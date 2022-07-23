@@ -1,0 +1,19 @@
+{
+  "name": "com.eflatun.scenereference",
+  "version": "0.0.1",
+  "displayName": "Eflatun.SceneReference",
+  "keywords": [
+    "eflatun",
+    "scene",
+	"reference",
+	"scenereference",
+	"inspector",
+	"editor",
+	"starikcetin"
+  ],
+  "author": {
+    "name": "starikcetin",
+    "email": "cetinsamedtarik@gmail.com",
+    "url": "https://github.com/starikcetin"
+  }
+}
