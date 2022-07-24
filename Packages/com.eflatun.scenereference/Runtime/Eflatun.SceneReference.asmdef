@@ -1,8 +1,7 @@
 {
     "name": "Eflatun.SceneReference",
     "rootNamespace": "Eflatun.SceneReference",
-    "references": [
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
