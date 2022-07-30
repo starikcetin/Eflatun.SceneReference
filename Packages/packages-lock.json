@@ -4,7 +4,9 @@
       "version": "file:com.eflatun.scenereference",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.unity.settings-manager": "2.0.1"
+      }
     },
     "com.unity.collab-proxy": {
       "version": "1.15.13",
@@ -85,8 +87,8 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.settings-manager": {
-      "version": "1.0.3",
-      "depth": 2,
+      "version": "2.0.1",
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

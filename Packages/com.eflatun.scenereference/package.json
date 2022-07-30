@@ -5,15 +5,18 @@
   "keywords": [
     "eflatun",
     "scene",
-	"reference",
-	"scenereference",
-	"inspector",
-	"editor",
-	"starikcetin"
+    "reference",
+    "scenereference",
+    "inspector",
+    "editor",
+    "starikcetin"
   ],
   "author": {
     "name": "starikcetin",
     "email": "cetinsamedtarik@gmail.com",
     "url": "https://github.com/starikcetin"
+  },
+  "dependencies": {
+    "com.unity.settings-manager": "2.0.1"
   }
 }
