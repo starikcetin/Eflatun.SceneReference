@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEditor;
 
 namespace Eflatun.SceneReference.Editor
@@ -32,6 +33,11 @@ namespace Eflatun.SceneReference.Editor
             }
 
             action();
+        }
+
+        public static bool IsSceneAssetPath(string path)
+        {
+            return Path.GetExtension(path) == ".unity";
         }
     }
 }
