@@ -1,14 +1,35 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Eflatun.SceneReference.Editor.Map
 {
     public static class Generator
     {
-        public static void GenerateAndWrite()
+        [MenuItem("Eflatun/SceneReference/Generate Scene Map")]
+        public static void Run()
+        {
+            EditorUtils.EditorUpdateOneShot -= Run;
+            
+            if (!Importer.CheckExistsAll())
+            {
+                throw new Exception("You need to import.");
+            }
+            
+            Debug.Log("Regenerating scene map.");
+            GenerateAndWrite();
+        }
+        
+        public static void RunNextEditorFrame()
+        {
+            EditorUtils.EditorUpdateOneShot += Run;
+        }
+
+        private static void GenerateAndWrite()
         {
             try
             {
