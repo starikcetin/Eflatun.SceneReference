@@ -22,17 +22,28 @@ namespace Eflatun.SceneReference
         {
             get
             {
-                if (_sceneGuidToScenePath == null)
-                {
-                    LoadMap();    
-                }
-                
+#if UNITY_EDITOR
+                // In editor, it needs to be loaded from scratch every time to make sure we get the latest values.
+                LoadMap();
+#else
+                // In runtime the file can't change, so only load it if we haven't loaded it already.
+                LoadMapIfNotAlready();
+#endif
+
                 return _sceneGuidToScenePath;
             }
         }
 
         [Preserve]
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void LoadMapIfNotAlready()
+        {
+            if (_sceneGuidToScenePath == null)
+            {
+                LoadMap();
+            }
+        }
+        
         private static void LoadMap()
         {
             var genFilePath = Paths.RelativeToResources.MapFile.UnixPath.WithoutExtension();
