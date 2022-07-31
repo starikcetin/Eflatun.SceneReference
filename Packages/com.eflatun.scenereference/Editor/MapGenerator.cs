@@ -20,7 +20,7 @@ namespace Eflatun.SceneReference.Editor
                     AssetDatabase.GUIDToAssetPath // value generator: take paths
                 );
                 
-                var jsonRaw = JsonConvert.SerializeObject(dictionary, SettingsManager.JsonFormatting.value);
+                var jsonRaw = JsonConvert.SerializeObject(dictionary, SettingsManager.MapJsonFormatting.value);
                 
                 Directory.CreateDirectory(Paths.RelativeToAssets.GenFolder.PlatformPath);
                 File.WriteAllText(Paths.RelativeToAssets.GenFile.PlatformPath, jsonRaw);
