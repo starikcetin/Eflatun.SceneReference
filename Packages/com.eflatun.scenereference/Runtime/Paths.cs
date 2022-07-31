@@ -1,24 +1,49 @@
 ﻿using System.IO;
 using Eflatun.SceneReference.Utility;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Eflatun.SceneReference
 {
-    internal static class Paths
+    /// <summary>
+    /// Paths used by Eflatun.SceneReference.
+    /// </summary>
+    [PublicAPI]
+    public static class Paths
     {
         private static readonly ConvertedPath AssetsFolder = new(Application.dataPath);
         private static readonly ConvertedPath ResourcesFolder = new(Path.Combine(AssetsFolder.GivenPath, "Resources"));
         
-        internal static class RelativeToResources
+        /// <summary>
+        /// Relative to the 'Assets/Resources' folder.
+        /// </summary>
+        public static class RelativeToResources
         {
-            internal static readonly ConvertedPath GenFolder = new(Path.Combine("Eflatun", "SceneReference"));
-            internal static readonly ConvertedPath GenFile = new(Path.Combine(GenFolder.GivenPath, "map.generated.json"));
+            /// <summary>
+            /// Path to the folder containing the generated map file. Relative to the 'Assets/Resources' folder.
+            /// </summary>
+            public static readonly ConvertedPath MapFolder = new(Path.Combine("Eflatun", "SceneReference"));
+            
+            /// <summary>
+            /// Path to the generated map file. Relative to the 'Assets/Resources' folder.
+            /// </summary>
+            public static readonly ConvertedPath MapFile = new(Path.Combine(MapFolder.GivenPath, "map.generated.json"));
         }
         
-        internal static class RelativeToAssets
+        /// <summary>
+        /// Relative to the 'Assets' folder.
+        /// </summary>
+        public static class RelativeToAssets
         {
-            internal static readonly ConvertedPath GenFolder = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.GenFolder.GivenPath));
-            internal static readonly ConvertedPath GenFile = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.GenFile.GivenPath));
+            /// <summary>
+            /// Path to the folder containing the generated map file. Relative to the 'Assets' folder.
+            /// </summary>
+            public static readonly ConvertedPath MapFolder = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.MapFolder.GivenPath));
+            
+            /// <summary>
+            /// Path to the generated map file. Relative to the 'Assets' folder.
+            /// </summary>
+            public static readonly ConvertedPath MapFile = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.MapFile.GivenPath));
         }
     }
 }

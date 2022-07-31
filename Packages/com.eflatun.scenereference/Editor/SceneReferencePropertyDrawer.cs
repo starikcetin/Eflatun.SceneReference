@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Eflatun.SceneReference.Editor
 {
     /// <summary>
-    /// Property drawer for <see cref="SceneReference"/>
+    /// Custom property drawer for <see cref="SceneReference"/>.
     /// </summary>
     [CustomPropertyDrawer(typeof(SceneReference))]
     public class SceneReferencePropertyDrawer : PropertyDrawer

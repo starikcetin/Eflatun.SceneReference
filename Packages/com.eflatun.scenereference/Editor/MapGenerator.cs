@@ -6,12 +6,22 @@ using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor
 {
+    /// <summary>
+    /// Generates and writes the scene map.
+    /// </summary>
     public static class MapGenerator
     {
-        [MenuItem("Eflatun/SceneReference/Generate Scene Map")]
+        /// <summary>
+        /// Runs the generator.
+        /// </summary>
+        /// <remarks>
+        /// The menu item "Eflatun/Scene Reference/Run Scene Map Generator" executes this method.
+        /// </remarks>
+        [MenuItem("Eflatun/Scene Reference/Run Scene Map Generator")]
         public static void Run()
         {
             Debug.Log("Regenerating scene map.");
+            
             try
             {
                 var allSceneGuids = AssetDatabase.FindAssets("t:Scene");
@@ -22,8 +32,8 @@ namespace Eflatun.SceneReference.Editor
                 
                 var jsonRaw = JsonConvert.SerializeObject(dictionary, SettingsManager.MapJsonFormatting.value);
                 
-                Directory.CreateDirectory(Paths.RelativeToAssets.GenFolder.PlatformPath);
-                File.WriteAllText(Paths.RelativeToAssets.GenFile.PlatformPath, jsonRaw);
+                Directory.CreateDirectory(Paths.RelativeToAssets.MapFolder.PlatformPath);
+                File.WriteAllText(Paths.RelativeToAssets.MapFile.PlatformPath, jsonRaw);
             }
             finally
             {

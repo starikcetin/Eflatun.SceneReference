@@ -2,6 +2,9 @@
 
 namespace Eflatun.SceneReference.Editor
 {
+    /// <summary>
+    /// Identifiers for places that perform map generation.
+    /// </summary>
     [Flags]
     public enum MapGenerationTriggers
     {
