@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Eflatun.SceneReference.Editor.Utility;
 using UnityEditor;
+using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 {
@@ -11,6 +11,8 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
         {
             if (!SettingsManager.IsGenerationTriggerEnabled(MapGenerationTriggers.AfterSceneAssetChange))
             {
+                Debug.LogWarning("Skipping SceneReference map generation after scene asset changes. It is recommended to enable map generation after scene asset changes, as an outdated map can result in broken scene references in runtime. You can enable it in Project Settings/Eflatun/Scene Reference.");
+                
                 return;
             }
 
