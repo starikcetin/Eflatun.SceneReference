@@ -13,7 +13,7 @@ namespace Eflatun.SceneReference
         [SerializeField] internal string sceneAssetGuidHex;
 
         public GUID Guid => new(sceneAssetGuidHex);
-        public string Path => Map.SceneGuidToScenePath[sceneAssetGuidHex];
+        public string Path => SceneGuidToScenePathMap.Map[sceneAssetGuidHex];
         public int BuildIndex => SceneUtility.GetBuildIndexByScenePath(Path);
         public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);

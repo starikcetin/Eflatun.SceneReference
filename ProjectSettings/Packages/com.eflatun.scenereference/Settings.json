@@ -2,21 +2,6 @@
     "m_Dictionary": {
         "m_DictionaryValues": [
             {
-                "type": "Eflatun.SceneReference.Editor.Map.GenerationTriggers, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                "key": "mapRegenerationTriggers",
-                "value": "{\"m_Value\":-1}"
-            },
-            {
-                "type": "Eflatun.SceneReference.Editor.Map.GenerationTriggers, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                "key": "MapRegenerationTriggers",
-                "value": "{\"m_Value\":-1}"
-            },
-            {
-                "type": "Eflatun.SceneReference.Editor.Map.GenerationTriggers, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                "key": "Map Regeneration Triggers",
-                "value": "{\"m_Value\":-1}"
-            },
-            {
                 "type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "test",
                 "value": "{\"m_Value\":0}"
@@ -25,6 +10,11 @@
                 "type": "Newtonsoft.Json.Formatting, Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
                 "key": "JsonFormatting",
                 "value": "{\"m_Value\":1}"
+            },
+            {
+                "type": "Eflatun.SceneReference.Editor.MapGenerationTriggers, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "key": "MapGenerationTriggers",
+                "value": "{\"m_Value\":-1}"
             }
         ]
     }

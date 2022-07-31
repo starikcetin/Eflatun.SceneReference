@@ -1,15 +1,15 @@
 ﻿using System.IO;
 
-namespace Eflatun.SceneReference
+namespace Eflatun.SceneReference.Utility
 {
-    public class PathConverter
+    public class ConvertedPath
     {
         public string GivenPath { get; }
         public string WindowsPath { get; }
         public string UnixPath { get; }
         public string PlatformPath { get; }
         
-        public PathConverter(string path)
+        public ConvertedPath(string path)
         {
             GivenPath = path;
             var split = path.Split('\\', '/');

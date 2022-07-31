@@ -1,11 +1,11 @@
 ﻿using UnityEditor;
 
-namespace Eflatun.SceneReference.Editor.Map
+namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 {
     [InitializeOnLoad]
-    public static class PlayModeListener
+    internal static class PlayModeListener
     {
-        private static bool ShouldRun => (SettingsManager.MapGenerationTriggers.value & GenerationTriggers.BeforeEnterPlayMode) == GenerationTriggers.BeforeEnterPlayMode;
+        private static bool ShouldRun => (SettingsManager.MapGenerationTriggers.value & MapGenerationTriggers.BeforeEnterPlayMode) == MapGenerationTriggers.BeforeEnterPlayMode;
         
         static PlayModeListener()
         {
@@ -21,7 +21,7 @@ namespace Eflatun.SceneReference.Editor.Map
 
             if (state == PlayModeStateChange.ExitingEditMode)
             {
-                Generator.Run();
+                MapGenerator.Run();
             }
         }
     }

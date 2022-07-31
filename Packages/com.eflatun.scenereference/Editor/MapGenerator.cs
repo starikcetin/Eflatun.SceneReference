@@ -4,29 +4,16 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
-namespace Eflatun.SceneReference.Editor.Map
+namespace Eflatun.SceneReference.Editor
 {
-    public static class Generator
+    public static class MapGenerator
     {
         [MenuItem("Eflatun/SceneReference/Generate Scene Map")]
         public static void Run()
         {
-            EditorUtils.EditorUpdateOneShot -= Run;
             Debug.Log("Regenerating scene map.");
-            GenerateAndWrite();
-        }
-        
-        public static void RunNextEditorFrame()
-        {
-            EditorUtils.EditorUpdateOneShot += Run;
-        }
-
-        private static void GenerateAndWrite()
-        {
             try
             {
-                EditorUtility.DisplayProgressBar("Generating scene map", "Generating scene map", 0);
-
                 var allSceneGuids = AssetDatabase.FindAssets("t:Scene");
                 var dictionary = allSceneGuids.ToDictionary(
                     x => x, // key generator: take guids
@@ -41,7 +28,6 @@ namespace Eflatun.SceneReference.Editor.Map
             finally
             {
                 AssetDatabase.Refresh();
-                EditorUtility.ClearProgressBar();
             }
         }
     }

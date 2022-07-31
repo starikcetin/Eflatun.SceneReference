@@ -1,23 +1,24 @@
 ﻿using System.IO;
+using Eflatun.SceneReference.Utility;
 using UnityEngine;
 
 namespace Eflatun.SceneReference
 {
-    public static class Paths
+    internal static class Paths
     {
-        private static readonly PathConverter AssetsFolder = new(Application.dataPath);
-        private static readonly PathConverter ResourcesFolder = new(Path.Combine(AssetsFolder.GivenPath, "Resources"));
+        private static readonly ConvertedPath AssetsFolder = new(Application.dataPath);
+        private static readonly ConvertedPath ResourcesFolder = new(Path.Combine(AssetsFolder.GivenPath, "Resources"));
         
-        public static class RelativeToResources
+        internal static class RelativeToResources
         {
-            public static readonly PathConverter GenFolder = new(Path.Combine("Eflatun", "SceneReference"));
-            public static readonly PathConverter GenFile = new(Path.Combine(GenFolder.GivenPath, "map.generated.json"));
+            internal static readonly ConvertedPath GenFolder = new(Path.Combine("Eflatun", "SceneReference"));
+            internal static readonly ConvertedPath GenFile = new(Path.Combine(GenFolder.GivenPath, "map.generated.json"));
         }
         
-        public static class RelativeToAssets
+        internal static class RelativeToAssets
         {
-            public static readonly PathConverter GenFolder = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.GenFolder.GivenPath));
-            public static readonly PathConverter GenFile = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.GenFile.GivenPath));
+            internal static readonly ConvertedPath GenFolder = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.GenFolder.GivenPath));
+            internal static readonly ConvertedPath GenFile = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.GenFile.GivenPath));
         }
     }
 }

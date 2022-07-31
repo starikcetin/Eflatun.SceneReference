@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Eflatun.SceneReference.Editor.Map
+namespace Eflatun.SceneReference.Editor
 {
     [Flags]
-    public enum GenerationTriggers
+    public enum MapGenerationTriggers
     {
         None = 0,
         All = ~None,

@@ -1,11 +1,12 @@
 ﻿using System.Linq;
+using Eflatun.SceneReference.Editor.Utility;
 using UnityEditor;
 
-namespace Eflatun.SceneReference.Editor.Map
+namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 {
-    public class SceneAssetPostprocessor : AssetPostprocessor
+    internal class SceneAssetPostprocessor : AssetPostprocessor
     {
-        private static bool ShouldRun => (SettingsManager.MapGenerationTriggers.value & GenerationTriggers.AfterSceneAssetChange) == GenerationTriggers.AfterSceneAssetChange;
+        private static bool ShouldRun => (SettingsManager.MapGenerationTriggers.value & MapGenerationTriggers.AfterSceneAssetChange) == MapGenerationTriggers.AfterSceneAssetChange;
 
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
@@ -17,7 +18,7 @@ namespace Eflatun.SceneReference.Editor.Map
             var allChangePaths = importedAssets.Concat(deletedAssets).Concat(movedAssets).Concat(movedFromAssetPaths);
             if (allChangePaths.Any(EditorUtils.IsSceneAssetPath))
             {
-                Generator.Run();
+                MapGenerator.Run();
             }
         }
     }

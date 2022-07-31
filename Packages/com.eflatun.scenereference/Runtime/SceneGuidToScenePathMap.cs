@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Eflatun.SceneReference.Utility;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -7,9 +8,10 @@ using UnityEngine.Scripting;
 namespace Eflatun.SceneReference
 {
     [Preserve]
-    public static class Map
+    public static class SceneGuidToScenePathMap
     {
-        public static Dictionary<string, string> SceneGuidToScenePath { get; private set; }
+        private static Dictionary<string, string> _map;
+        public static IReadOnlyDictionary<string, string> Map => _map;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void ParseMap()
@@ -23,7 +25,7 @@ namespace Eflatun.SceneReference
                 return;
             }
 
-            SceneGuidToScenePath = JsonConvert.DeserializeObject<Dictionary<string, string>>(genFile.text);
+            _map = JsonConvert.DeserializeObject<Dictionary<string, string>>(genFile.text);
         }
     }
 }

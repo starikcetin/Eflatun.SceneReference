@@ -2,11 +2,11 @@
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 
-namespace Eflatun.SceneReference.Editor.Map
+namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 {
-    public class BuildPreProcessor : IPreprocessBuildWithReport
+    internal class BuildPreProcessor : IPreprocessBuildWithReport
     {
-        private static bool ShouldRun => (SettingsManager.MapGenerationTriggers.value & GenerationTriggers.BeforeBuild) == GenerationTriggers.BeforeBuild;
+        private static bool ShouldRun => (SettingsManager.MapGenerationTriggers.value & MapGenerationTriggers.BeforeBuild) == MapGenerationTriggers.BeforeBuild;
 
         public int callbackOrder => -100;
         
@@ -19,7 +19,7 @@ namespace Eflatun.SceneReference.Editor.Map
             
             try
             {
-                Generator.Run();
+                MapGenerator.Run();
             }
             catch (Exception ex)
             {
