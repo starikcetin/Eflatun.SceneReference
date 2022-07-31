@@ -10,6 +10,11 @@
                 "type": "Newtonsoft.Json.Formatting, Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
                 "key": "MapJsonFormatting",
                 "value": "{\"m_Value\":1}"
+            },
+            {
+                "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "FailBuildIfMapGenerationFails",
+                "value": "{\"m_Value\":true}"
             }
         ]
     }
