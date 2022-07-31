@@ -27,6 +27,10 @@ namespace Eflatun.SceneReference.Editor
                 var sceneAssetGuid = AssetDatabase.GUIDFromAssetPath(sceneAssetPath);
                 sceneAssetGuidHexProperty.stringValue = sceneAssetGuid.ToString();
             }
+            else
+            {
+                Logger.Error($"Could not locate properties of a {nameof(SceneAsset)} while trying to draw!");
+            }
 
             EditorGUI.EndProperty();
         }

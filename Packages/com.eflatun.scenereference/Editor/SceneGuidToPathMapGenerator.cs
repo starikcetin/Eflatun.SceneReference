@@ -2,7 +2,6 @@
 using System.Linq;
 using Newtonsoft.Json;
 using UnityEditor;
-using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor
 {
@@ -20,7 +19,7 @@ namespace Eflatun.SceneReference.Editor
         [MenuItem("Eflatun/Scene Reference/Run Scene GUID to Path Map Generator")]
         public static void Run()
         {
-            Debug.Log("Generating scene GUID to path map.");
+            Logger.Debug("Generating scene GUID to path map.");
             
             try
             {

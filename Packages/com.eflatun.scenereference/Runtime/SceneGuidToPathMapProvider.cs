@@ -49,7 +49,7 @@ namespace Eflatun.SceneReference
 
             if (genFile == null)
             {
-                Debug.LogError("Generated file not found!");
+                Logger.Error("Scene GUID to path map file not found!");
                 return;
             }
 

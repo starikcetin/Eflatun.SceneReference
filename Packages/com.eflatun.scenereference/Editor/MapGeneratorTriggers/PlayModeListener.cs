@@ -1,5 +1,4 @@
 ﻿using UnityEditor;
-using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 {
@@ -15,7 +14,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
         {
             if (!SettingsManager.SceneGuidToPathMap.IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers.BeforeEnterPlayMode))
             {
-                Debug.LogWarning("Skipping scene GUID to path map generation before play mode. It is recommended to enable map generation before play mode, as an outdated map can result in broken scene references in runtime. You can enable it in Project Settings/Eflatun/Scene Reference.");
+                Logger.Warn($"Skipping scene GUID to path map generation before play mode. It is recommended to enable map generation before play mode, as an outdated map can result in broken scene references in runtime. You can enable it in {SettingsManager.SettingsMenuPathForDisplay}.");
                 
                 return;
             }

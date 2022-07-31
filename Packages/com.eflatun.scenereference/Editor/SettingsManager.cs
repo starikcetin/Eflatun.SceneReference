@@ -16,12 +16,14 @@ namespace Eflatun.SceneReference.Editor
     [PublicAPI]
     public static class SettingsManager
     {
+        private const string SettingsMenuPath = "Project/" + Constants.MenuPrefixBase;
+        internal const string SettingsMenuPathForDisplay = "Project Settings/" + SettingsMenuPath;
+        
         private static readonly Assembly ContainingAssembly = typeof(SettingsManager).Assembly;
-
-        private static readonly Settings Settings = new("com.eflatun.scenereference");
+        private static readonly Settings Settings = new(Constants.PackageNameReverseDomain);
 
         [SettingsProvider]
-        private static SettingsProvider CreateUserSettingsProvider() => new UserSettingsProvider("Project/Eflatun/Scene Reference", Settings, new[] { ContainingAssembly }, SettingsScope.Project);
+        private static SettingsProvider CreateUserSettingsProvider() => new UserSettingsProvider(SettingsMenuPath, Settings, new[] { ContainingAssembly }, SettingsScope.Project);
 
         /// <summary>
         /// Settings regarding the scene GUID to path map.
@@ -40,6 +42,7 @@ namespace Eflatun.SceneReference.Editor
             /// It is recommended that you leave this option at 'All' unless you are debugging something. Failure to generate the map when needed can result in broken scene references in runtime.
             /// </summary>
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+            /// <seealso cref="IsGenerationTriggerEnabled"/>
             [field: UserSetting(CategoryName, "Generation Triggers", "Controls when the scene GUID to path map gets regenerated.\n\n• After Scene Asset Change: Regenerate the map every time a scene asset changes (delete, create, move, rename).\n\n• Before Enter Play Mode: Regenerate the map before entering play mode in the editor.\n\n• Before Build: Regenerate the map before a build.\n\nIt is recommended that you leave this option at 'All' unless you are debugging something. Failure to generate the map when needed can result in broken scene references in runtime.")]
             public static UserSetting<SceneGuidToPathMapGenerationTriggers> GenerationTriggers { get; }
                 = new(Settings, "SceneGuidToPathMap.GenerationTriggers", SceneGuidToPathMapGenerationTriggers.All, SettingsScope.Project);
