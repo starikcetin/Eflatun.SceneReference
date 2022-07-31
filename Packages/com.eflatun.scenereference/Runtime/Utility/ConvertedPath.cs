@@ -33,9 +33,9 @@ namespace Eflatun.SceneReference.Utility
         {
             GivenPath = path;
             var split = path.Split('\\', '/');
-            WindowsPath = string.Join('\\', split);
-            UnixPath = string.Join('/', split);
-            PlatformPath = string.Join(Path.DirectorySeparatorChar, split);
+            WindowsPath = string.Join("\\", split);
+            UnixPath = string.Join("/", split);
+            PlatformPath = string.Join(Path.DirectorySeparatorChar.ToString(), split);
         }
     }
 }

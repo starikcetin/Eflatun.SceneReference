@@ -11,8 +11,8 @@ namespace Eflatun.SceneReference
     [PublicAPI]
     public static class Paths
     {
-        private static readonly ConvertedPath AssetsFolder = new(Application.dataPath);
-        private static readonly ConvertedPath ResourcesFolder = new(Path.Combine(AssetsFolder.GivenPath, "Resources"));
+        private static readonly ConvertedPath AssetsFolder = new ConvertedPath(Application.dataPath);
+        private static readonly ConvertedPath ResourcesFolder = new ConvertedPath(Path.Combine(AssetsFolder.GivenPath, "Resources"));
         
         /// <summary>
         /// Relative to the 'Assets/Resources' folder.
@@ -22,12 +22,12 @@ namespace Eflatun.SceneReference
             /// <summary>
             /// Path to the folder containing the generated map file. Relative to the 'Assets/Resources' folder.
             /// </summary>
-            public static readonly ConvertedPath SceneGuidToPathMapFolder = new(Path.Combine("Eflatun", "SceneReference"));
+            public static readonly ConvertedPath SceneGuidToPathMapFolder = new ConvertedPath(Path.Combine("Eflatun", "SceneReference"));
             
             /// <summary>
             /// Path to the generated map file. Relative to the 'Assets/Resources' folder.
             /// </summary>
-            public static readonly ConvertedPath SceneGuidToPathMapFile = new(Path.Combine(SceneGuidToPathMapFolder.GivenPath, "SceneGuidToPathMap.generated.json"));
+            public static readonly ConvertedPath SceneGuidToPathMapFile = new ConvertedPath(Path.Combine(SceneGuidToPathMapFolder.GivenPath, "SceneGuidToPathMap.generated.json"));
         }
         
         /// <summary>
@@ -38,12 +38,12 @@ namespace Eflatun.SceneReference
             /// <summary>
             /// Path to the folder containing the generated map file. Absolute.
             /// </summary>
-            public static readonly ConvertedPath SceneGuidToPathMapFolder = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.SceneGuidToPathMapFolder.GivenPath));
+            public static readonly ConvertedPath SceneGuidToPathMapFolder = new ConvertedPath(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.SceneGuidToPathMapFolder.GivenPath));
             
             /// <summary>
             /// Path to the generated map file. Absolute.
             /// </summary>
-            public static readonly ConvertedPath SceneGuidToPathMapFile = new(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.SceneGuidToPathMapFile.GivenPath));
+            public static readonly ConvertedPath SceneGuidToPathMapFile = new ConvertedPath(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.SceneGuidToPathMapFile.GivenPath));
         }
     }
 }

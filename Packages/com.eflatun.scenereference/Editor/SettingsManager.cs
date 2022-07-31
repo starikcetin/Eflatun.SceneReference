@@ -27,7 +27,7 @@ namespace Eflatun.SceneReference.Editor
         internal const string SettingsMenuPathForDisplay = "Project Settings/" + SettingsMenuPath;
         
         private static readonly Assembly ContainingAssembly = typeof(SettingsManager).Assembly;
-        private static readonly Settings Settings = new(Constants.PackageNameReverseDomain);
+        private static readonly Settings Settings = new Settings(Constants.PackageNameReverseDomain);
 
         [SettingsProvider]
         private static SettingsProvider CreateUserSettingsProvider() => new UserSettingsProvider(SettingsMenuPath, Settings, new[] { ContainingAssembly }, SettingsScope.Project);
@@ -52,7 +52,7 @@ namespace Eflatun.SceneReference.Editor
             /// <seealso cref="IsGenerationTriggerEnabled"/>
             [field: UserSetting(CategoryName, "Generation Triggers", "Controls when the scene GUID to path map gets regenerated.\n\n• After Scene Asset Change: Regenerate the map every time a scene asset changes (delete, create, move, rename).\n\n• Before Enter Play Mode: Regenerate the map before entering play mode in the editor.\n\n• Before Build: Regenerate the map before a build.\n\nIt is recommended that you leave this option at 'All' unless you are debugging something. Failure to generate the map when needed can result in broken scene references in runtime.")]
             public static ProjectSetting<SceneGuidToPathMapGenerationTriggers> GenerationTriggers { get; }
-                = new("SceneGuidToPathMap.GenerationTriggers", SceneGuidToPathMapGenerationTriggers.All);
+                = new ProjectSetting<SceneGuidToPathMapGenerationTriggers>("SceneGuidToPathMap.GenerationTriggers", SceneGuidToPathMapGenerationTriggers.All);
 
             /// <summary>
             /// Controls the scene GUID to path map generator's JSON formatting.<br/>
@@ -61,7 +61,7 @@ namespace Eflatun.SceneReference.Editor
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
             [field: UserSetting(CategoryName, "JSON Formatting", "Controls the scene GUID to path map generator's JSON formatting.\n\nIt is recommended to leave this option at 'Indented', as it will help with version control and make the generated file human-readable.")]
             public static ProjectSetting<Formatting> JsonFormatting { get; }
-                = new("SceneGuidToPathMap.JsonFormatting", Formatting.Indented);
+                = new ProjectSetting<Formatting>("SceneGuidToPathMap.JsonFormatting", Formatting.Indented);
 
             /// <summary>
             /// Should we fail a build if scene GUID to path map generation fails?<br/>
@@ -71,7 +71,7 @@ namespace Eflatun.SceneReference.Editor
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
             [field: UserSetting(CategoryName, "Fail Build If Generation Fails", "Should we fail a build if scene GUID to path map generation fails?\n\nOnly relevant if 'Before Build' generation trigger is enabled.\n\nIt is recommended to leave this option at 'true', as a failed map generation can result in broken scene references in runtime.")]
             public static ProjectSetting<bool> FailBuildIfGenerationFails { get; }
-                = new("SceneGuidToPathMap.FailBuildIfGenerationFails", true);
+                = new ProjectSetting<bool>("SceneGuidToPathMap.FailBuildIfGenerationFails", true);
 
             /// <summary>
             /// Returns whether the given <paramref name="trigger"/> is enabled in the settings.
