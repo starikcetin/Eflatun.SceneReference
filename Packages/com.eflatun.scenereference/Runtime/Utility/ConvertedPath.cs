@@ -1,10 +1,12 @@
 ﻿using System.IO;
+using JetBrains.Annotations;
 
 namespace Eflatun.SceneReference.Utility
 {
     /// <summary>
     /// Wrapper for a file/folder path. Provides platform-specific paths. 
     /// </summary>
+    [PublicAPI]
     public class ConvertedPath
     {
         /// <summary>

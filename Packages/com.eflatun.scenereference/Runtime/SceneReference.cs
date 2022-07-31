@@ -22,7 +22,7 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// Path to the scene asset.
         /// </summary>
-        public string Path => Map.SceneGuidToScenePath[sceneAssetGuidHex];
+        public string Path => SceneGuidToPathMapProvider.SceneGuidToPathMap[sceneAssetGuidHex];
         
         /// <summary>
         /// Build index of the scene.

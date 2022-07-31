@@ -1,4 +1,6 @@
-﻿using Eflatun.SceneReference.Utility;
+﻿using System.Reflection;
+using Eflatun.SceneReference.Utility;
+using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.SettingsManagement;
 using Newtonsoft.Json;
@@ -11,29 +13,62 @@ namespace Eflatun.SceneReference.Editor
     /// <remarks>
     /// Changing the settings from code may have unintended consequences. Make sure you now what you are doing.
     /// </remarks>
+    [PublicAPI]
     public static class SettingsManager
     {
+        private static readonly Assembly ContainingAssembly = typeof(SettingsManager).Assembly;
+
         private static readonly Settings Settings = new("com.eflatun.scenereference");
 
         [SettingsProvider]
-        private static SettingsProvider CreateUserSettingsProvider() => new UserSettingsProvider("Project/Eflatun/Scene Reference", Settings, new[] { typeof(SettingsManager).Assembly }, SettingsScope.Project);
+        private static SettingsProvider CreateUserSettingsProvider() => new UserSettingsProvider("Project/Eflatun/Scene Reference", Settings, new[] { ContainingAssembly }, SettingsScope.Project);
 
+        /// <summary>
+        /// Settings regarding the scene GUID to path map.
+        /// </summary>
         /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-        [field: UserSetting("Map", "Generation Triggers", "Controls when the scene map will be regenerated.\n\n• After Scene Asset Change: Regenerate the map every time a scene asset changes (deleted, created, moved, renamed).\n\n• Before Enter Play Mode: Regenerate the map before entering play mode in the editor.\n\n• Before Build: Regenerate the map before a build.\n\nIt is recommended that you leave this option at 'All' unless you are debugging something. Failure to regenerate the map when needed will result it broken scene references in runtime.")]
-        public static UserSetting<MapGenerationTriggers> MapGenerationTriggers { get; }
-            = new(Settings, "MapGenerationTriggers", Editor.MapGenerationTriggers.All, SettingsScope.Project);
+        [PublicAPI]
+        public static class SceneGuidToPathMap
+        {
+            private const string CategoryName = "Scene GUID To Path Map";
 
-        /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-        [field: UserSetting("Map", "JSON Formatting", "Controls the generator's json formatting.\n\nIt is recommended to leave this option at Indented, as it will help with version control and make the file human-readable.")]
-        public static UserSetting<Formatting> MapJsonFormatting { get; }
-            = new(Settings, "MapJsonFormatting", Formatting.Indented, SettingsScope.Project);
+            /// <summary>
+            /// Controls when the scene GUID to path map gets regenerated.<br/>
+            /// • After Scene Asset Change: Regenerate the map every time a scene asset changes (delete, create, move, rename).<br/>
+            /// • Before Enter Play Mode: Regenerate the map before entering play mode in the editor.<br/>
+            /// • Before Build: Regenerate the map before a build.<br/>
+            /// It is recommended that you leave this option at 'All' unless you are debugging something. Failure to generate the map when needed can result in broken scene references in runtime.
+            /// </summary>
+            /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+            [field: UserSetting(CategoryName, "Generation Triggers", "Controls when the scene GUID to path map gets regenerated.\n\n• After Scene Asset Change: Regenerate the map every time a scene asset changes (delete, create, move, rename).\n\n• Before Enter Play Mode: Regenerate the map before entering play mode in the editor.\n\n• Before Build: Regenerate the map before a build.\n\nIt is recommended that you leave this option at 'All' unless you are debugging something. Failure to generate the map when needed can result in broken scene references in runtime.")]
+            public static UserSetting<SceneGuidToPathMapGenerationTriggers> GenerationTriggers { get; }
+                = new(Settings, "SceneGuidToPathMap.GenerationTriggers", SceneGuidToPathMapGenerationTriggers.All, SettingsScope.Project);
 
-        /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-        [field: UserSetting("Map", "Fail Build If Generation Fails", "Should we fail a build if scene map generation fails?\n\nOnly relevant if Before Build Generation Trigger is enabled.\n\nIt is recommended to leave this option at true, as a failed scene map generation will result in broken scene references at runtime.")]
-        public static UserSetting<bool> FailBuildIfMapGenerationFails { get; }
-            = new(Settings, "FailBuildIfMapGenerationFails", true, SettingsScope.Project);
+            /// <summary>
+            /// Controls the scene GUID to path map generator's JSON formatting.<br/>
+            /// It is recommended to leave this option at 'Indented', as it will help with version control and make the generated file human-readable.
+            /// </summary>
+            /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+            [field: UserSetting(CategoryName, "JSON Formatting", "Controls the scene GUID to path map generator's JSON formatting.\n\nIt is recommended to leave this option at 'Indented', as it will help with version control and make the generated file human-readable.")]
+            public static UserSetting<Formatting> JsonFormatting { get; }
+                = new(Settings, "SceneGuidToPathMap.JsonFormatting", Formatting.Indented, SettingsScope.Project);
 
-        public static bool IsGenerationTriggerEnabled(MapGenerationTriggers trigger) =>
-            MapGenerationTriggers.value.IncludesFlag(trigger);
+            /// <summary>
+            /// Should we fail a build if scene GUID to path map generation fails?<br/>
+            /// Only relevant if 'Before Build' generation trigger is enabled.<br/>
+            /// It is recommended to leave this option at 'true', as a failed map generation can result in broken scene references in runtime.
+            /// </summary>
+            /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+            [field: UserSetting(CategoryName, "Fail Build If Generation Fails", "Should we fail a build if scene GUID to path map generation fails?\n\nOnly relevant if 'Before Build' generation trigger is enabled.\n\nIt is recommended to leave this option at 'true', as a failed map generation can result in broken scene references in runtime.")]
+            public static UserSetting<bool> FailBuildIfGenerationFails { get; }
+                = new(Settings, "SceneGuidToPathMap.FailBuildIfGenerationFails", true, SettingsScope.Project);
+
+            /// <summary>
+            /// Returns whether the given <paramref name="trigger"/> is enabled in the settings.
+            /// </summary>
+            /// <seealso cref="GenerationTriggers"/>
+            public static bool IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers trigger) =>
+                GenerationTriggers.value.IncludesFlag(trigger);
+        }
     }
 }

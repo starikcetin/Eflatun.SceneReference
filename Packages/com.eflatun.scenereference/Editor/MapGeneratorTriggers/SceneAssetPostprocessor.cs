@@ -9,9 +9,9 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
     {
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
-            if (!SettingsManager.IsGenerationTriggerEnabled(MapGenerationTriggers.AfterSceneAssetChange))
+            if (!SettingsManager.SceneGuidToPathMap.IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers.AfterSceneAssetChange))
             {
-                Debug.LogWarning("Skipping SceneReference map generation after scene asset changes. It is recommended to enable map generation after scene asset changes, as an outdated map can result in broken scene references in runtime. You can enable it in Project Settings/Eflatun/Scene Reference.");
+                Debug.LogWarning("Skipping scene GUID to path map generation after scene asset changes. It is recommended to enable map generation after scene asset changes, as an outdated map can result in broken scene references in runtime. You can enable it in Project Settings/Eflatun/Scene Reference.");
                 
                 return;
             }
@@ -24,7 +24,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
             
             if (hasSceneChange)
             {
-                MapGenerator.Run();
+                SceneGuidToPathMapGenerator.Run();
             }
         }
     }

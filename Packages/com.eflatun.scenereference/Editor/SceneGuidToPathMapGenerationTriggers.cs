@@ -3,10 +3,10 @@
 namespace Eflatun.SceneReference.Editor
 {
     /// <summary>
-    /// Identifiers for places that perform map generation.
+    /// Identifiers for places that perform scene GUID to path map generation generation.
     /// </summary>
     [Flags]
-    public enum MapGenerationTriggers
+    public enum SceneGuidToPathMapGenerationTriggers
     {
         None = 0,
         All = ~None,
