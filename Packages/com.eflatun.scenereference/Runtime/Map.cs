@@ -8,7 +8,7 @@ using UnityEngine.Scripting;
 namespace Eflatun.SceneReference
 {
     /// <summary>
-    /// The parsed map. Only valid in runtime.
+    /// The parsed map. Can be used in both editor and runtime.
     /// </summary>
     [PublicAPI]
     public static class Map
@@ -18,11 +18,22 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// A map of scene GUID hex values to scene paths.
         /// </summary>
-        public static IReadOnlyDictionary<string, string> SceneGuidToScenePath => _sceneGuidToScenePath;
+        public static IReadOnlyDictionary<string, string> SceneGuidToScenePath
+        {
+            get
+            {
+                if (_sceneGuidToScenePath == null)
+                {
+                    LoadMap();    
+                }
+                
+                return _sceneGuidToScenePath;
+            }
+        }
 
         [Preserve]
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void ParseMap()
+        private static void LoadMap()
         {
             var genFilePath = Paths.RelativeToResources.MapFile.UnixPath.WithoutExtension();
             var genFile = Resources.Load<TextAsset>(genFilePath);

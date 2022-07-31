@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 namespace Eflatun.SceneReference
 {
     /// <summary>
-    /// Provides a strongly-typed reference to a scene to be used in runtime.
+    /// Provides a strongly-typed reference to a scene. Can be used in both editor and runtime.
     /// </summary>
     [Serializable, PublicAPI]
     public class SceneReference
