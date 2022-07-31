@@ -34,6 +34,8 @@ namespace Eflatun.SceneReference.Editor
                 
                 Directory.CreateDirectory(Paths.RelativeToAssets.MapFolder.PlatformPath);
                 File.WriteAllText(Paths.RelativeToAssets.MapFile.PlatformPath, jsonRaw);
+
+                Map.Assign(dictionary);
             }
             finally
             {

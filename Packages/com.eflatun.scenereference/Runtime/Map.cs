@@ -22,16 +22,14 @@ namespace Eflatun.SceneReference
         {
             get
             {
-#if UNITY_EDITOR
-                // In editor, it needs to be loaded from scratch every time to make sure we get the latest values.
-                LoadMap();
-#else
-                // In runtime the file can't change, so only load it if we haven't loaded it already.
                 LoadMapIfNotAlready();
-#endif
-
                 return _sceneGuidToScenePath;
             }
+        }
+        
+        internal static void Assign(Dictionary<string, string> sceneGuidToScenePath)
+        {
+            _sceneGuidToScenePath = sceneGuidToScenePath;
         }
 
         [Preserve]
