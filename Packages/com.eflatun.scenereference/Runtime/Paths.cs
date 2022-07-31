@@ -27,7 +27,7 @@ namespace Eflatun.SceneReference
             /// <summary>
             /// Path to the generated map file. Relative to the 'Assets/Resources' folder.
             /// </summary>
-            public static readonly ConvertedPath SceneGuidToPathMapFile = new(Path.Combine(SceneGuidToPathMapFolder.GivenPath, "map.generated.json"));
+            public static readonly ConvertedPath SceneGuidToPathMapFile = new(Path.Combine(SceneGuidToPathMapFolder.GivenPath, "SceneGuidToPathMap.generated.json"));
         }
         
         /// <summary>
