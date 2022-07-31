@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using Eflatun.SceneReference.Utility;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Scripting;
 
