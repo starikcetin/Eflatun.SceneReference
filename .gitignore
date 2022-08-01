@@ -79,3 +79,6 @@ desktop.ini
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# UPM packages folder
+**/[Pp]ackages/.*/*
