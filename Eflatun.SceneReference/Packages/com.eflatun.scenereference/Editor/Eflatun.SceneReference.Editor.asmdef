@@ -14,6 +14,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.addressables",
+            "expression": "1.1",
+            "define": "UNITY_PACKAGE_ADDRESSABLES"
+        }
+    ],
     "noEngineReferences": false
 }

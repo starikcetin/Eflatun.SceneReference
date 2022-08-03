@@ -31,6 +31,17 @@ namespace Eflatun.SceneReference.Editor
 
         [SettingsProvider]
         private static SettingsProvider CreateUserSettingsProvider() => new UserSettingsProvider(SettingsMenuPath, Settings, new[] { ContainingAssembly }, SettingsScope.Project);
+        
+        private static bool IsAddressablesEnabled
+        {
+            get
+            {
+                #if UNITY_PACKAGE_ADDRESSABLES
+                    return true;
+                #endif
+                return false;
+            }
+        }
 
         /// <summary>
         /// Settings regarding the scene GUID to path map.
