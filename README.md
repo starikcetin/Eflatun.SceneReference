@@ -172,6 +172,10 @@ var generationTriggers = SettingsManager.SceneGuidToPathMap.GenerationTriggers;
 SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
 ```
 
+# Caveats
+
+`Eflatun.SceneReference` provides you with the information it has no matter what. It doesn't do any validation on whether the scene is in the build (_yet! this is a planned feature_). If your scene is not added to Build Settings or it is not enabled, you won't be able to load it, as Unity only bundles the scenes added and enabled in Build Settings.
+
 # Acknowlegments
 
 * This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
