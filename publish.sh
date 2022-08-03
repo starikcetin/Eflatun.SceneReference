@@ -43,6 +43,7 @@ echo "> Run gup"
 gup -p "$PACKAGE_ROOT/package.json"
 
 COMMIT_HASH_TO_KEEP=$(git rev-parse HEAD)
+echo "> COMMIT_HASH_TO_KEEP: $COMMIT_HASH_TO_KEEP"
 
 # revert the copy commit
 echo "> Undo the copy file commit"
@@ -58,6 +59,12 @@ echo ">> Reset to temp branch"
 git reset --hard $TEMP_BRANCH_NAME
 echo ">> Delete temp branch"
 git branch -d $TEMP_BRANCH_NAME
+
+# rewrite the commit message
+echo "> Rewrite commit message"
+NEW_COMMIT_MESSAGE="chore: $(git log -1 --pretty=%B | tr '[:upper:]' '[:lower:]')"
+echo ">> NEW_COMMIT_MESSAGE: $NEW_COMMIT_MESSAGE"
+git commit --amend -m "$NEW_COMMIT_MESSAGE"
 
 # done
 echo "> Done"
