@@ -180,10 +180,10 @@ SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
 
 * This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
 
-* README header inspired by [Angular's README](https://github.com/angular/angular).
+* README header inspired by [Angular's README](https://github.com/angular/angular/blob/main/README.md).
 
 # License
 
-MIT License. Refer to the [LICENSE](LICENSE) file.
+MIT License. Refer to the [LICENSE.md](LICENSE.md) file.
 
 Copyright (c) 2022 [S. Tarık Çetin](https://github.com/starikcetin)
