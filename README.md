@@ -127,7 +127,7 @@ It is recommended to leave this option at _true_, as a failed map generation can
 
 ## Generated File
 
-`Eflatun.SceneReference` uses a JSON generator in editor-time to produce a `Scene GUID -> Scene Path` map. You can find the file at this location: `Assets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated`.
+`Eflatun.SceneReference` uses a JSON generator in editor-time to produce a `Scene GUID -> Scene Path` map. You can find the file at this location: `Assets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json`.
 
 **This file is auto-generated, do not edit it. Any edits will be lost at the next generation.**
 
