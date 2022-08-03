@@ -47,7 +47,7 @@ openupm add com.eflatun.scenereference
 Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.0.0` with the version you want to install.
 
 ```
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git?#1.0.0"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.0.0"
 ```
 
 _Although it is highly discouraged, you can replace `1.0.0` with `upm` to get the latest version instead of a specific one._
