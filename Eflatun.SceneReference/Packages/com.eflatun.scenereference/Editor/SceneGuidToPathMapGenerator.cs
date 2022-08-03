@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEditor;
 
@@ -8,6 +9,7 @@ namespace Eflatun.SceneReference.Editor
     /// <summary>
     /// Generates and writes the scene GUID to path map.
     /// </summary>
+    [PublicAPI]
     public static class SceneGuidToPathMapGenerator
     {
         /// <summary>

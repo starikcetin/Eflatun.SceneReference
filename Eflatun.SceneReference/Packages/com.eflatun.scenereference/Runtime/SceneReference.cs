@@ -8,7 +8,8 @@ namespace Eflatun.SceneReference
     /// <summary>
     /// Provides a strongly-typed reference to a scene. Can be used in both editor and runtime.
     /// </summary>
-    [Serializable, PublicAPI]
+    [PublicAPI]
+    [Serializable]
     public class SceneReference
     {
         [SerializeField] internal UnityEngine.Object sceneAsset;

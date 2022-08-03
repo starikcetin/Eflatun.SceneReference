@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor
@@ -6,6 +7,7 @@ namespace Eflatun.SceneReference.Editor
     /// <summary>
     /// Custom property drawer for <see cref="SceneReference"/>.
     /// </summary>
+    [PublicAPI]
     [CustomPropertyDrawer(typeof(SceneReference))]
     public class SceneReferencePropertyDrawer : PropertyDrawer
     {

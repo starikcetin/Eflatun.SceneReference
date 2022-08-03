@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Eflatun.SceneReference.Utility;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Eflatun.SceneReference
@@ -8,8 +7,7 @@ namespace Eflatun.SceneReference
     /// <summary>
     /// Paths used by Eflatun.SceneReference.
     /// </summary>
-    [PublicAPI]
-    public static class Paths
+    internal static class Paths
     {
         private static readonly ConvertedPath AssetsFolder = new ConvertedPath(Application.dataPath);
         private static readonly ConvertedPath ResourcesFolder = new ConvertedPath(Path.Combine(AssetsFolder.GivenPath, "Resources"));

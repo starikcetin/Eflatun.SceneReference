@@ -1,13 +1,11 @@
 ﻿using System;
-using JetBrains.Annotations;
 
 namespace Eflatun.SceneReference.Utility
 {
     /// <summary>
     /// Utilities used by Eflatun.SceneReference.
     /// </summary>
-    [PublicAPI]
-    public static class Utils
+    internal static class Utils
     {
         /// <summary>
         /// Returns the given <paramref name="path"/> without file extension.
