@@ -1,11 +1,6 @@
 #!/bin/bash
 
-MAIN_BRANCH_NAME="main"
-TEMP_BRANCH_NAME="TEMP_BRANCH_3427892498"
 PACKAGE_ROOT="Eflatun.SceneReference/Packages/com.eflatun.scenereference"
-
-echo "> MAIN_BRANCH_NAME: $MAIN_BRANCH_NAME"
-echo "> TEMP_BRANCH_NAME: $TEMP_BRANCH_NAME"
 echo "> PACKAGE_ROOT: $PACKAGE_ROOT"
 
 # Make sure git is clean
@@ -17,7 +12,10 @@ if [[ `git status --porcelain` ]]; then
 fi
 
 BASE_COMMIT_HASH="$(git rev-parse HEAD)"
+BASE_COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
 echo "> BASE_COMMIT_HASH: $BASE_COMMIT_HASH"
+echo "> BASE_COMMIT_MESSAGE: $BASE_COMMIT_MESSAGE"
+read -p ">> Make sure this looks OK. Then press any key to continue..."
 
 # install gup
 echo "> Ensure programs"
@@ -36,35 +34,22 @@ cp -r ".assets" "$PACKAGE_ROOT/.assets"
 # make a commit
 echo "> Make a commit for copied files"
 git add .
-git commit -m "TEMP_COMMIT_5839058930"
+git commit -m "chore: copy readme, changelog, license, and assets to package directory"
+
+COPY_COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
+echo "> COPY_COMMIT_MESSAGE: $COPY_COMMIT_MESSAGE"
 
 # run gup
-echo "> Run gup"
+echo "> Run git-upm-publisher"
 gup -p "$PACKAGE_ROOT/package.json"
 
-COMMIT_HASH_TO_KEEP=$(git rev-parse HEAD)
-echo "> COMMIT_HASH_TO_KEEP: $COMMIT_HASH_TO_KEEP"
+GUP_COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
+echo "> GUP_COMMIT_MESSAGE: $GUP_COMMIT_MESSAGE"
 
-# revert the copy commit
-echo "> Undo the copy file commit"
-echo ">> Checkout base"
-git checkout $BASE_COMMIT_HASH
-echo ">> Create temp branch"
-git checkout -b $TEMP_BRANCH_NAME
-echo ">> Cherry-pick version bump commit"
-git cherry-pick $COMMIT_HASH_TO_KEEP
-echo ">> Checkout main branch"
-git checkout $MAIN_BRANCH_NAME
-echo ">> Reset to temp branch"
-git reset --hard $TEMP_BRANCH_NAME
-echo ">> Delete temp branch"
-git branch -d $TEMP_BRANCH_NAME
-
-# rewrite the commit message
-echo "> Rewrite commit message"
-NEW_COMMIT_MESSAGE="chore: $(git log -1 --pretty=%B | tr '[:upper:]' '[:lower:]')"
-echo ">> NEW_COMMIT_MESSAGE: $NEW_COMMIT_MESSAGE"
-git commit --amend -m "$NEW_COMMIT_MESSAGE"
+# squash commits
+echo "> Squashing commits to base"
+git reset --soft $BASE_COMMIT_HASH
+git commit --amend -m "$BASE_COMMIT_MESSAGE" -m "* $COPY_COMMIT_MESSAGE" -m "* $GUP_COMMIT_MESSAGE"
 
 # done
 echo "> Done"
