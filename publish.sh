@@ -11,11 +11,13 @@ if [[ `git status --porcelain` ]]; then
   exit 1
 fi
 
+read -p "> Make sure Unity is open. Then press any key to continue..."
+
 BASE_COMMIT_HASH="$(git rev-parse HEAD)"
 BASE_COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
 echo "> BASE_COMMIT_HASH: $BASE_COMMIT_HASH"
 echo "> BASE_COMMIT_MESSAGE: $BASE_COMMIT_MESSAGE"
-read -p ">> Make sure this looks OK. Then press any key to continue..."
+read -p "> Make sure this looks OK. Then press any key to continue..."
 
 # install gup
 echo "> Ensure programs"
@@ -30,6 +32,8 @@ cp "README.md" "$PACKAGE_ROOT/README.md"
 cp "CHANGELOG.md" "$PACKAGE_ROOT/CHANGELOG.md"
 cp "LICENSE.md" "$PACKAGE_ROOT/LICENSE.md"
 cp -r ".assets" "$PACKAGE_ROOT/.assets"
+
+read -p "> Go to Unity and wait for it to finish whatever it is doing. Then close Unity. Then press any key to continue..."
 
 # make a commit
 echo "> Make a commit for copied files"
