@@ -31,7 +31,7 @@ echo "> Copy essentail files to package folder"
 cp "README.md" "$PACKAGE_ROOT/README.md"
 cp "CHANGELOG.md" "$PACKAGE_ROOT/CHANGELOG.md"
 cp "LICENSE.md" "$PACKAGE_ROOT/LICENSE.md"
-cp -r ".assets" "$PACKAGE_ROOT/.assets"
+cp -r ".assets" "$PACKAGE_ROOT"
 
 read -p "> Go to Unity and wait for it to finish whatever it is doing. Then close Unity. Then press any key to continue..."
 
