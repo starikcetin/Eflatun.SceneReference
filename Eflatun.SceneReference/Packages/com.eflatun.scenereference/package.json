@@ -2,6 +2,10 @@
   "name": "com.eflatun.scenereference",
   "version": "0.0.1",
   "displayName": "Eflatun.SceneReference",
+  "description": "Scene References for Runtime and Editor. Strongly typed, robust, and reliable. Provides Asset GUID, Scene Path, Build Index, and Scene Name.\nhttps://github.com/starikcetin/Eflatun.SceneReference",
+  "documentationUrl": "https://github.com/starikcetin/Eflatun.SceneReference/blob/main/README.md",
+  "changelogUrl": "https://github.com/starikcetin/Eflatun.SceneReference/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/starikcetin/Eflatun.SceneReference/blob/main/LICENSE.md",
   "keywords": [
     "eflatun",
     "scene",
