@@ -7,11 +7,15 @@
 <br>
 
 <p align="center">
-    Strongly typed, robust, and reliable Scene References for Runtime and Editor.
+    Scene References for Runtime and Editor.
 </p>
 
 <p align="center">
-    Provides a Scene's GUID, Path, Build Index, and Name.
+    Strongly typed, robust, and reliable.
+</p>
+
+<p align="center">
+    Provides Asset GUID, Scene Path, Build Index, and Scene Name.
 </p>
 <br>
 
@@ -21,13 +25,12 @@
   <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/npm/v/com.eflatun.scenereference?label=OpenUPM&logo=unity&registry_uri=https://package.openupm.com" alt="OpenUPM badge"/></a>
 </p>
 <br>
-<br>
 
 # Installation
 
 ## With OpenUPM (recommended)
 
-1. Install `OpenUPM` via `npm`. No need to do it if you already have it installed.
+1. Install OpenUPM via npm. Skip this step if already have OpenUPM installed.
 
 ```
 npm install -g openupm-cli
@@ -51,7 +54,7 @@ _Although it is highly discouraged, you can replace `1.0.0` with `upm` to get th
 
 # Usage
 
-1. Define your `SceneReference` Unity serialized field as such.
+1. Define your `SceneReference` serialized field:
 
 ```cs
 // Import Runtime namespace
@@ -64,7 +67,7 @@ using Eflatun.SceneReference;
 [SerializeField] private List<SceneReference> mySceneReferences;
 ```
 
-2. Assign your scene to the `SceneReference` in the inspector.
+2. Assign your scene to your `SceneReference` field in the inspector:
 
 ![.assets/inspector.png](.assets/inspector.png)
 
@@ -169,8 +172,14 @@ var generationTriggers = SettingsManager.SceneGuidToPathMap.GenerationTriggers;
 SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
 ```
 
+# Acknowlegments
+
+* This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
+
+* README header inspired by [Angular's README](https://github.com/angular/angular).
+
 # License
 
-MIT License. Refer to the [LICENSE](/LICENSE) file.
+MIT License. Refer to the [LICENSE](LICENSE) file.
 
-Copyright (c) 2022 S. Tarık Çetin.
+Copyright (c) 2022 [S. Tarık Çetin](https://github.com/starikcetin)
