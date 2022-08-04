@@ -182,6 +182,12 @@ SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
 
 * README header inspired by [Angular's README](https://github.com/angular/angular/blob/main/README.md).
 
+# Similar Projects
+If this project doesn't suit your needs, you can always let me know by [opening an issue](https://github.com/starikcetin/Eflatun.SceneReference/issues) or [creating a discussion](https://github.com/starikcetin/Eflatun.SceneReference/discussions) and I will see what we can do about it. If you think you absolutely need another approach, here are some similar projects to check out:
+
+* https://github.com/JohannesMP/unity-scene-reference
+* https://github.com/NibbleByte/UnitySceneReference
+
 # License
 
 MIT License. Refer to the [LICENSE.md](LICENSE.md) file.
