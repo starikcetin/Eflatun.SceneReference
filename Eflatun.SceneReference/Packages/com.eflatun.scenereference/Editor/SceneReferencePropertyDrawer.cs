@@ -53,14 +53,7 @@ namespace Eflatun.SceneReference.Editor
 
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
-            if (_sceneAssetProperty != null && _sceneAssetGuidHexProperty != null)
-            {
-                SceneAsset = EditorGUI.ObjectField(position, SceneAsset, typeof(SceneAsset), false);
-            }
-            else
-            {
-                Logger.Error($"Could not locate properties of a {nameof(SceneAsset)} while trying to draw!");
-            }
+            SceneAsset = EditorGUI.ObjectField(position, SceneAsset, typeof(SceneAsset), false);
 
             GUI.color = prevColor;
             EditorGUI.EndProperty();
