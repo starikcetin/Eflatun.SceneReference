@@ -172,11 +172,35 @@ var generationTriggers = SettingsManager.SceneGuidToPathMap.GenerationTriggers;
 SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
 ```
 
+## Accessing the Scene Guid to Path Map Directly
+
+The `SceneGuidToPathMapProvider` static class is responsible for providing the scene GUID to scene path mapping to the rest of the code. You have the option of accessing it directly both in runtime and editor code:
+
+```cs
+// Import the Runtime namespace
+using Eflatun.SceneReference;
+
+// Get the scene path from a scene GUID. You can do this both in runtime and in editor.
+var scenePath = SceneGuidToPathMapProvider.SceneGuidToPathMap[sceneGuid];
+```
+
+There are no side-effects of accessing the map directly.
+
+In runtime, there are no performance penalties. The generated file is parsed automatically either upon the first access to `SceneGuidToPathMapProvider.SceneGuidToPathMap` or during `RuntimeInitializeLoadType.BeforeSceneLoad`, whichever comes first. It is guaranteed that the map is parsed only once.
+
+In editor, there are also no performance penalties except for one case. The generator assigns the map directly to the provider upon every generation. This prevents unnecessarily parsing the map file. However, if the provider loses the value assigned by the generator due to Unity [reloading the domain](https://docs.unity3d.com/Manual/DomainReloading.html), and some code tries to access the map before the generator runs again, then the provider has to parse the map file itself. This is what happens in that scenario:
+
+1. Generator runs and directly assigns the map to the provider.
+2. Something happens which triggers Unity to [reload the domain](https://docs.unity3d.com/Manual/DomainReloading.html).
+3. You access `SceneGuidToPathMapProvider.SceneGuidToPathMap`.
+4. Provider checks to see if it still has the map values, and realizes they are lost.
+5. Provider parses the map file.
+
 # Caveats
 
 `Eflatun.SceneReference` provides you with the information it has no matter what. It doesn't do any validation on whether the scene is in the build (_yet! [this is a planned feature](https://github.com/starikcetin/Eflatun.SceneReference/issues/4)_). If your scene is not added to Build Settings or it is not enabled, you won't be able to load it, as Unity only bundles the scenes added and enabled in Build Settings.
 
-# Acknowlegments
+# Acknowledgments
 
 * This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
 
