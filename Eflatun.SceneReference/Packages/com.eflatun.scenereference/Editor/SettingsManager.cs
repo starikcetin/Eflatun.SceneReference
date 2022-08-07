@@ -20,12 +20,14 @@ namespace Eflatun.SceneReference.Editor
         public class ProjectSetting<T> : UserSetting<T>
         {
             /// <inheritdoc cref="UserSetting{T}(Settings,string,T,SettingsScope)"/>
-            internal ProjectSetting(string key, T value) : base(Settings, key, value, SettingsScope.Project) {}
+            internal ProjectSetting(string key, T value) : base(Settings, key, value, SettingsScope.Project)
+            {
+            }
         }
 
         private const string SettingsMenuPath = "Project/" + Constants.MenuPrefixBase;
         internal const string SettingsMenuPathForDisplay = "Project Settings/" + SettingsMenuPath;
-        
+
         private static readonly Assembly ContainingAssembly = typeof(SettingsManager).Assembly;
         private static readonly Settings Settings = new Settings(Constants.PackageNameReverseDomain);
 
@@ -79,6 +81,36 @@ namespace Eflatun.SceneReference.Editor
             /// <seealso cref="GenerationTriggers"/>
             public static bool IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers trigger) =>
                 GenerationTriggers.value.IncludesFlag(trigger);
+        }
+
+        /// <summary>
+        /// Settings regarding <see cref="SceneReferencePropertyDrawer"/>.
+        /// </summary>
+        /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+        [PublicAPI]
+        public static class PropertyDrawer
+        {
+            private const string CategoryName = "Property Drawer";
+
+            /// <summary>
+            /// Should we show the inline utility that allows you to quickly fix scenes that are either not in build or disabled in build?<br/>
+            /// Unity only bundles scenes that are added and enabled in build settings. Therefore, you would want to make sure the scene you assign to a SceneReference is added and enabled in build settings.<br/>
+            /// It is recommended to leave this option at 'true', as the inline utility saves you a lot of time.
+            /// </summary>
+            /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+            [field: UserSetting(CategoryName, "Show Inline Scene In Build Utility", "SShould we show the inline utility that allows you to quickly fix scenes that are either not in build or disabled in build?\n\nUnity only bundles scenes that are added and enabled in build settings. Therefore, you would want to make sure the scene you assign to a SceneReference is added and enabled in build settings.\n\nIt is recommended to leave this option at 'true', as the inline utility saves you a lot of time.")]
+            public static ProjectSetting<bool> ShowInlineSceneInBuildUtility { get; }
+                = new ProjectSetting<bool>("PropertyDrawer.ShowInlineSceneInBuildUtility", true);
+
+            /// <summary>
+            /// Should we color the property to draw attention for scenes that are either not in build or disabled in build?<br/>
+            /// Unity only bundles scenes that are added and enabled in build settings. Therefore, you would want to validate whether the scene you assign to a SceneReference is added and enabled in build settings.<br/>
+            /// It is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.
+            /// </summary>
+            /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+            [field: UserSetting(CategoryName, "Color Based On Scene In Build State", "Should we color the property to draw attention for scenes that are either not in build or disabled in build?\n\nUnity only bundles scenes that are added and enabled in build settings. Therefore, you would want to validate whether the scene you assign to a SceneReference is added and enabled in build settings.\n\nIt is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.")]
+            public static ProjectSetting<bool> ColorBasedOnSceneInBuildState { get; }
+                = new ProjectSetting<bool>("PropertyDrawer.ColorBasedOnSceneInBuildState", true);
         }
     }
 }

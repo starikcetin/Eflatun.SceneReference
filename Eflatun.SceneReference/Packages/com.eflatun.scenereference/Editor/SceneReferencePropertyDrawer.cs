@@ -126,12 +126,16 @@ namespace Eflatun.SceneReference.Editor
             EditorGUI.BeginProperty(position, GUIContent.none, property);
 
             var colorToRestore = GUI.color;
-            GUI.color = _sceneBuildSettingsState switch
+
+            if (SettingsManager.PropertyDrawer.ColorBasedOnSceneInBuildState.value)
             {
-                SceneBuildSettingsState.NotIncluded => Color.red,
-                SceneBuildSettingsState.Disabled => Color.yellow,
-                _ => colorToRestore
-            };
+                GUI.color = _sceneBuildSettingsState switch
+                {
+                    SceneBuildSettingsState.NotIncluded => Color.red,
+                    SceneBuildSettingsState.Disabled => Color.yellow,
+                    _ => colorToRestore
+                };
+            }
 
             // draw scene asset selector
             var selectorFieldRect = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
@@ -140,7 +144,7 @@ namespace Eflatun.SceneReference.Editor
             SetWith(newSceneAsset);
 
             // draw utility line if needed
-            if (NeedsBuildSettingsFix)
+            if (SettingsManager.PropertyDrawer.ShowInlineSceneInBuildUtility.value && NeedsBuildSettingsFix)
             {
                 var buttonRect = new Rect(position)
                 {
@@ -171,7 +175,7 @@ namespace Eflatun.SceneReference.Editor
         {
             Init(property);
 
-            return _sceneAsset && _sceneBuildSettingsState != SceneBuildSettingsState.Enabled
+            return _sceneAsset && SettingsManager.PropertyDrawer.ShowInlineSceneInBuildUtility.value && _sceneBuildSettingsState != SceneBuildSettingsState.Enabled
                 ? EditorGUIUtility.singleLineHeight * 2
                 : EditorGUIUtility.singleLineHeight;
         }
