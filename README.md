@@ -239,9 +239,9 @@ In editor, there are also no performance penalties except for one case. The gene
 4. Provider checks to see if it still has the map values, and realizes they are lost.
 5. Provider parses the map file.
 
-# Acknowledgments
+# Acknowledgements
 
-* This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
+* This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks to [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
 
 * README header inspired by [Angular's README](https://github.com/angular/angular/blob/main/README.md).
 
