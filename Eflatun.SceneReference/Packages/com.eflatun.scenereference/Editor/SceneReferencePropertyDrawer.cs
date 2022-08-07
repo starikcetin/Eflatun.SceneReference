@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
@@ -14,21 +15,23 @@ namespace Eflatun.SceneReference.Editor
     {
         private enum SceneBuildSettingsState
         {
-            Enabled,
+            None,
+            NotIncluded,
             Disabled,
-            NotIncluded
+            Enabled
         }
 
         private SerializedProperty _sceneAssetProperty;
         private SerializedProperty _sceneAssetGuidHexProperty;
 
-        private Object _sceneAsset;
+        private UnityEngine.Object _sceneAsset;
         private string _sceneAssetGuidHex;
         private string _scenePath;
         private EditorBuildSettingsScene _sceneInBuildSettings;
         private SceneBuildSettingsState _sceneBuildSettingsState;
 
-        private bool NeedsBuildSettingsFix => _sceneBuildSettingsState != SceneBuildSettingsState.Enabled;
+        private bool NeedsBuildSettingsFix => _sceneBuildSettingsState == SceneBuildSettingsState.Disabled
+                                              || _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded;
 
         private void Init(SerializedProperty property)
         {
@@ -40,7 +43,11 @@ namespace Eflatun.SceneReference.Editor
             _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _sceneAssetGuidHex);
 
-            if (_sceneInBuildSettings == null)
+            if (_sceneAsset == null)
+            {
+                _sceneBuildSettingsState = SceneBuildSettingsState.None;
+            }
+            else if (_sceneInBuildSettings == null)
             {
                 _sceneBuildSettingsState = SceneBuildSettingsState.NotIncluded;
             }
@@ -54,7 +61,7 @@ namespace Eflatun.SceneReference.Editor
             }
         }
 
-        private void SetWith(Object newSceneAsset)
+        private void SetWith(UnityEngine.Object newSceneAsset)
         {
             if (_sceneAsset == newSceneAsset)
             {
@@ -143,9 +150,12 @@ namespace Eflatun.SceneReference.Editor
                     height = EditorGUIUtility.singleLineHeight
                 };
 
-                var buttonText = _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded
-                    ? "Add to Build..."
-                    : "Enable in Build...";
+                var buttonText = _sceneBuildSettingsState switch
+                {
+                    SceneBuildSettingsState.NotIncluded => "Add to Build...",
+                    SceneBuildSettingsState.Disabled => "Enable in Build...",
+                    _ => throw new ArgumentOutOfRangeException(nameof(_sceneBuildSettingsState), _sceneBuildSettingsState, null)
+                };
 
                 if (GUI.Button(buttonRect, buttonText))
                 {
