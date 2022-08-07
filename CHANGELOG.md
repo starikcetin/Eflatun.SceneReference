@@ -17,6 +17,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
+## [1.1.0] - 2022-08-07
+
+### Added
+- Validation & inline fix utility for scenes that are either not in build or disabled in build.
+- New settings entries for scene in build validation & inline fix utilities.
+
+
+
 ## [1.0.0] - 2022-08-03
 
 Initial release.
