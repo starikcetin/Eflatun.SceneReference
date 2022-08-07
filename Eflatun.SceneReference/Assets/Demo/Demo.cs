@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Demo : MonoBehaviour
 {
-    [SerializeField] private SceneReference sceneReference;
-    [SerializeField] private SceneReference anotherSceneReference;
-    [SerializeField] private SceneReference yetAnotherSceneReference;
+    [SerializeField] private SceneReference scene;
+    [SerializeField] private SceneReference anotherScene;
+    [SerializeField] private SceneReference yetAnotherScene;
     [SerializeField] private List<SceneReference> sceneReferenceList;
 }

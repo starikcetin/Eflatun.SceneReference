@@ -245,13 +245,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513f72474ff4e324e893c4801d983eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneReference:
+  scene:
     sceneAsset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
     sceneAssetGuidHex: 1d6d932bbdf133c41aa34e00b02bdd1d
-  anotherSceneReference:
+  anotherScene:
     sceneAsset: {fileID: 102900000, guid: fb949268f5f24df4eadb2a5028fca33a, type: 3}
     sceneAssetGuidHex: fb949268f5f24df4eadb2a5028fca33a
-  yetAnotherSceneReference:
+  yetAnotherScene:
     sceneAsset: {fileID: 102900000, guid: 63cbeaf10b76c5c4dacdf7685d4acdb6, type: 3}
     sceneAssetGuidHex: 63cbeaf10b76c5c4dacdf7685d4acdb6
   sceneReferenceList:
@@ -261,8 +261,6 @@ MonoBehaviour:
     sceneAssetGuidHex: fb949268f5f24df4eadb2a5028fca33a
   - sceneAsset: {fileID: 102900000, guid: 63cbeaf10b76c5c4dacdf7685d4acdb6, type: 3}
     sceneAssetGuidHex: 63cbeaf10b76c5c4dacdf7685d4acdb6
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
 --- !u!4 &314337509
 Transform:
   m_ObjectHideFlags: 0
@@ -306,15 +304,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513f72474ff4e324e893c4801d983eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneReference:
-    sceneAsset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
-    sceneAssetGuidHex: 1d6d932bbdf133c41aa34e00b02bdd1d
-  anotherSceneReference:
-    sceneAsset: {fileID: 102900000, guid: fb949268f5f24df4eadb2a5028fca33a, type: 3}
-    sceneAssetGuidHex: fb949268f5f24df4eadb2a5028fca33a
-  yetAnotherSceneReference:
-    sceneAsset: {fileID: 102900000, guid: 63cbeaf10b76c5c4dacdf7685d4acdb6, type: 3}
-    sceneAssetGuidHex: 63cbeaf10b76c5c4dacdf7685d4acdb6
+  scene:
+    sceneAsset: {fileID: 0}
+    sceneAssetGuidHex: 
+  anotherScene:
+    sceneAsset: {fileID: 0}
+    sceneAssetGuidHex: 
+  yetAnotherScene:
+    sceneAsset: {fileID: 0}
+    sceneAssetGuidHex: 
   sceneReferenceList:
   - sceneAsset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
     sceneAssetGuidHex: 1d6d932bbdf133c41aa34e00b02bdd1d
@@ -365,15 +363,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513f72474ff4e324e893c4801d983eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneReference:
-    sceneAsset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
-    sceneAssetGuidHex: 1d6d932bbdf133c41aa34e00b02bdd1d
-  anotherSceneReference:
-    sceneAsset: {fileID: 102900000, guid: fb949268f5f24df4eadb2a5028fca33a, type: 3}
-    sceneAssetGuidHex: fb949268f5f24df4eadb2a5028fca33a
-  yetAnotherSceneReference:
-    sceneAsset: {fileID: 102900000, guid: 63cbeaf10b76c5c4dacdf7685d4acdb6, type: 3}
-    sceneAssetGuidHex: 63cbeaf10b76c5c4dacdf7685d4acdb6
+  scene:
+    sceneAsset: {fileID: 0}
+    sceneAssetGuidHex: 
+  anotherScene:
+    sceneAsset: {fileID: 0}
+    sceneAssetGuidHex: 
+  yetAnotherScene:
+    sceneAsset: {fileID: 0}
+    sceneAssetGuidHex: 
   sceneReferenceList:
   - sceneAsset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
     sceneAssetGuidHex: 1d6d932bbdf133c41aa34e00b02bdd1d

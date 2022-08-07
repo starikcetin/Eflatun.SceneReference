@@ -87,6 +87,28 @@ var sceneName = mySceneReference.Name;
 var loadedScene = mySceneReference.LoadedScene
 ```
 
+## Inline Scene In Build Validation & Fix Utility
+
+Unity only includes in a build the scenes that are added and enabled in build settings. `Eflatun.SceneReference` on the other hand, allows you to assign on to it any scene you wish. This behaviour may cause runtime bugs when loading scenes. To prevent these potential bugs, `Eflatun.SceneReference` provides inline validation and fix utilities.
+
+In this example:
+
+![.assets/validation_inspector.png](.assets/validation_inspector.png)
+
+- `Another Scene` field is assigned a scene that is disabled in build settings.
+- `Yet Another Scene` field is assigned a scene that is not included in build settings.
+- Similarly for the `Scene Reference List` property.
+
+Clicking on the `Enable in Build...` button gives us this prompt, which enables us to quickly fix the situation:
+
+![.assets/validation_enable_prompt.png](.assets/validation_enable_prompt.png)
+
+Similarly, `Add to Build...` button gives the following prompt:
+
+![.assets/validation_add_prompt.png](.assets/validation_add_prompt.png)
+
+Using these prompts, we can quickly alleviate the situation, and prevent potential runtime bugs when loading these scenes.
+
 # Settings
 
 `Eflatun.SceneReference` provides settings under the `Project Settings`.
@@ -97,7 +119,28 @@ Look for the `Eflatun` category in the left panel. Select the `Scene Reference` 
 
 ![.assets/settings.png](.assets/settings.png)
 
-## Generation Triggers
+## Property Drawer
+
+### Show Inline Scene In Build Utility
+
+Should we show the inline utility that allows you to quickly fix scenes that are either not in build or disabled in build?
+
+Unity only bundles scenes that are added and enabled in build settings. Therefore, you would want to make sure the scene you assign to a
+SceneReference is added and enabled in build settings.
+
+It is recommended to leave this option at 'true', as the inline utility saves you a lot of time.
+
+### Color Based On Scene In Build State
+
+Should we color the property to draw attention for scenes that are either not in build or disabled in build?
+
+Unity only bundles scenes that are added and enabled in build settings. Therefore, you would want to validate whether the scene you assign to a SceneReference is added and enabled in build settings.
+
+It is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.
+
+## Scene GUID To Path Map
+
+### Generation Triggers
 
 Controls when the Scene GUID to Path Map gets regenerated.
 
@@ -109,13 +152,13 @@ Controls when the Scene GUID to Path Map gets regenerated.
 
 It is recommended that you leave this option at _All_ unless you are debugging something. Failure to generate the map when needed can result in broken scene references in runtime.
 
-## JSON Formatting
+### JSON Formatting
 
 Controls the Scene GUID to Path Map Generator's JSON formatting.
 
 It is recommended to leave this option at _Indented_, as it will help with version control and make the generated file human-readable.
 
-## Fail Build If Generation Fails
+### Fail Build If Generation Fails
 
 Should we fail a build if scene GUID to path map generation fails?
 
@@ -195,10 +238,6 @@ In editor, there are also no performance penalties except for one case. The gene
 3. You access `SceneGuidToPathMapProvider.SceneGuidToPathMap`.
 4. Provider checks to see if it still has the map values, and realizes they are lost.
 5. Provider parses the map file.
-
-# Caveats
-
-`Eflatun.SceneReference` provides you with the information it has no matter what. It doesn't do any validation on whether the scene is in the build (_yet! [this is a planned feature](https://github.com/starikcetin/Eflatun.SceneReference/issues/4)_). If your scene is not added to Build Settings or it is not enabled, you won't be able to load it, as Unity only bundles the scenes added and enabled in Build Settings.
 
 # Acknowledgments
 
