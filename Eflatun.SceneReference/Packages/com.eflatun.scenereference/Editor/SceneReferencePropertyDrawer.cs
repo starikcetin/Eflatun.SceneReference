@@ -12,51 +12,158 @@ namespace Eflatun.SceneReference.Editor
     [CustomPropertyDrawer(typeof(SceneReference))]
     public class SceneReferencePropertyDrawer : PropertyDrawer
     {
+        private enum SceneBuildSettingsState
+        {
+            Enabled,
+            Disabled,
+            NotIncluded
+        }
+
         private SerializedProperty _sceneAssetProperty;
         private SerializedProperty _sceneAssetGuidHexProperty;
 
-        private string SceneAssetGuidHex => _sceneAssetGuidHexProperty.stringValue;
+        private Object _sceneAsset;
+        private string _sceneAssetGuidHex;
+        private string _scenePath;
+        private EditorBuildSettingsScene _sceneInBuildSettings;
+        private SceneBuildSettingsState _sceneBuildSettingsState;
 
-        private Object SceneAsset
+        private bool NeedsBuildSettingsFix => _sceneBuildSettingsState != SceneBuildSettingsState.Enabled;
+
+        private void Init(SerializedProperty property)
         {
-            get => _sceneAssetProperty.objectReferenceValue;
-            set
+            _sceneAssetProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAsset));
+            _sceneAssetGuidHexProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAssetGuidHex));
+
+            _sceneAsset = _sceneAssetProperty.objectReferenceValue;
+            _sceneAssetGuidHex = _sceneAssetGuidHexProperty.stringValue;
+            _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
+            _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _sceneAssetGuidHex);
+
+            if (_sceneInBuildSettings == null)
             {
-                _sceneAssetProperty.objectReferenceValue = value;
-                
-                var sceneAssetPath = AssetDatabase.GetAssetPath(value);
-                var sceneAssetGuid = AssetDatabase.GUIDFromAssetPath(sceneAssetPath);
-                _sceneAssetGuidHexProperty.stringValue = sceneAssetGuid.ToString();
+                _sceneBuildSettingsState = SceneBuildSettingsState.NotIncluded;
+            }
+            else if (!_sceneInBuildSettings.enabled)
+            {
+                _sceneBuildSettingsState = SceneBuildSettingsState.Disabled;
+            }
+            else
+            {
+                _sceneBuildSettingsState = SceneBuildSettingsState.Enabled;
+            }
+        }
+
+        private void SetWith(Object newSceneAsset)
+        {
+            if (_sceneAsset == newSceneAsset)
+            {
+                return;
+            }
+
+            _sceneAssetProperty.objectReferenceValue = newSceneAsset;
+
+            var sceneAssetPath = AssetDatabase.GetAssetPath(newSceneAsset);
+            var sceneAssetGuid = AssetDatabase.GUIDFromAssetPath(sceneAssetPath);
+            _sceneAssetGuidHexProperty.stringValue = sceneAssetGuid.ToString();
+        }
+
+        private void FixInBuildSettings()
+        {
+            var changed = false;
+            var tempScenes = EditorBuildSettings.scenes.ToList();
+
+            if (_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
+            {
+                var title = "Add Scene to Build Settings?";
+                var body = $"Would you like to add the following scene to build settings?\n\n{_scenePath}";
+
+                switch (EditorUtility.DisplayDialogComplex(title, body, "Add to Build as Enabled", "Add to Build as Disabled", "Cancel"))
+                {
+                    case 0:
+                    {
+                        tempScenes.Add(new EditorBuildSettingsScene(_scenePath, true));
+                        changed = true;
+                        break;
+                    }
+                    case 1:
+                    {
+                        tempScenes.Add(new EditorBuildSettingsScene(_scenePath, false));
+                        changed = true;
+                        break;
+                    }
+                }
+            }
+            else if (_sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
+            {
+                var title = "Enable Scene in Build Settings?";
+                var body = $"Would you like to enable the following scene in build settings?\n\n{_scenePath}";
+
+                if (EditorUtility.DisplayDialog(title, body, "Enable in Build", "Cancel"))
+                {
+                    tempScenes.Single(x => x.guid.ToString() == _sceneAssetGuidHex).enabled = true;
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                EditorBuildSettings.scenes = tempScenes.ToArray();
             }
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            _sceneAssetProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAsset));
-            _sceneAssetGuidHexProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAssetGuidHex));
-            
-            var prevColor = GUI.color;
-            if (SceneAsset)
-            {
-                var sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == SceneAssetGuidHex);
-                if (sceneInBuildSettings == null)
-                {
-                    GUI.color = Color.red;
-                }
-                else if (!sceneInBuildSettings.enabled)
-                {
-                    GUI.color = Color.yellow;
-                }   
-            }
-            
+            Init(property);
+
             EditorGUI.BeginProperty(position, GUIContent.none, property);
 
-            position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+            var colorToRestore = GUI.color;
+            GUI.color = _sceneBuildSettingsState switch
+            {
+                SceneBuildSettingsState.NotIncluded => Color.red,
+                SceneBuildSettingsState.Disabled => Color.yellow,
+                _ => colorToRestore
+            };
 
-            SceneAsset = EditorGUI.ObjectField(position, SceneAsset, typeof(SceneAsset), false);
+            // draw scene asset selector
+            var selectorFieldRect = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+            selectorFieldRect.height = EditorGUIUtility.singleLineHeight;
+            var newSceneAsset = EditorGUI.ObjectField(selectorFieldRect, _sceneAsset, typeof(SceneAsset), false);
+            SetWith(newSceneAsset);
 
-            GUI.color = prevColor;
+            // draw utility line if needed
+            if (NeedsBuildSettingsFix)
+            {
+                var buttonRect = new Rect(position)
+                {
+                    // x = selectorFieldRect.x,                    
+                    y = position.y + EditorGUIUtility.singleLineHeight,
+                    // width = selectorFieldRect.width,
+                    height = EditorGUIUtility.singleLineHeight
+                };
+
+                var buttonText = _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded
+                    ? "Add to Build..."
+                    : "Enable in Build...";
+
+                if (GUI.Button(buttonRect, buttonText))
+                {
+                    FixInBuildSettings();
+                }
+            }
+
+            GUI.color = colorToRestore;
             EditorGUI.EndProperty();
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            Init(property);
+
+            return _sceneAsset && _sceneBuildSettingsState != SceneBuildSettingsState.Enabled
+                ? EditorGUIUtility.singleLineHeight * 2
+                : EditorGUIUtility.singleLineHeight;
         }
     }
 }
