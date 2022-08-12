@@ -18,7 +18,7 @@ namespace Eflatun.SceneReference.Editor
         /// <remarks>
         /// The menu item "Tools/Eflatun/Scene Reference/Run Scene GUID to Path Map Generator" executes this method.
         /// </remarks>
-        [MenuItem("Tools/Eflatun/Scene Reference/Run Scene GUID to Path Map Generator", priority = -3130)]
+        [MenuItem("Tools/" + Constants.MenuPrefixBase + "/Run Scene GUID to Path Map Generator", priority = -3130)]
         public static void Run()
         {
             Logger.Debug("Generating scene GUID to path map.");
