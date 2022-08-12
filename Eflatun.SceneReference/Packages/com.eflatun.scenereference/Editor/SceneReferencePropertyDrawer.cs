@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Eflatun.SceneReference.Editor.Utility;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Eflatun.SceneReference.Editor
     [CustomPropertyDrawer(typeof(SceneReference))]
     public class SceneReferencePropertyDrawer : PropertyDrawer
     {
+        private static readonly SceneReferenceOptionsAttribute DefaultOptionsAttribute = new SceneReferenceOptionsAttribute();
+
         private enum SceneBuildSettingsState
         {
             None,
@@ -29,9 +32,18 @@ namespace Eflatun.SceneReference.Editor
         private string _scenePath;
         private EditorBuildSettingsScene _sceneInBuildSettings;
         private SceneBuildSettingsState _sceneBuildSettingsState;
+        private SceneReferenceOptionsAttribute _optionsAttribute;
 
         private bool NeedsBuildSettingsFix => _sceneBuildSettingsState == SceneBuildSettingsState.Disabled
                                               || _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded;
+
+        private bool IsColoringEnabled =>
+            _optionsAttribute.Coloring == ColoringBehaviour.Enabled ||
+            (_optionsAttribute.Coloring == ColoringBehaviour.DoNotOverride && SettingsManager.PropertyDrawer.ColorBasedOnSceneInBuildState.value);
+
+        private bool IsUtilityLineEnabled =>
+            _optionsAttribute.UtilityLine == UtilityLineBehaviour.Enabled ||
+            (_optionsAttribute.UtilityLine == UtilityLineBehaviour.DoNotOverride && SettingsManager.PropertyDrawer.ShowInlineSceneInBuildUtility.value);
 
         private void Init(SerializedProperty property)
         {
@@ -42,6 +54,13 @@ namespace Eflatun.SceneReference.Editor
             _sceneAssetGuidHex = _sceneAssetGuidHexProperty.stringValue;
             _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _sceneAssetGuidHex);
+
+            var optionsAttributes = property.GetAttributes<SceneReferenceOptionsAttribute>(true);
+            _optionsAttribute = optionsAttributes.FirstOrDefault() ?? DefaultOptionsAttribute;
+            if (optionsAttributes.Length > 1)
+            {
+                Debug.LogError("multiple options attributes, using the first one");
+            }
 
             if (_sceneAsset == null)
             {
@@ -127,7 +146,7 @@ namespace Eflatun.SceneReference.Editor
 
             var colorToRestore = GUI.color;
 
-            if (SettingsManager.PropertyDrawer.ColorBasedOnSceneInBuildState.value)
+            if (IsColoringEnabled)
             {
                 GUI.color = _sceneBuildSettingsState switch
                 {
@@ -144,7 +163,7 @@ namespace Eflatun.SceneReference.Editor
             SetWith(newSceneAsset);
 
             // draw utility line if needed
-            if (SettingsManager.PropertyDrawer.ShowInlineSceneInBuildUtility.value && NeedsBuildSettingsFix)
+            if (IsUtilityLineEnabled && NeedsBuildSettingsFix)
             {
                 var buttonRect = new Rect(position)
                 {
@@ -175,8 +194,8 @@ namespace Eflatun.SceneReference.Editor
         {
             Init(property);
 
-            return _sceneAsset && SettingsManager.PropertyDrawer.ShowInlineSceneInBuildUtility.value && _sceneBuildSettingsState != SceneBuildSettingsState.Enabled
-                ? EditorGUIUtility.singleLineHeight * 2
+            return _sceneAsset && IsUtilityLineEnabled && NeedsBuildSettingsFix
+                ? EditorGUIUtility.singleLineHeight * 2f
                 : EditorGUIUtility.singleLineHeight;
         }
     }
