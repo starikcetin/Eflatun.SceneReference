@@ -54,9 +54,9 @@ namespace Eflatun.SceneReference.Editor
             _sceneAssetGuidHex = _sceneAssetGuidHexProperty.stringValue;
             _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _sceneAssetGuidHex);
-            
+
             var optionsAttributes = property.GetAttributes<SceneReferenceOptionsAttribute>(true);
-            
+
             // AllowMultiple is false on SceneReferenceOptionsAttribute, so we have 1 or 0.
             _optionsAttribute = optionsAttributes.SingleOrDefault() ?? DefaultOptionsAttribute;
 

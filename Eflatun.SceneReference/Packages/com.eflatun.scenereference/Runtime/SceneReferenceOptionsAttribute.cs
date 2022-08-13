@@ -13,7 +13,7 @@ namespace Eflatun.SceneReference
         /// Defaults to <see cref="ColoringBehaviour.DoNotOverride"/>.
         /// </summary>
         public ColoringBehaviour Coloring = ColoringBehaviour.DoNotOverride;
-        
+
         /// <summary>
         /// <inheritdoc cref="UtilityLineBehaviour"/>
         /// Defaults to <see cref="UtilityLineBehaviour.DoNotOverride"/>.

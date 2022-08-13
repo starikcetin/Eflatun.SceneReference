@@ -9,12 +9,12 @@
         /// Use the project settings.
         /// </summary>
         DoNotOverride = 0,
-        
+
         /// <summary>
         /// Force enable coloring, disregard project settings.
         /// </summary>
         Enabled = 1,
-        
+
         /// <summary>
         /// Force disable coloring, disregard project settings.
         /// </summary>
