@@ -87,7 +87,7 @@ var sceneName = mySceneReference.Name;
 var loadedScene = mySceneReference.LoadedScene
 ```
 
-## Inline Scene In Build Validation & Fix Utility
+## Inline Scene-In-Build Validation & Fix Utility
 
 Unity only includes in a build the scenes that are added and enabled in build settings. `Eflatun.SceneReference` on the other hand, allows you to assign on to it any scene you wish. This behaviour may cause runtime bugs when loading scenes. To prevent these potential bugs, `Eflatun.SceneReference` provides inline validation and fix utilities.
 
@@ -121,7 +121,7 @@ Look for the `Eflatun` category in the left panel. Select the `Scene Reference` 
 
 ## Property Drawer
 
-### Show Inline Scene In Build Utility
+### Show Inline Scene-In-Build Utility
 
 Should we show the inline utility that allows you to quickly fix scenes that are either not in build or disabled in build?
 
@@ -130,7 +130,7 @@ SceneReference is added and enabled in build settings.
 
 It is recommended to leave this option at 'true', as the inline utility saves you a lot of time.
 
-### Color Based On Scene In Build State
+### Color Based On Scene-In-Build State
 
 Should we color the property to draw attention for scenes that are either not in build or disabled in build?
 
@@ -238,6 +238,24 @@ In editor, there are also no performance penalties except for one case. The gene
 3. You access `SceneGuidToPathMapProvider.SceneGuidToPathMap`.
 4. Provider checks to see if it still has the map values, and realizes they are lost.
 5. Provider parses the map file.
+
+## Overriding Inline Scene-In-Build Validation Settings Per Field
+
+You can override the behaviour of the scene-in-build validation project settings on a per-field basis using the `[SceneReferenceOptions]` attribute. For example, in order to disable both the coloring and the utility line, use the attribute as such:
+
+```cs
+[SceneReferenceOptions(Coloring = ColoringBehaviour.Disabled, UtilityLine = UtilityLineBehaviour.Disabled)]
+[SerializeField] private SceneReference scene;
+```
+
+For both `Coloring` and `UtlityLine`, passing `Enabled` or `Disabled` will force that behaviour to be enabled or disabled respectively, disregarding the project settings. `DoNotOverride` makes the field respect the project settings. `DoNotOverride` is the default value. 
+
+You don't have to supply both fields at once. Missing fields will have the default value, which is `DoNotOverride`. For example, the following code disables the utility line, but makes coloring respect project settings:
+
+```cs
+[SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled)]
+[SerializeField] private SceneReference scene;
+```
 
 # Acknowledgements
 
