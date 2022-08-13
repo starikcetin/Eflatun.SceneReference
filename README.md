@@ -87,7 +87,7 @@ var sceneName = mySceneReference.Name;
 var loadedScene = mySceneReference.LoadedScene
 ```
 
-## Inline Scene In Build Validation & Fix Utility
+## Inline Scene-In-Build Validation & Fix Utility
 
 Unity only includes in a build the scenes that are added and enabled in build settings. `Eflatun.SceneReference` on the other hand, allows you to assign on to it any scene you wish. This behaviour may cause runtime bugs when loading scenes. To prevent these potential bugs, `Eflatun.SceneReference` provides inline validation and fix utilities.
 
@@ -121,7 +121,7 @@ Look for the `Eflatun` category in the left panel. Select the `Scene Reference` 
 
 ## Property Drawer
 
-### Show Inline Scene In Build Utility
+### Show Inline Scene-In-Build Utility
 
 Should we show the inline utility that allows you to quickly fix scenes that are either not in build or disabled in build?
 
@@ -130,7 +130,7 @@ SceneReference is added and enabled in build settings.
 
 It is recommended to leave this option at 'true', as the inline utility saves you a lot of time.
 
-### Color Based On Scene In Build State
+### Color Based On Scene-In-Build State
 
 Should we color the property to draw attention for scenes that are either not in build or disabled in build?
 
