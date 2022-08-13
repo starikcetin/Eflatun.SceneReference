@@ -17,6 +17,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
+## [1.2.0] - 2022-08-13
+
+### Added
+- `[SceneReferenceOptions]` attribute: Provides the ability to override scene-in-build validation settings on a per-field basis.
+
+### Changed
+- Moved the whole `Eflatun/Scene Reference` menu to under `Tools`. The new resulting menu path is `Tools/Eflatun/Scene Reference`.
+
+
+
 ## [1.1.0] - 2022-08-07
 
 ### Added
