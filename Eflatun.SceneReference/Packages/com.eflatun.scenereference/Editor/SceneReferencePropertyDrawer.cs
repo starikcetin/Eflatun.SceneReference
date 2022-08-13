@@ -54,13 +54,11 @@ namespace Eflatun.SceneReference.Editor
             _sceneAssetGuidHex = _sceneAssetGuidHexProperty.stringValue;
             _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _sceneAssetGuidHex);
-
+            
             var optionsAttributes = property.GetAttributes<SceneReferenceOptionsAttribute>(true);
-            _optionsAttribute = optionsAttributes.FirstOrDefault() ?? DefaultOptionsAttribute;
-            if (optionsAttributes.Length > 1)
-            {
-                Debug.LogError("multiple options attributes, using the first one");
-            }
+            
+            // AllowMultiple is false on SceneReferenceOptionsAttribute, so we have 1 or 0.
+            _optionsAttribute = optionsAttributes.SingleOrDefault() ?? DefaultOptionsAttribute;
 
             if (_sceneAsset == null)
             {
@@ -195,7 +193,7 @@ namespace Eflatun.SceneReference.Editor
             Init(property);
 
             return _sceneAsset && IsUtilityLineEnabled && NeedsBuildSettingsFix
-                ? EditorGUIUtility.singleLineHeight * 2f
+                ? EditorGUIUtility.singleLineHeight * 2
                 : EditorGUIUtility.singleLineHeight;
         }
     }
