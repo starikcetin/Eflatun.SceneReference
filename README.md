@@ -239,6 +239,24 @@ In editor, there are also no performance penalties except for one case. The gene
 4. Provider checks to see if it still has the map values, and realizes they are lost.
 5. Provider parses the map file.
 
+## Overriding Inline Scene-In-Build Validation Settings Per Field
+
+You can override the behaviour of the scene-in-build validation project settings on a per-field basis using the `[SceneReferenceOptions]` attribute. For example, in order to disable both the coloring and the utility line, use the attribute as such:
+
+```cs
+[SceneReferenceOptions(Coloring = ColoringBehaviour.Disabled, UtilityLine = UtilityLineBehaviour.Disabled)]
+[SerializeField] private SceneReference scene;
+```
+
+For both `Coloring` and `UtlityLine`, passing `Enabled` or `Disabled` will force that behaviour to be enabled or disabled respectively, disregarding the project settings. `DoNotOverride` makes the field respect the project settings. `DoNotOverride` is the default value. 
+
+You don't have to supply both fields at once. Missing fields will have the default value, which is `DoNotOverride`. For example, the following code disables the utility line, but makes coloring respect project settings:
+
+```cs
+[SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled)]
+[SerializeField] private SceneReference scene;
+```
+
 # Acknowledgements
 
 * This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks to [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
