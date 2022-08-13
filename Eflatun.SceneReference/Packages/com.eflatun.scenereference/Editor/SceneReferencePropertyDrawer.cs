@@ -37,13 +37,21 @@ namespace Eflatun.SceneReference.Editor
         private bool NeedsBuildSettingsFix => _sceneBuildSettingsState == SceneBuildSettingsState.Disabled
                                               || _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded;
 
-        private bool IsColoringEnabled =>
-            _optionsAttribute.Coloring == ColoringBehaviour.Enabled ||
-            (_optionsAttribute.Coloring == ColoringBehaviour.DoNotOverride && SettingsManager.PropertyDrawer.ColorBasedOnSceneInBuildState.value);
+        private bool IsColoringEnabled => _optionsAttribute.Coloring switch
+        {
+            ColoringBehaviour.Enabled => true,
+            ColoringBehaviour.Disabled => false,
+            ColoringBehaviour.DoNotOverride => SettingsManager.PropertyDrawer.ColorBasedOnSceneInBuildState.value,
+            _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.Coloring), _optionsAttribute.Coloring, null)
+        };
 
-        private bool IsUtilityLineEnabled =>
-            _optionsAttribute.UtilityLine == UtilityLineBehaviour.Enabled ||
-            (_optionsAttribute.UtilityLine == UtilityLineBehaviour.DoNotOverride && SettingsManager.PropertyDrawer.ShowInlineSceneInBuildUtility.value);
+        private bool IsUtilityLineEnabled => _optionsAttribute.UtilityLine switch
+        {
+            UtilityLineBehaviour.Enabled => true,
+            UtilityLineBehaviour.Disabled => false,
+            UtilityLineBehaviour.DoNotOverride => SettingsManager.PropertyDrawer.ShowInlineSceneInBuildUtility.value,
+            _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.UtilityLine), _optionsAttribute.UtilityLine, null)
+        };
 
         private void Init(SerializedProperty property)
         {
