@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 ### Added
+- Generator also generates a `.keep` file in the the auto-generated map folder to make sure the folder is always tracked in version control.
 
 ### Changed
 
