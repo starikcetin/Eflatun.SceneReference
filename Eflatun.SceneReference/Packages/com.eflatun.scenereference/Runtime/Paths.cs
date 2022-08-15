@@ -26,6 +26,11 @@ namespace Eflatun.SceneReference
             /// Path to the generated map file. Relative to the 'Assets/Resources' folder.
             /// </summary>
             public static readonly ConvertedPath SceneGuidToPathMapFile = new ConvertedPath(Path.Combine(SceneGuidToPathMapFolder.GivenPath, "SceneGuidToPathMap.generated.json"));
+            
+            /// <summary>
+            /// Path to the `.keep` file in the folder of the generated map file. Relative to the 'Assets/Resources' folder.
+            /// </summary>
+            public static readonly ConvertedPath SceneGuidToPathMapDotKeepFile = new ConvertedPath(Path.Combine(SceneGuidToPathMapFolder.GivenPath, ".keep"));
         }
         
         /// <summary>
@@ -42,6 +47,11 @@ namespace Eflatun.SceneReference
             /// Path to the generated map file. Absolute.
             /// </summary>
             public static readonly ConvertedPath SceneGuidToPathMapFile = new ConvertedPath(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.SceneGuidToPathMapFile.GivenPath));
+            
+            /// <summary>
+            /// Path to the `.keep` file in the folder of the generated map file. Absolute.
+            /// </summary>
+            public static readonly ConvertedPath SceneGuidToPathMapDotKeepFile = new ConvertedPath(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.SceneGuidToPathMapDotKeepFile.GivenPath));
         }
     }
 }
