@@ -32,15 +32,15 @@
 
 ### With OpenUPM (recommended)
 
-1. Install OpenUPM via npm. Skip this step if already have OpenUPM installed.
+1. Install `openupm-cli` via `npm`. You can skip this step if already have `openupm-cli` installed.
 
-```
+```console
 npm install -g openupm-cli
 ```
 
-2. Install `com.eflatun.scenereference` in your project. **Make sure to run this command at the root of your Unity project.**
+2. Install `com.eflatun.scenereference` in your project. Make sure to run this command at the root of your Unity project.
 
-```
+```console
 openupm add com.eflatun.scenereference
 ```
 
@@ -48,7 +48,7 @@ openupm add com.eflatun.scenereference
 
 Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.2.0` with the version you want to install.
 
-```
+```json
 "com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.2.0"
 ```
 
@@ -60,7 +60,7 @@ _You can skip this section if you are not using version control in your project.
 
 It is generally a recommended practice to ignore auto-generated files in version control. `Eflatun.SceneReference` auto-generates a JSON file with the path `Assets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json`. We recommend you ignore this file and its corresponding `.meta` file in your version control.
 
-**If you are using Git**, you can do so by adding the following lines to your `.gitignore` file:
+If you are using Git, you can do so by adding the following lines to your `.gitignore` file:
 
 ```gitignore
 # Eflatun.SceneReference auto-generated map file
