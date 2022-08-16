@@ -17,6 +17,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
+## [1.2.2] - 2022-08-16
+
+### Changed
+- Improve performance of `[SceneReferenceOptions]` attribute lookup in the property drawer.
+
+### Fixed
+- `[SceneReferenceOptions]` attribute not being recognized when the field is nested in other serializables.
+
+
+
 ## [1.2.1] - 2022-08-15
 It is now recommended to ignore the generated map file in version control. See the new [Ignore Auto-Generated Map File in Version Control section in README.md](README.md#ignore-auto-generated-map-file-in-version-control).
 
