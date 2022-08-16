@@ -1,8 +1,9 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using Eflatun.SceneReference;
 using UnityEngine;
 
-public class NestedOverrideDemo : MonoBehaviour
+public class NestedListOverrideDemo : MonoBehaviour
 {
     [Serializable]
     public class OuterContainer
@@ -15,10 +16,10 @@ public class NestedOverrideDemo : MonoBehaviour
     public class InnerContainer
     {
         [field: SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled, Coloring = ColoringBehaviour.Disabled)]
-        [field: SerializeField] public SceneReference SceneReferenceProp { get; private set; }
+        [field: SerializeField] public List<SceneReference> SceneReferencesProp { get; private set; }
 
         [SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled, Coloring = ColoringBehaviour.Disabled)] 
-        [SerializeField] private SceneReference sceneReferenceField;
+        [SerializeField] private List<SceneReference> sceneReferencesField;
     }
     
     [field: SerializeField] public OuterContainer OuterContainerProp { get; private set; }
