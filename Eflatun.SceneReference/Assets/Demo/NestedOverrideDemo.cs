@@ -18,9 +18,9 @@ public class OuterContainer
 [Serializable]
 public class InnerContainer
 {
-    [field: SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled, Coloring = ColoringBehaviour.Enabled)]
+    [field: SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled, Coloring = ColoringBehaviour.Disabled)]
     [field: SerializeField] public SceneReference SceneReferenceProp { get; private set; }
 
-    [SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled, Coloring = ColoringBehaviour.Enabled)] 
+    [SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled, Coloring = ColoringBehaviour.Disabled)] 
     [SerializeField] private SceneReference sceneReferenceField;
 }
