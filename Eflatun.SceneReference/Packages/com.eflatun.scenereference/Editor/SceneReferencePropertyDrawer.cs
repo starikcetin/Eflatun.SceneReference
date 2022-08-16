@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Eflatun.SceneReference.Editor.Utility;
 using JetBrains.Annotations;
 using UnityEditor;
@@ -63,10 +64,7 @@ namespace Eflatun.SceneReference.Editor
             _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _sceneAssetGuidHex);
 
-            var optionsAttributes = property.GetAttributes<SceneReferenceOptionsAttribute>(true);
-
-            // AllowMultiple is false on SceneReferenceOptionsAttribute, so we have 1 or 0.
-            _optionsAttribute = optionsAttributes.SingleOrDefault() ?? DefaultOptionsAttribute;
+            _optionsAttribute = fieldInfo.GetCustomAttribute<SceneReferenceOptionsAttribute>(false) ?? DefaultOptionsAttribute;
 
             if (_sceneAsset == null)
             {
