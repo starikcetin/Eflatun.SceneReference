@@ -198,7 +198,7 @@ Running the generator has no side-effects.
 
 ### Via Menu Item
 
-You can trigger the generator via a menu item. Find it under `Eflatun/Scene Reference/Run Scene GUID to Path Map Generator`:
+You can trigger the generator via a menu item. Find it under `Tools/Eflatun/Scene Reference/Run Scene GUID to Path Map Generator`:
 
 ![.assets/generator_menu.png](.assets/generator_menu.png)
 
