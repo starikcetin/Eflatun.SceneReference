@@ -98,7 +98,7 @@ namespace Eflatun.SceneReference.Editor
             /// It is recommended to leave this option at 'true', as the inline utility saves you a lot of time.
             /// </summary>
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-            [field: UserSetting(CategoryName, "Show Inline Scene-In-Build Utility", "SShould we show the inline utility that allows you to quickly fix scenes that are either not in build or disabled in build?\n\nUnity only bundles scenes that are added and enabled in build settings. Therefore, you would want to make sure the scene you assign to a SceneReference is added and enabled in build settings.\n\nIt is recommended to leave this option at 'true', as the inline utility saves you a lot of time.")]
+            [field: UserSetting(CategoryName, "Show Inline Scene-In-Build Utility", "Should we show the inline utility that allows you to quickly fix scenes that are either not in build or disabled in build?\n\nUnity only bundles scenes that are added and enabled in build settings. Therefore, you would want to make sure the scene you assign to a SceneReference is added and enabled in build settings.\n\nIt is recommended to leave this option at 'true', as the inline utility saves you a lot of time.")]
             public static ProjectSetting<bool> ShowInlineSceneInBuildUtility { get; }
                 = new ProjectSetting<bool>("PropertyDrawer.ShowInlineSceneInBuildUtility", true);
 
