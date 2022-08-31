@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 314337509}
   - component: {fileID: 314337508}
   m_Layer: 0
-  m_Name: Simple Demo
+  m_Name: Validation Demo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,15 +248,19 @@ MonoBehaviour:
   valid:
     sceneAsset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
     sceneAssetGuidHex: 1d6d932bbdf133c41aa34e00b02bdd1d
+    <IsValidSceneAsset>k__BackingField: 1
   disabled:
     sceneAsset: {fileID: 102900000, guid: fb949268f5f24df4eadb2a5028fca33a, type: 3}
     sceneAssetGuidHex: fb949268f5f24df4eadb2a5028fca33a
+    <IsValidSceneAsset>k__BackingField: 1
   notInBuild:
     sceneAsset: {fileID: 102900000, guid: 63cbeaf10b76c5c4dacdf7685d4acdb6, type: 3}
     sceneAssetGuidHex: 63cbeaf10b76c5c4dacdf7685d4acdb6
+    <IsValidSceneAsset>k__BackingField: 1
   empty:
     sceneAsset: {fileID: 0}
     sceneAssetGuidHex: 
+    <IsValidSceneAsset>k__BackingField: 0
 --- !u!4 &314337509
 Transform:
   m_ObjectHideFlags: 0
