@@ -8,8 +8,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 ### Added
+- Descriptive custom exceptions:
+  - `SceneReferenceException`: The root class of all custom exceptions of this package.
+  - `InvalidSceneAssetException`
+  - `OutdatedSceneGuidToPathMapException`
+- Validation properties in `SceneReference`:
+  - `IsValidSceneAsset`
+  - `IsInBuildAndEnabled`
+  - `IsSafeToUse`
 
 ### Changed
+- Now throws more descriptive custom exceptions (`InvalidSceneAssetException` and `OutdatedSceneGuidToPathMapException`) for edge cases.
 
 ### Removed
 

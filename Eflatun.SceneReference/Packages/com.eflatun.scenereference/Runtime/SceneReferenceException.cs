@@ -1,0 +1,30 @@
+﻿using System;
+using System.Runtime.Serialization;
+using JetBrains.Annotations;
+
+namespace Eflatun.SceneReference
+{
+    /// <summary>
+    /// Root custom exception for the <c>Eflatun.SceneReference</c> package.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    public class SceneReferenceException : Exception
+    {
+        internal SceneReferenceException()
+        {
+        }
+
+        internal SceneReferenceException(string message) : base(message)
+        {
+        }
+
+        internal SceneReferenceException(string message, Exception inner) : base(message, inner)
+        {
+        }
+
+        private protected SceneReferenceException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+}
