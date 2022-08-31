@@ -35,8 +35,7 @@ namespace Eflatun.SceneReference
         /// GUID of the scene asset in hex format. 
         /// </summary>
         /// <remarks>
-        /// Will be all 0s if the scene asset is null or invalid. Check <see cref="IsValidSceneAsset"/> to see if the
-        /// scene asset is non-null and valid.
+        /// You can check <see cref="IsValidSceneAsset"/> to see if the scene asset is non-null and valid.
         /// </remarks>
         public string AssetGuidHex => sceneAssetGuidHex;
 
