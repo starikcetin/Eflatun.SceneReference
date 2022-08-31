@@ -15,11 +15,11 @@ namespace Eflatun.SceneReference
         {
         }
 
-        internal SceneReferenceException(string message) : base(message)
+        internal SceneReferenceException(string message) : base($"{Constants.LogPrefixBase} {message}")
         {
         }
 
-        internal SceneReferenceException(string message, Exception inner) : base(message, inner)
+        internal SceneReferenceException(string message, Exception inner) : base($"{Constants.LogPrefixBase} {message}", inner)
         {
         }
 

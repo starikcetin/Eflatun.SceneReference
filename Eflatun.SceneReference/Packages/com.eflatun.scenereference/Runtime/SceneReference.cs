@@ -120,12 +120,12 @@ namespace Eflatun.SceneReference
             }
             else if (!(sceneAsset is SceneAsset))
             {
-                Debug.LogError($"A {nameof(SceneReference)} is assigned a non-null asset, but it is not of type {nameof(SceneAsset)}!");
+                Logger.Error($"A {nameof(SceneReference)} is assigned a non-null asset, but it is not of type {nameof(SceneAsset)}!");
                 IsValidSceneAsset = false;
             }
             else if (!AssetDatabase.Contains(sceneAsset))
             {
-                Debug.LogError($"A {nameof(SceneReference)} is assigned a non-null {nameof(SceneAsset)}, but {nameof(AssetDatabase)} doesn't contain the asset!");
+                Logger.Error($"A {nameof(SceneReference)} is assigned a non-null {nameof(SceneAsset)}, but {nameof(AssetDatabase)} doesn't contain the asset!");
                 IsValidSceneAsset = false;
             }
             else
