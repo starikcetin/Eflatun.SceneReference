@@ -3,6 +3,10 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif // UNITY_EDITOR
+
 namespace Eflatun.SceneReference
 {
     /// <summary>
@@ -10,10 +14,22 @@ namespace Eflatun.SceneReference
     /// </summary>
     [PublicAPI]
     [Serializable]
-    public class SceneReference
+    public class SceneReference : ISerializationCallbackReceiver
     {
         [SerializeField] internal UnityEngine.Object sceneAsset;
         [SerializeField] internal string sceneAssetGuidHex;
+
+        /// <summary>
+        /// Do we have a non-null and valid scene asset?
+        /// </summary>
+        /// <remarks>
+        /// This property alone does not communicate if this <see cref="SceneReference"/> is safe to use. Check
+        /// <see cref="IsSafeToUse"/> for that purpose.
+        /// </remarks>
+        /// <seealso cref="IsInBuildAndEnabled"/>
+        /// <seealso cref="IsSafeToUse"/>
+        [field: SerializeField]
+        public bool IsValidSceneAsset { get; private set; }
 
         /// <summary>
         /// GUID of the scene asset in hex format. 
@@ -69,17 +85,6 @@ namespace Eflatun.SceneReference
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
         /// <summary>
-        /// Do we have a non-null and valid scene asset?
-        /// </summary>
-        /// <remarks>
-        /// This property alone does not communicate if this <see cref="SceneReference"/> is safe to use. Check
-        /// <see cref="IsSafeToUse"/> for that purpose.
-        /// </remarks>
-        /// <seealso cref="IsInBuildAndEnabled"/>
-        /// <seealso cref="IsSafeToUse"/>
-        public bool IsValidSceneAsset => sceneAsset != null;
-
-        /// <summary>
         /// Is the scene added and enabled in Build Settings?
         /// </summary>
         /// <exception cref="InvalidSceneAssetException"></exception>
@@ -103,5 +108,39 @@ namespace Eflatun.SceneReference
         /// <seealso cref="IsInBuildAndEnabled"/>
         // Does not throw InvalidSceneAssetException, because we are checking for IsValidSceneAsset first.
         public bool IsSafeToUse => IsValidSceneAsset && IsInBuildAndEnabled;
+
+        /// <summary>
+        /// Do NOT call this method. It is for <see cref="ISerializationCallbackReceiver"/>.
+        /// </summary>
+        public void OnBeforeSerialize()
+        {
+#if UNITY_EDITOR
+            if (sceneAsset == null)
+            {
+                IsValidSceneAsset = false;
+            }
+            else if (!(sceneAsset is SceneAsset))
+            {
+                Debug.LogError($"A {nameof(SceneReference)} is assigned a non-null asset, but it is not of type {nameof(SceneAsset)}!");
+                IsValidSceneAsset = false;
+            }
+            else if (!AssetDatabase.Contains(sceneAsset))
+            {
+                Debug.LogError($"A {nameof(SceneReference)} is assigned a non-null {nameof(SceneAsset)}, but {nameof(AssetDatabase)} doesn't contain the asset!");
+                IsValidSceneAsset = false;
+            }
+            else
+            {
+                IsValidSceneAsset = true;
+            }
+#endif // UNITY_EDITOR
+        }
+
+        /// <summary>
+        /// Do NOT call this method. It is for <see cref="ISerializationCallbackReceiver"/>.
+        /// </summary>
+        public void OnAfterDeserialize()
+        {
+        }
     }
 }
