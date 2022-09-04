@@ -141,7 +141,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <remarks>
         /// Checking this property alone is sufficient for the majority of the validation use cases, as this property absolutely communicates whether this <see cref="SceneReference"/> is safe to use.<p/>
-        /// Checking this property is equivalent to checking all partial validation properties (namely: <see cref="HasValue"/>, <see cref="IsInSceneGuidToPathMap"/>, and <see cref="IsInBuildAndEnabled"/>), with slightly better performance. If you need those validations partially, you can check them instead of this property. Keep in mind that the use cases that require partial validation are rare and few.
+        /// Checking this property is equivalent to checking all partial validation properties (namely: <see cref="HasValue"/>, <see cref="IsInSceneGuidToPathMap"/>, and <see cref="IsInBuildAndEnabled"/>) in the correct order, but it provides a slightly better performance. If you need those validations partially, you can check them instead of this property. Keep in mind that the use cases that require partial validation are rare and few.
         /// </remarks>
         /// <seealso cref="HasValue"/>
         /// <seealso cref="IsInSceneGuidToPathMap"/>
