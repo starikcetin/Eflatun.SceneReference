@@ -18,20 +18,25 @@ public class ValidationDemo : MonoBehaviour
         Log(notInBuild, nameof(notInBuild));
         Log(empty, nameof(empty));
 
-        Assert.IsTrue(valid.IsValidSceneAsset);
-        Assert.IsTrue(disabled.IsValidSceneAsset);
-        Assert.IsTrue(notInBuild.IsValidSceneAsset);
-        Assert.IsFalse(empty.IsValidSceneAsset);
+        Assert.IsTrue(valid.IsSceneValid);
+        Assert.IsTrue(disabled.IsSceneValid);
+        Assert.IsTrue(notInBuild.IsSceneValid);
+        Assert.IsFalse(empty.IsSceneValid);
 
         Assert.IsTrue(valid.IsInBuildAndEnabled);
         Assert.IsFalse(disabled.IsInBuildAndEnabled);
         Assert.IsFalse(notInBuild.IsInBuildAndEnabled);
-        // Assert.IsFalse(empty.IsInBuildAndEnabled); // throws
+        AssertThrows<InvalidSceneReferenceException>(() => empty.IsInBuildAndEnabled);
 
         Assert.IsTrue(valid.IsSafeToUse);
         Assert.IsFalse(disabled.IsSafeToUse);
         Assert.IsFalse(notInBuild.IsSafeToUse);
         Assert.IsFalse(empty.IsSafeToUse);
+
+        Assert.AreNotEqual(-1, valid.BuildIndex);
+        Assert.AreEqual(-1, disabled.BuildIndex);
+        Assert.AreEqual(-1, notInBuild.BuildIndex);
+        AssertThrows<InvalidSceneReferenceException>(() => empty.BuildIndex);
     }
 
     private void Log(SceneReference sceneReference, string memberName)
@@ -89,10 +94,10 @@ public class ValidationDemo : MonoBehaviour
             sb.AppendLine($"throws {e.GetType().Name}");
         }
 
-        sb.Append($"{nameof(sceneReference.IsValidSceneAsset)}: ");
+        sb.Append($"{nameof(sceneReference.IsSceneValid)}: ");
         try
         {
-            sb.AppendLine(sceneReference.IsValidSceneAsset.ToString());
+            sb.AppendLine(sceneReference.IsSceneValid.ToString());
         }
         catch (Exception e)
         {
@@ -120,5 +125,34 @@ public class ValidationDemo : MonoBehaviour
         }
 
         Debug.Log(sb);
+    }
+
+    private void AssertThrows<TException>(Func<object> func)
+        where TException : Exception
+    {
+        void Act()
+        {
+            var x = func.Invoke();
+        }
+
+        AssertThrows<TException>(Act);
+    }
+
+    private void AssertThrows<TException>(Action action)
+        where TException : Exception
+    {
+        bool didThrow;
+
+        try
+        {
+            action.Invoke();
+            didThrow = false;
+        }
+        catch (TException)
+        {
+            didThrow = true;
+        }
+
+        Assert.IsTrue(didThrow);
     }
 }
