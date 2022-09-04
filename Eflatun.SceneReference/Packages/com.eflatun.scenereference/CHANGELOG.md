@@ -10,8 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Descriptive custom exceptions:
   - `SceneReferenceException`: The root class of all custom exceptions of this package.
+  - `EmptySceneReferenceException`
   - `InvalidSceneReferenceException`
 - Validation properties in `SceneReference`:
+  - `HasValue`
   - `IsInSceneGuidToPathMap`
   - `IsInBuildAndEnabled`
   - `IsSafeToUse`

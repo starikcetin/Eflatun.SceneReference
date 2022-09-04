@@ -18,15 +18,20 @@ public class ValidationDemo : MonoBehaviour
         Log(notInBuild, nameof(notInBuild));
         Log(empty, nameof(empty));
 
+        Assert.IsTrue(valid.HasValue);
+        Assert.IsTrue(disabled.HasValue);
+        Assert.IsTrue(notInBuild.HasValue);
+        Assert.IsFalse(empty.HasValue);
+
         Assert.IsTrue(valid.IsInSceneGuidToPathMap);
         Assert.IsTrue(disabled.IsInSceneGuidToPathMap);
         Assert.IsTrue(notInBuild.IsInSceneGuidToPathMap);
-        Assert.IsFalse(empty.IsInSceneGuidToPathMap);
+        AssertThrows<EmptySceneReferenceException>(() => empty.IsInSceneGuidToPathMap);
 
         Assert.IsTrue(valid.IsInBuildAndEnabled);
         Assert.IsFalse(disabled.IsInBuildAndEnabled);
         Assert.IsFalse(notInBuild.IsInBuildAndEnabled);
-        AssertThrows<InvalidSceneReferenceException>(() => empty.IsInBuildAndEnabled);
+        AssertThrows<EmptySceneReferenceException>(() => empty.IsInBuildAndEnabled);
 
         Assert.IsTrue(valid.IsSafeToUse);
         Assert.IsFalse(disabled.IsSafeToUse);
@@ -36,7 +41,7 @@ public class ValidationDemo : MonoBehaviour
         Assert.AreNotEqual(-1, valid.BuildIndex);
         Assert.AreEqual(-1, disabled.BuildIndex);
         Assert.AreEqual(-1, notInBuild.BuildIndex);
-        AssertThrows<InvalidSceneReferenceException>(() => empty.BuildIndex);
+        AssertThrows<EmptySceneReferenceException>(() => empty.BuildIndex);
     }
 
     private void Log(SceneReference sceneReference, string memberName)
@@ -88,6 +93,16 @@ public class ValidationDemo : MonoBehaviour
         try
         {
             sb.AppendLine(sceneReference.LoadedScene.ToString());
+        }
+        catch (Exception e)
+        {
+            sb.AppendLine($"throws {e.GetType().Name}");
+        }
+        
+        sb.Append($"{nameof(sceneReference.HasValue)}: ");
+        try
+        {
+            sb.AppendLine(sceneReference.HasValue.ToString());
         }
         catch (Exception e)
         {
