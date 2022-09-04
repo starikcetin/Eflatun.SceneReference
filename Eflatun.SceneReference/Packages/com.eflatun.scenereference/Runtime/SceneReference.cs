@@ -68,13 +68,18 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
         /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
+        /// <remarks>
+        /// You can check <see cref="Scene.IsValid"/> to see if the value of this property is valid.<p/>
+        /// If <see cref="IsInBuildAndEnabled"/> is <c>false</c>, the scene can never be loaded, and therefore this property can never have a valid value.
+        /// </remarks>
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
         /// <summary>
         /// Is this <see cref="SceneReference"/> assigned something?
         /// </summary>
         /// <remarks>
-        /// This property alone does not communicate if this <see cref="SceneReference"/> is safe to use. Check <see cref="IsSafeToUse"/> for that purpose.
+        /// Only check this property if you need partial validations, as this property alone does not communicate whether this <see cref="SceneReference"/> is absolutely safe to use.<p/>
+        /// If you only need to check if it is safe to use this <see cref="SceneReference"/>, then only check <see cref="IsSafeToUse"/> instead. Checking only <see cref="IsSafeToUse"/> is sufficient for the majority of the use cases.
         /// </remarks>
         /// <seealso cref="IsInSceneGuidToPathMap"/>
         /// <seealso cref="IsInBuildAndEnabled"/>
@@ -98,7 +103,8 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
         /// <remarks>
-        /// This property alone does not communicate if this <see cref="SceneReference"/> is safe to use. Check <see cref="IsSafeToUse"/> for that purpose.
+        /// Only check this property if you need partial validations, as this property alone does not communicate whether this <see cref="SceneReference"/> is absolutely safe to use.<p/>
+        /// If you only need to check if it is safe to use this <see cref="SceneReference"/>, then only check <see cref="IsSafeToUse"/> instead. Checking only <see cref="IsSafeToUse"/> is sufficient for the majority of the use cases.
         /// </remarks>
         /// <seealso cref="HasValue"/>
         /// <seealso cref="IsInBuildAndEnabled"/>
@@ -111,7 +117,7 @@ namespace Eflatun.SceneReference
                 {
                     throw new EmptySceneReferenceException();
                 }
-                
+
                 return SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(AssetGuidHex);
             }
         }
@@ -122,7 +128,8 @@ namespace Eflatun.SceneReference
         /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
         /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
         /// <remarks>
-        /// This property alone does not communicate if this <see cref="SceneReference"/> is safe to use. Check <see cref="IsSafeToUse"/> for that purpose.
+        /// Only check this property if you need partial validations, as this property alone does not communicate whether this <see cref="SceneReference"/> is absolutely safe to use.<p/>
+        /// If you only need to check if it is safe to use this <see cref="SceneReference"/>, then only check <see cref="IsSafeToUse"/> instead. Checking only <see cref="IsSafeToUse"/> is sufficient for the majority of the use cases.
         /// </remarks>
         /// <seealso cref="HasValue"/>
         /// <seealso cref="IsInSceneGuidToPathMap"/>
@@ -133,7 +140,8 @@ namespace Eflatun.SceneReference
         /// Is this <see cref="SceneReference"/> safe to use?
         /// </summary>
         /// <remarks>
-        /// This property is equivalent to checking all three of <see cref="HasValue"/>, <see cref="IsInSceneGuidToPathMap"/>, and <see cref="IsInBuildAndEnabled"/>, with slightly better performance.
+        /// Checking this property alone is sufficient for the majority of the validation use cases, as this property absolutely communicates whether this <see cref="SceneReference"/> is safe to use.<p/>
+        /// Checking this property is equivalent to checking all partial validation properties (namely: <see cref="HasValue"/>, <see cref="IsInSceneGuidToPathMap"/>, and <see cref="IsInBuildAndEnabled"/>), with slightly better performance. If you need those validations partially, you can check them instead of this property. Keep in mind that the use cases that require partial validation are rare and few.
         /// </remarks>
         /// <seealso cref="HasValue"/>
         /// <seealso cref="IsInSceneGuidToPathMap"/>
