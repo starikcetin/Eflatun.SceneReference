@@ -13,10 +13,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - `EmptySceneReferenceException`
   - `InvalidSceneReferenceException`
 - Validation properties in `SceneReference`:
+  - `IsSafeToUse`: Checks everything. Recommended for most use cases.
   - `HasValue`
   - `IsInSceneGuidToPathMap`
   - `IsInBuildAndEnabled`
-  - `IsSafeToUse`
 
 ### Changed
 - Now throwing more descriptive custom exceptions (`InvalidSceneAssetException` and `OutdatedSceneGuidToPathMapException`) for edge cases.
