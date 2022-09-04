@@ -23,7 +23,9 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// Path to the scene asset.
         /// </summary>
-        /// <exception cref="InvalidSceneReferenceException"></exception>
+        /// <exception cref="InvalidSceneReferenceException">
+        /// Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.
+        /// </exception>
         public string Path =>
             SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath)
                 ? scenePath
@@ -32,40 +34,58 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// Build index of the scene.
         /// </summary>
-        /// <exception cref="InvalidSceneReferenceException"></exception>
+        /// <exception cref="InvalidSceneReferenceException">
+        /// Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.
+        /// </exception>
+        /// <remarks>
+        /// This property will return <c>-1</c> if <see cref="IsInBuildAndEnabled"/> is <c>false</c>.
+        /// </remarks>
         public int BuildIndex => SceneUtility.GetBuildIndexByScenePath(Path);
 
         /// <summary>
         /// Name of the scene asset.
         /// </summary>
-        /// <exception cref="InvalidSceneReferenceException"></exception>
+        /// <exception cref="InvalidSceneReferenceException">
+        /// Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.
+        /// </exception>
         public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
 
         /// <summary>
         /// The <see cref="Scene"/> struct for this scene. Only valid if the scene is currently loaded.
         /// </summary>
-        /// <exception cref="InvalidSceneReferenceException"></exception>
+        /// <exception cref="InvalidSceneReferenceException">
+        /// Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.
+        /// </exception>
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
         /// <summary>
-        /// Does the Scene GUID to Path Map contain <see cref="AssetGuidHex"/>?
+        /// Does the scene GUID to path map contain the scene?
         /// </summary>
-        public bool IsSceneValid => SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(sceneAssetGuidHex);
+        /// <remarks>
+        /// This property alone does not communicate if this <see cref="SceneReference"/> is safe to use. Check <see cref="IsSafeToUse"/> for that purpose.
+        /// </remarks>
+        /// <seealso cref="IsInBuildAndEnabled"/>
+        public bool IsInSceneGuidToPathMap => SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(AssetGuidHex);
 
         /// <summary>
         /// Is the scene added and enabled in Build Settings?
         /// </summary>
-        /// <exception cref="InvalidSceneReferenceException"></exception>
+        /// <exception cref="InvalidSceneReferenceException">
+        /// Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.
+        /// </exception>
+        /// <remarks>
+        /// This property alone does not communicate if this <see cref="SceneReference"/> is safe to use. Check <see cref="IsSafeToUse"/> for that purpose.
+        /// </remarks>
         public bool IsInBuildAndEnabled => BuildIndex != -1;
 
         /// <summary>
-        /// Does the Scene GUID to Path Map contain <see cref="AssetGuidHex"/> AND is the scene added and enabled in Build Settings?
+        /// Is this <see cref="SceneReference"/> safe to use?
         /// </summary>
         /// <remarks>
-        /// If this property is true, then this <see cref="SceneReference"/> is safe to use.
+        /// This property is equivalent to checking both <see cref="IsInSceneGuidToPathMap"/> and <see cref="IsInBuildAndEnabled"/>, with slightly better performance.
         /// </remarks>
         public bool IsSafeToUse =>
-            SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var path)
+            SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(AssetGuidHex, out var path)
             && SceneUtility.GetBuildIndexByScenePath(path) != -1;
     }
 }

@@ -18,10 +18,10 @@ public class ValidationDemo : MonoBehaviour
         Log(notInBuild, nameof(notInBuild));
         Log(empty, nameof(empty));
 
-        Assert.IsTrue(valid.IsSceneValid);
-        Assert.IsTrue(disabled.IsSceneValid);
-        Assert.IsTrue(notInBuild.IsSceneValid);
-        Assert.IsFalse(empty.IsSceneValid);
+        Assert.IsTrue(valid.IsInSceneGuidToPathMap);
+        Assert.IsTrue(disabled.IsInSceneGuidToPathMap);
+        Assert.IsTrue(notInBuild.IsInSceneGuidToPathMap);
+        Assert.IsFalse(empty.IsInSceneGuidToPathMap);
 
         Assert.IsTrue(valid.IsInBuildAndEnabled);
         Assert.IsFalse(disabled.IsInBuildAndEnabled);
@@ -94,10 +94,10 @@ public class ValidationDemo : MonoBehaviour
             sb.AppendLine($"throws {e.GetType().Name}");
         }
 
-        sb.Append($"{nameof(sceneReference.IsSceneValid)}: ");
+        sb.Append($"{nameof(sceneReference.IsInSceneGuidToPathMap)}: ");
         try
         {
-            sb.AppendLine(sceneReference.IsSceneValid.ToString());
+            sb.AppendLine(sceneReference.IsInSceneGuidToPathMap.ToString());
         }
         catch (Exception e)
         {
