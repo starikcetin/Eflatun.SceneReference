@@ -17,6 +17,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
+## [1.3.0] - 2022-09-05
+
+### Added
+- Descriptive custom exceptions:
+  - `SceneReferenceException`: The root class of all custom exceptions of this package.
+  - `EmptySceneReferenceException`
+  - `InvalidSceneReferenceException`
+- Validation properties in `SceneReference`:
+  - `IsSafeToUse`: Checks everything. Recommended for most use cases.
+  - `HasValue`
+  - `IsInSceneGuidToPathMap`
+  - `IsInBuildAndEnabled`
+
+### Changed
+- Now throwing more descriptive custom exceptions (`EmptySceneReferenceException` and `InvalidSceneReferenceException`) for edge cases.
+
+### Fixed
+- Use plaintext log prefixes (without styling) if outside Unity Editor.
+
+
+
 ## [1.2.2] - 2022-08-16
 
 ### Changed

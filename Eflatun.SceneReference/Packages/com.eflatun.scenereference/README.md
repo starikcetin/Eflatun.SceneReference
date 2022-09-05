@@ -46,13 +46,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.2.2` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.3.0` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.2.2"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.3.0"
 ```
 
-_Although it is highly discouraged, you can replace `1.2.2` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `1.3.0` with `upm` to get the latest version instead of a specific one._
 
 ## Ignore Auto-Generated Map File in Version Control
 
@@ -101,6 +101,25 @@ var sceneName = mySceneReference.Name;
 
 // You can only access these when the scene is currently loaded
 var loadedScene = mySceneReference.LoadedScene
+```
+
+## Validation
+
+You can check `IsSafeToUse` property to make sure a `SceneReference` is completely valid before using it.
+
+```cs
+// Import Runtime namespace
+using Eflatun.SceneReference;
+
+// Validate
+if(mySceneReference.IsSafeToUse)
+{
+    // Safe to use!
+}
+else 
+{
+    // Something is wrong.
+}
 ```
 
 ## Inline Scene-In-Build Validation & Fix Utility
@@ -198,7 +217,7 @@ Running the generator has no side-effects.
 
 ### Via Menu Item
 
-You can trigger the generator via a menu item. Find it under `Eflatun/Scene Reference/Run Scene GUID to Path Map Generator`:
+You can trigger the generator via a menu item. Find it under `Tools/Eflatun/Scene Reference/Run Scene GUID to Path Map Generator`:
 
 ![.assets/generator_menu.png](.assets/generator_menu.png)
 
@@ -272,6 +291,80 @@ You don't have to supply both fields at once. Missing fields will have the defau
 [SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled)]
 [SerializeField] private SceneReference scene;
 ```
+
+## Partial Validation
+
+If you need to perform validation partially (step-by-step), then you can use the partial validation properties. Keep in mind that the use cases that require partial validation are rare and few.
+
+1. `HasValue`: Is this `SceneReference` assigned something?
+2. `IsInSceneGuidToPathMap`: Does the Scene GUID to Path Map contain the scene?
+3. `IsInBuildAndEnabled`: Is the scene added and enabled in Build Settings?
+
+These properties can throw exceptions. So the order in which you check them is important. This is the recommended order to avoid exceptions:
+
+```cs
+// Import Runtime namespace
+using Eflatun.SceneReference;
+
+// Avoid EmptySceneReferenceException.
+if(mySceneReference.HasValue)
+{
+    // Avoid InvalidSceneReferenceException.
+    if(mySceneReference.IsInSceneGuidToPathMap)
+    {
+        // Avoid SceneManagement-related problems.
+        if(mySceneReference.IsInBuildAndEnabled)
+        {
+            // Completely validated. Safe to use.
+        }
+        else
+        {
+            // The scene is not added or is disabled in Build Settings.
+        }
+    }
+    else
+    {
+        // One of these things:
+        // 1. The Scene GUID to Path Map is outdated.
+        // 2. The scene is invalid.
+        // 3. The assigned asset is not a scene.
+    }
+}
+else
+{
+    // The SceneReference is empty (not assigned anything).
+}
+```
+
+If you only need to check if it is completely safe to use a `SceneReference` without knowing where exactly the problem is, then only check `IsSafeToUse` instead. Checking only `IsSafeToUse` is sufficient for the majority of the use cases.
+
+Checking `IsSafeToUse` is equivalent to checking all partial validation properties in the correct order, but it provides a slightly better performance.
+
+# Exceptions
+
+## `EmptySceneReferenceException`
+
+Thrown if a `SceneReference` is empty (not assigned anything).
+
+To fix it, make sure the `SceneReference` is assigned a valid scene asset.
+
+You can avoid it by checking `IsSafeToUse` (recommended) or `HasValue`.
+
+## `InvalidSceneReferenceException`
+
+Thrown if a `SceneReference` is invalid. This can happen for these reasons:
+
+1. The `SceneReference` is assigned an invalid scene, or the assigned asset is not a scene. To fix this, make sure the `SceneReference` is assigned a valid scene asset.
+
+2. The Scene GUID to Path Map is outdated. To fix this, you can either manually run the map generator, or enable all generation triggers. It is highly recommended to keep all the generation triggers enabled.
+
+You can avoid it by checking `IsSafeToUse` (recommended) or `IsInSceneGuidToPathMap`.
+
+## `SceneReferenceInternalException`
+
+This exception is not part of the public API. It indicates that something has gone wrong internally. It is not meant to be catched, fixed, or avoided by user code.
+
+If you come across this exception, make sure to create a bug report by [opening an issue](https://github.com/starikcetin/Eflatun.SceneReference/issues) and including the relevant information in the exception message.
 
 # Acknowledgements
 

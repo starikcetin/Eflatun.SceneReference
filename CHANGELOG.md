@@ -8,6 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+
+## [1.3.0] - 2022-09-05
+
+### Added
 - Descriptive custom exceptions:
   - `SceneReferenceException`: The root class of all custom exceptions of this package.
   - `EmptySceneReferenceException`
@@ -20,8 +32,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 - Now throwing more descriptive custom exceptions (`EmptySceneReferenceException` and `InvalidSceneReferenceException`) for edge cases.
-
-### Removed
 
 ### Fixed
 - Use plaintext log prefixes (without styling) if outside Unity Editor.
