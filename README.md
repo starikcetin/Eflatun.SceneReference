@@ -336,7 +336,7 @@ else
 }
 ```
 
-If you only need to check if it is completly safe to use a `SceneReference` without knowing where exactly the problem is, then only check `IsSafeToUse` instead. Checking only `IsSafeToUse` is sufficient for the majority of the use cases.
+If you only need to check if it is completely safe to use a `SceneReference` without knowing where exactly the problem is, then only check `IsSafeToUse` instead. Checking only `IsSafeToUse` is sufficient for the majority of the use cases.
 
 Checking `IsSafeToUse` is equivalent to checking all partial validation properties in the correct order, but it provides a slightly better performance.
 
@@ -346,9 +346,9 @@ Checking `IsSafeToUse` is equivalent to checking all partial validation properti
 
 Thrown if a `SceneReference` is empty (not assigned anything).
 
-You can avoid it by checking `IsSafeToUse` (recommended) or `HasValue`.
-
 To fix it, make sure the `SceneReference` is assigned a valid scene asset.
+
+You can avoid it by checking `IsSafeToUse` (recommended) or `HasValue`.
 
 ## `InvalidSceneReferenceException`
 
@@ -358,9 +358,11 @@ Thrown if a `SceneReference` is invalid. This can happen for these reasons:
 
 2. The Scene GUID to Path Map is outdated. To fix this, you can either manually run the map generator, or enable all generation triggers. It is highly recommended to keep all the generation triggers enabled.
 
+You can avoid it by checking `IsSafeToUse` (recommended) or `IsInSceneGuidToPathMap`.
+
 ## `SceneReferenceInternalException`
 
-This exception is not part of the public API. It is not meant to be catched or mitigated by user code. It indicates that something has gone wrong internally.
+This exception is not part of the public API. It indicates that something has gone wrong internally. It is not meant to be catched, fixed, or avoided by user code.
 
 If you come across this exception, make sure to create a bug report by [opening an issue](https://github.com/starikcetin/Eflatun.SceneReference/issues) and including the relevant information in the exception message.
 
