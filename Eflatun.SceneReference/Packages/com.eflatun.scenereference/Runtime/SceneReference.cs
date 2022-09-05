@@ -13,7 +13,7 @@ namespace Eflatun.SceneReference
     [Serializable]
     public class SceneReference
     {
-        // An invalid GUID hex contains all zeros. A GUID hex has 32 chars.
+        // GUID hex of an invalid asset contains all zeros. A GUID hex has 32 chars.
         private const string AllZeroGuidHex = "00000000000000000000000000000000";
 
         [SerializeField] internal UnityEngine.Object sceneAsset = null;
