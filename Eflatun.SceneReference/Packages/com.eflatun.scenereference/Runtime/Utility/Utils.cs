@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Eflatun.SceneReference.Utility
 {
@@ -22,5 +23,11 @@ namespace Eflatun.SceneReference.Utility
         /// </summary>
         public static string BeforeLast(this string source, char chr) =>
             source.Substring(0, source.LastIndexOf(chr));
+
+        /// <summary>
+        /// Returns if the given <paramref name="guidHex"/> is valid. A valid GUID hex is 32 chars of hexadecimals.
+        /// </summary>
+        public static bool IsValidGuidHex(this string guidHex) =>
+            guidHex.Length == 32 && guidHex.ToUpper().All("0123456789ABCDEF".Contains);
     }
 }
