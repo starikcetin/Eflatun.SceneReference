@@ -1,4 +1,5 @@
 using System;
+using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -88,10 +89,10 @@ namespace Eflatun.SceneReference
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(AssetGuidHex))
+                if (!AssetGuidHex.IsValidGuidHex())
                 {
                     // internal exceptions should not be documented as part of the public API
-                    throw SceneReferenceInternalException.AssetGuidHexNullOrWhiteSpace("54783205", AssetGuidHex);
+                    throw SceneReferenceInternalException.InvalidAssetGuidHex("54783205", AssetGuidHex);
                 }
 
                 return AssetGuidHex != AllZeroGuidHex;
