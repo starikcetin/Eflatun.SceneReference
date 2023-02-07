@@ -1,6 +1,8 @@
 using System;
+using System.Runtime.Serialization;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +13,7 @@ namespace Eflatun.SceneReference
     /// </summary>
     [PublicAPI]
     [Serializable]
-    public class SceneReference
+    public class SceneReference : ISerializable
     {
         // GUID hex of an invalid asset contains all zeros. A GUID hex has 32 chars.
         private const string AllZeroGuidHex = "00000000000000000000000000000000";
@@ -20,9 +22,24 @@ namespace Eflatun.SceneReference
         [SerializeField] internal string sceneAssetGuidHex = AllZeroGuidHex;
 
         /// <summary>
-        /// GUID of the scene asset in hex format. 
+        /// GUID of the scene asset in hex format.
         /// </summary>
         public string AssetGuidHex => sceneAssetGuidHex;
+
+        /// <summary>
+        /// Used by <see cref="ISerializable"/> for custom serialization support.
+        /// </summary>
+        protected SceneReference(SerializationInfo info, StreamingContext context)
+        {
+            sceneAssetGuidHex = info.GetString("sceneAssetGuidHex");
+
+#if UNITY_EDITOR
+            if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath))
+            {
+                sceneAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath);
+            }
+#endif // UNITY_EDITOR
+        }
 
         /// <summary>
         /// Path to the scene asset.
@@ -151,5 +168,13 @@ namespace Eflatun.SceneReference
             HasValue
             && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(AssetGuidHex, out var path)
             && SceneUtility.GetBuildIndexByScenePath(path) != -1;
+
+        /// <summary>
+        /// Used by <see cref="ISerializable"/> for custom serialization support.
+        /// </summary>
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("sceneAssetGuidHex", sceneAssetGuidHex);
+        }
     }
 }

@@ -340,6 +340,12 @@ If you only need to check if it is completely safe to use a `SceneReference` wit
 
 Checking `IsSafeToUse` is equivalent to checking all partial validation properties in the correct order, but it provides a slightly better performance.
 
+## Custom Serialization
+
+`SceneReference` implements the `ISerializable` interface and the corresponding deserialization constructor. Therefore, custom serialization is supported.
+
+**Warning:** Custom serialization is only tested with `BinaryFormatter` and `Newtonsoft.Json`.
+
 # Exceptions
 
 ## `EmptySceneReferenceException`
