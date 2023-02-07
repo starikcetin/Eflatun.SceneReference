@@ -46,13 +46,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.3.0` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.4.0` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.3.0"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.4.0"
 ```
 
-_Although it is highly discouraged, you can replace `1.3.0` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `1.4.0` with `upm` to get the latest version instead of a specific one._
 
 ## Ignore Auto-Generated Map File in Version Control
 
@@ -339,6 +339,12 @@ else
 If you only need to check if it is completely safe to use a `SceneReference` without knowing where exactly the problem is, then only check `IsSafeToUse` instead. Checking only `IsSafeToUse` is sufficient for the majority of the use cases.
 
 Checking `IsSafeToUse` is equivalent to checking all partial validation properties in the correct order, but it provides a slightly better performance.
+
+## Custom Serialization
+
+`SceneReference` implements the `ISerializable` interface and the corresponding deserialization constructor. Therefore, custom serialization is supported.
+
+**Warning:** Custom serialization is only tested with `BinaryFormatter` and `Newtonsoft.Json`.
 
 # Exceptions
 
