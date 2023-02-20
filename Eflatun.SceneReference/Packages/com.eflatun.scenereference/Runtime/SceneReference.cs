@@ -24,16 +24,33 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// GUID of the scene asset in hex format.
         /// </summary>
-        public string AssetGuidHex => sceneAssetGuidHex;
+        public string AssetGuidHex
+        {
+            get
+            {
+                // For some reason, the field initializer for sceneAssetGuidHex is working inconsistently. Therefore,
+                // we sometimes get empty strings instead of all zero hex. This condition is here to safeguard against
+                // that situation.
+                // TODO: There can be a deeper problem causing the issue described above, needs further investigation.
+                if (string.IsNullOrWhiteSpace(sceneAssetGuidHex))
+                {
+                    return AllZeroGuidHex;
+                }
+
+                return sceneAssetGuidHex;
+            }
+        }
 
         /// <summary>
         /// Used by <see cref="ISerializable"/> for custom serialization support.
         /// </summary>
         protected SceneReference(SerializationInfo info, StreamingContext context)
         {
+            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
             sceneAssetGuidHex = info.GetString("sceneAssetGuidHex");
 
 #if UNITY_EDITOR
+            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
             if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath))
             {
                 sceneAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath);
@@ -55,7 +72,7 @@ namespace Eflatun.SceneReference
                     throw new EmptySceneReferenceException();
                 }
 
-                if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath))
+                if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(AssetGuidHex, out var scenePath))
                 {
                     throw new InvalidSceneReferenceException();
                 }
@@ -174,6 +191,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
             info.AddValue("sceneAssetGuidHex", sceneAssetGuidHex);
         }
     }
