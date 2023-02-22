@@ -46,13 +46,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.4.1` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.5.0` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.4.1"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.5.0"
 ```
 
-_Although it is highly discouraged, you can replace `1.4.1` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `1.5.0` with `upm` to get the latest version instead of a specific one._
 
 ## Ignore Auto-Generated Map File in Version Control
 
@@ -345,6 +345,32 @@ Checking `IsSafeToUse` is equivalent to checking all partial validation properti
 `SceneReference` implements the `ISerializable` interface and the corresponding deserialization constructor. Therefore, custom serialization is supported.
 
 **Warning:** Custom serialization is only tested with `BinaryFormatter` and `Newtonsoft.Json`.
+
+## Creating Instances in Code
+
+You can create instances of `SceneReference` in code. To facilitate this, it exposes constructors and a factory method.
+
+```cs
+// Empty (and subsequently invalid)
+var empty = new SceneReference();
+
+// From Scene GUID
+string sceneGuid = /* ... */;
+var fromSceneGuid = new SceneReference(sceneGuid);
+
+// From Scene Path
+string scenePath = /* ... */;
+var fromScenePath = SceneReference.FromScenePath(scenePath);
+
+// From Scene Asset (Only do this in Editor code!)
+UnityEngine.Object sceneAsset = /* ... */;
+var fromSceneAsset = new SceneReference(sceneAsset);
+```
+
+**Warnings:**
+- Constructors and the factory methods do NOT validate their arguments. If the given arguments are invalid, then the created `SceneReference` instance will also be invalid.
+- The default constructor always creates an empty and subsequently invalid instance.
+- The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor-use only. Do NOT use it in runtime code.
 
 # Exceptions
 
