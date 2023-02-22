@@ -25,6 +25,23 @@ namespace Eflatun.SceneReference
         [SerializeField] internal string sceneAssetGuidHex = AllZeroGuidHex;
 
         /// <summary>
+        /// Used by <see cref="ISerializable"/> for custom serialization support.
+        /// </summary>
+        protected SceneReference(SerializationInfo info, StreamingContext context)
+        {
+            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
+            sceneAssetGuidHex = info.GetString("sceneAssetGuidHex");
+
+#if UNITY_EDITOR
+            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
+            if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath))
+            {
+                sceneAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath);
+            }
+#endif // UNITY_EDITOR
+        }
+
+        /// <summary>
         /// GUID of the scene asset in hex format.
         /// </summary>
         public string AssetGuidHex
@@ -42,23 +59,6 @@ namespace Eflatun.SceneReference
 
                 return sceneAssetGuidHex;
             }
-        }
-
-        /// <summary>
-        /// Used by <see cref="ISerializable"/> for custom serialization support.
-        /// </summary>
-        protected SceneReference(SerializationInfo info, StreamingContext context)
-        {
-            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
-            sceneAssetGuidHex = info.GetString("sceneAssetGuidHex");
-
-#if UNITY_EDITOR
-            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
-            if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath))
-            {
-                sceneAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath);
-            }
-#endif // UNITY_EDITOR
         }
 
         /// <summary>
