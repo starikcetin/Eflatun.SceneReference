@@ -2,9 +2,12 @@ using System;
 using System.Runtime.Serialization;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif // UNITY_EDITOR
 
 namespace Eflatun.SceneReference
 {
