@@ -21,8 +21,13 @@ namespace Eflatun.SceneReference.Utility
         /// <summary>
         /// Returns the portion of <paramref name="source"/> that comes before the last occurence of <paramref name="chr"/>.
         /// </summary>
-        public static string BeforeLast(this string source, char chr) =>
-            source.Substring(0, source.LastIndexOf(chr));
+        public static string BeforeLast(this string source, char chr)
+        {
+            var lastChrIndex = source.LastIndexOf(chr);
+            return lastChrIndex < 0
+                ? source
+                : source.Substring(0, lastChrIndex);
+        }
 
         /// <summary>
         /// Returns if the given <paramref name="guidHex"/> is valid. A valid GUID hex is 32 chars of hexadecimals.
