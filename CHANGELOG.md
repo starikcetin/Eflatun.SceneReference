@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 ### Added
+- `SceneReference` now exposes public constructors and a factory method for allowing instance creation in code:
+	- Empty: `new SceneReference()` constructor
+	- From GUID: `new SceneReference(string sceneAssetGuidHex)` constructor
+	- (Editor-only) From asset: `new SceneReference(UnityEngine.Object sceneAsset)` constructor
+	- From path: `SceneReference.FromScenePath(string scenePath)` factory method
 
 ### Changed
 

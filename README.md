@@ -346,6 +346,32 @@ Checking `IsSafeToUse` is equivalent to checking all partial validation properti
 
 **Warning:** Custom serialization is only tested with `BinaryFormatter` and `Newtonsoft.Json`.
 
+## Creating Instances in Code
+
+You can create instances of `SceneReference` in code. To facilitate this, it exposes constructors and a factory method.
+
+```cs
+// Empty (and subsequently invalid)
+var empty = new SceneReference();
+
+// From Scene GUID
+string sceneGuid = /* ... */;
+var fromSceneGuid = new SceneReference(sceneGuid);
+
+// From Scene Path
+string scenePath = /* ... */;
+var fromScenePath = SceneReference.FromScenePath(scenePath);
+
+// From Scene Asset (Only do this in Editor code!)
+UnityEngine.Object sceneAsset = /* ... */;
+var fromSceneAsset = new SceneReference(sceneAsset);
+```
+
+**Warnings:**
+- Constructors and the factory methods do NOT validate their arguments. If the given arguments are invalid, then the created `SceneReference` instance will also be invalid.
+- The default constructor always creates an empty and subsequently invalid instance.
+- The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor-use only. Do NOT use it in runtime code.
+
 # Exceptions
 
 ## `EmptySceneReferenceException`

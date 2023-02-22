@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.Serialization;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
@@ -18,27 +19,81 @@ namespace Eflatun.SceneReference
     [Serializable]
     public class SceneReference : ISerializable
     {
+        /// <summary>
+        /// Creates a new <see cref="SceneReference"/> which references the scene at the given path.
+        /// </summary>
+        /// <param name="scenePath">Path of the scene to reference.</param>
+        /// <returns>A new <see cref="SceneReference"/>.</returns>
+        /// <remarks>
+        /// This factory method does NOT validate the given path. If it is invalid, then the created
+        /// <see cref="SceneReference"/> will also be invalid.
+        /// </remarks>
+        public static SceneReference FromScenePath(string scenePath)
+        {
+            var guid = SceneGuidToPathMapProvider.SceneGuidToPathMap.SingleOrDefault(x => x.Value == scenePath).Key;
+            return new SceneReference(guid);
+        }
+
         // GUID hex of an invalid asset contains all zeros. A GUID hex has 32 chars.
         private const string AllZeroGuidHex = "00000000000000000000000000000000";
 
-        [SerializeField] internal UnityEngine.Object sceneAsset = null;
-        [SerializeField] internal string sceneAssetGuidHex = AllZeroGuidHex;
+        [SerializeField] internal UnityEngine.Object sceneAsset;
+        [SerializeField] internal string sceneAssetGuidHex;
+
+        /// <summary>
+        /// Creates a new <see cref="SceneReference"/> which is empty, and subsequently invalid.
+        /// </summary>
+        public SceneReference()
+        {
+            sceneAssetGuidHex = AssetGuidHex;
+            sceneAsset = null;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="SceneReference"/> which references the scene that has the given GUID.
+        /// </summary>
+        /// <param name="sceneAssetGuidHex">GUID of the scene to reference.</param>
+        /// <remarks>
+        /// This constructor does NOT validate the given GUID. If it is invalid, then the created
+        /// <see cref="SceneReference"/> will also be invalid.
+        /// </remarks>
+        public SceneReference(string sceneAssetGuidHex)
+        {
+            this.sceneAssetGuidHex = sceneAssetGuidHex;
+
+#if UNITY_EDITOR
+            sceneAsset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath)
+                ? AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath)
+                : null;
+#endif // UNITY_EDITOR
+        }
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// Creates a new <see cref="SceneReference"/> which references the given scene asset.
+        /// </summary>
+        /// <param name="sceneAsset">The asset of the scene to reference.</param>
+        /// <remarks>
+        /// This constructor is for editor-use only. Do NOT use it in runtime code.<p/>
+        /// This constructor does NOT validate the given asset. If it is invalid, then the created
+        /// <see cref="SceneReference"/> will also be invalid.
+        /// </remarks>
+        public SceneReference(UnityEngine.Object sceneAsset)
+        {
+            sceneAssetGuidHex = AssetDatabase.TryGetGUIDAndLocalFileIdentifier(sceneAsset, out var guid, out long _)
+                ? guid
+                : AllZeroGuidHex;
+
+            this.sceneAsset = sceneAsset;
+        }
+#endif // UNITY_EDITOR
 
         /// <summary>
         /// Used by <see cref="ISerializable"/> for custom serialization support.
         /// </summary>
         protected SceneReference(SerializationInfo info, StreamingContext context)
+            : this(info.GetString("sceneAssetGuidHex"))
         {
-            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
-            sceneAssetGuidHex = info.GetString("sceneAssetGuidHex");
-
-#if UNITY_EDITOR
-            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
-            if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath))
-            {
-                sceneAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath);
-            }
-#endif // UNITY_EDITOR
         }
 
         /// <summary>
