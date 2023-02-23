@@ -42,6 +42,7 @@ namespace Eflatun.SceneReference.Tests
         {
             var scene = SceneManager.GetSceneByPath(TestSceneContainerPath);
             yield return SceneManager.UnloadSceneAsync(scene);
+            _testMb = null;
         }
 
         [Test]
