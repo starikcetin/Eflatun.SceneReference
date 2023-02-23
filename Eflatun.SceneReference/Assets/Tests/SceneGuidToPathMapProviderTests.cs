@@ -8,13 +8,13 @@ namespace Eflatun.SceneReference.Tests
     public class SceneGuidToPathMapProviderTests
     {
         private const string DisabledGuid = "7e37b14fa3517514a91937cec5cad27a";
-        private const string DisabledPath = "Assets/TestUtils/TestScene_Disabled.unity";
+        private const string DisabledPath = "Assets/Tests/Utils/TestScene_Disabled.unity";
 
         private const string EnabledGuid = "e3f2c1473b766c34ba5b37779d71787e";
-        private const string EnabledPath = "Assets/TestUtils/TestScene_Enabled.unity";
+        private const string EnabledPath = "Assets/Tests/Utils/TestScene_Enabled.unity";
 
         private const string NotInBuildGuid = "63c386231869c904c9b701dd79268476";
-        private const string NotInBuildPath = "Assets/TestUtils/TestScene_NotInBuild.unity";
+        private const string NotInBuildPath = "Assets/Tests/Utils/TestScene_NotInBuild.unity";
 
         [Test]
         public void SceneGuidToPathMap_ContainsUtilScenes()
