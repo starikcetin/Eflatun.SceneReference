@@ -150,7 +150,7 @@ namespace Eflatun.SceneReference
         public int BuildIndex => SceneUtility.GetBuildIndexByScenePath(Path);
 
         /// <summary>
-        /// Name of the scene asset.
+        /// Name of the scene asset. Without '.unity' extension.
         /// </summary>
         /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
         /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
