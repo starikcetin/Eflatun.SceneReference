@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+- Prevent empty string GUIDs in serialized `SceneReference` instances.
 - Internal bug fixes.
 
 

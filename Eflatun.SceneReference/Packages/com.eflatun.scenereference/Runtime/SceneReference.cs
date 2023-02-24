@@ -17,7 +17,7 @@ namespace Eflatun.SceneReference
     /// </summary>
     [PublicAPI]
     [Serializable]
-    public class SceneReference : ISerializable
+    public class SceneReference : ISerializable, ISerializationCallbackReceiver
     {
         /// <summary>
         /// Creates a new <see cref="SceneReference"/> which references the scene at the given path.
@@ -251,6 +251,28 @@ namespace Eflatun.SceneReference
         {
             // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
             info.AddValue("sceneAssetGuidHex", sceneAssetGuidHex);
+        }
+
+        /// <summary>
+        /// DO NOT CALL
+        /// </summary>
+        void ISerializationCallbackReceiver.OnBeforeSerialize()
+        {
+            if (string.IsNullOrEmpty(sceneAssetGuidHex))
+            {
+                sceneAssetGuidHex = AllZeroGuidHex;
+            }
+        }
+
+        /// <summary>
+        /// DO NOT CALL
+        /// </summary>
+        void ISerializationCallbackReceiver.OnAfterDeserialize()
+        {
+            if (string.IsNullOrEmpty(sceneAssetGuidHex))
+            {
+                sceneAssetGuidHex = AllZeroGuidHex;
+            }
         }
     }
 }
