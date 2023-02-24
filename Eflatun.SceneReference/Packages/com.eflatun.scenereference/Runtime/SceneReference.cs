@@ -1,6 +1,9 @@
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -17,7 +20,8 @@ namespace Eflatun.SceneReference
     /// </summary>
     [PublicAPI]
     [Serializable]
-    public class SceneReference : ISerializable, ISerializationCallbackReceiver
+    [XmlRoot("Eflatun.SceneReference.SceneReference")]
+    public class SceneReference : ISerializable, ISerializationCallbackReceiver, IXmlSerializable
     {
         /// <summary>
         /// Creates a new <see cref="SceneReference"/> which references the scene at the given path.
@@ -45,6 +49,9 @@ namespace Eflatun.SceneReference
         /// </summary>
         public SceneReference()
         {
+            // This parameterless constructor is required for the XML serialization.
+            // See: https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.ixmlserializable?view=net-7.0#remarks
+
             sceneAssetGuidHex = AssetGuidHex;
             sceneAsset = null;
         }
@@ -273,6 +280,36 @@ namespace Eflatun.SceneReference
             {
                 sceneAssetGuidHex = AllZeroGuidHex;
             }
+        }
+
+        /// <summary>
+        /// DO NOT CALL
+        /// </summary>
+        XmlSchema IXmlSerializable.GetSchema()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// DO NOT CALL
+        /// </summary>
+        void IXmlSerializable.ReadXml(XmlReader reader)
+        {
+            sceneAssetGuidHex = reader.ReadString();
+
+#if UNITY_EDITOR
+            sceneAsset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath)
+                ? AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath)
+                : null;
+#endif // UNITY_EDITOR
+        }
+
+        /// <summary>
+        /// DO NOT CALL
+        /// </summary>
+        void IXmlSerializable.WriteXml(XmlWriter writer)
+        {
+            writer.WriteString(sceneAssetGuidHex);
         }
     }
 }

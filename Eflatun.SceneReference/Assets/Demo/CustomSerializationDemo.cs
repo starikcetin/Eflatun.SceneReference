@@ -1,6 +1,9 @@
+using System;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 using Eflatun.SceneReference;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -13,6 +16,7 @@ public class CustomSerializationDemo : MonoBehaviour
     {
         ToJsonAndBack();
         ToBinaryAndBack();
+        ToXmlAndBack();
     }
 
     private void ToBinaryAndBack()
@@ -22,7 +26,9 @@ public class CustomSerializationDemo : MonoBehaviour
         using var ms = new MemoryStream();
 
         bf.Serialize(ms, original);
-        Debug.Log($"Binary serialization: {ms.ToArray().Aggregate("", (agg, cur) => agg + cur)}");
+        var bytes = ms.ToArray();
+        var base64 = Convert.ToBase64String(bytes);
+        Debug.Log($"Binary serialization (base64): {base64}");
 
         ms.Position = 0;
         var deserialized = (SceneReference)bf.Deserialize(ms);
@@ -36,6 +42,22 @@ public class CustomSerializationDemo : MonoBehaviour
         Debug.Log($"JSON serialization: {json}");
 
         var deserialized = JsonConvert.DeserializeObject<SceneReference>(json);
+        Debug.Log("Deserialized path: " + (deserialized is { HasValue: true, IsInSceneGuidToPathMap: true } ? deserialized.Path : "<empty>"));
+    }
+
+    private void ToXmlAndBack()
+    {
+        Debug.Log("--- XML ---");
+        var xmlSerializer = new XmlSerializer(typeof(SceneReference));
+        var sb = new StringBuilder();
+        using var xmlWriter = XmlWriter.Create(sb);
+        xmlSerializer.Serialize(xmlWriter, original);
+        var xml = sb.ToString();
+        Debug.Log($"XML serialization: {xml}");
+
+        using var stringReader = new StringReader(xml);
+        using var xmlReader = XmlReader.Create(stringReader);
+        var deserialized = (SceneReference)xmlSerializer.Deserialize(xmlReader);
         Debug.Log("Deserialized path: " + (deserialized is { HasValue: true, IsInSceneGuidToPathMap: true } ? deserialized.Path : "<empty>"));
     }
 }

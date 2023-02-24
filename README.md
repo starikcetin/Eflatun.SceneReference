@@ -342,9 +342,64 @@ Checking `IsSafeToUse` is equivalent to checking all partial validation properti
 
 ## Custom Serialization
 
-`SceneReference` implements the `ISerializable` interface and the corresponding deserialization constructor. Therefore, custom serialization is supported.
+Serializers listed under this section are tested and supported.
 
-**Warning:** Custom serialization is only tested with `BinaryFormatter` and `Newtonsoft.Json`.
+If you come across any problems while using these serializers, or if you want another serializer to be supported, please [open an issue](https://github.com/starikcetin/Eflatun.SceneReference/issues).
+
+### JSON serialization via `Newtonsoft.Json`
+
+Example `SceneReference` serialization to Json and back via `Newtonsoft.Json`:
+
+```cs
+// Serialize
+SceneReference sceneRef = /* ... */;
+var serialized = JsonConvert.SerializeObject(sceneRef);
+
+// Deserialize
+string json = /* ... */;
+SceneReference deserialized = JsonConvert.DeserializeObject<SceneReference>(json);
+```
+
+### Binary serialization via `System.Runtime.Serialization.Formatters.Binary`
+
+Example `SceneReference` serialization to binary and back via `System.Runtime.Serialization.Formatters.Binary`:
+
+```cs
+// Serialize
+SceneReference sceneRef = /* ... */;
+var bf = new BinaryFormatter();
+using var ms = new MemoryStream();
+bf.Serialize(ms, sceneRef);
+var serializedBytes = ms.ToArray();
+var serializedBase64 = Convert.ToBase64String(serializedBytes);
+
+// Deserialize
+byte[] bytes = /* ... */;
+var bf = new BinaryFormatter();
+using var ms = new MemoryStream(bytes);
+SceneReference deserialized = bf.Deserialize(ms) as SceneReference;
+```
+
+### XML serialization via `System.Xml`
+
+Example `SceneReference` serialization to XML and back via `System.Xml`:
+
+```cs
+// Serialize
+SceneReference sceneRef = /* ... */;
+var xmlSerializer = new XmlSerializer(typeof(SceneReference));
+var sb = new StringBuilder();
+using var xmlWriter = XmlWriter.Create(sb);
+xmlSerializer.Serialize(xmlWriter, sceneRef);
+var serialized = sb.ToString();
+
+// Deserialize
+string xml = /* ... */;
+var xmlSerializer = new XmlSerializer(typeof(SceneReference));
+using var stringReader = new StringReader(xml);
+using var xmlReader = XmlReader.Create(stringReader);
+SceneReference deserialized = xmlSerializer.Deserialize(xmlReader) as SceneReference;
+```
 
 ## Creating Instances in Code
 
