@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 - Prevent empty scene GUID hex in Unity serialized `SceneReference` instances.
+- `SceneReference` default constructor now initailizes with an all-zero GUID as intended.
 - Internal bug fixes.
 
 

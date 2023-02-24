@@ -52,7 +52,7 @@ namespace Eflatun.SceneReference
             // This parameterless constructor is required for the XML serialization.
             // See: https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.ixmlserializable?view=net-7.0#remarks
 
-            sceneAssetGuidHex = AssetGuidHex;
+            sceneAssetGuidHex = AllZeroGuidHex;
             sceneAsset = null;
         }
 
