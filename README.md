@@ -95,7 +95,7 @@ using Eflatun.SceneReference;
 
 // You can access these anytime, anywhere
 var sceneGuid = mySceneReference.AssetGuidHex;
-var scenePath = mySceneReference.ScenePath;
+var scenePath = mySceneReference.Path;
 var sceneBuildIndex = mySceneReference.BuildIndex;
 var sceneName = mySceneReference.Name;
 
