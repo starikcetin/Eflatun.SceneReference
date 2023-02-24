@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -14,6 +15,7 @@ namespace Eflatun.SceneReference
     public static class SceneGuidToPathMapProvider
     {
         private static Dictionary<string, string> _sceneGuidToPathMap;
+        private static Dictionary<string, string> _scenePathToGuidMap;
 
         /// <summary>
         /// The scene GUID to path map.
@@ -27,9 +29,21 @@ namespace Eflatun.SceneReference
             }
         }
 
+        /// <summary>
+        /// The scene path to GUID map.
+        /// </summary>
+        public static IReadOnlyDictionary<string, string> ScenePathToGuidMap
+        {
+            get
+            {
+                LoadIfNotAlready();
+                return _scenePathToGuidMap;
+            }
+        }
+
         internal static void DirectAssign(Dictionary<string, string> sceneGuidToPath)
         {
-            _sceneGuidToPathMap = sceneGuidToPath;
+            FillWith(sceneGuidToPath);
         }
 
         [Preserve]
@@ -53,7 +67,14 @@ namespace Eflatun.SceneReference
                 return;
             }
 
-            _sceneGuidToPathMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(genFile.text);
+            var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(genFile.text);
+            FillWith(deserialized);
+        }
+
+        private static void FillWith(Dictionary<string, string> sceneGuidToPath)
+        {
+            _sceneGuidToPathMap = sceneGuidToPath;
+            _scenePathToGuidMap = sceneGuidToPath.ToDictionary(x => x.Value, x => x.Key);
         }
     }
 }

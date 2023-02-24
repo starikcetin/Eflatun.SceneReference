@@ -252,7 +252,7 @@ SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
 
 ## Accessing the Scene Guid to Path Map Directly
 
-The `SceneGuidToPathMapProvider` static class is responsible for providing the scene GUID to scene path mapping to the rest of the code. You have the option of accessing it directly both in runtime and editor code:
+The `SceneGuidToPathMapProvider` static class is responsible for providing the scene GUID to scene path mapping to the rest of the code. There are two maps, one maps from GUIDs to paths, and the other one maps from paths to GUIDs. Both maps are inversely equivalent. You have the option of accessing them directly both in runtime and editor code:
 
 ```cs
 // Import the Runtime namespace
@@ -260,6 +260,9 @@ using Eflatun.SceneReference;
 
 // Get the scene path from a scene GUID. You can do this both in runtime and in editor.
 var scenePath = SceneGuidToPathMapProvider.SceneGuidToPathMap[sceneGuid];
+
+// Get the scene GUID from a scene path. You can do this both in runtime and in editor.
+var sceneGuid = SceneGuidToPathMapProvider.ScenePathToGuidMap[scenePath];
 ```
 
 There are no side-effects of accessing the map directly.
