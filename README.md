@@ -351,6 +351,9 @@ If you come across any problems while using these serializers, or if you want an
 Example `SceneReference` serialization to Json and back via `Newtonsoft.Json`:
 
 ```cs
+using Eflatun.SceneReference;
+using Newtonsoft.Json;
+
 // Serialize
 SceneReference sceneRef = /* ... */;
 var serialized = JsonConvert.SerializeObject(sceneRef);
@@ -365,6 +368,11 @@ SceneReference deserialized = JsonConvert.DeserializeObject<SceneReference>(json
 Example `SceneReference` serialization to binary and back via `System.Runtime.Serialization.Formatters.Binary`:
 
 ```cs
+using Eflatun.SceneReference;
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+
 // Serialize
 SceneReference sceneRef = /* ... */;
 var bf = new BinaryFormatter();
@@ -385,6 +393,12 @@ SceneReference deserialized = bf.Deserialize(ms) as SceneReference;
 Example `SceneReference` serialization to XML and back via `System.Xml`:
 
 ```cs
+using Eflatun.SceneReference;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
+
 // Serialize
 SceneReference sceneRef = /* ... */;
 var xmlSerializer = new XmlSerializer(typeof(SceneReference));
