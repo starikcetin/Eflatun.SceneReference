@@ -346,32 +346,32 @@ MonoBehaviour:
     sceneAssetGuidHex: 00000000000000000000000000000000
   fieldArrayUnassigned:
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   <PropArrayUnassigned>k__BackingField:
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   fieldListUnassigned:
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   <PropListUnassigned>k__BackingField:
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 
+    sceneAssetGuidHex: 00000000000000000000000000000000
   fieldEmpty:
     sceneAsset: {fileID: 0}
     sceneAssetGuidHex: 00000000000000000000000000000000
