@@ -440,8 +440,8 @@ var fromSceneAsset = new SceneReference(sceneAsset);
 ```
 
 **Warnings:**
-- Constructors and the factory methods do NOT validate their arguments. If the given arguments are invalid, then the created `SceneReference` instance will also be invalid.
-- The default constructor always creates an empty and subsequently invalid instance.
+- Constructors and factory methods validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid.
+- The default constructor always creates an empty instance, but it never throws.
 - The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor-use only. Do NOT use it in runtime code.
 
 # Exceptions
@@ -463,6 +463,14 @@ Thrown if a `SceneReference` is invalid. This can happen for these reasons:
 2. The Scene GUID to Path Map is outdated. To fix this, you can either manually run the map generator, or enable all generation triggers. It is highly recommended to keep all the generation triggers enabled.
 
 You can avoid it by checking `IsSafeToUse` (recommended) or `IsInSceneGuidToPathMap`.
+
+## `SceneReferenceCreationException`
+
+Thrown when something goes wrong during the creation of a `SceneReference`. 
+
+It can happen for many different reasons. 
+
+The exception message contains the particular reason and suggestions on how to fix it.
 
 ## `SceneReferenceInternalException`
 

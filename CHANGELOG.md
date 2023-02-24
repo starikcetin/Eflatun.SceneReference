@@ -7,9 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Breaking Changes
+- Constructors and factory methods of `SceneReference` now validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid. Note that the default constructor always creates an empty instance, but it never throws.
+
 ### Added
 - `SceneReference` now supports custom XML serialization via `System.Xml`.
 - `SceneGuidToPathMapProvider` now also provides a path to GUID map, which is inversely equivalent to the already existing GUID to path map.
+- `SceneReferenceCreationException`: Thrown when something goes wrong during the creation of a `SceneReference`.
 
 ### Changed
 - `SceneReference` now implements serialization interfaces explicitly. This means serialization implementations are no longer exposed as `public`.
