@@ -75,5 +75,26 @@ namespace Eflatun.SceneReference.Tests
             // cleanup
             SceneGuidToPathMapProvider.DirectAssign(toRestore);
         }
+
+        [Test]
+        public void SceneGuidToPathMap_And_ScenePathToGuidMap_AreEquivalent()
+        {
+            var g2p = SceneGuidToPathMapProvider.SceneGuidToPathMap;
+            var p2g = SceneGuidToPathMapProvider.ScenePathToGuidMap;
+
+            Assert.AreEqual(g2p.Count, p2g.Count);
+            CollectionAssert.AreEquivalent(g2p.Keys, p2g.Values);
+            CollectionAssert.AreEquivalent(g2p.Values, p2g.Keys);
+
+            foreach (var (guidFromG2P, pathFromG2P) in g2p)
+            {
+                Assert.AreEqual(guidFromG2P, p2g[pathFromG2P]);
+            }
+
+            foreach (var (pathFromP2G, guidFromP2G) in p2g)
+            {
+                Assert.AreEqual(pathFromP2G, g2p[guidFromP2G]);
+            }
+        }
     }
 }
