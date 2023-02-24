@@ -21,7 +21,7 @@ namespace Eflatun.SceneReference
     [PublicAPI]
     [Serializable]
     [XmlRoot("Eflatun.SceneReference.SceneReference")]
-    public class SceneReference : ISerializable, ISerializationCallbackReceiver, IXmlSerializable
+    public class SceneReference : ISerializationCallbackReceiver, ISerializable, IXmlSerializable
     {
         /// <summary>
         /// Creates a new <see cref="SceneReference"/> which references the scene at the given path.
@@ -96,7 +96,7 @@ namespace Eflatun.SceneReference
 #endif // UNITY_EDITOR
 
         /// <summary>
-        /// Used by <see cref="ISerializable"/> for custom serialization support.
+        /// Used by <see cref="ISerializable"/> for custom JSON and Binary serialization support.
         /// </summary>
         protected SceneReference(SerializationInfo info, StreamingContext context)
             : this(info.GetString("sceneAssetGuidHex"))
@@ -251,30 +251,31 @@ namespace Eflatun.SceneReference
             && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(AssetGuidHex, out var path)
             && SceneUtility.GetBuildIndexByScenePath(path) != -1;
 
+        /// <inheritdoc cref="GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)"/>
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            GetObjectData(info, context);
+        }
+
         /// <summary>
-        /// Used by <see cref="ISerializable"/> for custom serialization support.
+        /// Used by <see cref="ISerializable"/> for custom JSON and Binary serialization support.
         /// </summary>
-        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        protected virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
             info.AddValue("sceneAssetGuidHex", sceneAssetGuidHex);
         }
 
-        /// <summary>
-        /// DO NOT CALL
-        /// </summary>
+        /// <inheritdoc cref="OnBeforeSerialize()"/>
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-            if (string.IsNullOrEmpty(sceneAssetGuidHex))
-            {
-                sceneAssetGuidHex = AllZeroGuidHex;
-            }
+            OnBeforeSerialize();
         }
 
         /// <summary>
-        /// DO NOT CALL
+        /// Used by <see cref="ISerializationCallbackReceiver"/>.
         /// </summary>
-        void ISerializationCallbackReceiver.OnAfterDeserialize()
+        protected virtual void OnBeforeSerialize()
         {
             if (string.IsNullOrEmpty(sceneAssetGuidHex))
             {
@@ -282,19 +283,49 @@ namespace Eflatun.SceneReference
             }
         }
 
+        /// <inheritdoc cref="OnAfterDeserialize()"/>
+        void ISerializationCallbackReceiver.OnAfterDeserialize()
+        {
+            OnAfterDeserialize();
+        }
+
         /// <summary>
-        /// DO NOT CALL
+        /// Used by <see cref="ISerializationCallbackReceiver"/>.
         /// </summary>
+        protected virtual void OnAfterDeserialize()
+        {
+            if (string.IsNullOrEmpty(sceneAssetGuidHex))
+            {
+                sceneAssetGuidHex = AllZeroGuidHex;
+            }
+        }
+
+        /// <inheritdoc cref="GetSchema()"/>
         XmlSchema IXmlSerializable.GetSchema()
+        {
+            return GetSchema();
+        }
+
+        /// <summary>
+        /// Used by <see cref="IXmlSerializable"/> for custom XML serialization support..
+        /// </summary>
+        protected virtual XmlSchema GetSchema()
         {
             return null;
         }
 
-        /// <summary>
-        /// DO NOT CALL
-        /// </summary>
+        /// <inheritdoc cref="ReadXml(System.Xml.XmlReader)"/>
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
+            ReadXml(reader);
+        }
+
+        /// <summary>
+        /// Used by <see cref="IXmlSerializable"/> for custom XML serialization support.
+        /// </summary>
+        protected virtual void ReadXml(XmlReader reader)
+        {
+            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
             sceneAssetGuidHex = reader.ReadString();
 
 #if UNITY_EDITOR
@@ -304,11 +335,18 @@ namespace Eflatun.SceneReference
 #endif // UNITY_EDITOR
         }
 
-        /// <summary>
-        /// DO NOT CALL
-        /// </summary>
+        /// <inheritdoc cref="WriteXml(System.Xml.XmlWriter)"/>
         void IXmlSerializable.WriteXml(XmlWriter writer)
         {
+            WriteXml(writer);
+        }
+
+        /// <summary>
+        /// Used by <see cref="IXmlSerializable"/> for custom XML serialization support.
+        /// </summary>
+        protected virtual void WriteXml(XmlWriter writer)
+        {
+            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
             writer.WriteString(sceneAssetGuidHex);
         }
     }

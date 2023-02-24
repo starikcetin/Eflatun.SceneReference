@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - `SceneReference` now supports XML serialization via `System.Xml`.
 
 ### Changed
+- `SceneReference` now implements serialization interfaces explicitly. This means serialization implementations are no longer exposed as `public`.
+- `SceneReference` serialization implementations are now `virtual`. This means child classes can override custom serialization behaviours.
 
 ### Removed
 
