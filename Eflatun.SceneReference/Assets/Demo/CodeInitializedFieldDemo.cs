@@ -21,7 +21,10 @@ public class CodeInitializedFieldDemo : MonoBehaviour
     {
         sceneA = new SceneReference("45ac7250dffb26f4e84eda01a52b8b19");
         sceneB = SceneReference.FromScenePath("Assets/Scenes/SceneB.unity");
+
+#if UNITY_EDITOR
         sceneC = new SceneReference(GetSceneAsset(sceneCSource));
+#endif // UNITY_EDITOR
     }
 
     private static UnityEngine.Object GetSceneAsset(SceneReference x)

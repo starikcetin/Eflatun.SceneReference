@@ -1,23 +1,29 @@
 ﻿using System.IO;
 using NUnit.Framework;
+using UnityEngine.SceneManagement;
 
 namespace Eflatun.SceneReference.Tests.Runtime.Utils
 {
     public static class TestUtils
     {
+        // NOTE: Do not hardcode the build indices, as they seem to change on test builds.
+        // Possibly due to Unity inserting their test scene at the beginning of the list.
+
         public const string TestSceneContainerPath = "Assets/Tests/Runtime/Utils/TestScene_Container.unity";
 
         public const string EnabledSceneName = "TestScene_Enabled";
         public const string EnabledScenePath = "Assets/Tests/Runtime/Utils/TestScene_Enabled.unity";
-        public const int EnabledSceneBuildIndex = 0;
+        public static int EnabledSceneBuildIndex => SceneUtility.GetBuildIndexByScenePath(EnabledScenePath);
         public const string EnabledSceneGuid = "e3f2c1473b766c34ba5b37779d71787e";
 
         public const string DisabledSceneName = "TestScene_Disabled";
         public const string DisabledScenePath = "Assets/Tests/Runtime/Utils/TestScene_Disabled.unity";
+        public static int DisabledSceneBuildIndex => SceneUtility.GetBuildIndexByScenePath(DisabledScenePath);
         public const string DisabledSceneGuid = "7e37b14fa3517514a91937cec5cad27a";
 
         public const string NotInBuildSceneName = "TestScene_NotInBuild";
         public const string NotInBuildScenePath = "Assets/Tests/Runtime/Utils/TestScene_NotInBuild.unity";
+        public static int NotInBuildSceneBuildIndex => SceneUtility.GetBuildIndexByScenePath(NotInBuildScenePath);
         public const string NotInBuildSceneGuid = "63c386231869c904c9b701dd79268476";
 
         public const string AllZeroGuid = "00000000000000000000000000000000";
@@ -56,12 +62,21 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(DisabledSceneName, sr.sceneAsset.name);
 #endif
 
-            Assert.AreEqual(-1, sr.BuildIndex);
+            Assert.AreEqual(DisabledSceneBuildIndex, sr.BuildIndex);
             Assert.IsTrue(sr.HasValue);
             Assert.AreEqual(DisabledSceneGuid, sr.AssetGuidHex);
             Assert.AreEqual(DisabledSceneGuid, sr.sceneAssetGuidHex);
+
+// TODO: Unity seems to be enabling all scenes before making a test build.
+// Figure out a way to disable that behaviour and then get rid of this define check.
+#if UNITY_EDITOR
             Assert.IsFalse(sr.IsSafeToUse);
             Assert.IsFalse(sr.IsInBuildAndEnabled);
+#else // UNITY_EDITOR
+            Assert.IsTrue(sr.IsSafeToUse);
+            Assert.IsTrue(sr.IsInBuildAndEnabled);
+#endif // UNITY_EDITOR
+
             Assert.IsTrue(sr.IsInSceneGuidToPathMap);
         }
 
@@ -74,7 +89,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(NotInBuildSceneName, sr.sceneAsset.name);
 #endif
 
-            Assert.AreEqual(-1, sr.BuildIndex);
+            Assert.AreEqual(NotInBuildSceneBuildIndex, sr.BuildIndex);
             Assert.IsTrue(sr.HasValue);
             Assert.AreEqual(NotInBuildSceneGuid, sr.AssetGuidHex);
             Assert.AreEqual(NotInBuildSceneGuid, sr.sceneAssetGuidHex);
