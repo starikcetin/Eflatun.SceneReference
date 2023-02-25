@@ -53,10 +53,10 @@ public class Test : MonoBehaviour
     [field: SerializeField] public List<SceneReference> PropListDeleted { get; private set; }
 
     [field: Header("Invalid")]
-    public SceneReference fieldInvalid;
-    [field: SerializeField] public SceneReference PropInvalid { get; private set; }
-    public SceneReference[] fieldArrayInvalid;
-    [field: SerializeField] public SceneReference[] PropArrayInvalid { get; private set; }
-    public List<SceneReference> fieldListInvalid;
-    [field: SerializeField] public List<SceneReference> PropListInvalid { get; private set; }
+    public SceneReference fieldNotExisting;
+    [field: SerializeField] public SceneReference PropNotExisting { get; private set; }
+    public SceneReference[] fieldArrayNotExisting;
+    [field: SerializeField] public SceneReference[] PropArrayNotExisting { get; private set; }
+    public List<SceneReference> fieldListNotExisting;
+    [field: SerializeField] public List<SceneReference> PropListNotExisting { get; private set; }
 }
