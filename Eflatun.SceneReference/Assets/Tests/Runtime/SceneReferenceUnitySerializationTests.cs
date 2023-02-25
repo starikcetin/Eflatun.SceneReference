@@ -32,24 +32,24 @@ namespace Eflatun.SceneReference.Tests.Runtime
             TestUtils.AssertEnabledSceneState(_testMb.fieldEnabledScene);
             TestUtils.AssertEnabledSceneState(_testMb.PropEnabledScene);
 
-            foreach (var enabled in _testMb.fieldArrayEnabledScene)
+            foreach (var sr in _testMb.fieldArrayEnabledScene)
             {
-                TestUtils.AssertEnabledSceneState(enabled);
+                TestUtils.AssertEnabledSceneState(sr);
             }
 
-            foreach (var enabled in _testMb.PropArrayEnabledScene)
+            foreach (var sr in _testMb.PropArrayEnabledScene)
             {
-                TestUtils.AssertEnabledSceneState(enabled);
+                TestUtils.AssertEnabledSceneState(sr);
             }
 
-            foreach (var enabled in _testMb.fieldListEnabledScene)
+            foreach (var sr in _testMb.fieldListEnabledScene)
             {
-                TestUtils.AssertEnabledSceneState(enabled);
+                TestUtils.AssertEnabledSceneState(sr);
             }
 
-            foreach (var enabled in _testMb.PropListEnabledScene)
+            foreach (var sr in _testMb.PropListEnabledScene)
             {
-                TestUtils.AssertEnabledSceneState(enabled);
+                TestUtils.AssertEnabledSceneState(sr);
             }
         }
 
@@ -59,24 +59,24 @@ namespace Eflatun.SceneReference.Tests.Runtime
             TestUtils.AssertDisabledSceneState(_testMb.fieldDisabledScene);
             TestUtils.AssertDisabledSceneState(_testMb.PropDisabledScene);
 
-            foreach (var disabled in _testMb.fieldArrayDisabledScene)
+            foreach (var sr in _testMb.fieldArrayDisabledScene)
             {
-                TestUtils.AssertDisabledSceneState(disabled);
+                TestUtils.AssertDisabledSceneState(sr);
             }
 
-            foreach (var disabled in _testMb.PropArrayDisabledScene)
+            foreach (var sr in _testMb.PropArrayDisabledScene)
             {
-                TestUtils.AssertDisabledSceneState(disabled);
+                TestUtils.AssertDisabledSceneState(sr);
             }
 
-            foreach (var disabled in _testMb.fieldListDisabledScene)
+            foreach (var sr in _testMb.fieldListDisabledScene)
             {
-                TestUtils.AssertDisabledSceneState(disabled);
+                TestUtils.AssertDisabledSceneState(sr);
             }
 
-            foreach (var disabled in _testMb.PropListDisabledScene)
+            foreach (var sr in _testMb.PropListDisabledScene)
             {
-                TestUtils.AssertDisabledSceneState(disabled);
+                TestUtils.AssertDisabledSceneState(sr);
             }
         }
 
@@ -86,24 +86,24 @@ namespace Eflatun.SceneReference.Tests.Runtime
             TestUtils.AssertNotInBuildSceneState(_testMb.fieldNotInBuildScene);
             TestUtils.AssertNotInBuildSceneState(_testMb.PropNotInBuildScene);
 
-            foreach (var notInBuild in _testMb.fieldArrayNotInBuildScene)
+            foreach (var sr in _testMb.fieldArrayNotInBuildScene)
             {
-                TestUtils.AssertNotInBuildSceneState(notInBuild);
+                TestUtils.AssertNotInBuildSceneState(sr);
             }
 
-            foreach (var notInBuild in _testMb.PropArrayNotInBuildScene)
+            foreach (var sr in _testMb.PropArrayNotInBuildScene)
             {
-                TestUtils.AssertNotInBuildSceneState(notInBuild);
+                TestUtils.AssertNotInBuildSceneState(sr);
             }
 
-            foreach (var notInBuild in _testMb.fieldListNotInBuildScene)
+            foreach (var sr in _testMb.fieldListNotInBuildScene)
             {
-                TestUtils.AssertNotInBuildSceneState(notInBuild);
+                TestUtils.AssertNotInBuildSceneState(sr);
             }
 
-            foreach (var notInBuild in _testMb.PropListNotInBuildScene)
+            foreach (var sr in _testMb.PropListNotInBuildScene)
             {
-                TestUtils.AssertNotInBuildSceneState(notInBuild);
+                TestUtils.AssertNotInBuildSceneState(sr);
             }
         }
 
@@ -113,24 +113,24 @@ namespace Eflatun.SceneReference.Tests.Runtime
             TestUtils.AssertEmptyState(_testMb.fieldEmpty);
             TestUtils.AssertEmptyState(_testMb.PropEmpty);
 
-            foreach (var empty in _testMb.fieldArrayEmpty)
+            foreach (var sr in _testMb.fieldArrayEmpty)
             {
-                TestUtils.AssertEmptyState(empty);
+                TestUtils.AssertEmptyState(sr);
             }
 
-            foreach (var empty in _testMb.PropArrayEmpty)
+            foreach (var sr in _testMb.PropArrayEmpty)
             {
-                TestUtils.AssertEmptyState(empty);
+                TestUtils.AssertEmptyState(sr);
             }
 
-            foreach (var empty in _testMb.fieldListEmpty)
+            foreach (var sr in _testMb.fieldListEmpty)
             {
-                TestUtils.AssertEmptyState(empty);
+                TestUtils.AssertEmptyState(sr);
             }
 
-            foreach (var empty in _testMb.PropListEmpty)
+            foreach (var sr in _testMb.PropListEmpty)
             {
-                TestUtils.AssertEmptyState(empty);
+                TestUtils.AssertEmptyState(sr);
             }
         }
 
@@ -140,24 +140,24 @@ namespace Eflatun.SceneReference.Tests.Runtime
             TestUtils.AssertDeletedSceneState(_testMb.fieldDeletedScene);
             TestUtils.AssertDeletedSceneState(_testMb.PropDeletedScene);
 
-            foreach (var deleted in _testMb.fieldArrayDeletedScene)
+            foreach (var sr in _testMb.fieldArrayDeletedScene)
             {
-                TestUtils.AssertDeletedSceneState(deleted);
+                TestUtils.AssertDeletedSceneState(sr);
             }
 
-            foreach (var deleted in _testMb.PropArrayDeletedScene)
+            foreach (var sr in _testMb.PropArrayDeletedScene)
             {
-                TestUtils.AssertDeletedSceneState(deleted);
+                TestUtils.AssertDeletedSceneState(sr);
             }
 
-            foreach (var deleted in _testMb.fieldListDeletedScene)
+            foreach (var sr in _testMb.fieldListDeletedScene)
             {
-                TestUtils.AssertDeletedSceneState(deleted);
+                TestUtils.AssertDeletedSceneState(sr);
             }
 
-            foreach (var deleted in _testMb.PropListDeletedScene)
+            foreach (var sr in _testMb.PropListDeletedScene)
             {
-                TestUtils.AssertDeletedSceneState(deleted);
+                TestUtils.AssertDeletedSceneState(sr);
             }
         }
 
@@ -167,24 +167,24 @@ namespace Eflatun.SceneReference.Tests.Runtime
             TestUtils.AssertNotExistingState(_testMb.fieldNotExisting);
             TestUtils.AssertNotExistingState(_testMb.PropNotExisting);
 
-            foreach (var invalid in _testMb.fieldArrayNotExisting)
+            foreach (var sr in _testMb.fieldArrayNotExisting)
             {
-                TestUtils.AssertNotExistingState(invalid);
+                TestUtils.AssertNotExistingState(sr);
             }
 
-            foreach (var invalid in _testMb.PropArrayNotExisting)
+            foreach (var sr in _testMb.PropArrayNotExisting)
             {
-                TestUtils.AssertNotExistingState(invalid);
+                TestUtils.AssertNotExistingState(sr);
             }
 
-            foreach (var invalid in _testMb.fieldListNotExisting)
+            foreach (var sr in _testMb.fieldListNotExisting)
             {
-                TestUtils.AssertNotExistingState(invalid);
+                TestUtils.AssertNotExistingState(sr);
             }
 
-            foreach (var invalid in _testMb.PropListNotExisting)
+            foreach (var sr in _testMb.PropListNotExisting)
             {
-                TestUtils.AssertNotExistingState(invalid);
+                TestUtils.AssertNotExistingState(sr);
             }
         }
 
@@ -194,24 +194,24 @@ namespace Eflatun.SceneReference.Tests.Runtime
             TestUtils.AssertNotSceneAssetState(_testMb.fieldNotSceneAsset);
             TestUtils.AssertNotSceneAssetState(_testMb.PropNotSceneAsset);
 
-            foreach (var invalid in _testMb.fieldArrayNotSceneAsset)
+            foreach (var sr in _testMb.fieldArrayNotSceneAsset)
             {
-                TestUtils.AssertNotSceneAssetState(invalid);
+                TestUtils.AssertNotSceneAssetState(sr);
             }
 
-            foreach (var invalid in _testMb.PropArrayNotSceneAsset)
+            foreach (var sr in _testMb.PropArrayNotSceneAsset)
             {
-                TestUtils.AssertNotSceneAssetState(invalid);
+                TestUtils.AssertNotSceneAssetState(sr);
             }
 
-            foreach (var invalid in _testMb.fieldListNotSceneAsset)
+            foreach (var sr in _testMb.fieldListNotSceneAsset)
             {
-                TestUtils.AssertNotSceneAssetState(invalid);
+                TestUtils.AssertNotSceneAssetState(sr);
             }
 
-            foreach (var invalid in _testMb.PropListNotSceneAsset)
+            foreach (var sr in _testMb.PropListNotSceneAsset)
             {
-                TestUtils.AssertNotSceneAssetState(invalid);
+                TestUtils.AssertNotSceneAssetState(sr);
             }
         }
     }
