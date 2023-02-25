@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Eflatun.SceneReference.Tests.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
 using UnityEngine.TestTools;
@@ -82,6 +83,20 @@ namespace Eflatun.SceneReference.Tests
 
             // non-hex char at the beginning
             Assert.IsFalse("xb2424ee6dbe9094e9637f087446b90f".IsValidGuidHex());
+        }
+
+        [Test]
+        public void GuardGuidAgainstNullOrWhitespace_Works()
+        {
+            Assert.AreEqual(TestUtils.AllZeroGuid, ((string)null).GuardGuidAgainstNullOrWhitespace());
+            Assert.AreEqual(TestUtils.AllZeroGuid, "".GuardGuidAgainstNullOrWhitespace());
+            Assert.AreEqual(TestUtils.AllZeroGuid, "    ".GuardGuidAgainstNullOrWhitespace());
+
+            const string validGuid = "eb2424ee6dbe9094e9637f087446b90f";
+            Assert.AreEqual(validGuid, validGuid.GuardGuidAgainstNullOrWhitespace());
+
+            const string invalidGuid = "abcdefx9";
+            Assert.AreEqual(invalidGuid, invalidGuid.GuardGuidAgainstNullOrWhitespace());
         }
     }
 }
