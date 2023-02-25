@@ -30,7 +30,7 @@ namespace Eflatun.SceneReference.Editor
 
         private UnityEngine.Object _asset;
         private string _guid;
-        private string _scenePath;
+        private string _path;
         private EditorBuildSettingsScene _sceneInBuildSettings;
         private SceneBuildSettingsState _sceneBuildSettingsState;
         private SceneReferenceOptionsAttribute _optionsAttribute;
@@ -61,7 +61,7 @@ namespace Eflatun.SceneReference.Editor
 
             _asset = _assetSerializedProperty.objectReferenceValue;
             _guid = _guidSerializedProperty.stringValue;
-            _scenePath = AssetDatabase.GetAssetPath(_asset);
+            _path = AssetDatabase.GetAssetPath(_asset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
 
             _optionsAttribute = fieldInfo.GetCustomAttribute<SceneReferenceOptionsAttribute>(false) ?? DefaultOptionsAttribute;
@@ -106,19 +106,19 @@ namespace Eflatun.SceneReference.Editor
             if (_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
             {
                 var title = "Add Scene to Build Settings?";
-                var body = $"Would you like to add the following scene to build settings?\n\n{_scenePath}";
+                var body = $"Would you like to add the following scene to build settings?\n\n{_path}";
 
                 switch (EditorUtility.DisplayDialogComplex(title, body, "Add to Build as Enabled", "Add to Build as Disabled", "Cancel"))
                 {
                     case 0:
                     {
-                        tempScenes.Add(new EditorBuildSettingsScene(_scenePath, true));
+                        tempScenes.Add(new EditorBuildSettingsScene(_path, true));
                         changed = true;
                         break;
                     }
                     case 1:
                     {
-                        tempScenes.Add(new EditorBuildSettingsScene(_scenePath, false));
+                        tempScenes.Add(new EditorBuildSettingsScene(_path, false));
                         changed = true;
                         break;
                     }
@@ -127,7 +127,7 @@ namespace Eflatun.SceneReference.Editor
             else if (_sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
             {
                 var title = "Enable Scene in Build Settings?";
-                var body = $"Would you like to enable the following scene in build settings?\n\n{_scenePath}";
+                var body = $"Would you like to enable the following scene in build settings?\n\n{_path}";
 
                 if (EditorUtility.DisplayDialog(title, body, "Enable in Build", "Cancel"))
                 {

@@ -12,6 +12,7 @@ We renamed some of our internal serialized fields. Since we utilize `FormerlySer
 - Constructors and factory methods of `SceneReference` now validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid. Note that the default constructor always creates an empty instance, but it never throws.
 - Changed the argument name of the constructor `SceneReference(string sceneAssetGuidHex)` to `SceneReference(string guid)`.
 - Changed the name of the property `SceneReference.AssetGuidHex` to `SceneReference.Guid`.
+- Changed the argument name of the factory method `SceneReference.FromScenePath(string scenePath)` to `SceneReference.FromScenePath(string path)`.
 
 ### Added
 - `SceneReference` now supports custom XML serialization via `System.Xml`.

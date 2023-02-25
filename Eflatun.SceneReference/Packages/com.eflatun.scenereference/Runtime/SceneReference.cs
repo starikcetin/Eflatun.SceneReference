@@ -130,23 +130,23 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// Creates a new <see cref="SceneReference"/> which references the scene at the given path.
         /// </summary>
-        /// <param name="scenePath">Path of the scene to reference.</param>
+        /// <param name="path">Path of the scene to reference.</param>
         /// <returns>A new <see cref="SceneReference"/>.</returns>
         /// <exception cref="SceneReferenceCreationException">Throws if the given path is null or whitespace.</exception>
         /// <exception cref="SceneReferenceCreationException">Throws if the given path is not found in the Scene Path to GUID map.</exception>
-        public static SceneReference FromScenePath(string scenePath)
+        public static SceneReference FromScenePath(string path)
         {
-            if (string.IsNullOrWhiteSpace(scenePath))
+            if (string.IsNullOrWhiteSpace(path))
             {
                 throw new SceneReferenceCreationException(
-                    $"Given path is null or whitespace. Path: '{scenePath}'" +
+                    $"Given path is null or whitespace. Path: '{path}'" +
                     "\nTo fix this, make sure you provide the path of a valid scene.");
             }
 
-            if (!SceneGuidToPathMapProvider.ScenePathToGuidMap.TryGetValue(scenePath, out var guidFromMap))
+            if (!SceneGuidToPathMapProvider.ScenePathToGuidMap.TryGetValue(path, out var guidFromMap))
             {
                 throw new SceneReferenceCreationException(
-                    $"Given path is not found in the scene GUID to path map. Path: '{scenePath}'"
+                    $"Given path is not found in the scene GUID to path map. Path: '{path}'"
                     + "\nThis can happen for these reasons:"
                     + "\n1. The asset at the given path either doesn't exist or is not a scene. To fix this, make sure you provide the path of a valid scene."
                     + "\n2. The scene GUID to path map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.");
@@ -391,8 +391,8 @@ namespace Eflatun.SceneReference
             guid = deserializedGuid;
 
 #if UNITY_EDITOR
-            asset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(deserializedGuid, out var scenePath)
-                ? AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath)
+            asset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(deserializedGuid, out var pathFromMap)
+                ? AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(pathFromMap)
                 : null;
 #endif // UNITY_EDITOR
         }
