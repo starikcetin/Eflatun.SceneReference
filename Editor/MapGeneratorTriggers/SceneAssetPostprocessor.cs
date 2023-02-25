@@ -12,8 +12,8 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
                 .Concat(deletedAssets)
                 .Concat(movedAssets)
                 .Concat(movedFromAssetPaths)
-                .Any(EditorUtils.IsSceneAssetPath);
-            
+                .Any(EditorUtils.IsScenePath);
+
             if (hasSceneChange)
             {
                 if (SettingsManager.SceneGuidToPathMap.IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers.AfterSceneAssetChange))

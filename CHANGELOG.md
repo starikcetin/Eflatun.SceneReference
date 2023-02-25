@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Breaking Changes
+
 ### Added
 
 ### Changed
@@ -14,6 +16,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+
+
+
+## [2.0.0] - 2023-02-26
+We renamed some of our internal serialized fields. Since we utilize `FormerlySerializedAs`, you will not lose any data. However, due to these changes, Unity will re-serialize your `SceneReference`s as you save your scenes and prefabs. Please commit these re-serialization changes as you see fit, otherwise they will keep appearing until you do so.
+
+### Breaking Changes
+- Constructors and factory methods of `SceneReference` now validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid. Note that the default constructor always creates an empty instance, but it never throws.
+- Changed the argument name of the constructor `SceneReference(string sceneAssetGuidHex)` to `SceneReference(string guid)`.
+- Changed the name of the property `SceneReference.AssetGuidHex` to `SceneReference.Guid`.
+- Changed the argument name of the factory method `SceneReference.FromScenePath(string scenePath)` to `SceneReference.FromScenePath(string path)`.
+
+### Added
+- `SceneReference` now supports custom XML serialization via `System.Xml`.
+- `SceneGuidToPathMapProvider` now also provides a path to GUID map, which is inversely equivalent to the already existing GUID to path map.
+- `SceneReferenceCreationException`: Thrown when something goes wrong during the creation of a `SceneReference`.
+
+### Changed
+- `SceneReference` now implements serialization interfaces explicitly. This means serialization implementations are no longer exposed as `public`.
+- `SceneReference` serialization implementations are now `virtual`. This means child classes can override custom serialization behaviours.
+- Internal serialized field name changes:
+	- `SceneReference.sceneAsset` to `SceneReference.asset`
+	- `SceneReference.sceneAssetGuidHex` to `SceneReference.guid`
+
+### Fixed
+- Prevent empty scene GUID hex in Unity serialized `SceneReference` instances.
+- `SceneReference` default constructor now initailizes with an all-zero GUID as intended.
+- `SceneReference` custom serialization implementations now guard against null or whitespace GUIDs.
+- Prevent Unity from throwing `InvalidOperationException: Stack empty.` after inline scene-in-build utility pop-up.
+- Internal bug fixes.
 
 
 

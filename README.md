@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-    Provides Asset GUID, Scene Path, Build Index, and Scene Name.
+    Provides GUID, Path, Build Index, and Name.
 </p>
 <br>
 
@@ -46,13 +46,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `1.5.0` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `2.0.0` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#1.5.0"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#2.0.0"
 ```
 
-_Although it is highly discouraged, you can replace `1.5.0` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `2.0.0` with `upm` to get the latest version instead of a specific one._
 
 ## Ignore Auto-Generated Map File in Version Control
 
@@ -94,8 +94,8 @@ using Eflatun.SceneReference;
 using Eflatun.SceneReference;
 
 // You can access these anytime, anywhere
-var sceneGuid = mySceneReference.AssetGuidHex;
-var scenePath = mySceneReference.ScenePath;
+var sceneGuid = mySceneReference.Guid;
+var scenePath = mySceneReference.Path;
 var sceneBuildIndex = mySceneReference.BuildIndex;
 var sceneName = mySceneReference.Name;
 
@@ -252,7 +252,7 @@ SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
 
 ## Accessing the Scene Guid to Path Map Directly
 
-The `SceneGuidToPathMapProvider` static class is responsible for providing the scene GUID to scene path mapping to the rest of the code. You have the option of accessing it directly both in runtime and editor code:
+The `SceneGuidToPathMapProvider` static class is responsible for providing the scene GUID to scene path mapping to the rest of the code. There are two maps, one maps from GUIDs to paths, and the other one maps from paths to GUIDs. Both maps are inversely equivalent. You have the option of accessing them directly both in runtime and editor code:
 
 ```cs
 // Import the Runtime namespace
@@ -260,6 +260,9 @@ using Eflatun.SceneReference;
 
 // Get the scene path from a scene GUID. You can do this both in runtime and in editor.
 var scenePath = SceneGuidToPathMapProvider.SceneGuidToPathMap[sceneGuid];
+
+// Get the scene GUID from a scene path. You can do this both in runtime and in editor.
+var sceneGuid = SceneGuidToPathMapProvider.ScenePathToGuidMap[scenePath];
 ```
 
 There are no side-effects of accessing the map directly.
@@ -342,9 +345,80 @@ Checking `IsSafeToUse` is equivalent to checking all partial validation properti
 
 ## Custom Serialization
 
-`SceneReference` implements the `ISerializable` interface and the corresponding deserialization constructor. Therefore, custom serialization is supported.
+Serializers listed under this section are tested and supported.
 
-**Warning:** Custom serialization is only tested with `BinaryFormatter` and `Newtonsoft.Json`.
+If you come across any problems while using these serializers, or if you want another serializer to be supported, please [open an issue](https://github.com/starikcetin/Eflatun.SceneReference/issues).
+
+### JSON serialization via `Newtonsoft.Json`
+
+Example `SceneReference` serialization to Json and back via `Newtonsoft.Json`:
+
+```cs
+using Eflatun.SceneReference;
+using Newtonsoft.Json;
+
+// Serialize
+SceneReference sceneRef = /* ... */;
+var serialized = JsonConvert.SerializeObject(sceneRef);
+
+// Deserialize
+string json = /* ... */;
+SceneReference deserialized = JsonConvert.DeserializeObject<SceneReference>(json);
+```
+
+### Binary serialization via `System.Runtime.Serialization.Formatters.Binary`
+
+**Warning:** We strongly advise against using `BinaryFormatter` as it is inconsistent and has inherent security risks. Only use it if you absolutely have to.
+
+Example `SceneReference` serialization to binary and back via `System.Runtime.Serialization.Formatters.Binary`:
+
+```cs
+using Eflatun.SceneReference;
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+
+// Serialize
+SceneReference sceneRef = /* ... */;
+var bf = new BinaryFormatter();
+using var ms = new MemoryStream();
+bf.Serialize(ms, sceneRef);
+var serializedBytes = ms.ToArray();
+var serializedBase64 = Convert.ToBase64String(serializedBytes);
+
+// Deserialize
+byte[] bytes = /* ... */;
+var bf = new BinaryFormatter();
+using var ms = new MemoryStream(bytes);
+SceneReference deserialized = bf.Deserialize(ms) as SceneReference;
+```
+
+### XML serialization via `System.Xml`
+
+Example `SceneReference` serialization to XML and back via `System.Xml`:
+
+```cs
+using Eflatun.SceneReference;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
+
+// Serialize
+SceneReference sceneRef = /* ... */;
+var xmlSerializer = new XmlSerializer(typeof(SceneReference));
+var sb = new StringBuilder();
+using var xmlWriter = XmlWriter.Create(sb);
+xmlSerializer.Serialize(xmlWriter, sceneRef);
+var serialized = sb.ToString();
+
+// Deserialize
+string xml = /* ... */;
+var xmlSerializer = new XmlSerializer(typeof(SceneReference));
+using var stringReader = new StringReader(xml);
+using var xmlReader = XmlReader.Create(stringReader);
+SceneReference deserialized = xmlSerializer.Deserialize(xmlReader) as SceneReference;
+```
 
 ## Creating Instances in Code
 
@@ -368,8 +442,8 @@ var fromSceneAsset = new SceneReference(sceneAsset);
 ```
 
 **Warnings:**
-- Constructors and the factory methods do NOT validate their arguments. If the given arguments are invalid, then the created `SceneReference` instance will also be invalid.
-- The default constructor always creates an empty and subsequently invalid instance.
+- Constructors and factory methods validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid.
+- The default constructor always creates an empty instance, but it never throws.
 - The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor-use only. Do NOT use it in runtime code.
 
 # Exceptions
@@ -391,6 +465,14 @@ Thrown if a `SceneReference` is invalid. This can happen for these reasons:
 2. The Scene GUID to Path Map is outdated. To fix this, you can either manually run the map generator, or enable all generation triggers. It is highly recommended to keep all the generation triggers enabled.
 
 You can avoid it by checking `IsSafeToUse` (recommended) or `IsInSceneGuidToPathMap`.
+
+## `SceneReferenceCreationException`
+
+Thrown when something goes wrong during the creation of a `SceneReference`. 
+
+It can happen for many different reasons. 
+
+The exception message contains the particular reason and suggestions on how to fix it.
 
 ## `SceneReferenceInternalException`
 

@@ -25,12 +25,12 @@ namespace Eflatun.SceneReference.Editor
             Enabled
         }
 
-        private SerializedProperty _sceneAssetProperty;
-        private SerializedProperty _sceneAssetGuidHexProperty;
+        private SerializedProperty _assetSerializedProperty;
+        private SerializedProperty _guidSerializedProperty;
 
-        private UnityEngine.Object _sceneAsset;
-        private string _sceneAssetGuidHex;
-        private string _scenePath;
+        private UnityEngine.Object _asset;
+        private string _guid;
+        private string _path;
         private EditorBuildSettingsScene _sceneInBuildSettings;
         private SceneBuildSettingsState _sceneBuildSettingsState;
         private SceneReferenceOptionsAttribute _optionsAttribute;
@@ -56,17 +56,17 @@ namespace Eflatun.SceneReference.Editor
 
         private void Init(SerializedProperty property)
         {
-            _sceneAssetProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAsset));
-            _sceneAssetGuidHexProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAssetGuidHex));
+            _assetSerializedProperty = property.FindPropertyRelative(nameof(SceneReference.asset));
+            _guidSerializedProperty = property.FindPropertyRelative(nameof(SceneReference.guid));
 
-            _sceneAsset = _sceneAssetProperty.objectReferenceValue;
-            _sceneAssetGuidHex = _sceneAssetGuidHexProperty.stringValue;
-            _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
-            _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _sceneAssetGuidHex);
+            _asset = _assetSerializedProperty.objectReferenceValue;
+            _guid = _guidSerializedProperty.stringValue;
+            _path = AssetDatabase.GetAssetPath(_asset);
+            _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
 
             _optionsAttribute = fieldInfo.GetCustomAttribute<SceneReferenceOptionsAttribute>(false) ?? DefaultOptionsAttribute;
 
-            if (_sceneAsset == null)
+            if (_asset == null)
             {
                 _sceneBuildSettingsState = SceneBuildSettingsState.None;
             }
@@ -84,18 +84,18 @@ namespace Eflatun.SceneReference.Editor
             }
         }
 
-        private void SetWith(UnityEngine.Object newSceneAsset)
+        private void SetWith(UnityEngine.Object newAsset)
         {
-            if (_sceneAsset == newSceneAsset)
+            if (_asset == newAsset)
             {
                 return;
             }
 
-            _sceneAssetProperty.objectReferenceValue = newSceneAsset;
+            _assetSerializedProperty.objectReferenceValue = newAsset;
 
-            var sceneAssetPath = AssetDatabase.GetAssetPath(newSceneAsset);
-            var sceneAssetGuid = AssetDatabase.GUIDFromAssetPath(sceneAssetPath);
-            _sceneAssetGuidHexProperty.stringValue = sceneAssetGuid.ToString();
+            var newPath = AssetDatabase.GetAssetPath(newAsset);
+            var newGuid = AssetDatabase.GUIDFromAssetPath(newPath);
+            _guidSerializedProperty.stringValue = newGuid.ToString();
         }
 
         private void FixInBuildSettings()
@@ -106,19 +106,19 @@ namespace Eflatun.SceneReference.Editor
             if (_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
             {
                 var title = "Add Scene to Build Settings?";
-                var body = $"Would you like to add the following scene to build settings?\n\n{_scenePath}";
+                var body = $"Would you like to add the following scene to build settings?\n\n{_path}";
 
                 switch (EditorUtility.DisplayDialogComplex(title, body, "Add to Build as Enabled", "Add to Build as Disabled", "Cancel"))
                 {
                     case 0:
                     {
-                        tempScenes.Add(new EditorBuildSettingsScene(_scenePath, true));
+                        tempScenes.Add(new EditorBuildSettingsScene(_path, true));
                         changed = true;
                         break;
                     }
                     case 1:
                     {
-                        tempScenes.Add(new EditorBuildSettingsScene(_scenePath, false));
+                        tempScenes.Add(new EditorBuildSettingsScene(_path, false));
                         changed = true;
                         break;
                     }
@@ -127,11 +127,11 @@ namespace Eflatun.SceneReference.Editor
             else if (_sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
             {
                 var title = "Enable Scene in Build Settings?";
-                var body = $"Would you like to enable the following scene in build settings?\n\n{_scenePath}";
+                var body = $"Would you like to enable the following scene in build settings?\n\n{_path}";
 
                 if (EditorUtility.DisplayDialog(title, body, "Enable in Build", "Cancel"))
                 {
-                    tempScenes.Single(x => x.guid.ToString() == _sceneAssetGuidHex).enabled = true;
+                    tempScenes.Single(x => x.guid.ToString() == _guid).enabled = true;
                     changed = true;
                 }
             }
@@ -163,15 +163,15 @@ namespace Eflatun.SceneReference.Editor
             // draw scene asset selector
             var selectorFieldRect = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             selectorFieldRect.height = EditorGUIUtility.singleLineHeight;
-            var newSceneAsset = EditorGUI.ObjectField(selectorFieldRect, _sceneAsset, typeof(SceneAsset), false);
-            SetWith(newSceneAsset);
+            var newAsset = EditorGUI.ObjectField(selectorFieldRect, _asset, typeof(SceneAsset), false);
+            SetWith(newAsset);
 
             // draw utility line if needed
             if (IsUtilityLineEnabled && NeedsBuildSettingsFix)
             {
                 var buttonRect = new Rect(position)
                 {
-                    // x = selectorFieldRect.x,                    
+                    // x = selectorFieldRect.x,
                     y = position.y + EditorGUIUtility.singleLineHeight,
                     // width = selectorFieldRect.width,
                     height = EditorGUIUtility.singleLineHeight
@@ -187,6 +187,9 @@ namespace Eflatun.SceneReference.Editor
                 if (GUI.Button(buttonRect, buttonText))
                 {
                     FixInBuildSettings();
+
+                    // This prevents Unity from throwing 'InvalidOperationException: Stack empty.' at 'EditorGUI.EndProperty'.
+                    GUIUtility.ExitGUI();
                 }
             }
 
@@ -198,7 +201,7 @@ namespace Eflatun.SceneReference.Editor
         {
             Init(property);
 
-            return _sceneAsset && IsUtilityLineEnabled && NeedsBuildSettingsFix
+            return _asset && IsUtilityLineEnabled && NeedsBuildSettingsFix
                 ? EditorGUIUtility.singleLineHeight * 2
                 : EditorGUIUtility.singleLineHeight;
         }

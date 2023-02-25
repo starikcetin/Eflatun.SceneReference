@@ -10,6 +10,6 @@ namespace Eflatun.SceneReference.Editor.Utility
         /// <summary>
         /// Returns true if the given <paramref name="path"/> ends with the file extension ".unity".
         /// </summary>
-        public static bool IsSceneAssetPath(this string path) => Path.GetExtension(path) == ".unity";
+        public static bool IsScenePath(this string path) => Path.GetExtension(path) == ".unity";
     }
 }
