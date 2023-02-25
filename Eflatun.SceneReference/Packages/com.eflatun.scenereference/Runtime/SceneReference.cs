@@ -23,6 +23,8 @@ namespace Eflatun.SceneReference
     [XmlRoot("Eflatun.SceneReference.SceneReference")]
     public class SceneReference : ISerializationCallbackReceiver, ISerializable, IXmlSerializable
     {
+        private const string CustomSerializationGuidKey = "sceneAssetGuidHex";
+
         [SerializeField] internal UnityEngine.Object sceneAsset;
 
         [FormerlySerializedAs("sceneAssetGuidHex")]
@@ -120,7 +122,7 @@ namespace Eflatun.SceneReference
         /// <inheritdoc cref="GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)"/>
         protected SceneReference(SerializationInfo info, StreamingContext context)
         {
-            var deserializedGuid = info.GetString("sceneAssetGuidHex");
+            var deserializedGuid = info.GetString(CustomSerializationGuidKey);
             FillWithDeserializedGuid(deserializedGuid);
         }
 
@@ -300,7 +302,7 @@ namespace Eflatun.SceneReference
         protected virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             var guidToSerialize = GetGuidToSerialize();
-            info.AddValue("sceneAssetGuidHex", guidToSerialize);
+            info.AddValue(CustomSerializationGuidKey, guidToSerialize);
         }
 
         /// <inheritdoc cref="OnBeforeSerialize()"/>
