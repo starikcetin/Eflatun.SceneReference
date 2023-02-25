@@ -114,9 +114,7 @@ namespace Eflatun.SceneReference
         }
 #endif // UNITY_EDITOR
 
-        /// <summary>
-        /// Used by <see cref="ISerializable"/> for custom JSON and Binary serialization support.
-        /// </summary>
+        /// <inheritdoc cref="GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)"/>
         protected SceneReference(SerializationInfo info, StreamingContext context)
         {
             var deserializedGuid = info.GetString("sceneAssetGuidHex");
@@ -293,6 +291,9 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// Used by <see cref="ISerializable"/> for custom JSON and Binary serialization support.
         /// </summary>
+        /// <remarks>
+        /// https://www.newtonsoft.com/json/help/html/serializationguide.htm#ISerializable
+        /// </remarks>
         protected virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             var guidToSerialize = GetGuidToSerialize();
