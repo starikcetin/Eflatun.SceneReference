@@ -35,7 +35,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         {
             foreach (var (key, value) in SceneGuidToPathMapProvider.SceneGuidToPathMap)
             {
-                Assert.IsTrue(key.IsValidGuidHex());
+                Assert.IsTrue(key.IsValidGuid());
                 Assert.IsTrue(TestUtils.IsSceneAssetPath(value));
                 Assert.IsTrue(value.StartsWith("Assets/") || value.StartsWith("Packages/"));
             }

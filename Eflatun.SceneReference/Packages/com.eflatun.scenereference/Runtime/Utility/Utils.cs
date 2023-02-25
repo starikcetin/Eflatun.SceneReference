@@ -8,8 +8,10 @@ namespace Eflatun.SceneReference.Utility
     /// </summary>
     internal static class Utils
     {
-        // GUID hex of an invalid asset contains all zeros. A GUID hex has 32 chars.
-        public const string AllZeroGuidHex = "00000000000000000000000000000000";
+        /// <summary>
+        /// GUID of all zeros. Invalid assets have this GUID.
+        /// </summary>
+        public const string AllZeroGuid = "00000000000000000000000000000000";
 
         /// <summary>
         /// Returns the given <paramref name="path"/> without file extension.
@@ -33,15 +35,15 @@ namespace Eflatun.SceneReference.Utility
         }
 
         /// <summary>
-        /// Returns if the given <paramref name="guidHex"/> is valid. A valid GUID hex is 32 chars of hexadecimals.
+        /// Returns if the given <paramref name="guid"/> is valid. A valid GUID is 32 chars of hexadecimals.
         /// </summary>
-        public static bool IsValidGuidHex(this string guidHex) =>
-            guidHex.Length == 32 && guidHex.ToUpper().All("0123456789ABCDEF".Contains);
+        public static bool IsValidGuid(this string guid) =>
+            guid.Length == 32 && guid.ToUpper().All("0123456789ABCDEF".Contains);
 
         /// <summary>
-        /// If the given GUID is null or whitespace returns <see cref="AllZeroGuidHex"/>. Otherwise returns as-is.
+        /// If the given GUID is null or whitespace returns <see cref="AllZeroGuid"/>. Otherwise returns as-is.
         /// </summary>
         public static string GuardGuidAgainstNullOrWhitespace(this string guid) =>
-            string.IsNullOrWhiteSpace(guid) ? AllZeroGuidHex : guid;
+            string.IsNullOrWhiteSpace(guid) ? AllZeroGuid : guid;
     }
 }

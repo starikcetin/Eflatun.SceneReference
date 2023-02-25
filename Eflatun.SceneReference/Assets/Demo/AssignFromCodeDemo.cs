@@ -15,10 +15,10 @@ public class AssignFromCodeDemo : MonoBehaviour
         // from guids
         try
         {
-            var target = source.Select(x => new SceneReference(x.AssetGuidHex)).ToArray();
+            var target = source.Select(x => new SceneReference(x.Guid)).ToArray();
             for (var i = 0; i < source.Length; i++)
             {
-                Assert.AreEqual(source[i].AssetGuidHex, target[i].AssetGuidHex);
+                Assert.AreEqual(source[i].Guid, target[i].Guid);
             }
 
             Debug.Log("from guids pass");
@@ -36,7 +36,7 @@ public class AssignFromCodeDemo : MonoBehaviour
             var target = source.Select(x => new SceneReference(GetSceneAsset(x))).ToArray();
             for (var i = 0; i < source.Length; i++)
             {
-                Assert.AreEqual(source[i].AssetGuidHex, target[i].AssetGuidHex);
+                Assert.AreEqual(source[i].Guid, target[i].Guid);
             }
 
             Debug.Log("from objects pass");
@@ -54,7 +54,7 @@ public class AssignFromCodeDemo : MonoBehaviour
             var target = source.Select(x => SceneReference.FromScenePath(x.Path)).ToArray();
             for (var i = 0; i < source.Length; i++)
             {
-                Assert.AreEqual(source[i].AssetGuidHex, target[i].AssetGuidHex);
+                Assert.AreEqual(source[i].Guid, target[i].Guid);
             }
 
             Debug.Log("from paths pass");
@@ -70,7 +70,7 @@ public class AssignFromCodeDemo : MonoBehaviour
         {
             var empty1 = new SceneReference();
             var empty2 = new SceneReference();
-            Assert.AreEqual(empty1.AssetGuidHex, empty2.AssetGuidHex);
+            Assert.AreEqual(empty1.Guid, empty2.Guid);
             Assert.AreEqual(GetSceneAsset(empty1), GetSceneAsset(empty2));
             AssertBothThrowsOrAreEqual<EmptySceneReferenceException, string>(() => empty1.Path, () => empty2.Path);
 

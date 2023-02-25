@@ -49,10 +49,10 @@ public class ValidationDemo : MonoBehaviour
         var sb = new StringBuilder();
         sb.AppendLine($"SceneReference \"{memberName}\" properties:");
 
-        sb.Append($"{nameof(sceneReference.AssetGuidHex)}: ");
+        sb.Append($"{nameof(sceneReference.Guid)}: ");
         try
         {
-            sb.AppendLine(sceneReference.AssetGuidHex.ToString());
+            sb.AppendLine(sceneReference.Guid.ToString());
         }
         catch (Exception e)
         {

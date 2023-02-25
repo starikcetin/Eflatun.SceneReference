@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-    Provides Asset GUID, Scene Path, Build Index, and Scene Name.
+    Provides GUID, Path, Build Index, and Name.
 </p>
 <br>
 
@@ -94,7 +94,7 @@ using Eflatun.SceneReference;
 using Eflatun.SceneReference;
 
 // You can access these anytime, anywhere
-var sceneGuid = mySceneReference.AssetGuidHex;
+var sceneGuid = mySceneReference.Guid;
 var scenePath = mySceneReference.Path;
 var sceneBuildIndex = mySceneReference.BuildIndex;
 var sceneName = mySceneReference.Name;

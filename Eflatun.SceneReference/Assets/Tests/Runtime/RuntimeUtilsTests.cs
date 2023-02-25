@@ -69,22 +69,22 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void IsValidGuidHex_Works()
+        public void IsValidGuid_Works()
         {
-            Assert.IsTrue("eb2424ee6dbe9094e9637f087446b90f".IsValidGuidHex());
-            Assert.IsTrue("EB2424EE6DBE9094E9637F087446B90F".IsValidGuidHex());
-            Assert.IsTrue("00000000000000000000000000000000".IsValidGuidHex());
+            Assert.IsTrue("eb2424ee6dbe9094e9637f087446b90f".IsValidGuid());
+            Assert.IsTrue("EB2424EE6DBE9094E9637F087446B90F".IsValidGuid());
+            Assert.IsTrue("00000000000000000000000000000000".IsValidGuid());
 
-            Assert.IsFalse("".IsValidGuidHex());
+            Assert.IsFalse("".IsValidGuid());
 
             // too short
-            Assert.IsFalse("eb2424ee6d".IsValidGuidHex());
+            Assert.IsFalse("eb2424ee6d".IsValidGuid());
 
             // too long
-            Assert.IsFalse("eb2424ee6dbe9094e9637f087446b90fabcde1234".IsValidGuidHex());
+            Assert.IsFalse("eb2424ee6dbe9094e9637f087446b90fabcde1234".IsValidGuid());
 
             // non-hex char at the beginning
-            Assert.IsFalse("xb2424ee6dbe9094e9637f087446b90f".IsValidGuidHex());
+            Assert.IsFalse("xb2424ee6dbe9094e9637f087446b90f".IsValidGuid());
         }
 
         [Test]

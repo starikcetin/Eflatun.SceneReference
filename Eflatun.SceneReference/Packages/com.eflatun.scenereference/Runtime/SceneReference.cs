@@ -7,6 +7,7 @@ using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -23,7 +24,9 @@ namespace Eflatun.SceneReference
     public class SceneReference : ISerializationCallbackReceiver, ISerializable, IXmlSerializable
     {
         [SerializeField] internal UnityEngine.Object sceneAsset;
-        [SerializeField] internal string sceneAssetGuidHex;
+
+        [FormerlySerializedAs("sceneAssetGuidHex")]
+        [SerializeField] internal string guid;
 
         /// <summary>
         /// Creates a new empty <see cref="SceneReference"/>.
@@ -34,44 +37,44 @@ namespace Eflatun.SceneReference
             // This parameterless constructor is required for the custom XML serialization support.
             // See: https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.ixmlserializable?view=net-7.0#remarks
 
-            sceneAssetGuidHex = Utils.AllZeroGuidHex;
+            guid = Utils.AllZeroGuid;
             sceneAsset = null;
         }
 
         /// <summary>
         /// Creates a new <see cref="SceneReference"/> which references the scene that has the given GUID.
         /// </summary>
-        /// <param name="sceneAssetGuidHex">GUID of the scene to reference.</param>
+        /// <param name="guid">GUID of the scene to reference.</param>
         /// <exception cref="SceneReferenceCreationException">Throws if the given GUID is null or empty.</exception>
         /// <exception cref="SceneReferenceCreationException">Throws if the given GUID is not found in the Scene GUID to Path map.</exception>
         /// <exception cref="SceneReferenceCreationException">(Editor-only) Throws if the asset is not found at the path that the GUID corresponds to.</exception>
-        public SceneReference(string sceneAssetGuidHex)
+        public SceneReference(string guid)
         {
-            if (string.IsNullOrWhiteSpace(sceneAssetGuidHex))
+            if (string.IsNullOrWhiteSpace(guid))
             {
                 throw new SceneReferenceCreationException(
-                    $"Given GUID is null or whitespace. GUID: '{sceneAssetGuidHex}'." +
+                    $"Given GUID is null or whitespace. GUID: '{guid}'." +
                     "\nTo fix this, make sure you provide the GUID of a valid scene.");
             }
 
-            if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath))
+            if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(guid, out var pathFromMap))
             {
                 throw new SceneReferenceCreationException(
-                    $"Given GUID is not found in the scene GUID to path map. GUID: '{sceneAssetGuidHex}'"
+                    $"Given GUID is not found in the scene GUID to path map. GUID: '{guid}'"
                     + "\nThis can happen for these reasons:"
                     + "\n1. The asset with the given GUID either doesn't exist or is not a scene. To fix this, make sure you provide the GUID of a valid scene."
                     + "\n2. The scene GUID to path map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.");
             }
 
-            this.sceneAssetGuidHex = sceneAssetGuidHex;
+            this.guid = guid;
 
 #if UNITY_EDITOR
-            var foundAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath);
+            var foundAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(pathFromMap);
 
             if (!foundAsset)
             {
                 throw new SceneReferenceCreationException(
-                    $"The given GUID was found in the map, but the scene asset at the corresponding path could not be loaded. Path: '{scenePath}'."
+                    $"The given GUID was found in the map, but the scene asset at the corresponding path could not be loaded. Path: '{pathFromMap}'."
                     + "\nThis can happen due to an outdated scene GUID to path map retaining scene assets that no longer exist. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.");
             }
 
@@ -95,21 +98,21 @@ namespace Eflatun.SceneReference
                 throw new SceneReferenceCreationException("Given scene asset is null. To fix this, make sure you provide a valid scene asset.");
             }
 
-            if (!AssetDatabase.TryGetGUIDAndLocalFileIdentifier(sceneAsset, out var guid, out long _))
+            if (!AssetDatabase.TryGetGUIDAndLocalFileIdentifier(sceneAsset, out var guidFromAsset, out long _))
             {
                 throw new SceneReferenceCreationException("Could not retrieve the GUID of the given scene asset. This usually indicates an invalid asset. To fix this, make sure you provide a valid scene asset.");
             }
 
-            if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(guid))
+            if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(guidFromAsset))
             {
                 throw new SceneReferenceCreationException(
-                    $"The GUID of the given scene asset is not found in the scene GUID to path map. GUID: '{guid}'"
+                    $"The GUID of the given scene asset is not found in the scene GUID to path map. GUID: '{guidFromAsset}'"
                     + "\nThis can happen for these reasons:"
                     + "\n1. Given asset either doesn't exist or is not a scene. To fix this, make sure you provide a valid scene asset."
                     + "\n2. The scene GUID to path map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.");
             }
 
-            sceneAssetGuidHex = guid;
+            guid = guidFromAsset;
             this.sceneAsset = sceneAsset;
         }
 #endif // UNITY_EDITOR
@@ -118,7 +121,7 @@ namespace Eflatun.SceneReference
         protected SceneReference(SerializationInfo info, StreamingContext context)
         {
             var deserializedGuid = info.GetString("sceneAssetGuidHex");
-            FillFromDeserializedGuid(deserializedGuid);
+            FillWithDeserializedGuid(deserializedGuid);
         }
 
         /// <summary>
@@ -137,7 +140,7 @@ namespace Eflatun.SceneReference
                     "\nTo fix this, make sure you provide the path of a valid scene.");
             }
 
-            if (!SceneGuidToPathMapProvider.ScenePathToGuidMap.TryGetValue(scenePath, out var sceneGuid))
+            if (!SceneGuidToPathMapProvider.ScenePathToGuidMap.TryGetValue(scenePath, out var guidFromMap))
             {
                 throw new SceneReferenceCreationException(
                     $"Given path is not found in the scene GUID to path map. Path: '{scenePath}'"
@@ -146,13 +149,13 @@ namespace Eflatun.SceneReference
                     + "\n2. The scene GUID to path map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.");
             }
 
-            return new SceneReference(sceneGuid);
+            return new SceneReference(guidFromMap);
         }
 
         /// <summary>
-        /// GUID of the scene asset in hex format.
+        /// GUID of the scene asset.
         /// </summary>
-        public string AssetGuidHex => sceneAssetGuidHex.GuardGuidAgainstNullOrWhitespace();
+        public string Guid => guid.GuardGuidAgainstNullOrWhitespace();
 
         /// <summary>
         /// Path to the scene asset.
@@ -168,12 +171,12 @@ namespace Eflatun.SceneReference
                     throw new EmptySceneReferenceException();
                 }
 
-                if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(AssetGuidHex, out var scenePath))
+                if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var pathFromMap))
                 {
                     throw new InvalidSceneReferenceException();
                 }
 
-                return scenePath;
+                return pathFromMap;
             }
         }
 
@@ -219,13 +222,13 @@ namespace Eflatun.SceneReference
         {
             get
             {
-                if (!AssetGuidHex.IsValidGuidHex())
+                if (!Guid.IsValidGuid())
                 {
                     // internal exceptions should not be documented as part of the public API
-                    throw SceneReferenceInternalException.InvalidAssetGuidHex("54783205", AssetGuidHex);
+                    throw SceneReferenceInternalException.InvalidGuid("54783205", Guid);
                 }
 
-                return AssetGuidHex != Utils.AllZeroGuidHex;
+                return Guid != Utils.AllZeroGuid;
             }
         }
 
@@ -249,7 +252,7 @@ namespace Eflatun.SceneReference
                     throw new EmptySceneReferenceException();
                 }
 
-                return SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(AssetGuidHex);
+                return SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(Guid);
             }
         }
 
@@ -279,7 +282,7 @@ namespace Eflatun.SceneReference
         /// <seealso cref="IsInBuildAndEnabled"/>
         public bool IsSafeToUse =>
             HasValue
-            && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(AssetGuidHex, out var path)
+            && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path)
             && SceneUtility.GetBuildIndexByScenePath(path) != -1;
 
         /// <inheritdoc cref="GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)"/>
@@ -311,7 +314,8 @@ namespace Eflatun.SceneReference
         /// </summary>
         protected virtual void OnBeforeSerialize()
         {
-            sceneAssetGuidHex = sceneAssetGuidHex.GuardGuidAgainstNullOrWhitespace();
+            // Intentionally using guid field directly instead of the Guid property.
+            guid = guid.GuardGuidAgainstNullOrWhitespace();
         }
 
         /// <inheritdoc cref="OnAfterDeserialize()"/>
@@ -325,7 +329,8 @@ namespace Eflatun.SceneReference
         /// </summary>
         protected virtual void OnAfterDeserialize()
         {
-            sceneAssetGuidHex = sceneAssetGuidHex.GuardGuidAgainstNullOrWhitespace();
+            // Intentionally using guid field directly instead of the Guid property.
+            guid = guid.GuardGuidAgainstNullOrWhitespace();
         }
 
         /// <inheritdoc cref="GetSchema()"/>
@@ -354,7 +359,7 @@ namespace Eflatun.SceneReference
         protected virtual void ReadXml(XmlReader reader)
         {
             var deserializedGuid = reader.ReadString();
-            FillFromDeserializedGuid(deserializedGuid);
+            FillWithDeserializedGuid(deserializedGuid);
         }
 
         /// <inheritdoc cref="WriteXml(System.Xml.XmlWriter)"/>
@@ -373,14 +378,14 @@ namespace Eflatun.SceneReference
         }
 
         private string GetGuidToSerialize() =>
-            sceneAssetGuidHex.GuardGuidAgainstNullOrWhitespace();
+            guid.GuardGuidAgainstNullOrWhitespace();
 
-        private void FillFromDeserializedGuid(string deserializedGuid)
+        private void FillWithDeserializedGuid(string deserializedGuid)
         {
             deserializedGuid = deserializedGuid.GuardGuidAgainstNullOrWhitespace();
 
-            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
-            sceneAssetGuidHex = deserializedGuid;
+            // Intentionally using guid field directly instead of the Guid property.
+            guid = deserializedGuid;
 
 #if UNITY_EDITOR
             sceneAsset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(deserializedGuid, out var scenePath)

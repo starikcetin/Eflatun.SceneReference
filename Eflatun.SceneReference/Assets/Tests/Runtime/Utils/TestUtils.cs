@@ -73,8 +73,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
             Assert.AreEqual(EnabledSceneBuildIndex, sr.BuildIndex);
             Assert.IsTrue(sr.HasValue);
-            Assert.AreEqual(EnabledSceneGuid, sr.AssetGuidHex);
-            Assert.AreEqual(EnabledSceneGuid, sr.sceneAssetGuidHex);
+            Assert.AreEqual(EnabledSceneGuid, sr.Guid);
+            Assert.AreEqual(EnabledSceneGuid, sr.guid);
             Assert.IsTrue(sr.IsSafeToUse);
             Assert.IsTrue(sr.IsInBuildAndEnabled);
             Assert.IsTrue(sr.IsInSceneGuidToPathMap);
@@ -91,8 +91,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
             Assert.AreEqual(DisabledSceneBuildIndex, sr.BuildIndex);
             Assert.IsTrue(sr.HasValue);
-            Assert.AreEqual(DisabledSceneGuid, sr.AssetGuidHex);
-            Assert.AreEqual(DisabledSceneGuid, sr.sceneAssetGuidHex);
+            Assert.AreEqual(DisabledSceneGuid, sr.Guid);
+            Assert.AreEqual(DisabledSceneGuid, sr.guid);
 
 // TODO: Unity seems to be enabling all scenes before making a test build.
 // Figure out a way to disable that behaviour and then get rid of this define check.
@@ -118,8 +118,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
             Assert.AreEqual(NotInBuildSceneBuildIndex, sr.BuildIndex);
             Assert.IsTrue(sr.HasValue);
-            Assert.AreEqual(NotInBuildSceneGuid, sr.AssetGuidHex);
-            Assert.AreEqual(NotInBuildSceneGuid, sr.sceneAssetGuidHex);
+            Assert.AreEqual(NotInBuildSceneGuid, sr.Guid);
+            Assert.AreEqual(NotInBuildSceneGuid, sr.guid);
             Assert.IsFalse(sr.IsSafeToUse);
             Assert.IsFalse(sr.IsInBuildAndEnabled);
             Assert.IsTrue(sr.IsInSceneGuidToPathMap);
@@ -136,8 +136,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.BuildIndex);
             Assert.IsFalse(sr.HasValue);
-            Assert.AreEqual(AllZeroGuid, sr.AssetGuidHex);
-            Assert.AreEqual(AllZeroGuid, sr.sceneAssetGuidHex);
+            Assert.AreEqual(AllZeroGuid, sr.Guid);
+            Assert.AreEqual(AllZeroGuid, sr.guid);
             Assert.IsFalse(sr.IsSafeToUse);
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.IsInBuildAndEnabled);
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.IsInSceneGuidToPathMap);
@@ -160,8 +160,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.BuildIndex);
             Assert.IsTrue(sr.HasValue);
-            Assert.AreEqual(expectedGuid, sr.AssetGuidHex);
-            Assert.AreEqual(expectedGuid, sr.sceneAssetGuidHex);
+            Assert.AreEqual(expectedGuid, sr.Guid);
+            Assert.AreEqual(expectedGuid, sr.guid);
             Assert.IsFalse(sr.IsSafeToUse);
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.IsInBuildAndEnabled);
             Assert.IsFalse(sr.IsInSceneGuidToPathMap);

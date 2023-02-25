@@ -25,11 +25,11 @@ namespace Eflatun.SceneReference.Editor
             Enabled
         }
 
-        private SerializedProperty _sceneAssetProperty;
-        private SerializedProperty _sceneAssetGuidHexProperty;
+        private SerializedProperty _sceneAssetSerializedProperty;
+        private SerializedProperty _guidSerializedProperty;
 
         private UnityEngine.Object _sceneAsset;
-        private string _sceneAssetGuidHex;
+        private string _guid;
         private string _scenePath;
         private EditorBuildSettingsScene _sceneInBuildSettings;
         private SceneBuildSettingsState _sceneBuildSettingsState;
@@ -56,13 +56,13 @@ namespace Eflatun.SceneReference.Editor
 
         private void Init(SerializedProperty property)
         {
-            _sceneAssetProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAsset));
-            _sceneAssetGuidHexProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAssetGuidHex));
+            _sceneAssetSerializedProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAsset));
+            _guidSerializedProperty = property.FindPropertyRelative(nameof(SceneReference.guid));
 
-            _sceneAsset = _sceneAssetProperty.objectReferenceValue;
-            _sceneAssetGuidHex = _sceneAssetGuidHexProperty.stringValue;
+            _sceneAsset = _sceneAssetSerializedProperty.objectReferenceValue;
+            _guid = _guidSerializedProperty.stringValue;
             _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
-            _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _sceneAssetGuidHex);
+            _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
 
             _optionsAttribute = fieldInfo.GetCustomAttribute<SceneReferenceOptionsAttribute>(false) ?? DefaultOptionsAttribute;
 
@@ -91,11 +91,11 @@ namespace Eflatun.SceneReference.Editor
                 return;
             }
 
-            _sceneAssetProperty.objectReferenceValue = newSceneAsset;
+            _sceneAssetSerializedProperty.objectReferenceValue = newSceneAsset;
 
             var sceneAssetPath = AssetDatabase.GetAssetPath(newSceneAsset);
             var sceneAssetGuid = AssetDatabase.GUIDFromAssetPath(sceneAssetPath);
-            _sceneAssetGuidHexProperty.stringValue = sceneAssetGuid.ToString();
+            _guidSerializedProperty.stringValue = sceneAssetGuid.ToString();
         }
 
         private void FixInBuildSettings()
@@ -131,7 +131,7 @@ namespace Eflatun.SceneReference.Editor
 
                 if (EditorUtility.DisplayDialog(title, body, "Enable in Build", "Cancel"))
                 {
-                    tempScenes.Single(x => x.guid.ToString() == _sceneAssetGuidHex).enabled = true;
+                    tempScenes.Single(x => x.guid.ToString() == _guid).enabled = true;
                     changed = true;
                 }
             }
@@ -171,7 +171,7 @@ namespace Eflatun.SceneReference.Editor
             {
                 var buttonRect = new Rect(position)
                 {
-                    // x = selectorFieldRect.x,                    
+                    // x = selectorFieldRect.x,
                     y = position.y + EditorGUIUtility.singleLineHeight,
                     // width = selectorFieldRect.width,
                     height = EditorGUIUtility.singleLineHeight
