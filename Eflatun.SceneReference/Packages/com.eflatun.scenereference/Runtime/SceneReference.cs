@@ -149,8 +149,16 @@ namespace Eflatun.SceneReference
         /// Used by <see cref="ISerializable"/> for custom JSON and Binary serialization support.
         /// </summary>
         protected SceneReference(SerializationInfo info, StreamingContext context)
-            : this(info.GetString("sceneAssetGuidHex"))
         {
+            var deserializedGuid = info.GetString("sceneAssetGuidHex");
+            sceneAssetGuidHex = deserializedGuid;
+
+#if UNITY_EDITOR
+            if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(deserializedGuid, out var scenePath))
+            {
+                sceneAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath);
+            }
+#endif // UNITY_EDITOR
         }
 
         /// <summary>
