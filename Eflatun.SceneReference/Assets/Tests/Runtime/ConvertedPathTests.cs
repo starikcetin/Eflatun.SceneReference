@@ -2,7 +2,7 @@
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
 
-namespace Eflatun.SceneReference.Tests
+namespace Eflatun.SceneReference.Tests.Runtime
 {
     public class ConvertedPathTests
     {

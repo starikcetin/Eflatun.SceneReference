@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Eflatun.SceneReference.Tests
+namespace Eflatun.SceneReference.Tests.Runtime
 {
     public class SceneReferenceCustomSerializationTests
     {

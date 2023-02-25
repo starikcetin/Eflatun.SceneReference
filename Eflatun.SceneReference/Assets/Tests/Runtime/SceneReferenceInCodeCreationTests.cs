@@ -1,8 +1,8 @@
-﻿using Eflatun.SceneReference.Tests.Utils;
+﻿using Eflatun.SceneReference.Tests.Runtime.Utils;
 using NUnit.Framework;
 using UnityEditor;
 
-namespace Eflatun.SceneReference.Tests
+namespace Eflatun.SceneReference.Tests.Runtime
 {
     public class SceneReferenceInCodeCreationTests
     {

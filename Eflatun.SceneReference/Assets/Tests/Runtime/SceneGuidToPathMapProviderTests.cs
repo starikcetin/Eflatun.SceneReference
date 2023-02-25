@@ -1,38 +1,29 @@
 ﻿using System.Collections.Generic;
-using Eflatun.SceneReference.Editor.Utility;
+using Eflatun.SceneReference.Tests.Runtime.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
 
-namespace Eflatun.SceneReference.Tests
+namespace Eflatun.SceneReference.Tests.Runtime
 {
     public class SceneGuidToPathMapProviderTests
     {
-        private const string DisabledGuid = "7e37b14fa3517514a91937cec5cad27a";
-        private const string DisabledPath = "Assets/Tests/Utils/TestScene_Disabled.unity";
-
-        private const string EnabledGuid = "e3f2c1473b766c34ba5b37779d71787e";
-        private const string EnabledPath = "Assets/Tests/Utils/TestScene_Enabled.unity";
-
-        private const string NotInBuildGuid = "63c386231869c904c9b701dd79268476";
-        private const string NotInBuildPath = "Assets/Tests/Utils/TestScene_NotInBuild.unity";
-
         [Test]
         public void SceneGuidToPathMap_ContainsUtilScenes()
         {
-            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(EnabledGuid));
-            Assert.AreEqual(EnabledPath, SceneGuidToPathMapProvider.SceneGuidToPathMap[EnabledGuid]);
+            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(TestUtils.EnabledSceneGuid));
+            Assert.AreEqual(TestUtils.EnabledScenePath, SceneGuidToPathMapProvider.SceneGuidToPathMap[TestUtils.EnabledSceneGuid]);
 
-            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(DisabledGuid));
-            Assert.AreEqual(DisabledPath, SceneGuidToPathMapProvider.SceneGuidToPathMap[DisabledGuid]);
+            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(TestUtils.DisabledSceneGuid));
+            Assert.AreEqual(TestUtils.DisabledScenePath, SceneGuidToPathMapProvider.SceneGuidToPathMap[TestUtils.DisabledSceneGuid]);
 
-            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(NotInBuildGuid));
-            Assert.AreEqual(NotInBuildPath, SceneGuidToPathMapProvider.SceneGuidToPathMap[NotInBuildGuid]);
+            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(TestUtils.NotInBuildSceneGuid));
+            Assert.AreEqual(TestUtils.NotInBuildScenePath, SceneGuidToPathMapProvider.SceneGuidToPathMap[TestUtils.NotInBuildSceneGuid]);
         }
 
         [Test]
         public void SceneGuidToPathMap_DoesNotContainInvalidGuids()
         {
-            Assert.IsFalse(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey("00000000000000000000000000000000"));
+            Assert.IsFalse(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(TestUtils.AllZeroGuid));
             Assert.IsFalse(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(""));
             Assert.IsFalse(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey("eb2424ee6d"));
             Assert.IsFalse(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey("eb2424ee6dbe9094e9637f087446b90fabcde1234"));
@@ -45,7 +36,7 @@ namespace Eflatun.SceneReference.Tests
             foreach (var (key, value) in SceneGuidToPathMapProvider.SceneGuidToPathMap)
             {
                 Assert.IsTrue(key.IsValidGuidHex());
-                Assert.IsTrue(value.IsSceneAssetPath());
+                Assert.IsTrue(TestUtils.IsSceneAssetPath(value));
                 Assert.IsTrue(value.StartsWith("Assets/"));
             }
         }

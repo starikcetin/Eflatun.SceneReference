@@ -1,11 +1,10 @@
 {
-    "name": "Eflatun.SceneReference.Tests",
-    "rootNamespace": "Eflatun.SceneReference.Tests",
+    "name": "Eflatun.SceneReference.Tests.Runtime",
+    "rootNamespace": "Eflatun.SceneReference.Tests.Runtime",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Eflatun.SceneReference",
-        "Eflatun.SceneReference.Editor"
+        "Eflatun.SceneReference"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,9 +1,9 @@
 using System;
-using Eflatun.SceneReference.Tests.Utils;
+using Eflatun.SceneReference.Tests.Runtime.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
 
-namespace Eflatun.SceneReference.Tests
+namespace Eflatun.SceneReference.Tests.Runtime
 {
     public class RuntimeUtilsTests
     {

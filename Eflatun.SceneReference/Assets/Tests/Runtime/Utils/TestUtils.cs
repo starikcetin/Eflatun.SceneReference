@@ -1,22 +1,23 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using NUnit.Framework;
 
-namespace Eflatun.SceneReference.Tests.Utils
+namespace Eflatun.SceneReference.Tests.Runtime.Utils
 {
     public static class TestUtils
     {
-        public const string TestSceneContainerPath = "Assets/Tests/Utils/TestScene_Container.unity";
+        public const string TestSceneContainerPath = "Assets/Tests/Runtime/Utils/TestScene_Container.unity";
 
         public const string EnabledSceneName = "TestScene_Enabled";
-        public const string EnabledScenePath = "Assets/Tests/Utils/TestScene_Enabled.unity";
+        public const string EnabledScenePath = "Assets/Tests/Runtime/Utils/TestScene_Enabled.unity";
         public const int EnabledSceneBuildIndex = 0;
         public const string EnabledSceneGuid = "e3f2c1473b766c34ba5b37779d71787e";
 
         public const string DisabledSceneName = "TestScene_Disabled";
-        public const string DisabledScenePath = "Assets/Tests/Utils/TestScene_Disabled.unity";
+        public const string DisabledScenePath = "Assets/Tests/Runtime/Utils/TestScene_Disabled.unity";
         public const string DisabledSceneGuid = "7e37b14fa3517514a91937cec5cad27a";
 
         public const string NotInBuildSceneName = "TestScene_NotInBuild";
-        public const string NotInBuildScenePath = "Assets/Tests/Utils/TestScene_NotInBuild.unity";
+        public const string NotInBuildScenePath = "Assets/Tests/Runtime/Utils/TestScene_NotInBuild.unity";
         public const string NotInBuildSceneGuid = "63c386231869c904c9b701dd79268476";
 
         public const string AllZeroGuid = "00000000000000000000000000000000";
@@ -26,7 +27,7 @@ namespace Eflatun.SceneReference.Tests.Utils
         public const string NotExistingGuid = "2bc1683d94d80cc269d85e4e8a5fcf5d";
 
         public const string NotSceneAssetGuid = "99d2aa5f58f54c44fba8671b66be5259";
-        public const string NotSceneAssetPath = "Assets/Tests/Utils/TestMaterial.mat";
+        public const string NotSceneAssetPath = "Assets/Tests/Runtime/Utils/TestMaterial.mat";
 
         public static void AssertEnabledSceneReferenceState(SceneReference sr)
         {
@@ -98,6 +99,11 @@ namespace Eflatun.SceneReference.Tests.Utils
             Assert.IsFalse(sr.IsSafeToUse);
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.IsInBuildAndEnabled);
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.IsInSceneGuidToPathMap);
+        }
+
+        public static bool IsSceneAssetPath(string path)
+        {
+            return Path.GetExtension(path) == ".unity";
         }
     }
 }
