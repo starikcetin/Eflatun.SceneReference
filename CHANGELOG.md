@@ -32,6 +32,7 @@ We renamed some of our internal serialized fields. Since we utilize `FormerlySer
 - Prevent empty scene GUID hex in Unity serialized `SceneReference` instances.
 - `SceneReference` default constructor now initailizes with an all-zero GUID as intended.
 - `SceneReference` custom serialization implementations now guard against null or whitespace GUIDs.
+- Prevent Unity from throwing `InvalidOperationException: Stack empty.` after inline scene-in-build utility pop-up.
 - Internal bug fixes.
 
 

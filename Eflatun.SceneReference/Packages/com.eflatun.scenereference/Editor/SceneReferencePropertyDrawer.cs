@@ -187,6 +187,9 @@ namespace Eflatun.SceneReference.Editor
                 if (GUI.Button(buttonRect, buttonText))
                 {
                     FixInBuildSettings();
+
+                    // This prevents Unity from throwing 'InvalidOperationException: Stack empty.' at 'EditorGUI.EndProperty'.
+                    GUIUtility.ExitGUI();
                 }
             }
 
