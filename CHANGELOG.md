@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [Unreleased]
+
+### Breaking Changes
+
+### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+
+## [2.0.0] - 2023-02-26
 We renamed some of our internal serialized fields. Since we utilize `FormerlySerializedAs`, you will not lose any data. However, due to these changes, Unity will re-serialize your `SceneReference`s as you save your scenes and prefabs. Please commit these re-serialization changes as you see fit, otherwise they will keep appearing until you do so.
 
 ### Breaking Changes
@@ -25,8 +39,6 @@ We renamed some of our internal serialized fields. Since we utilize `FormerlySer
 - Internal serialized field name changes:
 	- `SceneReference.sceneAsset` to `SceneReference.asset`
 	- `SceneReference.sceneAssetGuidHex` to `SceneReference.guid`
-
-### Removed
 
 ### Fixed
 - Prevent empty scene GUID hex in Unity serialized `SceneReference` instances.
