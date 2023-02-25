@@ -22,9 +22,6 @@ namespace Eflatun.SceneReference
     [XmlRoot("Eflatun.SceneReference.SceneReference")]
     public class SceneReference : ISerializationCallbackReceiver, ISerializable, IXmlSerializable
     {
-        // GUID hex of an invalid asset contains all zeros. A GUID hex has 32 chars.
-        private const string AllZeroGuidHex = "00000000000000000000000000000000";
-
         [SerializeField] internal UnityEngine.Object sceneAsset;
         [SerializeField] internal string sceneAssetGuidHex;
 
@@ -34,10 +31,10 @@ namespace Eflatun.SceneReference
         /// <remarks>This constructor never throws.</remarks>
         public SceneReference()
         {
-            // This parameterless constructor is required for the XML serialization.
+            // This parameterless constructor is required for the custom XML serialization support.
             // See: https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.ixmlserializable?view=net-7.0#remarks
 
-            sceneAssetGuidHex = AllZeroGuidHex;
+            sceneAssetGuidHex = Utils.AllZeroGuidHex;
             sceneAsset = null;
         }
 
@@ -123,14 +120,7 @@ namespace Eflatun.SceneReference
         protected SceneReference(SerializationInfo info, StreamingContext context)
         {
             var deserializedGuid = info.GetString("sceneAssetGuidHex");
-            sceneAssetGuidHex = deserializedGuid;
-
-#if UNITY_EDITOR
-            if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(deserializedGuid, out var scenePath))
-            {
-                sceneAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath);
-            }
-#endif // UNITY_EDITOR
+            FillFromDeserializedGuid(deserializedGuid);
         }
 
         /// <summary>
@@ -164,22 +154,7 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// GUID of the scene asset in hex format.
         /// </summary>
-        public string AssetGuidHex
-        {
-            get
-            {
-                // For some reason, the field initializer for sceneAssetGuidHex is working inconsistently. Therefore,
-                // we sometimes get empty strings instead of all zero hex. This condition is here to safeguard against
-                // that situation.
-                // TODO: There can be a deeper problem causing the issue described above, needs further investigation.
-                if (string.IsNullOrWhiteSpace(sceneAssetGuidHex))
-                {
-                    return AllZeroGuidHex;
-                }
-
-                return sceneAssetGuidHex;
-            }
-        }
+        public string AssetGuidHex => sceneAssetGuidHex.GuardGuidAgainstNullOrWhitespace();
 
         /// <summary>
         /// Path to the scene asset.
@@ -252,7 +227,7 @@ namespace Eflatun.SceneReference
                     throw SceneReferenceInternalException.InvalidAssetGuidHex("54783205", AssetGuidHex);
                 }
 
-                return AssetGuidHex != AllZeroGuidHex;
+                return AssetGuidHex != Utils.AllZeroGuidHex;
             }
         }
 
@@ -320,8 +295,8 @@ namespace Eflatun.SceneReference
         /// </summary>
         protected virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
-            info.AddValue("sceneAssetGuidHex", sceneAssetGuidHex);
+            var guidToSerialize = GetGuidToSerialize();
+            info.AddValue("sceneAssetGuidHex", guidToSerialize);
         }
 
         /// <inheritdoc cref="OnBeforeSerialize()"/>
@@ -335,10 +310,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         protected virtual void OnBeforeSerialize()
         {
-            if (string.IsNullOrEmpty(sceneAssetGuidHex))
-            {
-                sceneAssetGuidHex = AllZeroGuidHex;
-            }
+            sceneAssetGuidHex = sceneAssetGuidHex.GuardGuidAgainstNullOrWhitespace();
         }
 
         /// <inheritdoc cref="OnAfterDeserialize()"/>
@@ -352,10 +324,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         protected virtual void OnAfterDeserialize()
         {
-            if (string.IsNullOrEmpty(sceneAssetGuidHex))
-            {
-                sceneAssetGuidHex = AllZeroGuidHex;
-            }
+            sceneAssetGuidHex = sceneAssetGuidHex.GuardGuidAgainstNullOrWhitespace();
         }
 
         /// <inheritdoc cref="GetSchema()"/>
@@ -365,7 +334,7 @@ namespace Eflatun.SceneReference
         }
 
         /// <summary>
-        /// Used by <see cref="IXmlSerializable"/> for custom XML serialization support..
+        /// Used by <see cref="IXmlSerializable"/> for custom XML serialization support.
         /// </summary>
         protected virtual XmlSchema GetSchema()
         {
@@ -383,14 +352,8 @@ namespace Eflatun.SceneReference
         /// </summary>
         protected virtual void ReadXml(XmlReader reader)
         {
-            // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
-            sceneAssetGuidHex = reader.ReadString();
-
-#if UNITY_EDITOR
-            sceneAsset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(sceneAssetGuidHex, out var scenePath)
-                ? AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath)
-                : null;
-#endif // UNITY_EDITOR
+            var deserializedGuid = reader.ReadString();
+            FillFromDeserializedGuid(deserializedGuid);
         }
 
         /// <inheritdoc cref="WriteXml(System.Xml.XmlWriter)"/>
@@ -404,8 +367,25 @@ namespace Eflatun.SceneReference
         /// </summary>
         protected virtual void WriteXml(XmlWriter writer)
         {
+            var guidToSerialize = GetGuidToSerialize();
+            writer.WriteString(guidToSerialize);
+        }
+
+        private string GetGuidToSerialize() =>
+            sceneAssetGuidHex.GuardGuidAgainstNullOrWhitespace();
+
+        private void FillFromDeserializedGuid(string deserializedGuid)
+        {
+            deserializedGuid = deserializedGuid.GuardGuidAgainstNullOrWhitespace();
+
             // Intentionally using sceneAssetGuidHex field directly instead of the AssetGuidHex property.
-            writer.WriteString(sceneAssetGuidHex);
+            sceneAssetGuidHex = deserializedGuid;
+
+#if UNITY_EDITOR
+            sceneAsset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(deserializedGuid, out var scenePath)
+                ? AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath)
+                : null;
+#endif // UNITY_EDITOR
         }
     }
 }
