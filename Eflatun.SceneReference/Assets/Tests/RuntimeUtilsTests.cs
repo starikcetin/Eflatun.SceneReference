@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using Eflatun.SceneReference.Tests.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
-using UnityEngine.TestTools;
 
 namespace Eflatun.SceneReference.Tests
 {
