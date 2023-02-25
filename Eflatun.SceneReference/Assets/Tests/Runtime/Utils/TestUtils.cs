@@ -143,7 +143,13 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.IsInSceneGuidToPathMap);
         }
 
-        public static void AssertDeletedSceneState(SceneReference sr)
+        public static void AssertDeletedSceneState(SceneReference sr) => AssertInvalidState(sr, DeletedSceneGuid);
+
+        public static void AssertNotExistingState(SceneReference sr) => AssertInvalidState(sr, NotExistingGuid);
+
+        public static void AssertNotSceneAssetState(SceneReference sr) => AssertInvalidState(sr, NotSceneAssetGuid);
+
+        private static void AssertInvalidState(SceneReference sr, string expectedGuid)
         {
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Name);
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Path);
@@ -154,44 +160,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.BuildIndex);
             Assert.IsTrue(sr.HasValue);
-            Assert.AreEqual(DeletedSceneGuid, sr.AssetGuidHex);
-            Assert.AreEqual(DeletedSceneGuid, sr.sceneAssetGuidHex);
-            Assert.IsFalse(sr.IsSafeToUse);
-            Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.IsInBuildAndEnabled);
-            Assert.IsFalse(sr.IsInSceneGuidToPathMap);
-        }
-
-        public static void AssertNotExistingState(SceneReference sr)
-        {
-            Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Name);
-            Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Path);
-
-#if UNITY_EDITOR
-            Assert.IsFalse(!!sr.sceneAsset);
-#endif
-
-            Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.BuildIndex);
-            Assert.IsTrue(sr.HasValue);
-            Assert.AreEqual(NotExistingGuid, sr.AssetGuidHex);
-            Assert.AreEqual(NotExistingGuid, sr.sceneAssetGuidHex);
-            Assert.IsFalse(sr.IsSafeToUse);
-            Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.IsInBuildAndEnabled);
-            Assert.IsFalse(sr.IsInSceneGuidToPathMap);
-        }
-
-        public static void AssertNotSceneAssetState(SceneReference sr)
-        {
-            Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Name);
-            Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Path);
-
-#if UNITY_EDITOR
-            Assert.IsFalse(!!sr.sceneAsset);
-#endif
-
-            Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.BuildIndex);
-            Assert.IsTrue(sr.HasValue);
-            Assert.AreEqual(NotSceneAssetGuid, sr.AssetGuidHex);
-            Assert.AreEqual(NotSceneAssetGuid, sr.sceneAssetGuidHex);
+            Assert.AreEqual(expectedGuid, sr.AssetGuidHex);
+            Assert.AreEqual(expectedGuid, sr.sceneAssetGuidHex);
             Assert.IsFalse(sr.IsSafeToUse);
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.IsInBuildAndEnabled);
             Assert.IsFalse(sr.IsInSceneGuidToPathMap);
