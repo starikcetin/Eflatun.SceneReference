@@ -29,6 +29,7 @@ public class AssignFromCodeDemo : MonoBehaviour
             Debug.LogException(e);
         }
 
+#if UNITY_EDITOR
         // from objects
         try
         {
@@ -45,6 +46,7 @@ public class AssignFromCodeDemo : MonoBehaviour
             Debug.Log("from objects fail");
             Debug.LogException(e);
         }
+#endif // UNITY_EDITOR
 
         // from paths
         try

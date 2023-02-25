@@ -5,6 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Tests/Runtime/Subjects/TestSubject_Disabled.unity
+    guid: 7e37b14fa3517514a91937cec5cad27a
+  - enabled: 1
+    path: Assets/Tests/Runtime/Subjects/TestSubject_Enabled.unity
+    guid: e3f2c1473b766c34ba5b37779d71787e
+  - enabled: 1
+    path: Assets/Tests/Runtime/Subjects/TestSubjectContainer.unity
+    guid: 4a619bd3d89b8d244944890d9aed7527
   - enabled: 1
     path: Assets/Demo/ValidationDemo.unity
     guid: ec96515e0b82bae4d908d6d069c8cce2
