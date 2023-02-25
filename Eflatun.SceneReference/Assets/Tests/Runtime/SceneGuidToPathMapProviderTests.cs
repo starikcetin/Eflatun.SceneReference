@@ -8,7 +8,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
     public class SceneGuidToPathMapProviderTests
     {
         [Test]
-        public void SceneGuidToPathMap_ContainsUtilScenes()
+        public void SceneGuidToPathMap_ContainsSubjectScenes()
         {
             Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(TestUtils.EnabledSceneGuid));
             Assert.AreEqual(TestUtils.EnabledScenePath, SceneGuidToPathMapProvider.SceneGuidToPathMap[TestUtils.EnabledSceneGuid]);
@@ -37,13 +37,14 @@ namespace Eflatun.SceneReference.Tests.Runtime
             {
                 Assert.IsTrue(key.IsValidGuidHex());
                 Assert.IsTrue(TestUtils.IsSceneAssetPath(value));
-                Assert.IsTrue(value.StartsWith("Assets/"));
+                Assert.IsTrue(value.StartsWith("Assets/") || value.StartsWith("Packages/"));
             }
         }
 
         [Test]
         public void SceneGuidToPathMap_AllEntriesAreUnique()
         {
+            CollectionAssert.AllItemsAreUnique(SceneGuidToPathMapProvider.SceneGuidToPathMap);
             CollectionAssert.AllItemsAreUnique(SceneGuidToPathMapProvider.SceneGuidToPathMap.Keys);
             CollectionAssert.AllItemsAreUnique(SceneGuidToPathMapProvider.SceneGuidToPathMap.Values);
         }

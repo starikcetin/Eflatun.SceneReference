@@ -10,20 +10,20 @@ namespace Eflatun.SceneReference.Tests.Runtime
         public void DefaultConstructor_ProvidesExpectedState()
         {
             var defaultRef = new SceneReference();
-            TestUtils.AssertEmptySceneReferenceState(defaultRef);
+            TestUtils.AssertEmptyState(defaultRef);
         }
 
         [Test]
         public void GuidConstructor_ProvidesExpectedState()
         {
             var enabledRef = new SceneReference(TestUtils.EnabledSceneGuid);
-            TestUtils.AssertEnabledSceneReferenceState(enabledRef);
+            TestUtils.AssertEnabledSceneState(enabledRef);
 
             var disabledRef = new SceneReference(TestUtils.DisabledSceneGuid);
-            TestUtils.AssertDisabledSceneReferenceState(disabledRef);
+            TestUtils.AssertDisabledSceneState(disabledRef);
 
             var notInBuildRef = new SceneReference(TestUtils.NotInBuildSceneGuid);
-            TestUtils.AssertNotInBuildSceneReferenceState(notInBuildRef);
+            TestUtils.AssertNotInBuildSceneState(notInBuildRef);
         }
 
         [Test]
@@ -42,15 +42,15 @@ namespace Eflatun.SceneReference.Tests.Runtime
 #if UNITY_EDITOR
             var enabledAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(TestUtils.EnabledScenePath);
             var enabledRef = new SceneReference(enabledAsset);
-            TestUtils.AssertEnabledSceneReferenceState(enabledRef);
+            TestUtils.AssertEnabledSceneState(enabledRef);
 
             var disabledAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(TestUtils.DisabledScenePath);
             var disabledRef = new SceneReference(disabledAsset);
-            TestUtils.AssertDisabledSceneReferenceState(disabledRef);
+            TestUtils.AssertDisabledSceneState(disabledRef);
 
             var notInBuildAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(TestUtils.NotInBuildScenePath);
             var notInBuildRef = new SceneReference(notInBuildAsset);
-            TestUtils.AssertNotInBuildSceneReferenceState(notInBuildRef);
+            TestUtils.AssertNotInBuildSceneState(notInBuildRef);
 
 #else // UNITY_EDITOR
             Assert.Ignore("The asset constructor is editor-only, so this test is meaningless outside the editor.");
@@ -76,13 +76,13 @@ namespace Eflatun.SceneReference.Tests.Runtime
         public void PathFactoryMethod_ProvidesExpectedState()
         {
             var enabledRef = SceneReference.FromScenePath(TestUtils.EnabledScenePath);
-            TestUtils.AssertEnabledSceneReferenceState(enabledRef);
+            TestUtils.AssertEnabledSceneState(enabledRef);
 
             var disabledRef = SceneReference.FromScenePath(TestUtils.DisabledScenePath);
-            TestUtils.AssertDisabledSceneReferenceState(disabledRef);
+            TestUtils.AssertDisabledSceneState(disabledRef);
 
             var notInBuildRef = SceneReference.FromScenePath(TestUtils.NotInBuildScenePath);
-            TestUtils.AssertNotInBuildSceneReferenceState(notInBuildRef);
+            TestUtils.AssertNotInBuildSceneState(notInBuildRef);
         }
 
         [Test]

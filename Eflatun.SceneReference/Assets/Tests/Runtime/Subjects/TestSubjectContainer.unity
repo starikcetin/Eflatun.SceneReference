@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 311110115}
   - component: {fileID: 311110114}
   m_Layer: 0
-  m_Name: Test
+  m_Name: TestSubjectContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,142 +236,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3170eec9cb41149b464923607ee216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldEnabled:
+  fieldEnabledScene:
     sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
-  <PropEnabled>k__BackingField:
+  <PropEnabledScene>k__BackingField:
     sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
-  fieldArrayEnabled:
+  fieldArrayEnabledScene:
   - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
   - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
-  - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
-    sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
-  <PropArrayEnabled>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
-    sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
+  <PropArrayEnabledScene>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
   - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
-  fieldListEnabled:
+  fieldListEnabledScene:
   - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
   - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
-  - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
-    sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
-  <PropListEnabled>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
-    sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
+  <PropListEnabledScene>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
   - sceneAsset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
     sceneAssetGuidHex: e3f2c1473b766c34ba5b37779d71787e
-  fieldDisabled:
+  fieldDisabledScene:
     sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
-  <PropDisabled>k__BackingField:
+  <PropDisabledScene>k__BackingField:
     sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
-  fieldArrayDisabled:
+  fieldArrayDisabledScene:
   - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
   - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
-  - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
-    sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
-  <PropArrayDisabled>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
-    sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
+  <PropArrayDisabledScene>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
   - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
-  fieldListDisabled:
+  fieldListDisabledScene:
   - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
   - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
-  - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
-    sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
-  <PropListDisabled>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
-    sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
+  <PropListDisabledScene>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
   - sceneAsset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
     sceneAssetGuidHex: 7e37b14fa3517514a91937cec5cad27a
-  fieldNotInBuild:
+  fieldNotInBuildScene:
     sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
-  <PropNotInBuild>k__BackingField:
+  <PropNotInBuildScene>k__BackingField:
     sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
-  fieldArrayNotInBuild:
+  fieldArrayNotInBuildScene:
   - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
   - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
-  - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
-    sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
-  <PropArrayNotInBuild>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
-    sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
+  <PropArrayNotInBuildScene>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
   - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
-  fieldListNotInBuild:
+  fieldListNotInBuildScene:
   - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
   - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
-  - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
-    sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
-  <PropListNotInBuild>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
-    sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
+  <PropListNotInBuildScene>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
   - sceneAsset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
     sceneAssetGuidHex: 63c386231869c904c9b701dd79268476
-  fieldUnassigned:
-    sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  <PropUnassigned>k__BackingField:
-    sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  fieldArrayUnassigned:
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  <PropArrayUnassigned>k__BackingField:
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  fieldListUnassigned:
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  <PropListUnassigned>k__BackingField:
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
   fieldEmpty:
     sceneAsset: {fileID: 0}
     sceneAssetGuidHex: 00000000000000000000000000000000
@@ -383,11 +325,7 @@ MonoBehaviour:
     sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
     sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
   <PropArrayEmpty>k__BackingField:
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
     sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
@@ -397,45 +335,33 @@ MonoBehaviour:
     sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
     sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
   <PropListEmpty>k__BackingField:
   - sceneAsset: {fileID: 0}
     sceneAssetGuidHex: 00000000000000000000000000000000
   - sceneAsset: {fileID: 0}
     sceneAssetGuidHex: 00000000000000000000000000000000
-  - sceneAsset: {fileID: 0}
-    sceneAssetGuidHex: 00000000000000000000000000000000
-  fieldDeleted:
+  fieldDeletedScene:
     sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
-  <PropDeleted>k__BackingField:
+  <PropDeletedScene>k__BackingField:
     sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
-  fieldArrayDeleted:
+  fieldArrayDeletedScene:
   - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
   - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
-  - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
-    sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
-  <PropArrayDeleted>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
-    sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
+  <PropArrayDeletedScene>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
   - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
-  fieldListDeleted:
+  fieldListDeletedScene:
   - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
   - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
-  - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
-    sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
-  <PropListDeleted>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
-    sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
+  <PropListDeletedScene>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
     sceneAssetGuidHex: 69c1683d94db0cc469d86e4e865f9f5d
   - sceneAsset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
@@ -451,11 +377,7 @@ MonoBehaviour:
     sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
   - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
     sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
-  - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
-    sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
   <PropArrayNotExisting>k__BackingField:
-  - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
-    sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
   - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
     sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
   - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
@@ -465,15 +387,37 @@ MonoBehaviour:
     sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
   - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
     sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
-  - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
-    sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
   <PropListNotExisting>k__BackingField:
   - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
     sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
   - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
     sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
-  - sceneAsset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
-    sceneAssetGuidHex: 2bc1683d94d80cc269d85e4e8a5fcf5d
+  fieldNotSceneAsset:
+    sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  <PropNotSceneAsset>k__BackingField:
+    sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  fieldArrayNotSceneAsset:
+  - sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  - sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  <PropArrayNotSceneAsset>k__BackingField:
+  - sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  - sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  fieldListNotSceneAsset:
+  - sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  - sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  <PropListNotSceneAsset>k__BackingField:
+  - sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
+  - sceneAsset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
+    sceneAssetGuidHex: 99d2aa5f58f54c44fba8671b66be5259
 --- !u!4 &311110115
 Transform:
   m_ObjectHideFlags: 0

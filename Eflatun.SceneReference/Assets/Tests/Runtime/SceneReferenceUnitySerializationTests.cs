@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Eflatun.SceneReference.Tests.Runtime.Subjects;
 using Eflatun.SceneReference.Tests.Runtime.Utils;
 using NUnit.Framework;
 using UnityEngine.SceneManagement;
@@ -8,245 +9,209 @@ namespace Eflatun.SceneReference.Tests.Runtime
 {
     public class SceneReferenceUnitySerializationTests
     {
-        private Test _testMb;
+        private TestSubjectContainer _testMb;
 
         [UnitySetUp]
         public IEnumerator Setup()
         {
-            yield return SceneManager.LoadSceneAsync(TestUtils.TestSceneContainerPath, LoadSceneMode.Additive);
-            _testMb = UnityEngine.Object.FindObjectOfType<Test>();
+            yield return SceneManager.LoadSceneAsync(TestUtils.TestSubjectContainerScenePath, LoadSceneMode.Additive);
+            _testMb = UnityEngine.Object.FindObjectOfType<TestSubjectContainer>();
         }
 
         [UnityTearDown]
         public IEnumerator TearDown()
         {
-            var scene = SceneManager.GetSceneByPath(TestUtils.TestSceneContainerPath);
+            var scene = SceneManager.GetSceneByPath(TestUtils.TestSubjectContainerScenePath);
             yield return SceneManager.UnloadSceneAsync(scene);
             _testMb = null;
         }
 
         [Test]
-        public void ProvidesExpectedState_Enabled()
+        public void ProvidesExpectedState_EnabledScene()
         {
-            TestUtils.AssertEnabledSceneReferenceState(_testMb.fieldEnabled);
-            TestUtils.AssertEnabledSceneReferenceState(_testMb.PropEnabled);
+            TestUtils.AssertEnabledSceneState(_testMb.fieldEnabledScene);
+            TestUtils.AssertEnabledSceneState(_testMb.PropEnabledScene);
 
-            foreach (var enabled in _testMb.fieldArrayEnabled)
+            foreach (var enabled in _testMb.fieldArrayEnabledScene)
             {
-                TestUtils.AssertEnabledSceneReferenceState(enabled);
+                TestUtils.AssertEnabledSceneState(enabled);
             }
 
-            foreach (var enabled in _testMb.PropArrayEnabled)
+            foreach (var enabled in _testMb.PropArrayEnabledScene)
             {
-                TestUtils.AssertEnabledSceneReferenceState(enabled);
+                TestUtils.AssertEnabledSceneState(enabled);
             }
 
-            foreach (var enabled in _testMb.fieldListEnabled)
+            foreach (var enabled in _testMb.fieldListEnabledScene)
             {
-                TestUtils.AssertEnabledSceneReferenceState(enabled);
+                TestUtils.AssertEnabledSceneState(enabled);
             }
 
-            foreach (var enabled in _testMb.PropListEnabled)
+            foreach (var enabled in _testMb.PropListEnabledScene)
             {
-                TestUtils.AssertEnabledSceneReferenceState(enabled);
+                TestUtils.AssertEnabledSceneState(enabled);
             }
         }
 
         [Test]
-        public void ProvidesExpectedState_Disabled()
+        public void ProvidesExpectedState_DisabledScene()
         {
-            TestUtils.AssertDisabledSceneReferenceState(_testMb.fieldDisabled);
-            TestUtils.AssertDisabledSceneReferenceState(_testMb.PropDisabled);
+            TestUtils.AssertDisabledSceneState(_testMb.fieldDisabledScene);
+            TestUtils.AssertDisabledSceneState(_testMb.PropDisabledScene);
 
-            foreach (var disabled in _testMb.fieldArrayDisabled)
+            foreach (var disabled in _testMb.fieldArrayDisabledScene)
             {
-                TestUtils.AssertDisabledSceneReferenceState(disabled);
+                TestUtils.AssertDisabledSceneState(disabled);
             }
 
-            foreach (var disabled in _testMb.PropArrayDisabled)
+            foreach (var disabled in _testMb.PropArrayDisabledScene)
             {
-                TestUtils.AssertDisabledSceneReferenceState(disabled);
+                TestUtils.AssertDisabledSceneState(disabled);
             }
 
-            foreach (var disabled in _testMb.fieldListDisabled)
+            foreach (var disabled in _testMb.fieldListDisabledScene)
             {
-                TestUtils.AssertDisabledSceneReferenceState(disabled);
+                TestUtils.AssertDisabledSceneState(disabled);
             }
 
-            foreach (var disabled in _testMb.PropListDisabled)
+            foreach (var disabled in _testMb.PropListDisabledScene)
             {
-                TestUtils.AssertDisabledSceneReferenceState(disabled);
+                TestUtils.AssertDisabledSceneState(disabled);
             }
         }
 
         [Test]
-        public void ProvidesExpectedState_NotInBuild()
+        public void ProvidesExpectedState_NotInBuildScene()
         {
-            TestUtils.AssertNotInBuildSceneReferenceState(_testMb.fieldNotInBuild);
-            TestUtils.AssertNotInBuildSceneReferenceState(_testMb.PropNotInBuild);
+            TestUtils.AssertNotInBuildSceneState(_testMb.fieldNotInBuildScene);
+            TestUtils.AssertNotInBuildSceneState(_testMb.PropNotInBuildScene);
 
-            foreach (var notInBuild in _testMb.fieldArrayNotInBuild)
+            foreach (var notInBuild in _testMb.fieldArrayNotInBuildScene)
             {
-                TestUtils.AssertNotInBuildSceneReferenceState(notInBuild);
+                TestUtils.AssertNotInBuildSceneState(notInBuild);
             }
 
-            foreach (var notInBuild in _testMb.PropArrayNotInBuild)
+            foreach (var notInBuild in _testMb.PropArrayNotInBuildScene)
             {
-                TestUtils.AssertNotInBuildSceneReferenceState(notInBuild);
+                TestUtils.AssertNotInBuildSceneState(notInBuild);
             }
 
-            foreach (var notInBuild in _testMb.fieldListNotInBuild)
+            foreach (var notInBuild in _testMb.fieldListNotInBuildScene)
             {
-                TestUtils.AssertNotInBuildSceneReferenceState(notInBuild);
+                TestUtils.AssertNotInBuildSceneState(notInBuild);
             }
 
-            foreach (var notInBuild in _testMb.PropListNotInBuild)
+            foreach (var notInBuild in _testMb.PropListNotInBuildScene)
             {
-                TestUtils.AssertNotInBuildSceneReferenceState(notInBuild);
-            }
-        }
-
-        [Test]
-        public void ProvidesExpectedState_Unassigned()
-        {
-            TestUtils.AssertEmptySceneReferenceState(_testMb.fieldUnassigned);
-            TestUtils.AssertEmptySceneReferenceState(_testMb.PropUnassigned);
-
-            foreach (var unassigned in _testMb.fieldArrayUnassigned)
-            {
-                TestUtils.AssertEmptySceneReferenceState(unassigned);
-            }
-
-            foreach (var unassigned in _testMb.PropArrayUnassigned)
-            {
-                TestUtils.AssertEmptySceneReferenceState(unassigned);
-            }
-
-            foreach (var unassigned in _testMb.fieldListUnassigned)
-            {
-                TestUtils.AssertEmptySceneReferenceState(unassigned);
-            }
-
-            foreach (var unassigned in _testMb.PropListUnassigned)
-            {
-                TestUtils.AssertEmptySceneReferenceState(unassigned);
+                TestUtils.AssertNotInBuildSceneState(notInBuild);
             }
         }
 
         [Test]
         public void ProvidesExpectedState_Empty()
         {
-            TestUtils.AssertEmptySceneReferenceState(_testMb.fieldEmpty);
-            TestUtils.AssertEmptySceneReferenceState(_testMb.PropEmpty);
+            TestUtils.AssertEmptyState(_testMb.fieldEmpty);
+            TestUtils.AssertEmptyState(_testMb.PropEmpty);
 
             foreach (var empty in _testMb.fieldArrayEmpty)
             {
-                TestUtils.AssertEmptySceneReferenceState(empty);
+                TestUtils.AssertEmptyState(empty);
             }
 
             foreach (var empty in _testMb.PropArrayEmpty)
             {
-                TestUtils.AssertEmptySceneReferenceState(empty);
+                TestUtils.AssertEmptyState(empty);
             }
 
             foreach (var empty in _testMb.fieldListEmpty)
             {
-                TestUtils.AssertEmptySceneReferenceState(empty);
+                TestUtils.AssertEmptyState(empty);
             }
 
             foreach (var empty in _testMb.PropListEmpty)
             {
-                TestUtils.AssertEmptySceneReferenceState(empty);
+                TestUtils.AssertEmptyState(empty);
             }
         }
 
         [Test]
-        public void ProvidesExpectedState_Deleted()
+        public void ProvidesExpectedState_DeletedScene()
         {
-            void Test(SceneReference sceneRef)
+            TestUtils.AssertDeletedSceneState(_testMb.fieldDeletedScene);
+            TestUtils.AssertDeletedSceneState(_testMb.PropDeletedScene);
+
+            foreach (var deleted in _testMb.fieldArrayDeletedScene)
             {
-                Assert.Throws<InvalidSceneReferenceException>(() => _ = sceneRef.Name);
-                Assert.Throws<InvalidSceneReferenceException>(() => _ = sceneRef.Path);
-
-#if UNITY_EDITOR
-                Assert.IsFalse(!!sceneRef.sceneAsset);
-#endif
-
-                Assert.Throws<InvalidSceneReferenceException>(() => _ = sceneRef.BuildIndex);
-                Assert.IsTrue(sceneRef.HasValue);
-                Assert.AreEqual(TestUtils.DeletedSceneGuid, sceneRef.AssetGuidHex);
-                Assert.AreEqual(TestUtils.DeletedSceneGuid, sceneRef.sceneAssetGuidHex);
-                Assert.IsFalse(sceneRef.IsSafeToUse);
-                Assert.Throws<InvalidSceneReferenceException>(() => _ = sceneRef.IsInBuildAndEnabled);
-                Assert.IsFalse(sceneRef.IsInSceneGuidToPathMap);
+                TestUtils.AssertDeletedSceneState(deleted);
             }
 
-            Test(_testMb.fieldDeleted);
-            Test(_testMb.PropDeleted);
-
-            foreach (var deleted in _testMb.fieldArrayDeleted)
+            foreach (var deleted in _testMb.PropArrayDeletedScene)
             {
-                Test(deleted);
+                TestUtils.AssertDeletedSceneState(deleted);
             }
 
-            foreach (var deleted in _testMb.PropArrayDeleted)
+            foreach (var deleted in _testMb.fieldListDeletedScene)
             {
-                Test(deleted);
+                TestUtils.AssertDeletedSceneState(deleted);
             }
 
-            foreach (var deleted in _testMb.fieldListDeleted)
+            foreach (var deleted in _testMb.PropListDeletedScene)
             {
-                Test(deleted);
-            }
-
-            foreach (var deleted in _testMb.PropListDeleted)
-            {
-                Test(deleted);
+                TestUtils.AssertDeletedSceneState(deleted);
             }
         }
 
         [Test]
         public void ProvidesExpectedState_NotExisting()
         {
-            void Test(SceneReference sceneRef)
-            {
-                Assert.Throws<InvalidSceneReferenceException>(() => _ = sceneRef.Name);
-                Assert.Throws<InvalidSceneReferenceException>(() => _ = sceneRef.Path);
-
-#if UNITY_EDITOR
-                Assert.IsFalse(!!sceneRef.sceneAsset);
-#endif
-
-                Assert.Throws<InvalidSceneReferenceException>(() => _ = sceneRef.BuildIndex);
-                Assert.IsTrue(sceneRef.HasValue);
-                Assert.AreEqual(TestUtils.NotExistingGuid, sceneRef.AssetGuidHex);
-                Assert.AreEqual(TestUtils.NotExistingGuid, sceneRef.sceneAssetGuidHex);
-                Assert.IsFalse(sceneRef.IsSafeToUse);
-                Assert.Throws<InvalidSceneReferenceException>(() => _ = sceneRef.IsInBuildAndEnabled);
-                Assert.IsFalse(sceneRef.IsInSceneGuidToPathMap);
-            }
-
-            Test(_testMb.fieldNotExisting);
-            Test(_testMb.PropNotExisting);
+            TestUtils.AssertNotExistingState(_testMb.fieldNotExisting);
+            TestUtils.AssertNotExistingState(_testMb.PropNotExisting);
 
             foreach (var invalid in _testMb.fieldArrayNotExisting)
             {
-                Test(invalid);
+                TestUtils.AssertNotExistingState(invalid);
             }
 
             foreach (var invalid in _testMb.PropArrayNotExisting)
             {
-                Test(invalid);
+                TestUtils.AssertNotExistingState(invalid);
             }
 
             foreach (var invalid in _testMb.fieldListNotExisting)
             {
-                Test(invalid);
+                TestUtils.AssertNotExistingState(invalid);
             }
 
             foreach (var invalid in _testMb.PropListNotExisting)
             {
-                Test(invalid);
+                TestUtils.AssertNotExistingState(invalid);
+            }
+        }
+
+        [Test]
+        public void ProvidesExpectedState_NotSceneAsset()
+        {
+            TestUtils.AssertNotSceneAssetState(_testMb.fieldNotSceneAsset);
+            TestUtils.AssertNotSceneAssetState(_testMb.PropNotSceneAsset);
+
+            foreach (var invalid in _testMb.fieldArrayNotSceneAsset)
+            {
+                TestUtils.AssertNotSceneAssetState(invalid);
+            }
+
+            foreach (var invalid in _testMb.PropArrayNotSceneAsset)
+            {
+                TestUtils.AssertNotSceneAssetState(invalid);
+            }
+
+            foreach (var invalid in _testMb.fieldListNotSceneAsset)
+            {
+                TestUtils.AssertNotSceneAssetState(invalid);
+            }
+
+            foreach (var invalid in _testMb.PropListNotSceneAsset)
+            {
+                TestUtils.AssertNotSceneAssetState(invalid);
             }
         }
     }

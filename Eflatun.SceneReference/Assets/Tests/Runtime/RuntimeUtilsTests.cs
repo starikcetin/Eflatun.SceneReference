@@ -36,14 +36,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
             const FooFlag fooBar = FooFlag.Foo | FooFlag.Bar;
             const FooFlag none = 0;
 
+            Assert.IsTrue(all.IncludesFlag(none));
             Assert.IsTrue(all.IncludesFlag(FooFlag.Foo));
             Assert.IsTrue(all.IncludesFlag(FooFlag.Foo | FooFlag.Bar));
+            Assert.IsTrue(all.IncludesFlag(all));
 
+            Assert.IsTrue(fooBar.IncludesFlag(none));
             Assert.IsTrue(fooBar.IncludesFlag(FooFlag.Foo));
             Assert.IsTrue(fooBar.IncludesFlag(FooFlag.Foo | FooFlag.Bar));
             Assert.IsFalse(fooBar.IncludesFlag(FooFlag.Baz));
             Assert.IsFalse(fooBar.IncludesFlag(FooFlag.Foo | FooFlag.Baz));
 
+            Assert.IsTrue(none.IncludesFlag(none));
             Assert.IsFalse(none.IncludesFlag(FooFlag.Foo));
             Assert.IsFalse(none.IncludesFlag(FooFlag.Foo | FooFlag.Bar));
         }
