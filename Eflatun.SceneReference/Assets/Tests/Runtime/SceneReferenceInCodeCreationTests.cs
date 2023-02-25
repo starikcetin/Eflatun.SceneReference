@@ -53,8 +53,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
             TestUtils.AssertNotInBuildSceneReferenceState(notInBuildRef);
 
 #else // UNITY_EDITOR
-            // The asset constructor is editor-only, so this test is meaningless outside the editor.
-            Assert.Pass();
+            Assert.Ignore("The asset constructor is editor-only, so this test is meaningless outside the editor.");
 #endif // UNITY_EDITOR
         }
 
@@ -69,8 +68,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
             Assert.Throws<SceneReferenceCreationException>(() => _ = new SceneReference(notSceneAsset));
 
 #else // UNITY_EDITOR
-            // The asset constructor is editor-only, so this test is meaningless outside the editor.
-            Assert.Pass();
+            Assert.Ignore("The asset constructor is editor-only, so this test is meaningless outside the editor.");
 #endif // UNITY_EDITOR
         }
 
