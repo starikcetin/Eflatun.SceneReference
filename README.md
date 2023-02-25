@@ -368,6 +368,8 @@ SceneReference deserialized = JsonConvert.DeserializeObject<SceneReference>(json
 
 ### Binary serialization via `System.Runtime.Serialization.Formatters.Binary`
 
+**Warning:** We strongly advise against using `BinaryFormatter` as it is inconsistent and has inherent security risks. Only use it if you absolutely have to.
+
 Example `SceneReference` serialization to binary and back via `System.Runtime.Serialization.Formatters.Binary`:
 
 ```cs
