@@ -68,7 +68,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(EnabledScenePath, sr.Path);
 
 #if UNITY_EDITOR
-            Assert.AreEqual(EnabledSceneName, sr.sceneAsset.name);
+            Assert.AreEqual(EnabledSceneName, sr.asset.name);
 #endif
 
             Assert.AreEqual(EnabledSceneBuildIndex, sr.BuildIndex);
@@ -86,7 +86,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(DisabledScenePath, sr.Path);
 
 #if UNITY_EDITOR
-            Assert.AreEqual(DisabledSceneName, sr.sceneAsset.name);
+            Assert.AreEqual(DisabledSceneName, sr.asset.name);
 #endif
 
             Assert.AreEqual(DisabledSceneBuildIndex, sr.BuildIndex);
@@ -113,7 +113,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(NotInBuildScenePath, sr.Path);
 
 #if UNITY_EDITOR
-            Assert.AreEqual(NotInBuildSceneName, sr.sceneAsset.name);
+            Assert.AreEqual(NotInBuildSceneName, sr.asset.name);
 #endif
 
             Assert.AreEqual(NotInBuildSceneBuildIndex, sr.BuildIndex);
@@ -131,7 +131,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.Path);
 
 #if UNITY_EDITOR
-            Assert.IsFalse(!!sr.sceneAsset);
+            Assert.IsFalse(!!sr.asset);
 #endif // UNITY_EDITOR
 
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.BuildIndex);
@@ -155,7 +155,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Path);
 
 #if UNITY_EDITOR
-            Assert.IsFalse(!!sr.sceneAsset);
+            Assert.IsFalse(!!sr.asset);
 #endif
 
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.BuildIndex);
@@ -167,7 +167,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.IsFalse(sr.IsInSceneGuidToPathMap);
         }
 
-        public static bool IsSceneAssetPath(string path)
+        public static bool IsScenePath(string path)
         {
             return Path.GetExtension(path) == ".unity";
         }

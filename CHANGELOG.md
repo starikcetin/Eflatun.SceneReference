@@ -6,13 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [Unreleased]
+We renamed some of our internal serialized fields. Since we utilize `FormerlySerializedAs`, you will not lose any data. However, due to these changes, Unity will re-serialize your `SceneReference`s as you save your scenes and prefabs. Please commit these re-serialization changes as you see fit, otherwise they will keep appearing until you do so.
 
 ### Breaking Changes
 - Constructors and factory methods of `SceneReference` now validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid. Note that the default constructor always creates an empty instance, but it never throws.
-- Simplified names related to GUID. All public-facing changes are as follows (old -> new):
-	- Public constructor argument name change: `SceneReference(string sceneAssetGuidHex)` -> `SceneReference(string guid)`
-	- Public property name change: `SceneReference.AssetGuidHex` -> `SceneReference.Guid`
-	- Serialized internal field name change: `SceneReference.sceneAssetGuidHex` -> `SceneReference.guid` (This change does not require you to change anything in your code. However, Unity will re-serialize your Unity-serialized `SceneReference`s as it comes across them. Please commit these re-serialization changes as you see fit, otherwise they will keep re-appearing until you do so. You will not lose any data as we utilize `FormerlySerializedAs`.)
+- Changed the argument name of the constructor `SceneReference(string sceneAssetGuidHex)` to `SceneReference(string guid)`.
+- Changed the name of the property `SceneReference.AssetGuidHex` to `SceneReference.Guid`.
 
 ### Added
 - `SceneReference` now supports custom XML serialization via `System.Xml`.
@@ -22,6 +21,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - `SceneReference` now implements serialization interfaces explicitly. This means serialization implementations are no longer exposed as `public`.
 - `SceneReference` serialization implementations are now `virtual`. This means child classes can override custom serialization behaviours.
+- Internal serialized field name changes:
+	- `SceneReference.sceneAsset` to `SceneReference.asset`
+	- `SceneReference.sceneAssetGuidHex` to `SceneReference.guid`
 
 ### Removed
 

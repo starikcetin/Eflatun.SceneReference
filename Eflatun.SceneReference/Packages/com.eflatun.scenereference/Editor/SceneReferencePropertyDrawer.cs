@@ -25,10 +25,10 @@ namespace Eflatun.SceneReference.Editor
             Enabled
         }
 
-        private SerializedProperty _sceneAssetSerializedProperty;
+        private SerializedProperty _assetSerializedProperty;
         private SerializedProperty _guidSerializedProperty;
 
-        private UnityEngine.Object _sceneAsset;
+        private UnityEngine.Object _asset;
         private string _guid;
         private string _scenePath;
         private EditorBuildSettingsScene _sceneInBuildSettings;
@@ -56,17 +56,17 @@ namespace Eflatun.SceneReference.Editor
 
         private void Init(SerializedProperty property)
         {
-            _sceneAssetSerializedProperty = property.FindPropertyRelative(nameof(SceneReference.sceneAsset));
+            _assetSerializedProperty = property.FindPropertyRelative(nameof(SceneReference.asset));
             _guidSerializedProperty = property.FindPropertyRelative(nameof(SceneReference.guid));
 
-            _sceneAsset = _sceneAssetSerializedProperty.objectReferenceValue;
+            _asset = _assetSerializedProperty.objectReferenceValue;
             _guid = _guidSerializedProperty.stringValue;
-            _scenePath = AssetDatabase.GetAssetPath(_sceneAsset);
+            _scenePath = AssetDatabase.GetAssetPath(_asset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
 
             _optionsAttribute = fieldInfo.GetCustomAttribute<SceneReferenceOptionsAttribute>(false) ?? DefaultOptionsAttribute;
 
-            if (_sceneAsset == null)
+            if (_asset == null)
             {
                 _sceneBuildSettingsState = SceneBuildSettingsState.None;
             }
@@ -84,18 +84,18 @@ namespace Eflatun.SceneReference.Editor
             }
         }
 
-        private void SetWith(UnityEngine.Object newSceneAsset)
+        private void SetWith(UnityEngine.Object newAsset)
         {
-            if (_sceneAsset == newSceneAsset)
+            if (_asset == newAsset)
             {
                 return;
             }
 
-            _sceneAssetSerializedProperty.objectReferenceValue = newSceneAsset;
+            _assetSerializedProperty.objectReferenceValue = newAsset;
 
-            var sceneAssetPath = AssetDatabase.GetAssetPath(newSceneAsset);
-            var sceneAssetGuid = AssetDatabase.GUIDFromAssetPath(sceneAssetPath);
-            _guidSerializedProperty.stringValue = sceneAssetGuid.ToString();
+            var newPath = AssetDatabase.GetAssetPath(newAsset);
+            var newGuid = AssetDatabase.GUIDFromAssetPath(newPath);
+            _guidSerializedProperty.stringValue = newGuid.ToString();
         }
 
         private void FixInBuildSettings()
@@ -163,8 +163,8 @@ namespace Eflatun.SceneReference.Editor
             // draw scene asset selector
             var selectorFieldRect = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             selectorFieldRect.height = EditorGUIUtility.singleLineHeight;
-            var newSceneAsset = EditorGUI.ObjectField(selectorFieldRect, _sceneAsset, typeof(SceneAsset), false);
-            SetWith(newSceneAsset);
+            var newAsset = EditorGUI.ObjectField(selectorFieldRect, _asset, typeof(SceneAsset), false);
+            SetWith(newAsset);
 
             // draw utility line if needed
             if (IsUtilityLineEnabled && NeedsBuildSettingsFix)
@@ -198,7 +198,7 @@ namespace Eflatun.SceneReference.Editor
         {
             Init(property);
 
-            return _sceneAsset && IsUtilityLineEnabled && NeedsBuildSettingsFix
+            return _asset && IsUtilityLineEnabled && NeedsBuildSettingsFix
                 ? EditorGUIUtility.singleLineHeight * 2
                 : EditorGUIUtility.singleLineHeight;
         }

@@ -23,13 +23,13 @@ public class CodeInitializedFieldDemo : MonoBehaviour
         sceneB = SceneReference.FromScenePath("Assets/Scenes/SceneB.unity");
 
 #if UNITY_EDITOR
-        sceneC = new SceneReference(GetSceneAsset(sceneCSource));
+        sceneC = new SceneReference(GetAsset(sceneCSource));
 #endif // UNITY_EDITOR
     }
 
-    private static UnityEngine.Object GetSceneAsset(SceneReference x)
+    private static UnityEngine.Object GetAsset(SceneReference x)
     {
         const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-        return (UnityEngine.Object) typeof(SceneReference).GetField("sceneAsset", bindingFlags)?.GetValue(x);
+        return (UnityEngine.Object) typeof(SceneReference).GetField("asset", bindingFlags)?.GetValue(x);
     }
 }

@@ -23,9 +23,10 @@ namespace Eflatun.SceneReference
     [XmlRoot("Eflatun.SceneReference.SceneReference")]
     public class SceneReference : ISerializationCallbackReceiver, ISerializable, IXmlSerializable
     {
-        private const string CustomSerializationGuidKey = "sceneAssetGuidHex";
+        internal const string CustomSerializationGuidKey = "sceneAssetGuidHex";
 
-        [SerializeField] internal UnityEngine.Object sceneAsset;
+        [FormerlySerializedAs("sceneAsset")]
+        [SerializeField] internal UnityEngine.Object asset;
 
         [FormerlySerializedAs("sceneAssetGuidHex")]
         [SerializeField] internal string guid;
@@ -40,7 +41,7 @@ namespace Eflatun.SceneReference
             // See: https://learn.microsoft.com/en-us/dotnet/api/system.xml.serialization.ixmlserializable?view=net-7.0#remarks
 
             guid = Utils.AllZeroGuid;
-            sceneAsset = null;
+            asset = null;
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace Eflatun.SceneReference
                     + "\nThis can happen due to an outdated scene GUID to path map retaining scene assets that no longer exist. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.");
             }
 
-            sceneAsset = foundAsset;
+            asset = foundAsset;
 #endif // UNITY_EDITOR
         }
 
@@ -88,19 +89,19 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// Creates a new <see cref="SceneReference"/> which references the given scene asset.
         /// </summary>
-        /// <param name="sceneAsset">The asset of the scene to reference.</param>
+        /// <param name="asset">The asset of the scene to reference.</param>
         /// <exception cref="SceneReferenceCreationException">Throws if the given asset is null.</exception>
         /// <exception cref="SceneReferenceCreationException">Throws if the GUID of the given asset cannot be retrieved.</exception>
         /// <exception cref="SceneReferenceCreationException">Throws if the Scene GUID to Path map does not contain the GUID of the given asset.</exception>
         /// <remarks>This constructor is for editor-use only. Do NOT use it in runtime code.</remarks>
-        public SceneReference(UnityEngine.Object sceneAsset)
+        public SceneReference(UnityEngine.Object asset)
         {
-            if (!sceneAsset)
+            if (!asset)
             {
                 throw new SceneReferenceCreationException("Given scene asset is null. To fix this, make sure you provide a valid scene asset.");
             }
 
-            if (!AssetDatabase.TryGetGUIDAndLocalFileIdentifier(sceneAsset, out var guidFromAsset, out long _))
+            if (!AssetDatabase.TryGetGUIDAndLocalFileIdentifier(asset, out var guidFromAsset, out long _))
             {
                 throw new SceneReferenceCreationException("Could not retrieve the GUID of the given scene asset. This usually indicates an invalid asset. To fix this, make sure you provide a valid scene asset.");
             }
@@ -115,7 +116,7 @@ namespace Eflatun.SceneReference
             }
 
             guid = guidFromAsset;
-            this.sceneAsset = sceneAsset;
+            this.asset = asset;
         }
 #endif // UNITY_EDITOR
 
@@ -390,7 +391,7 @@ namespace Eflatun.SceneReference
             guid = deserializedGuid;
 
 #if UNITY_EDITOR
-            sceneAsset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(deserializedGuid, out var scenePath)
+            asset = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(deserializedGuid, out var scenePath)
                 ? AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(scenePath)
                 : null;
 #endif // UNITY_EDITOR

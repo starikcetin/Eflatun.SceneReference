@@ -33,7 +33,7 @@ public class AssignFromCodeDemo : MonoBehaviour
         // from objects
         try
         {
-            var target = source.Select(x => new SceneReference(GetSceneAsset(x))).ToArray();
+            var target = source.Select(x => new SceneReference(GetAsset(x))).ToArray();
             for (var i = 0; i < source.Length; i++)
             {
                 Assert.AreEqual(source[i].Guid, target[i].Guid);
@@ -71,7 +71,7 @@ public class AssignFromCodeDemo : MonoBehaviour
             var empty1 = new SceneReference();
             var empty2 = new SceneReference();
             Assert.AreEqual(empty1.Guid, empty2.Guid);
-            Assert.AreEqual(GetSceneAsset(empty1), GetSceneAsset(empty2));
+            Assert.AreEqual(GetAsset(empty1), GetAsset(empty2));
             AssertBothThrowsOrAreEqual<EmptySceneReferenceException, string>(() => empty1.Path, () => empty2.Path);
 
             Debug.Log("empty pass");
@@ -83,10 +83,10 @@ public class AssignFromCodeDemo : MonoBehaviour
         }
     }
 
-    private static UnityEngine.Object GetSceneAsset(SceneReference x)
+    private static UnityEngine.Object GetAsset(SceneReference x)
     {
         const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-        return (UnityEngine.Object) typeof(SceneReference).GetField("sceneAsset", bindingFlags)?.GetValue(x);
+        return (UnityEngine.Object) typeof(SceneReference).GetField("asset", bindingFlags)?.GetValue(x);
     }
 
     private static void AssertBothThrowsOrAreEqual<TException, TValue>(Func<TValue> x, Func<TValue> y) where TException : Exception
