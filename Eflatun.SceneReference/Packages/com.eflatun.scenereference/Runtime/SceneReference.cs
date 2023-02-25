@@ -20,9 +20,10 @@ namespace Eflatun.SceneReference
     /// </summary>
     [PublicAPI]
     [Serializable]
-    [XmlRoot("Eflatun.SceneReference.SceneReference")]
+    [XmlRoot(XmlRootElementName)]
     public class SceneReference : ISerializationCallbackReceiver, ISerializable, IXmlSerializable
     {
+        internal const string XmlRootElementName = "Eflatun.SceneReference.SceneReference";
         internal const string CustomSerializationGuidKey = "sceneAssetGuidHex";
 
         [FormerlySerializedAs("sceneAsset")]

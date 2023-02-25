@@ -216,7 +216,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             return xmlSerializer.Deserialize(xmlReader) as SceneReference;
         }
 
-        private static string GetRawJson(string guid) => @$"{{""sceneAssetGuidHex"":""{guid}""}}";
-        private static string GetRawXml(string guid) => $@"<?xml version=""1.0"" encoding=""utf-16""?><Eflatun.SceneReference.SceneReference>{guid}</Eflatun.SceneReference.SceneReference>";
+        private static string GetRawJson(string guid) => @$"{{""{SceneReference.CustomSerializationGuidKey}"":""{guid}""}}";
+        private static string GetRawXml(string guid) => $@"<?xml version=""1.0"" encoding=""utf-16""?><{SceneReference.XmlRootElementName}>{guid}</{SceneReference.XmlRootElementName}>";
     }
 }
