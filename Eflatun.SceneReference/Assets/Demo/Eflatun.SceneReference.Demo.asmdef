@@ -1,0 +1,16 @@
+{
+    "name": "Eflatun.SceneReference.Demo",
+    "rootNamespace": "Eflatun.SceneReference.Demo",
+    "references": [
+        "GUID:caca889fed6088d40b22c2d7e2909c31"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

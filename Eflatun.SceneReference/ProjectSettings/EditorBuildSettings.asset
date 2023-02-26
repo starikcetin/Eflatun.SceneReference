@@ -5,31 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Tests/Runtime/Subjects/TestSubject_Disabled.unity
-    guid: 7e37b14fa3517514a91937cec5cad27a
   - enabled: 1
-    path: Assets/Tests/Runtime/Subjects/TestSubject_Enabled.unity
-    guid: e3f2c1473b766c34ba5b37779d71787e
+    path: Assets/Demo/Simple/SceneA.unity
+    guid: 45ac7250dffb26f4e84eda01a52b8b19
+  - enabled: 1
+    path: Assets/Demo/Simple/SceneB.unity
+    guid: c5d794d51a8a22c46a17330344e5d1f5
+  - enabled: 1
+    path: Assets/Demo/Simple/SceneC.unity
+    guid: 50ccd0f8666b55544ac0f21398ad9535
+  - enabled: 1
+    path: Assets/Demo/Demo Utils/Subject Scenes/Enabled In Build.unity
+    guid: 1d6d932bbdf133c41aa34e00b02bdd1d
+  - enabled: 0
+    path: Assets/Demo/Demo Utils/Subject Scenes/Disabled In Build.unity
+    guid: fb949268f5f24df4eadb2a5028fca33a
   - enabled: 1
     path: Assets/Tests/Runtime/Subjects/TestSubjectContainer.unity
     guid: 4a619bd3d89b8d244944890d9aed7527
   - enabled: 1
-    path: Assets/Demo/ValidationDemo.unity
-    guid: ec96515e0b82bae4d908d6d069c8cce2
-  - enabled: 1
-    path: Assets/Scenes/SceneA.unity
-    guid: 45ac7250dffb26f4e84eda01a52b8b19
-  - enabled: 1
-    path: Assets/Scenes/SceneB.unity
-    guid: c5d794d51a8a22c46a17330344e5d1f5
-  - enabled: 1
-    path: Assets/Scenes Folder 2/SceneC.unity
-    guid: 50ccd0f8666b55544ac0f21398ad9535
-  - enabled: 1
-    path: Assets/Demo/Enabled In Build.unity
-    guid: 1d6d932bbdf133c41aa34e00b02bdd1d
+    path: Assets/Tests/Runtime/Subjects/TestSubject_Enabled.unity
+    guid: e3f2c1473b766c34ba5b37779d71787e
   - enabled: 0
-    path: Assets/Demo/Disabled In Build.unity
-    guid: fb949268f5f24df4eadb2a5028fca33a
+    path: Assets/Tests/Runtime/Subjects/TestSubject_Disabled.unity
+    guid: 7e37b14fa3517514a91937cec5cad27a
   m_configObjects: {}
