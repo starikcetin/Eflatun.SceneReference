@@ -10,10 +10,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Breaking Changes
 
 ### Added
+- `Open Build Settings` button to the Scene-in-build utility popups. This button will ping the scene in the project view and open build settings, allowing you to fix your build settings manually.
 
 ### Changed
 
 ### Removed
+- `Add to Build as Disabled` button in the Scene-in-build utility popups of scenes that are not in build. This button was not making much sense because adding to build as disabled doesn't actually fix the situation, since the scene will still be disabled afterwards.
 
 ### Fixed
 

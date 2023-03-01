@@ -108,7 +108,7 @@ namespace Eflatun.SceneReference.Editor
                 var title = "Add Scene to Build Settings?";
                 var body = $"Would you like to add the following scene to build settings?\n\n{_path}";
 
-                switch (EditorUtility.DisplayDialogComplex(title, body, "Add to Build as Enabled", "Add to Build as Disabled", "Cancel"))
+                switch (EditorUtility.DisplayDialogComplex(title, body, "Add to Build", "Cancel", "Open Build Settings"))
                 {
                     case 0:
                     {
@@ -118,8 +118,12 @@ namespace Eflatun.SceneReference.Editor
                     }
                     case 1:
                     {
-                        tempScenes.Add(new EditorBuildSettingsScene(_path, false));
-                        changed = true;
+                        // 1 is cancel
+                        break;
+                    }
+                    case 2:
+                    {
+                        PingAssetAndOpenBuildSettings();
                         break;
                     }
                 }
@@ -129,10 +133,24 @@ namespace Eflatun.SceneReference.Editor
                 var title = "Enable Scene in Build Settings?";
                 var body = $"Would you like to enable the following scene in build settings?\n\n{_path}";
 
-                if (EditorUtility.DisplayDialog(title, body, "Enable in Build", "Cancel"))
+                switch (EditorUtility.DisplayDialogComplex(title, body, "Enable in Build", "Cancel", "Open Build Settings"))
                 {
-                    tempScenes.Single(x => x.guid.ToString() == _guid).enabled = true;
-                    changed = true;
+                    case 0:
+                    {
+                        tempScenes.Single(x => x.guid.ToString() == _guid).enabled = true;
+                        changed = true;
+                        break;
+                    }
+                    case 1:
+                    {
+                        // 1 is cancel
+                        break;
+                    }
+                    case 2:
+                    {
+                        PingAssetAndOpenBuildSettings();
+                        break;
+                    }
                 }
             }
 
@@ -204,6 +222,12 @@ namespace Eflatun.SceneReference.Editor
             return _asset && IsUtilityLineEnabled && NeedsBuildSettingsFix
                 ? EditorGUIUtility.singleLineHeight * 2
                 : EditorGUIUtility.singleLineHeight;
+        }
+
+        private void PingAssetAndOpenBuildSettings()
+        {
+            EditorGUIUtility.PingObject(_asset);
+            EditorWindow.GetWindow<BuildPlayerWindow>();
         }
     }
 }
