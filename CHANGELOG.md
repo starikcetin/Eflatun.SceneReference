@@ -19,6 +19,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
+## [2.1.0] - 2023-03-01
+
+### Added
+- `Open Build Settings` button to the scene-in-build utility popups. This button will ping the scene in the project view and open build settings, allowing you to fix your build settings manually.
+
+### Changed
+- `Add to Build as Enabled` button is renamed to `Add to Build` in scene-in-build utility popups of scenes that are not in build.
+
+### Removed
+- `Add to Build as Disabled` button in the scene-in-build utility popups of scenes that are not in build. This button was not making much sense because adding to build as disabled doesn't actually fix the situation, since the scene will still be disabled afterwards.
+
+
+
 ## [2.0.0] - 2023-02-26
 We renamed some of our internal serialized fields. Since we utilize `FormerlySerializedAs`, you will not lose any data. However, due to these changes, Unity will re-serialize your `SceneReference`s as you save your scenes and prefabs. Please commit these re-serialization changes as you see fit, otherwise they will keep appearing until you do so.
 
