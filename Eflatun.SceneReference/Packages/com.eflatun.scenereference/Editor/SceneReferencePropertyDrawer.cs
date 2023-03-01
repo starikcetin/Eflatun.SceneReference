@@ -17,14 +17,6 @@ namespace Eflatun.SceneReference.Editor
     {
         private static readonly SceneReferenceOptionsAttribute DefaultOptionsAttribute = new SceneReferenceOptionsAttribute();
 
-        private enum SceneBuildSettingsState
-        {
-            None,
-            NotIncluded,
-            Disabled,
-            Enabled
-        }
-
         private SerializedProperty _assetSerializedProperty;
         private SerializedProperty _guidSerializedProperty;
 
@@ -98,50 +90,6 @@ namespace Eflatun.SceneReference.Editor
             _guidSerializedProperty.stringValue = newGuid.ToString();
         }
 
-        private void FixInBuildSettings()
-        {
-            var changed = false;
-            var tempScenes = EditorBuildSettings.scenes.ToList();
-
-            if (_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
-            {
-                var title = "Add Scene to Build Settings?";
-                var body = $"Would you like to add the following scene to build settings?\n\n{_path}";
-
-                switch (EditorUtility.DisplayDialogComplex(title, body, "Add to Build as Enabled", "Add to Build as Disabled", "Cancel"))
-                {
-                    case 0:
-                    {
-                        tempScenes.Add(new EditorBuildSettingsScene(_path, true));
-                        changed = true;
-                        break;
-                    }
-                    case 1:
-                    {
-                        tempScenes.Add(new EditorBuildSettingsScene(_path, false));
-                        changed = true;
-                        break;
-                    }
-                }
-            }
-            else if (_sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
-            {
-                var title = "Enable Scene in Build Settings?";
-                var body = $"Would you like to enable the following scene in build settings?\n\n{_path}";
-
-                if (EditorUtility.DisplayDialog(title, body, "Enable in Build", "Cancel"))
-                {
-                    tempScenes.Single(x => x.guid.ToString() == _guid).enabled = true;
-                    changed = true;
-                }
-            }
-
-            if (changed)
-            {
-                EditorBuildSettings.scenes = tempScenes.ToArray();
-            }
-        }
-
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             Init(property);
@@ -186,7 +134,7 @@ namespace Eflatun.SceneReference.Editor
 
                 if (GUI.Button(buttonRect, buttonText))
                 {
-                    FixInBuildSettings();
+                    FixInBuildEditorWindow.Display(_asset, _path, _guid, _sceneBuildSettingsState);
 
                     // This prevents Unity from throwing 'InvalidOperationException: Stack empty.' at 'EditorGUI.EndProperty'.
                     GUIUtility.ExitGUI();
