@@ -3,6 +3,11 @@
         "m_DictionaryValues": [
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "AddressablesSupport.IsAddressablesChangeGenerationTriggerEnabled",
+                "value": "{\"m_Value\":true}"
+            },
+            {
+                "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "PropertyDrawer.ShowInlineSceneInBuildUtility",
                 "value": "{\"m_Value\":true}"
             },

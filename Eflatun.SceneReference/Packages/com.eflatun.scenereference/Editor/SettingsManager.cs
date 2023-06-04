@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Eflatun.SceneReference.Editor.Utility;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
 using UnityEditor;
@@ -16,7 +17,7 @@ namespace Eflatun.SceneReference.Editor
     [PublicAPI]
     public static class SettingsManager
     {
-        /// <inheritdoc cref="UserSetting{T}"/> 
+        /// <inheritdoc cref="UserSetting{T}"/>
         public class ProjectSetting<T> : UserSetting<T>
         {
             /// <inheritdoc cref="UserSetting{T}(Settings,string,T,SettingsScope)"/>
@@ -111,6 +112,34 @@ namespace Eflatun.SceneReference.Editor
             [field: UserSetting(CategoryName, "Color Based On Scene-In-Build State", "Should we color the property to draw attention for scenes that are either not in build or disabled in build?\n\nUnity only bundles scenes that are added and enabled in build settings. Therefore, you would want to validate whether the scene you assign to a SceneReference is added and enabled in build settings.\n\nIt is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.")]
             public static ProjectSetting<bool> ColorBasedOnSceneInBuildState { get; }
                 = new ProjectSetting<bool>("PropertyDrawer.ColorBasedOnSceneInBuildState", true);
+        }
+
+        /// <summary>
+        /// Settings regarding support for Addressables.
+        /// </summary>
+        /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+        [PublicAPI]
+        public static class AddressablesSupport
+        {
+            private const string CategoryName = "Addressables Support";
+
+            /// <summary>
+            /// TODO
+            /// </summary>
+            /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+            [field: UserSetting(CategoryName, "Enable Addressables Change Generation Trigger", "TODO")]
+            public static ProjectSetting<bool> IsAddressablesChangeGenerationTriggerEnabled { get; }
+                = new ProjectSetting<bool>("AddressablesSupport.IsAddressablesChangeGenerationTriggerEnabled", true);
+
+            [UserSettingBlock(CategoryName)]
+            public static void Draw(string searchContext)
+            {
+                if (!EditorUtils.IsAddressablesPackagePresent)
+                {
+                    // TODO: make warning message better
+                    EditorGUILayout.HelpBox("Addressables package is not installed.", MessageType.Warning);
+                }
+            }
         }
     }
 }

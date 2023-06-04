@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Eflatun.SceneReference.Editor.Utility;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
+
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+
+// TODO: also color addressables differently (add a settings entry for it)
 
 namespace Eflatun.SceneReference.Editor
 {
@@ -22,7 +28,10 @@ namespace Eflatun.SceneReference.Editor
             None,
             NotIncluded,
             Disabled,
-            Enabled
+            Enabled,
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            Addressable,
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
         }
 
         private SerializedProperty _assetSerializedProperty;
@@ -34,6 +43,10 @@ namespace Eflatun.SceneReference.Editor
         private EditorBuildSettingsScene _sceneInBuildSettings;
         private SceneBuildSettingsState _sceneBuildSettingsState;
         private SceneReferenceOptionsAttribute _optionsAttribute;
+
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+        private AddressableAssetEntry _addressableEntry;
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
 
         private bool NeedsBuildSettingsFix => _sceneBuildSettingsState == SceneBuildSettingsState.Disabled
                                               || _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded;
@@ -64,12 +77,22 @@ namespace Eflatun.SceneReference.Editor
             _path = AssetDatabase.GetAssetPath(_asset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
 
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            _addressableEntry = AddressableAssetSettingsDefaultObject.Settings.FindAssetEntry(_guid);
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+
             _optionsAttribute = fieldInfo.GetCustomAttribute<SceneReferenceOptionsAttribute>(false) ?? DefaultOptionsAttribute;
 
             if (_asset == null)
             {
                 _sceneBuildSettingsState = SceneBuildSettingsState.None;
             }
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            else if (_addressableEntry != null)
+            {
+                _sceneBuildSettingsState = SceneBuildSettingsState.Addressable;
+            }
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
             else if (_sceneInBuildSettings == null)
             {
                 _sceneBuildSettingsState = SceneBuildSettingsState.NotIncluded;

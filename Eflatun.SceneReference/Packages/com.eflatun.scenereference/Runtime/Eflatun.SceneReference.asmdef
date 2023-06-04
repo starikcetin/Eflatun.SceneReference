@@ -9,6 +9,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.addressables",
+            "expression": "1.19.19",
+            "define": "EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT"
+        }
+    ],
     "noEngineReferences": false
 }

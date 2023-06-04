@@ -13,6 +13,8 @@ using UnityEngine.Serialization;
 using UnityEditor;
 #endif // UNITY_EDITOR
 
+// TODO: factory method that takes in an address
+
 namespace Eflatun.SceneReference
 {
     /// <summary>
@@ -212,6 +214,12 @@ namespace Eflatun.SceneReference
         /// </remarks>
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
+        // TODO: make sure we throw a typed exception just like we do with Path if IsAddressable is false
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public string Address => AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap[Guid];
+
         /// <summary>
         /// Is this <see cref="SceneReference"/> assigned something?
         /// </summary>
@@ -275,6 +283,11 @@ namespace Eflatun.SceneReference
         public bool IsInBuildAndEnabled => BuildIndex != -1;
 
         /// <summary>
+        /// TODO
+        /// </summary>
+        public bool IsAddressable => AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap.ContainsKey(Guid);
+
+        /// <summary>
         /// Is this <see cref="SceneReference"/> safe to use?
         /// </summary>
         /// <remarks>
@@ -287,7 +300,7 @@ namespace Eflatun.SceneReference
         public bool IsSafeToUse =>
             HasValue
             && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path)
-            && SceneUtility.GetBuildIndexByScenePath(path) != -1;
+            && (SceneUtility.GetBuildIndexByScenePath(path) != -1 || IsAddressable);
 
         /// <inheritdoc cref="GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)"/>
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)

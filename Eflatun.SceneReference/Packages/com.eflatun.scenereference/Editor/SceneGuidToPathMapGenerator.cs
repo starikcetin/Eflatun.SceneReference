@@ -1,8 +1,13 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEditor;
+
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+using UnityEditor.AddressableAssets;
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
 
 namespace Eflatun.SceneReference.Editor
 {
@@ -12,6 +17,8 @@ namespace Eflatun.SceneReference.Editor
     [PublicAPI]
     public static class SceneGuidToPathMapGenerator
     {
+        private const string DotKeepFileContent = "Add this file to version control. See for explanation: https://stackoverflow.com/a/17929518/6301627";
+
         /// <summary>
         /// Runs the generator.
         /// </summary>
@@ -21,30 +28,76 @@ namespace Eflatun.SceneReference.Editor
         [MenuItem("Tools/" + Constants.MenuPrefixBase + "/Run Scene GUID to Path Map Generator", priority = -3130)]
         public static void Run()
         {
-            const string dotKeepFileContent = "Add this file to version control. See for explanation: https://stackoverflow.com/a/17929518/6301627";
-            
-            Logger.Debug("Generating scene GUID to path map.");
-            
             try
             {
+                Logger.Debug("Generating maps.");
+
+                WriteScaffolding();
+
                 var allSceneGuids = AssetDatabase.FindAssets("t:Scene");
-                var sceneGuidToPath = allSceneGuids.ToDictionary(
-                    x => x, // key generator: take guids
-                    AssetDatabase.GUIDToAssetPath // value generator: take paths
-                );
-                
-                var jsonRaw = JsonConvert.SerializeObject(sceneGuidToPath, SettingsManager.SceneGuidToPathMap.JsonFormatting.value);
 
-                Directory.CreateDirectory(Paths.Absolute.SceneGuidToPathMapFolder.PlatformPath);
-                File.WriteAllText(Paths.Absolute.SceneGuidToPathMapDotKeepFile.PlatformPath, dotKeepFileContent);
-                File.WriteAllText(Paths.Absolute.SceneGuidToPathMapFile.PlatformPath, jsonRaw);
+                var sceneGuidToPathMap = GenerateSceneGuidToPathMap(allSceneGuids);
+                WriteSceneGuidToPathMap(sceneGuidToPathMap);
 
-                SceneGuidToPathMapProvider.DirectAssign(sceneGuidToPath);
+                var addressableSceneGuidToAddressMap = GenerateAddressableSceneGuidToAddressMap(allSceneGuids);
+                WriteAddressableSceneGuidToAddressMap(addressableSceneGuidToAddressMap);
             }
             finally
             {
                 AssetDatabase.Refresh();
             }
+        }
+
+        private static void WriteScaffolding()
+        {
+            Directory.CreateDirectory(Paths.Absolute.SceneGuidToPathMapFolder.PlatformPath);
+            File.WriteAllText(Paths.Absolute.SceneGuidToPathMapDotKeepFile.PlatformPath, DotKeepFileContent);
+        }
+
+        private static Dictionary<string, string> GenerateSceneGuidToPathMap(string[] allSceneGuids)
+        {
+            var sceneGuidToPathMap = allSceneGuids.ToDictionary(
+                x => x, // key generator: take guids
+                AssetDatabase.GUIDToAssetPath // value generator: take paths
+            );
+            return sceneGuidToPathMap;
+        }
+
+        private static void WriteSceneGuidToPathMap(Dictionary<string, string> sceneGuidToPathMap)
+        {
+            var jsonRaw = JsonConvert.SerializeObject(sceneGuidToPathMap, SettingsManager.SceneGuidToPathMap.JsonFormatting.value);
+            File.WriteAllText(Paths.Absolute.SceneGuidToPathMapFile.PlatformPath, jsonRaw);
+
+            SceneGuidToPathMapProvider.DirectAssign(sceneGuidToPathMap);
+        }
+
+        private static Dictionary<string, string> GenerateAddressableSceneGuidToAddressMap(string[] allSceneGuids)
+        {
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            var addressableSettings = AddressableAssetSettingsDefaultObject.Settings;
+
+            var addressableSceneAssetEntries = allSceneGuids
+                .Select(addressableSettings.FindAssetEntry)
+                .Where(x => x != null);
+
+            var addressableSceneGuidToAddressMap = addressableSceneAssetEntries.ToDictionary(
+                x => x.guid, // key generator: take guids
+                x => x.address // value generator: take addresses
+            );
+
+            return addressableSceneGuidToAddressMap;
+#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            return new Dictionary<string, string>();
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+        }
+
+        private static void WriteAddressableSceneGuidToAddressMap(Dictionary<string, string> addressableSceneGuidToAddressMap)
+        {
+            // TODO: separate the json formatting setting for the addressable scene guid -> address map
+            var jsonRaw = JsonConvert.SerializeObject(addressableSceneGuidToAddressMap, SettingsManager.SceneGuidToPathMap.JsonFormatting.value);
+            File.WriteAllText(Paths.Absolute.AddressableSceneGuidToAddressMapFile.PlatformPath, jsonRaw);
+
+            AddressableSceneGuidToAddressMapProvider.DirectAssign(addressableSceneGuidToAddressMap);
         }
     }
 }
