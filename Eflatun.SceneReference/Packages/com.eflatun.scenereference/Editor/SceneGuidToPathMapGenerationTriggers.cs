@@ -12,9 +12,10 @@ namespace Eflatun.SceneReference.Editor
     {
         None = 0,
         All = ~0,
-        
+
         AfterSceneAssetChange = 1 << 0,
         BeforeEnterPlayMode = 1 << 1,
         BeforeBuild = 1 << 2,
+        AfterPackageResolve = 1 << 3,
     }
 }

@@ -4,8 +4,6 @@ using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 
-// TODO: we should also generate addressable map immediately after we enable the addressable support, since addressable change trigger will not run then
-
 namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 {
     [InitializeOnLoad]
