@@ -124,7 +124,7 @@ namespace Eflatun.SceneReference.Editor
             private const string CategoryName = "Addressables Support";
 
             /// <summary>
-            /// TODO
+            /// TODO: write docs
             /// </summary>
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
             [field: UserSetting(CategoryName, "Enable Addressables Change Generation Trigger", "TODO")]

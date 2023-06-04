@@ -216,7 +216,7 @@ namespace Eflatun.SceneReference
 
         // TODO: make sure we throw a typed exception just like we do with Path if IsAddressable is false
         /// <summary>
-        /// TODO
+        /// TODO: write docs
         /// </summary>
         public string Address => AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap[Guid];
 
@@ -283,7 +283,7 @@ namespace Eflatun.SceneReference
         public bool IsInBuildAndEnabled => BuildIndex != -1;
 
         /// <summary>
-        /// TODO
+        /// TODO: write docs
         /// </summary>
         public bool IsAddressable => AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap.ContainsKey(Guid);
 
