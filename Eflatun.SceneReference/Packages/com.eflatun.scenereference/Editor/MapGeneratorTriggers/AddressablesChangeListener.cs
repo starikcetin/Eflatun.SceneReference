@@ -22,7 +22,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
                 e == AddressableAssetSettings.ModificationEvent.EntryMoved ||
                 e == AddressableAssetSettings.ModificationEvent.EntryCreated)
             {
-                if (SettingsManager.AddressablesSupport.IsAddressablesChangeGenerationTriggerEnabled)
+                if (SettingsManager.SceneGuidToPathMap.IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers.AfterAddressablesChange))
                 {
                     SceneGuidToPathMapGenerator.Run();
                 }

@@ -123,21 +123,17 @@ namespace Eflatun.SceneReference.Editor
         {
             private const string CategoryName = "Addressables Support";
 
-            /// <summary>
-            /// TODO: write docs
-            /// </summary>
-            /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-            [field: UserSetting(CategoryName, "Enable Addressables Change Generation Trigger", "TODO")]
-            public static ProjectSetting<bool> IsAddressablesChangeGenerationTriggerEnabled { get; }
-                = new ProjectSetting<bool>("AddressablesSupport.IsAddressablesChangeGenerationTriggerEnabled", true);
-
             [UserSettingBlock(CategoryName)]
-            public static void Draw(string searchContext)
+            private static void Draw(string searchContext)
             {
                 if (!EditorUtils.IsAddressablesPackagePresent)
                 {
                     // TODO: make warning message better
-                    EditorGUILayout.HelpBox("Addressables package is not installed.", MessageType.Warning);
+                    EditorGUILayout.HelpBox("Addressables package is not installed. Addressables support is disabled.", MessageType.Warning);
+                }
+                else
+                {
+                    EditorGUILayout.HelpBox("Addressables support is enabled.", MessageType.Info);
                 }
             }
         }
