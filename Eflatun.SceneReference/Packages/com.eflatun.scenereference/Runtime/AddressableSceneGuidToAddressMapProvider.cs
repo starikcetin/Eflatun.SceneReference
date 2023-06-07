@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -10,6 +12,11 @@ namespace Eflatun.SceneReference
     /// <summary>
     /// Provides the scene GUID to path map. Can be used in both editor and runtime.
     /// </summary>
+    /// <remarks>
+    /// Unlike <see cref="SceneGuidToPathMapProvider"/>, this class can not provide an inverse map because address
+    /// of an asset does not have to be unique. Instead, it provides <see cref="GetGuidFromAddress"/> and
+    /// <see cref="TryGetGuidFromAddress"/> methods.
+    /// </remarks>
     [PublicAPI]
     public static class AddressableSceneGuidToAddressMapProvider
     {
@@ -24,6 +31,58 @@ namespace Eflatun.SceneReference
             {
                 LoadIfNotAlready();
                 return _addressableSceneGuidToAddressMap;
+            }
+        }
+
+        /// <summary>
+        /// TODO: docs
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public static string GetGuidFromAddress(string address)
+        {
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                // TODO: throw better exception
+                throw new Exception();
+            }
+
+            LoadIfNotAlready();
+
+            var matchingEntries = _addressableSceneGuidToAddressMap.Where(x => x.Value == address).ToArray();
+
+            if (matchingEntries.Length < 1)
+            {
+                // TODO: throw better exception
+                throw new Exception();
+            }
+
+            if (matchingEntries.Length > 1)
+            {
+                // TODO: throw better exception
+                throw new Exception();
+            }
+
+            return matchingEntries.First().Key;
+        }
+
+        /// <summary>
+        /// TODO: docs
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public static bool TryGetGuidFromAddress(string address, out string guid)
+        {
+            try
+            {
+                guid = GetGuidFromAddress(address);
+                return true;
+            }
+            catch
+            {
+                guid = null;
+                return false;
             }
         }
 
