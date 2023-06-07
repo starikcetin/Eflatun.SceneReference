@@ -13,8 +13,6 @@ using UnityEngine.Serialization;
 using UnityEditor;
 #endif // UNITY_EDITOR
 
-// TODO: factory method that takes in an address
-
 namespace Eflatun.SceneReference
 {
     /// <summary>
@@ -159,6 +157,34 @@ namespace Eflatun.SceneReference
         }
 
         /// <summary>
+        /// TODO: docs
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public static SceneReference FromAddress(string address)
+        {
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                throw new SceneReferenceCreationException(
+                    $"Given address is null or whitespace. Path: '{address}'" +
+                    "\nTo fix this, make sure you provide the address of a valid addressable scene.");
+            }
+
+            if (!AddressableSceneGuidToAddressMapProvider.TryGetGuidFromAddress(address, out var guidFromMap))
+            {
+                // TODO: throw better exception
+                throw new SceneReferenceCreationException("");
+            }
+
+            return new SceneReference(guidFromMap);
+#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            // TODO: throw support missing exception
+            throw new Exception();
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+        }
+
+        /// <summary>
         /// GUID of the scene asset.
         /// </summary>
         public string Guid => guid.GuardGuidAgainstNullOrWhitespace();
@@ -214,7 +240,7 @@ namespace Eflatun.SceneReference
         /// </remarks>
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
-        // TODO: make sure we throw a typed exception just like we do with Path if IsAddressable is false
+        // TODO: make sure we throw a typed exception just like we do with Path if IsAddressable is false, explaining that the scene is not addressable
         /// <summary>
         /// TODO: write docs
         /// </summary>
@@ -287,6 +313,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         public bool IsAddressable => AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap.ContainsKey(Guid);
 
+        // TODO: edit docs to mention addressables
         /// <summary>
         /// Is this <see cref="SceneReference"/> safe to use?
         /// </summary>
