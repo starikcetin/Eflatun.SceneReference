@@ -12,7 +12,7 @@ public class AddressableSceneDemo : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"Is addressable: {addressableSceneRef.IsAddressable}");
+        Debug.Log($"IsAddressable: {addressableSceneRef.IsAddressable}");
         Debug.Log($"IsSafeToUse: {addressableSceneRef.IsSafeToUse}");
 
         if (addressableSceneRef.IsAddressable)
