@@ -10,8 +10,6 @@ using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 #endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
 
-// TODO: also color addressables differently (add a settings entry for it)
-
 namespace Eflatun.SceneReference.Editor
 {
     /// <summary>

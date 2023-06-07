@@ -93,7 +93,6 @@ namespace Eflatun.SceneReference.Editor
 
         private static void WriteAddressableSceneGuidToAddressMap(Dictionary<string, string> addressableSceneGuidToAddressMap)
         {
-            // TODO: separate the json formatting setting for the addressable scene guid -> address map
             var jsonRaw = JsonConvert.SerializeObject(addressableSceneGuidToAddressMap, SettingsManager.SceneGuidToPathMap.JsonFormatting.value);
             File.WriteAllText(Paths.Absolute.AddressableSceneGuidToAddressMapFile.PlatformPath, jsonRaw);
 
