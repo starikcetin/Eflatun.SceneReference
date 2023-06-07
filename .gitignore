@@ -83,6 +83,6 @@ Thumbs.db
 # UPM packages folder
 **/[Pp]ackages/.*/*
 
-# Eflatun.SceneReference auto-generated map file
-**/[Aa]ssets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json
-**/[Aa]ssets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json.meta
+# Eflatun.SceneReference auto-generated map files
+**/[Aa]ssets/Resources/Eflatun/SceneReference/*.generated.json
+**/[Aa]ssets/Resources/Eflatun/SceneReference/*.generated.json.meta
