@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: a0dc50aad931bf642b26775d121a3f17
   m_SerializeEntries:
   - m_GUID: 9035c3d9637db67459a347d73514c868
-    m_Address: Assets/Demo/Demo Utils/Subject Scenes/Addressable.unity
+    m_Address: Demo Subject Addressable Scene
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
