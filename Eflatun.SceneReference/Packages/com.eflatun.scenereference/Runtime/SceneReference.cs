@@ -157,10 +157,14 @@ namespace Eflatun.SceneReference
         }
 
         /// <summary>
-        /// TODO: docs
+        /// Creates a new <see cref="SceneReference"/> which references the scene with the given address.
         /// </summary>
-        /// <param name="address"></param>
-        /// <returns></returns>
+        /// <param name="address">Address of the scene to reference.</param>
+        /// <returns>A new <see cref="SceneReference"/>.</returns>
+        /// <exception cref="SceneReferenceCreationException">Throws if the given address is null or whitespace.</exception>
+        /// <exception cref="SceneReferenceCreationException">Throws if the given address is not found in the addressable scene GUID to address map.</exception>
+        /// <exception cref="SceneReferenceCreationException">Throws if the given address matches multiple entries from the addressable scene GUID to address map.</exception>
+        /// <exception cref="AddressablesSupportDisabledException">Throws if the addressables support is disabled.</exception>
         public static SceneReference FromAddress(string address)
         {
 #if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
@@ -171,16 +175,33 @@ namespace Eflatun.SceneReference
                     "\nTo fix this, make sure you provide the address of a valid addressable scene.");
             }
 
-            if (!AddressableSceneGuidToAddressMapProvider.TryGetGuidFromAddress(address, out var guidFromMap))
+            try
             {
-                // TODO: throw better exception
-                throw new SceneReferenceCreationException("");
+                var guidFromMap = AddressableSceneGuidToAddressMapProvider.GetGuidFromAddress(address);
+                return new SceneReference(guidFromMap);
             }
-
-            return new SceneReference(guidFromMap);
+            catch (AddressNotFoundException e)
+            {
+                throw new SceneReferenceCreationException(
+                    $"Given address is not found in the addressable scene GUID to address map. Address: '{address}'"
+                    + "\nThis can happen for these reasons:"
+                    + "\n1. The asset with the given address either doesn't exist or is not a scene. To fix this, make sure you provide the address of a valid scene."
+                    + "\n2. The addressable scene GUID to address map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
+                    , e
+                );
+            }
+            catch (AddressNotUniqueException e)
+            {
+                throw new SceneReferenceCreationException(
+                    $"Given address matches multiple entries in addressable scene GUID to address map. Address: '{address}'"
+                    + "\nThis can happen for these reasons:"
+                    + "\n1. There are multiple addressable scenes with the same given address. To fix this, make sure there is only one addressable scene with the given address."
+                    + "\n2. The addressable scene GUID to address map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
+                    , e
+                );
+            }
 #else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
-            // TODO: throw support missing exception
-            throw new Exception();
+            throw new AddressablesSupportDisabledException();
 #endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
         }
 
@@ -240,11 +261,34 @@ namespace Eflatun.SceneReference
         /// </remarks>
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
-        // TODO: make sure we throw a typed exception just like we do with Path if IsAddressable is false, explaining that the scene is not addressable
         /// <summary>
-        /// TODO: write docs
+        /// Address of this addressable scene.
         /// </summary>
-        public string Address => AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap[Guid];
+        /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
+        /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
+        /// <exception cref="SceneNotAddressableException">Throws if <see cref="IsAddressable"/> is <c>false</c>.</exception>
+        /// <exception cref="AddressablesSupportDisabledException">Throws if the addressables support is disabled.</exception>
+        public string Address
+        {
+            get
+            {
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+                if (!IsInSceneGuidToPathMap)
+                {
+                    throw new InvalidSceneReferenceException();
+                }
+
+                if (!AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap.TryGetValue(Guid, out var addressFromMap))
+                {
+                    throw new SceneNotAddressableException();
+                }
+
+                return addressFromMap;
+#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+                throw new AddressablesSupportDisabledException();
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            }
+        }
 
         /// <summary>
         /// Is this <see cref="SceneReference"/> assigned something?
@@ -300,8 +344,8 @@ namespace Eflatun.SceneReference
         /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
         /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
         /// <remarks>
-        /// Only check this property if you need partial validations, as this property alone does not communicate whether this <see cref="SceneReference"/> is absolutely safe to use.<p/>
-        /// If you only need to check if it is completely safe to use a <see cref="SceneReference"/> without knowing where exactly the problem is, then only check <see cref="IsSafeToUse"/> instead. Checking only <see cref="IsSafeToUse"/> is sufficient for the majority of the use cases.
+        /// This property alone does NOT communicate whether this <see cref="SceneReference"/> is safe to use. You should also check <see cref="IsSafeToUse"/> (recommended) or other partial validation properties to make sure that it is completely safe to use.<p/>
+        /// This property will always be <c>false</c> if <see cref="IsAddressable"/> is <c>true</c>, as an addressable scene can not be in the build settings.
         /// </remarks>
         /// <seealso cref="HasValue"/>
         /// <seealso cref="IsInSceneGuidToPathMap"/>
@@ -309,8 +353,12 @@ namespace Eflatun.SceneReference
         public bool IsInBuildAndEnabled => BuildIndex != -1;
 
         /// <summary>
-        /// TODO: write docs
+        /// Is the scene addressable?
         /// </summary>
+        /// <remarks>
+        /// This property alone does NOT communicate whether this <see cref="SceneReference"/> is safe to use. You should also check <see cref="IsSafeToUse"/> (recommended) or other partial validation properties to make sure that it is completely safe to use.<p/>
+        /// This property will always be <c>false</c> if <see cref="IsInBuildAndEnabled"/> is <c>true</c>, as a scene in the build settings can not be addressable.
+        /// </remarks>
         public bool IsAddressable => AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap.ContainsKey(Guid);
 
         // TODO: edit docs to mention addressables
@@ -319,7 +367,8 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <remarks>
         /// Checking this property alone is sufficient for the majority of the validation use cases, as this property absolutely communicates whether this <see cref="SceneReference"/> is safe to use.<p/>
-        /// Checking this property is equivalent to checking all partial validation properties (namely: <see cref="HasValue"/>, <see cref="IsInSceneGuidToPathMap"/>, and <see cref="IsInBuildAndEnabled"/>) in the correct order, but it provides a slightly better performance. If you need those validations partially, you can check them instead of this property. Keep in mind that the use cases that require partial validation are rare and few.
+        /// Checking this property is equivalent to checking all partial validation properties (namely: <see cref="HasValue"/>, <see cref="IsInSceneGuidToPathMap"/>, and <see cref="IsInBuildAndEnabled"/> or <see cref="IsAddressable"/>) in the correct order, but it provides a slightly better performance. If you need those validations partially, you can check them instead of this property. Keep in mind that the use cases that require partial validation are rare and few.<p/>
+        /// You should also check <see cref="IsAddressable"/> afterwards to see how to use the referenced scene.
         /// </remarks>
         /// <seealso cref="HasValue"/>
         /// <seealso cref="IsInSceneGuidToPathMap"/>

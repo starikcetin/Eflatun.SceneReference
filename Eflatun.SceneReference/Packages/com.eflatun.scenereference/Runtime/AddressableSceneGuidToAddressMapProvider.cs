@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -35,43 +34,38 @@ namespace Eflatun.SceneReference
         }
 
         /// <summary>
-        /// TODO: docs
+        /// Gets the GUID of the scene with the given address.
         /// </summary>
-        /// <param name="address"></param>
-        /// <returns></returns>
+        /// <param name="address">Address of the scene.</param>
+        /// <returns>GUID of the scene.</returns>
+        /// <exception cref="AddressNotFoundException">Thrown if no scene with the given address is found in the map.</exception>
+        /// <exception cref="AddressNotUniqueException">Thrown if multiple scenes have the given address.</exception>
         public static string GetGuidFromAddress(string address)
         {
-            if (string.IsNullOrWhiteSpace(address))
-            {
-                // TODO: throw better exception
-                throw new Exception();
-            }
-
             LoadIfNotAlready();
 
             var matchingEntries = _addressableSceneGuidToAddressMap.Where(x => x.Value == address).ToArray();
 
             if (matchingEntries.Length < 1)
             {
-                // TODO: throw better exception
-                throw new Exception();
+                throw new AddressNotFoundException(address);
             }
 
             if (matchingEntries.Length > 1)
             {
-                // TODO: throw better exception
-                throw new Exception();
+                throw new AddressNotUniqueException(address);
             }
 
             return matchingEntries.First().Key;
         }
 
         /// <summary>
-        /// TODO: docs
+        /// Gets the GUID of the scene with the given address.
         /// </summary>
-        /// <param name="address"></param>
-        /// <param name="guid"></param>
-        /// <returns></returns>
+        /// <param name="address">Address of the scene.</param>
+        /// <param name="guid">GUID of the scene if the return is <c>true</c>; <c>null</c> otherwise.</param>
+        /// <returns><c>true</c> if there is exactly one scene with the given address in the map; <c>false</c> otherwise.</returns>
+        [ContractAnnotation("=> true, guid:notnull; => false, guid:null")]
         public static bool TryGetGuidFromAddress(string address, out string guid)
         {
             try

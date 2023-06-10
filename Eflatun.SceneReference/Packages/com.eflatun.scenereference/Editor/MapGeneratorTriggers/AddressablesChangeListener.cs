@@ -28,8 +28,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
                 }
                 else
                 {
-                    // TODO: write better warning
-                    Logger.Warn("Addressables change generation trigger is disabled.");
+                    Logger.Warn($"Skipping scene GUID to path map generation after addressables changes. It is recommended to enable map generation after addressables changes, as an outdated map can result in broken scene references in runtime. You can enable it in {SettingsManager.SettingsMenuPathForDisplay}.");
                 }
             }
         }

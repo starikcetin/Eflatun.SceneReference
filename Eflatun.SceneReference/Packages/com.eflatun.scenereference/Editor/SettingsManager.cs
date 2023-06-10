@@ -128,8 +128,7 @@ namespace Eflatun.SceneReference.Editor
             {
                 if (!EditorUtils.IsAddressablesPackagePresent)
                 {
-                    // TODO: make warning message better
-                    EditorGUILayout.HelpBox("Addressables package is not installed. Addressables support is disabled.", MessageType.Warning);
+                    EditorGUILayout.HelpBox("Addressables support is disabled because the addressables package is not installed in the project. Addressables support will be enabled automatically when the addressables package is installed in the project.", MessageType.Warning);
                 }
                 else
                 {
