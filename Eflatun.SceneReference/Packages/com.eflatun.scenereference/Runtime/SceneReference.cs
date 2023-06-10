@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Eflatun.SceneReference.Exceptions;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
 using UnityEngine;

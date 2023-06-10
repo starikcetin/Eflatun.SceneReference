@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Eflatun.SceneReference.Exceptions;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Scripting;

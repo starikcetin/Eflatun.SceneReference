@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
-namespace Eflatun.SceneReference
+namespace Eflatun.SceneReference.Exceptions
 {
     /// <summary>
     /// Thrown if the addressables support is disabled.

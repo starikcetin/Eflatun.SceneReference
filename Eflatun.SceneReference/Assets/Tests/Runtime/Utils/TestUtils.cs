@@ -4,6 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Eflatun.SceneReference.Exceptions;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using UnityEngine.SceneManagement;

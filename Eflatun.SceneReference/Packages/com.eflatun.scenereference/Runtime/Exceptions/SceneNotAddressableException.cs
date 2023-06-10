@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
-namespace Eflatun.SceneReference
+namespace Eflatun.SceneReference.Exceptions
 {
     /// <summary>
     /// Thrown if a <see cref="SceneReference"/> is not addressable.

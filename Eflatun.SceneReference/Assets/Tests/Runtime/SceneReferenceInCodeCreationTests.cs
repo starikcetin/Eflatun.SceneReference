@@ -1,4 +1,5 @@
-﻿using Eflatun.SceneReference.Tests.Runtime.Utils;
+﻿using Eflatun.SceneReference.Exceptions;
+using Eflatun.SceneReference.Tests.Runtime.Utils;
 using NUnit.Framework;
 using UnityEditor;
 

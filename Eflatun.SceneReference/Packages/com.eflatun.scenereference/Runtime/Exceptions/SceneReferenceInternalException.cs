@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Eflatun.SceneReference
+namespace Eflatun.SceneReference.Exceptions
 {
     [Serializable]
     internal class SceneReferenceInternalException : SceneReferenceException
