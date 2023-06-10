@@ -12,19 +12,14 @@ public class AddressableSceneDemo : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"IsAddressable: {addressableSceneRef.IsAddressable}");
-        Debug.Log($"IsSafeToUse: {addressableSceneRef.IsSafeToUse}");
+        Debug.Log($"State: {addressableSceneRef.State}");
 
-        if (addressableSceneRef.IsAddressable)
+        if (addressableSceneRef.State == SceneReferenceState.Addressable)
         {
             Debug.Log($"Address: {addressableSceneRef.Address}");
 #if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
             Addressables.LoadSceneAsync(addressableSceneRef.Address, LoadSceneMode.Additive);
 #endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
-        }
-        else
-        {
-            SceneManager.LoadSceneAsync(addressableSceneRef.Path, LoadSceneMode.Additive);
         }
     }
 }

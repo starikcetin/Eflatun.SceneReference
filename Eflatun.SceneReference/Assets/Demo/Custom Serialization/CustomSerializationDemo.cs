@@ -33,7 +33,7 @@ namespace Eflatun.SceneReference.Demo
 
             ms.Position = 0;
             var deserialized = (SceneReference)bf.Deserialize(ms);
-            Debug.Log("Deserialized path: " + (deserialized is { HasValue: true, IsInSceneGuidToPathMap: true } ? deserialized.Path : "<empty>"));
+            Debug.Log("Deserialized path: " + (deserialized.State != SceneReferenceState.Unsafe ? deserialized.Path : "<empty>"));
         }
 
         private void ToJsonAndBack()
@@ -43,7 +43,7 @@ namespace Eflatun.SceneReference.Demo
             Debug.Log($"JSON serialization: {json}");
 
             var deserialized = JsonConvert.DeserializeObject<SceneReference>(json);
-            Debug.Log("Deserialized path: " + (deserialized is { HasValue: true, IsInSceneGuidToPathMap: true } ? deserialized.Path : "<empty>"));
+            Debug.Log("Deserialized path: " + (deserialized.State != SceneReferenceState.Unsafe ? deserialized.Path : "<empty>"));
         }
 
         private void ToXmlAndBack()
@@ -59,7 +59,7 @@ namespace Eflatun.SceneReference.Demo
             using var stringReader = new StringReader(xml);
             using var xmlReader = XmlReader.Create(stringReader);
             var deserialized = (SceneReference)xmlSerializer.Deserialize(xmlReader);
-            Debug.Log("Deserialized path: " + (deserialized is { HasValue: true, IsInSceneGuidToPathMap: true } ? deserialized.Path : "<empty>"));
+            Debug.Log("Deserialized path: " + (deserialized.State != SceneReferenceState.Unsafe ? deserialized.Path : "<empty>"));
         }
     }
 }

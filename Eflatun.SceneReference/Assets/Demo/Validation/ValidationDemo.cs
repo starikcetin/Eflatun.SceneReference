@@ -20,30 +20,10 @@ namespace Eflatun.SceneReference.Demo
             Log(notInBuild, nameof(notInBuild));
             Log(empty, nameof(empty));
 
-            Assert.IsTrue(valid.HasValue);
-            Assert.IsTrue(disabled.HasValue);
-            Assert.IsTrue(notInBuild.HasValue);
-            Assert.IsFalse(empty.HasValue);
-
-            Assert.IsTrue(valid.IsInSceneGuidToPathMap);
-            Assert.IsTrue(disabled.IsInSceneGuidToPathMap);
-            Assert.IsTrue(notInBuild.IsInSceneGuidToPathMap);
-            AssertThrows<EmptySceneReferenceException>(() => empty.IsInSceneGuidToPathMap);
-
-            Assert.IsTrue(valid.IsInBuildAndEnabled);
-            Assert.IsFalse(disabled.IsInBuildAndEnabled);
-            Assert.IsFalse(notInBuild.IsInBuildAndEnabled);
-            AssertThrows<EmptySceneReferenceException>(() => empty.IsInBuildAndEnabled);
-
-            Assert.IsTrue(valid.IsSafeToUse);
-            Assert.IsFalse(disabled.IsSafeToUse);
-            Assert.IsFalse(notInBuild.IsSafeToUse);
-            Assert.IsFalse(empty.IsSafeToUse);
-
-            Assert.AreNotEqual(-1, valid.BuildIndex);
-            Assert.AreEqual(-1, disabled.BuildIndex);
-            Assert.AreEqual(-1, notInBuild.BuildIndex);
-            AssertThrows<EmptySceneReferenceException>(() => empty.BuildIndex);
+            Assert.IsTrue(valid.State != SceneReferenceState.Unsafe);
+            Assert.IsTrue(disabled.State == SceneReferenceState.Unsafe);
+            Assert.IsTrue(notInBuild.State == SceneReferenceState.Unsafe);
+            Assert.IsFalse(empty.State == SceneReferenceState.Unsafe);
         }
 
         private void Log(SceneReference sceneReference, string memberName)
@@ -100,41 +80,21 @@ namespace Eflatun.SceneReference.Demo
             {
                 sb.AppendLine($"throws {e.GetType().Name}");
             }
-        
-            sb.Append($"{nameof(sceneReference.HasValue)}: ");
+
+            sb.Append($"{nameof(sceneReference.Address)}: ");
             try
             {
-                sb.AppendLine(sceneReference.HasValue.ToString());
+                sb.AppendLine(sceneReference.Address.ToString());
             }
             catch (Exception e)
             {
                 sb.AppendLine($"throws {e.GetType().Name}");
             }
 
-            sb.Append($"{nameof(sceneReference.IsInSceneGuidToPathMap)}: ");
+            sb.Append($"{nameof(sceneReference.State)}: ");
             try
             {
-                sb.AppendLine(sceneReference.IsInSceneGuidToPathMap.ToString());
-            }
-            catch (Exception e)
-            {
-                sb.AppendLine($"throws {e.GetType().Name}");
-            }
-
-            sb.Append($"{nameof(sceneReference.IsInBuildAndEnabled)}: ");
-            try
-            {
-                sb.AppendLine(sceneReference.IsInBuildAndEnabled.ToString());
-            }
-            catch (Exception e)
-            {
-                sb.AppendLine($"throws {e.GetType().Name}");
-            }
-
-            sb.Append($"{nameof(sceneReference.IsSafeToUse)}: ");
-            try
-            {
-                sb.AppendLine(sceneReference.IsSafeToUse.ToString());
+                sb.AppendLine(sceneReference.State.ToString());
             }
             catch (Exception e)
             {
