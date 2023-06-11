@@ -201,6 +201,11 @@ namespace Eflatun.SceneReference
                     , e
                 );
             }
+            catch (AddressablesSupportDisabledException e)
+            {
+                // internal exceptions should not be documented as part of the public API
+                throw SceneReferenceInternalException.ImpossibleException("48302749", e);
+            }
 #else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
             throw new AddressablesSupportDisabledException();
 #endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT

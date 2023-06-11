@@ -41,8 +41,10 @@ namespace Eflatun.SceneReference
         /// <returns>GUID of the scene.</returns>
         /// <exception cref="AddressNotFoundException">Thrown if no scene with the given address is found in the map.</exception>
         /// <exception cref="AddressNotUniqueException">Thrown if multiple scenes have the given address.</exception>
+        /// <exception cref="AddressablesSupportDisabledException">Thrown if addressables support is disabled.</exception>
         public static string GetGuidFromAddress(string address)
         {
+#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
             LoadIfNotAlready();
 
             var matchingEntries = _addressableSceneGuidToAddressMap.Where(x => x.Value == address).ToArray();
@@ -58,6 +60,9 @@ namespace Eflatun.SceneReference
             }
 
             return matchingEntries.First().Key;
+#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+            throw new AddressablesSupportDisabledException();
+#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
         }
 
         /// <summary>
@@ -81,6 +86,9 @@ namespace Eflatun.SceneReference
             }
         }
 
+        /// <summary>
+        /// IMPORTANT: This method does NOT check if addressables support is enabled or not! It will assign no matter what.
+        /// </summary>
         internal static void DirectAssign(Dictionary<string, string> addressableSceneGuidToAddress)
         {
             FillWith(addressableSceneGuidToAddress);
