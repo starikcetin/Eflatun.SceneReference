@@ -4,7 +4,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Eflatun.SceneReference"
+        "Eflatun.SceneReference",
+        "Eflatun.SceneReference.DevelopmentUtils"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
