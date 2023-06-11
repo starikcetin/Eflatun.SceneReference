@@ -207,6 +207,23 @@ namespace Eflatun.SceneReference
         }
 
         /// <summary>
+        /// Is this <see cref="SceneReference"/> assigned something?
+        /// </summary>
+        private bool HasValue
+        {
+            get
+            {
+                if (!Guid.IsValidGuid())
+                {
+                    // internal exceptions should not be documented as part of the public API
+                    throw SceneReferenceInternalException.InvalidGuid("54783205", Guid);
+                }
+
+                return Guid != Utils.AllZeroGuid;
+            }
+        }
+
+        /// <summary>
         /// GUID of the scene asset.
         /// </summary>
         public string Guid => guid.GuardGuidAgainstNullOrWhitespace();
@@ -220,13 +237,7 @@ namespace Eflatun.SceneReference
         {
             get
             {
-                if (!Guid.IsValidGuid())
-                {
-                    // internal exceptions should not be documented as part of the public API
-                    throw SceneReferenceInternalException.InvalidGuid("54783205", Guid);
-                }
-
-                if (!(Guid != Utils.AllZeroGuid))
+                if (!HasValue)
                 {
                     throw new EmptySceneReferenceException();
                 }
@@ -303,13 +314,9 @@ namespace Eflatun.SceneReference
         {
             get
             {
-                if (!Guid.IsValidGuid())
-                {
-                    // internal exceptions should not be documented as part of the public API
-                    throw SceneReferenceInternalException.InvalidGuid("54783205", Guid);
-                }
+                // TODO: getting HasValue beforehand to make sure the internal exception is thrown if necessary before everything else. Ideally, the internal exception should be thrown in the Guid property instead, so the exception coverage is greater. Inline this usage after moving the internal exception to the Guid property.
+                var hasValue = HasValue;
 
-                var hasValue = Guid != Utils.AllZeroGuid;
                 var isInSceneGuidToPathMap = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path);
 
                 if (hasValue && isInSceneGuidToPathMap)
