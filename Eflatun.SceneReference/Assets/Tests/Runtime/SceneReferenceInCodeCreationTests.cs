@@ -94,5 +94,53 @@ namespace Eflatun.SceneReference.Tests.Runtime
             Assert.Throws<SceneReferenceCreationException>(() => _ = SceneReference.FromScenePath("foo/bar/baz"));
             Assert.Throws<SceneReferenceCreationException>(() => _ = SceneReference.FromScenePath(TestUtils.NotSceneAssetPath));
         }
+
+        [Test]
+        public void AddressablesFactoryMethod_Throws_WithoutAddressablesSupport()
+        {
+            TestUtils.IgnoreIfAddressablesSupportIsEnabled();
+
+            Assert.Throws<AddressablesSupportDisabledException>(() => _ = SceneReference.FromAddress(TestUtils.Addressable1ScenePath));
+            Assert.Throws<AddressablesSupportDisabledException>(() => _ = SceneReference.FromAddress(TestUtils.Addressable2ScenePath));
+            Assert.Throws<AddressablesSupportDisabledException>(() => _ = SceneReference.FromAddress(TestUtils.AddressableDuplicateAddressAScenePath));
+            Assert.Throws<AddressablesSupportDisabledException>(() => _ = SceneReference.FromAddress(TestUtils.AddressableDuplicateAddressBScenePath));
+        }
+
+        [Test]
+        public void AddressFactoryMethod_ProvidesExpectedState_WithAddressablesSupport()
+        {
+            TestUtils.IgnoreIfAddressablesSupportIsDisabled();
+
+            var addressable1Ref = SceneReference.FromAddress(TestUtils.Addressable1SceneAddress);
+            TestUtils.AssertAddressable1SceneState(addressable1Ref);
+
+            var addressable2Ref = SceneReference.FromAddress(TestUtils.Addressable2SceneAddress);
+            TestUtils.AssertAddressable2SceneState(addressable2Ref);
+
+            Assert.Throws<SceneReferenceCreationException>(() => _ = SceneReference.FromAddress(TestUtils.AddressableDuplicateAddressASceneAddress));
+            Assert.Throws<SceneReferenceCreationException>(() => _ = SceneReference.FromAddress(TestUtils.AddressableDuplicateAddressBSceneAddress));
+        }
+
+        [Test]
+        public void AddressFactoryMethod_ThrowsForInvalidArgs_WithAddressablesSupport()
+        {
+            TestUtils.IgnoreIfAddressablesSupportIsDisabled();
+
+            Assert.Throws<SceneReferenceCreationException>(() => _ = SceneReference.FromAddress(null));
+            Assert.Throws<SceneReferenceCreationException>(() => _ = SceneReference.FromAddress("    "));
+            Assert.Throws<SceneReferenceCreationException>(() => _ = SceneReference.FromAddress("foo/bar/baz"));
+            Assert.Throws<SceneReferenceCreationException>(() => _ = SceneReference.FromAddress(TestUtils.NonExistingAddress));
+        }
+
+        [Test]
+        public void AddressFactoryMethod_ThrowsForInvalidArgs_WithoutAddressablesSupport()
+        {
+            TestUtils.IgnoreIfAddressablesSupportIsEnabled();
+
+            Assert.Throws<AddressablesSupportDisabledException>(() => _ = SceneReference.FromAddress(null));
+            Assert.Throws<AddressablesSupportDisabledException>(() => _ = SceneReference.FromAddress("    "));
+            Assert.Throws<AddressablesSupportDisabledException>(() => _ = SceneReference.FromAddress("foo/bar/baz"));
+            Assert.Throws<AddressablesSupportDisabledException>(() => _ = SceneReference.FromAddress(TestUtils.NonExistingAddress));
+        }
     }
 }
