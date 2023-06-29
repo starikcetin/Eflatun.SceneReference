@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -102,6 +100,14 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
         public const string NonExistingAddress = "This Address Should Never Exist ___ Foo ___ Bar";
 
+        public static bool IsAddressablesPackagePresent =>
+#if ESR_ADDRESSABLES
+            true
+#else // ESR_ADDRESSABLES
+            false
+#endif // ESR_ADDRESSABLES
+        ;
+
         public static void AssertEnabledSceneState(SceneReference sr)
         {
             Assert.AreEqual(EnabledSceneName, sr.Name);
@@ -116,7 +122,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(EnabledSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
 
-            if (Utility.Utils.IsAddressablesPackagePresent)
+            if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
             }
@@ -147,7 +153,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
 #endif // UNITY_EDITOR
 
-            if (Utility.Utils.IsAddressablesPackagePresent)
+            if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
             }
@@ -171,7 +177,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(NotInBuildSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
 
-            if (Utility.Utils.IsAddressablesPackagePresent)
+            if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
             }
@@ -195,7 +201,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(AllZeroGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
 
-            if (Utility.Utils.IsAddressablesPackagePresent)
+            if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<EmptySceneReferenceException>(() => _ = sr.Address);
             }
@@ -225,7 +231,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(expectedGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
 
-            if (Utility.Utils.IsAddressablesPackagePresent)
+            if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Address);
             }
@@ -256,7 +262,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(expectedGuid, sr.Guid);
             Assert.AreEqual(expectedGuid, sr.guid);
 
-            if (Utility.Utils.IsAddressablesPackagePresent)
+            if (IsAddressablesPackagePresent)
             {
                 Assert.AreEqual(SceneReferenceState.Addressable, sr.State);
                 Assert.AreEqual(expectedAddress, sr.Address);
@@ -308,7 +314,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
         public static void IgnoreIfAddressablesSupportIsDisabled()
         {
-            if (!Utility.Utils.IsAddressablesPackagePresent)
+            if (!IsAddressablesPackagePresent)
             {
                 Assert.Ignore("This test is meaningless when Addressables support is disabled.");
             }
@@ -316,7 +322,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
         public static void IgnoreIfAddressablesSupportIsEnabled()
         {
-            if (Utility.Utils.IsAddressablesPackagePresent)
+            if (IsAddressablesPackagePresent)
             {
                 Assert.Ignore("This test is meaningless when Addressables support is enabled.");
             }
