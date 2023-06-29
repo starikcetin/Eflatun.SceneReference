@@ -29,8 +29,5 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Tests/Runtime/Subjects/TestSubject_Disabled.unity
     guid: 7e37b14fa3517514a91937cec5cad27a
-  - enabled: 0
-    path: Assets/Demo/Demo Utils/Subject Scenes/Addressable.unity
-    guid: 9035c3d9637db67459a347d73514c868
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e906d322c803e28468070dc8d1cf3ae6, type: 2}
