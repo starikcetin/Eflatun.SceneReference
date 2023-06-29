@@ -214,5 +214,113 @@ namespace Eflatun.SceneReference.Tests.Runtime
                 TestUtils.AssertNotSceneAssetState(sr);
             }
         }
+
+        [Test]
+        public void ProvidesExpectedState_Addressable1Scene()
+        {
+            TestUtils.AssertAddressable1SceneState(_testMb.fieldAddressable1Scene);
+            TestUtils.AssertAddressable1SceneState(_testMb.PropAddressable1Scene);
+
+            foreach (var sr in _testMb.fieldArrayAddressable1Scene)
+            {
+                TestUtils.AssertAddressable1SceneState(sr);
+            }
+
+            foreach (var sr in _testMb.PropArrayAddressable1Scene)
+            {
+                TestUtils.AssertAddressable1SceneState(sr);
+            }
+
+            foreach (var sr in _testMb.fieldListAddressable1Scene)
+            {
+                TestUtils.AssertAddressable1SceneState(sr);
+            }
+
+            foreach (var sr in _testMb.PropListAddressable1Scene)
+            {
+                TestUtils.AssertAddressable1SceneState(sr);
+            }
+        }
+
+        [Test]
+        public void ProvidesExpectedState_Addressable2Scene()
+        {
+            TestUtils.AssertAddressable2SceneState(_testMb.fieldAddressable2Scene);
+            TestUtils.AssertAddressable2SceneState(_testMb.PropAddressable2Scene);
+
+            foreach (var sr in _testMb.fieldArrayAddressable2Scene)
+            {
+                TestUtils.AssertAddressable2SceneState(sr);
+            }
+
+            foreach (var sr in _testMb.PropArrayAddressable2Scene)
+            {
+                TestUtils.AssertAddressable2SceneState(sr);
+            }
+
+            foreach (var sr in _testMb.fieldListAddressable2Scene)
+            {
+                TestUtils.AssertAddressable2SceneState(sr);
+            }
+
+            foreach (var sr in _testMb.PropListAddressable2Scene)
+            {
+                TestUtils.AssertAddressable2SceneState(sr);
+            }
+        }
+
+        [Test]
+        public void ProvidesExpectedState_AddressableDuplicateAddressAScene()
+        {
+            TestUtils.AssertAddressableDuplicateAddressASceneState(_testMb.fieldAddressableDuplicateAddressAScene);
+            TestUtils.AssertAddressableDuplicateAddressASceneState(_testMb.PropAddressableDuplicateAddressAScene);
+
+            foreach (var sr in _testMb.fieldArrayAddressableDuplicateAddressAScene)
+            {
+                TestUtils.AssertAddressableDuplicateAddressASceneState(sr);
+            }
+
+            foreach (var sr in _testMb.PropArrayAddressableDuplicateAddressAScene)
+            {
+                TestUtils.AssertAddressableDuplicateAddressASceneState(sr);
+            }
+
+            foreach (var sr in _testMb.fieldListAddressableDuplicateAddressAScene)
+            {
+                TestUtils.AssertAddressableDuplicateAddressASceneState(sr);
+            }
+
+            foreach (var sr in _testMb.PropListAddressableDuplicateAddressAScene)
+            {
+                TestUtils.AssertAddressableDuplicateAddressASceneState(sr);
+            }
+        }
+
+        [Test]
+        public void ProvidesExpectedState_AddressableDuplicateAddressBScene()
+        {
+            TestUtils.AssertAddressableDuplicateAddressBSceneState(_testMb.fieldAddressableDuplicateAddressBScene);
+            TestUtils.AssertAddressableDuplicateAddressBSceneState(_testMb.PropAddressableDuplicateAddressBScene);
+
+            foreach (var sr in _testMb.fieldArrayAddressableDuplicateAddressBScene)
+            {
+                TestUtils.AssertAddressableDuplicateAddressBSceneState(sr);
+            }
+
+            foreach (var sr in _testMb.PropArrayAddressableDuplicateAddressBScene)
+            {
+                TestUtils.AssertAddressableDuplicateAddressBSceneState(sr);
+            }
+
+            foreach (var sr in _testMb.fieldListAddressableDuplicateAddressBScene)
+            {
+                TestUtils.AssertAddressableDuplicateAddressBSceneState(sr);
+            }
+
+            foreach (var sr in _testMb.PropListAddressableDuplicateAddressBScene)
+            {
+                TestUtils.AssertAddressableDuplicateAddressBSceneState(sr);
+            }
+        }
     }
 }
