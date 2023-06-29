@@ -334,6 +334,110 @@ MonoBehaviour:
     guid: 99d2aa5f58f54c44fba8671b66be5259
   - asset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
     guid: 99d2aa5f58f54c44fba8671b66be5259
+  fieldAddressable1Scene:
+    asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  <PropAddressable1Scene>k__BackingField:
+    asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  fieldArrayAddressable1Scene:
+  - asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  - asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  <PropArrayAddressable1Scene>k__BackingField:
+  - asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  - asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  fieldListAddressable1Scene:
+  - asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  - asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  <PropListAddressable1Scene>k__BackingField:
+  - asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  - asset: {fileID: 102900000, guid: 8b3f523138018e04ebcb86e1230451b1, type: 3}
+    guid: 8b3f523138018e04ebcb86e1230451b1
+  fieldAddressable2Scene:
+    asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  <PropAddressable2Scene>k__BackingField:
+    asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  fieldArrayAddressable2Scene:
+  - asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  - asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  <PropArrayAddressable2Scene>k__BackingField:
+  - asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  - asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  fieldListAddressable2Scene:
+  - asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  - asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  <PropListAddressable2Scene>k__BackingField:
+  - asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  - asset: {fileID: 102900000, guid: 32b8f3692a793ae4693d74167b0f093f, type: 3}
+    guid: 32b8f3692a793ae4693d74167b0f093f
+  fieldAddressableDuplicateAddressAScene:
+    asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  <PropAddressableDuplicateAddressAScene>k__BackingField:
+    asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  fieldArrayAddressableDuplicateAddressAScene:
+  - asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  - asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  <PropArrayAddressableDuplicateAddressAScene>k__BackingField:
+  - asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  - asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  fieldListAddressableDuplicateAddressAScene:
+  - asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  - asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  <PropListAddressableDuplicateAddressAScene>k__BackingField:
+  - asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  - asset: {fileID: 102900000, guid: 97f5e006e871a7440b0ffe04cb128c15, type: 3}
+    guid: 97f5e006e871a7440b0ffe04cb128c15
+  fieldAddressableDuplicateAddressBScene:
+    asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  <PropAddressableDuplicateAddressBScene>k__BackingField:
+    asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  fieldArrayAddressableDuplicateAddressBScene:
+  - asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  - asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  <PropArrayAddressableDuplicateAddressBScene>k__BackingField:
+  - asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  - asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  fieldListAddressableDuplicateAddressBScene:
+  - asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  - asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  <PropListAddressableDuplicateAddressBScene>k__BackingField:
+  - asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
+  - asset: {fileID: 102900000, guid: c367bc2503743ea4b8abccc44b2fefbc, type: 3}
+    guid: c367bc2503743ea4b8abccc44b2fefbc
 --- !u!4 &311110115
 Transform:
   m_ObjectHideFlags: 0
