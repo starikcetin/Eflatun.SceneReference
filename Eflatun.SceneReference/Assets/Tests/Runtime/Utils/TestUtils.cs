@@ -115,6 +115,15 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(EnabledSceneGuid, sr.Guid);
             Assert.AreEqual(EnabledSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
+
+            if (Utility.Utils.IsAddressablesPackagePresent)
+            {
+                Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
+            }
+            else
+            {
+                Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+            }
         }
 
         public static void AssertDisabledSceneState(SceneReference sr)
@@ -137,6 +146,15 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 #else // UNITY_EDITOR
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
 #endif // UNITY_EDITOR
+
+            if (Utility.Utils.IsAddressablesPackagePresent)
+            {
+                Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
+            }
+            else
+            {
+                Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+            }
         }
 
         public static void AssertNotInBuildSceneState(SceneReference sr)
@@ -152,6 +170,15 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(NotInBuildSceneGuid, sr.Guid);
             Assert.AreEqual(NotInBuildSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
+
+            if (Utility.Utils.IsAddressablesPackagePresent)
+            {
+                Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
+            }
+            else
+            {
+                Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+            }
         }
 
         public static void AssertEmptyState(SceneReference sr)
@@ -167,6 +194,15 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(AllZeroGuid, sr.Guid);
             Assert.AreEqual(AllZeroGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
+
+            if (Utility.Utils.IsAddressablesPackagePresent)
+            {
+                Assert.Throws<EmptySceneReferenceException>(() => _ = sr.Address);
+            }
+            else
+            {
+                Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+            }
         }
 
         public static void AssertDeletedSceneState(SceneReference sr) => AssertInvalidState(sr, DeletedSceneGuid);
@@ -188,6 +224,47 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(expectedGuid, sr.Guid);
             Assert.AreEqual(expectedGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
+
+            if (Utility.Utils.IsAddressablesPackagePresent)
+            {
+                Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Address);
+            }
+            else
+            {
+                Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+            }
+        }
+
+        public static void AssertAddressable1SceneState(SceneReference sr) => AssertAddressableSceneState(sr, Addressable1SceneName, Addressable1ScenePath, Addressable1SceneGuid, Addressable1SceneAddress);
+
+        public static void AssertAddressable2SceneState(SceneReference sr) => AssertAddressableSceneState(sr, Addressable2SceneName, Addressable2ScenePath, Addressable2SceneGuid, Addressable2SceneAddress);
+
+        public static void AssertAddressableDuplicateAddressASceneState(SceneReference sr) => AssertAddressableSceneState(sr, AddressableDuplicateAddressASceneName, AddressableDuplicateAddressAScenePath, AddressableDuplicateAddressASceneGuid, AddressableDuplicateAddressASceneAddress);
+
+        public static void AssertAddressableDuplicateAddressBSceneState(SceneReference sr) => AssertAddressableSceneState(sr, AddressableDuplicateAddressBSceneName, AddressableDuplicateAddressBScenePath, AddressableDuplicateAddressBSceneGuid, AddressableDuplicateAddressBSceneAddress);
+
+        private static void AssertAddressableSceneState(SceneReference sr, string expectedName, string expectedPath, string expectedGuid, string expectedAddress)
+        {
+            Assert.AreEqual(expectedName, sr.Name);
+            Assert.AreEqual(expectedPath, sr.Path);
+
+#if UNITY_EDITOR
+            Assert.AreEqual(expectedName, sr.asset.name);
+#endif
+
+            Assert.AreEqual(-1, sr.BuildIndex);
+            Assert.AreEqual(expectedGuid, sr.Guid);
+            Assert.AreEqual(expectedGuid, sr.guid);
+            Assert.AreEqual(SceneReferenceState.Addressable, sr.State);
+
+            if (Utility.Utils.IsAddressablesPackagePresent)
+            {
+                Assert.AreEqual(expectedAddress, sr.Address);
+            }
+            else
+            {
+                Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+            }
         }
 
         public static bool IsScenePath(string path)
@@ -230,7 +307,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
         public static void IgnoreIfAddressablesSupportIsDisabled()
         {
-            if (!Eflatun.SceneReference.Utility.Utils.IsAddressablesPackagePresent)
+            if (!Utility.Utils.IsAddressablesPackagePresent)
             {
                 Assert.Ignore("This test is meaningless when Addressables support is disabled.");
             }
@@ -238,13 +315,14 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
         public static void IgnoreIfAddressablesSupportIsEnabled()
         {
-            if (Eflatun.SceneReference.Utility.Utils.IsAddressablesPackagePresent)
+            if (Utility.Utils.IsAddressablesPackagePresent)
             {
                 Assert.Ignore("This test is meaningless when Addressables support is enabled.");
             }
         }
 
         private static string GetRawJson(string guid) => @$"{{""{SceneReference.CustomSerializationGuidKey}"":""{guid}""}}";
+
         private static string GetRawXml(string guid) => $@"<?xml version=""1.0"" encoding=""utf-16""?><{SceneReference.XmlRootElementName}>{guid}</{SceneReference.XmlRootElementName}>";
     }
 }

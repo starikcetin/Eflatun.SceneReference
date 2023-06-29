@@ -295,6 +295,11 @@ namespace Eflatun.SceneReference
             get
             {
 #if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+                if (!HasValue)
+                {
+                    throw new EmptySceneReferenceException();
+                }
+
                 if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out _))
                 {
                     throw new InvalidSceneReferenceException();
