@@ -16,7 +16,7 @@ namespace Eflatun.SceneReference.Editor
         AfterSceneAssetChange = 1 << 0,
         BeforeEnterPlayMode = 1 << 1,
         BeforeBuild = 1 << 2,
-        AfterPackageResolve = 1 << 3,
+        AfterPackagesResolve = 1 << 3,
         AfterAddressablesChange = 1 << 4,
     }
 }

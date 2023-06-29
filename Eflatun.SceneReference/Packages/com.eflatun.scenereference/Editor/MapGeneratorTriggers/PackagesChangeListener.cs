@@ -13,7 +13,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 
         private static void RegisteredPackagesEventHandler(PackageRegistrationEventArgs obj)
         {
-            if (SettingsManager.SceneGuidToPathMap.IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers.AfterPackageResolve))
+            if (SettingsManager.SceneGuidToPathMap.IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers.AfterPackagesResolve))
             {
                 SceneGuidToPathMapGenerator.Run();
             }
