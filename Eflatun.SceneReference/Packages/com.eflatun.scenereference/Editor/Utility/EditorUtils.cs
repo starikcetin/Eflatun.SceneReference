@@ -11,11 +11,11 @@ namespace Eflatun.SceneReference.Editor.Utility
         /// Returns whether the addressables package is installed in the project.
         /// </summary>
         public static bool IsAddressablesPackagePresent =>
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             true
-#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#else // ESR_ADDRESSABLES
             false
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
         ;
 
         /// <summary>

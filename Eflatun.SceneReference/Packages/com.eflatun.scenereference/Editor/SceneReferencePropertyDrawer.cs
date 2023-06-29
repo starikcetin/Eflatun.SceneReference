@@ -5,10 +5,10 @@ using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
 
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
 
 namespace Eflatun.SceneReference.Editor
 {
@@ -27,9 +27,9 @@ namespace Eflatun.SceneReference.Editor
             NotIncluded,
             Disabled,
             Enabled,
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             Addressable,
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
         }
 
         private SerializedProperty _assetSerializedProperty;
@@ -42,9 +42,9 @@ namespace Eflatun.SceneReference.Editor
         private SceneBuildSettingsState _sceneBuildSettingsState;
         private SceneReferenceOptionsAttribute _optionsAttribute;
 
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
         private AddressableAssetEntry _addressableEntry;
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
 
         private bool NeedsBuildSettingsFix => _sceneBuildSettingsState == SceneBuildSettingsState.Disabled
                                               || _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded;
@@ -75,9 +75,9 @@ namespace Eflatun.SceneReference.Editor
             _path = AssetDatabase.GetAssetPath(_asset);
             _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
 
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             _addressableEntry = AddressableAssetSettingsDefaultObject.Settings.FindAssetEntry(_guid);
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
 
             _optionsAttribute = fieldInfo.GetCustomAttribute<SceneReferenceOptionsAttribute>(false) ?? DefaultOptionsAttribute;
 
@@ -85,12 +85,12 @@ namespace Eflatun.SceneReference.Editor
             {
                 _sceneBuildSettingsState = SceneBuildSettingsState.None;
             }
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             else if (_addressableEntry != null)
             {
                 _sceneBuildSettingsState = SceneBuildSettingsState.Addressable;
             }
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
             else if (_sceneInBuildSettings == null)
             {
                 _sceneBuildSettingsState = SceneBuildSettingsState.NotIncluded;

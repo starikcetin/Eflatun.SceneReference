@@ -168,7 +168,7 @@ namespace Eflatun.SceneReference
         /// <exception cref="AddressablesSupportDisabledException">Throws if the addressables support is disabled.</exception>
         public static SceneReference FromAddress(string address)
         {
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             if (string.IsNullOrWhiteSpace(address))
             {
                 throw new SceneReferenceCreationException(
@@ -206,9 +206,9 @@ namespace Eflatun.SceneReference
                 // internal exceptions should not be documented as part of the public API
                 throw SceneReferenceInternalException.ImpossibleException("48302749", e);
             }
-#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#else // ESR_ADDRESSABLES
             throw new AddressablesSupportDisabledException();
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Eflatun.SceneReference
         {
             get
             {
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
                 if (!HasValue)
                 {
                     throw new EmptySceneReferenceException();
@@ -311,9 +311,9 @@ namespace Eflatun.SceneReference
                 }
 
                 return addressFromMap;
-#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#else // ESR_ADDRESSABLES
                 throw new AddressablesSupportDisabledException();
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
             }
         }
 
@@ -337,12 +337,12 @@ namespace Eflatun.SceneReference
                         return SceneReferenceState.Regular;
                     }
 
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
                     if (AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap.ContainsKey(Guid))
                     {
                         return SceneReferenceState.Addressable;
                     }
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
                 }
 
                 return SceneReferenceState.Unsafe;

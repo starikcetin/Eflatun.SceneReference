@@ -44,7 +44,7 @@ namespace Eflatun.SceneReference
         /// <exception cref="AddressablesSupportDisabledException">Thrown if addressables support is disabled.</exception>
         public static string GetGuidFromAddress(string address)
         {
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             LoadIfNotAlready();
 
             var matchingEntries = _addressableSceneGuidToAddressMap.Where(x => x.Value == address).ToArray();
@@ -60,9 +60,9 @@ namespace Eflatun.SceneReference
             }
 
             return matchingEntries.First().Key;
-#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#else // ESR_ADDRESSABLES
             throw new AddressablesSupportDisabledException();
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Eflatun.SceneReference
 
         private static void Load()
         {
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             var genFilePath = Paths.RelativeToResources.AddressableSceneGuidToAddressMapFile.UnixPath.WithoutExtension();
             var genFile = Resources.Load<TextAsset>(genFilePath);
 
@@ -118,9 +118,9 @@ namespace Eflatun.SceneReference
 
             var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(genFile.text);
             FillWith(deserialized);
-#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#else // ESR_ADDRESSABLES
             FillWith(new Dictionary<string, string>());
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
         }
 
         private static void FillWith(Dictionary<string, string> addressableSceneGuidToAddress)

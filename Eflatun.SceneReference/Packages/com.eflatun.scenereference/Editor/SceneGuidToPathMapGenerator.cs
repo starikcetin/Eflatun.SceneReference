@@ -5,9 +5,9 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEditor;
 
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
 using UnityEditor.AddressableAssets;
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
 
 namespace Eflatun.SceneReference.Editor
 {
@@ -73,7 +73,7 @@ namespace Eflatun.SceneReference.Editor
 
         private static Dictionary<string, string> GenerateAddressableSceneGuidToAddressMap(string[] allSceneGuids)
         {
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             var addressableSettings = AddressableAssetSettingsDefaultObject.Settings;
 
             var addressableSceneAssetEntries = allSceneGuids
@@ -86,9 +86,9 @@ namespace Eflatun.SceneReference.Editor
             );
 
             return addressableSceneGuidToAddressMap;
-#else // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#else // ESR_ADDRESSABLES
             return new Dictionary<string, string>();
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
         }
 
         private static void WriteAddressableSceneGuidToAddressMap(Dictionary<string, string> addressableSceneGuidToAddressMap)

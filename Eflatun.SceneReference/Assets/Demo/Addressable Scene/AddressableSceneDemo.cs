@@ -2,9 +2,9 @@ using Eflatun.SceneReference;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
 using UnityEngine.AddressableAssets;
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
 
 public class AddressableSceneDemo : MonoBehaviour
 {
@@ -17,9 +17,9 @@ public class AddressableSceneDemo : MonoBehaviour
         if (addressableSceneRef.State == SceneReferenceState.Addressable)
         {
             Debug.Log($"Address: {addressableSceneRef.Address}");
-#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#if ESR_ADDRESSABLES
             Addressables.LoadSceneAsync(addressableSceneRef.Address, LoadSceneMode.Additive);
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
         }
     }
 }

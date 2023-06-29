@@ -1,4 +1,4 @@
-﻿#if EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+﻿#if ESR_ADDRESSABLES
 
 using UnityEditor;
 using UnityEditor.AddressableAssets;
@@ -35,4 +35,4 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
     }
 }
 
-#endif // EFLATUN_SCENEREFERENCE_ADDRESSABLES_PACKAGE_PRESENT
+#endif // ESR_ADDRESSABLES
