@@ -255,14 +255,15 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(-1, sr.BuildIndex);
             Assert.AreEqual(expectedGuid, sr.Guid);
             Assert.AreEqual(expectedGuid, sr.guid);
-            Assert.AreEqual(SceneReferenceState.Addressable, sr.State);
 
             if (Utility.Utils.IsAddressablesPackagePresent)
             {
+                Assert.AreEqual(SceneReferenceState.Addressable, sr.State);
                 Assert.AreEqual(expectedAddress, sr.Address);
             }
             else
             {
+                Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
                 Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
             }
         }
