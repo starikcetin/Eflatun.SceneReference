@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Text;
-using Development_Utils;
-using Eflatun.SceneReference;
 using UnityEditor;
 using UnityEngine;
 
-namespace Utils.Editor
+namespace Eflatun.SceneReference.DevelopmentUtils.Editor
 {
     public static class BinarySerializationTools
     {

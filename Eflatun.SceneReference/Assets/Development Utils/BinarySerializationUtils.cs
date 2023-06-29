@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Development_Utils
+namespace Eflatun.SceneReference.DevelopmentUtils
 {
     public static class BinarySerializationUtils
     {

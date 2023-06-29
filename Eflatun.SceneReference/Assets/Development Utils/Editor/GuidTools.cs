@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Utils.Editor
+namespace Eflatun.SceneReference.DevelopmentUtils.Editor
 {
     public static class GuidTools
     {
