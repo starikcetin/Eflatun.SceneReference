@@ -331,14 +331,15 @@ namespace Eflatun.SceneReference
 
                 if (hasValue && isInSceneGuidToPathMap)
                 {
-                    var isInBuild = SceneUtility.GetBuildIndexByScenePath(path) != -1;
-                    if (isInBuild)
+                    var isInBuildAndEnabled = SceneUtility.GetBuildIndexByScenePath(path) != -1;
+                    if (isInBuildAndEnabled)
                     {
                         return SceneReferenceState.Regular;
                     }
 
 #if ESR_ADDRESSABLES
-                    if (SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(Guid))
+                    var isInSceneGuidToAddressMap = SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(Guid);
+                    if (isInSceneGuidToAddressMap)
                     {
                         return SceneReferenceState.Addressable;
                     }
