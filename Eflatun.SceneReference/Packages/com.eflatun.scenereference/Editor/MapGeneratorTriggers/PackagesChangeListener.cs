@@ -8,10 +8,10 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
     {
         static PackagesChangeListener()
         {
-            UnityEditor.PackageManager.Events.registeredPackages += RegisteredPackagesEventHandler;
+            UnityEditor.PackageManager.Events.registeredPackages += OnRegisteredPackages;
         }
 
-        private static void RegisteredPackagesEventHandler(PackageRegistrationEventArgs obj)
+        private static void OnRegisteredPackages(PackageRegistrationEventArgs obj)
         {
             if (SettingsManager.SceneDataMaps.IsGenerationTriggerEnabled(SceneDataMapsGeneratorTriggers.AfterPackagesResolve))
             {
