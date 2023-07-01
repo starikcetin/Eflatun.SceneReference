@@ -284,7 +284,7 @@ namespace Eflatun.SceneReference
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
         /// <summary>
-        /// Address of this addressable scene.
+        /// Address of this scene.
         /// </summary>
         /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
         /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
