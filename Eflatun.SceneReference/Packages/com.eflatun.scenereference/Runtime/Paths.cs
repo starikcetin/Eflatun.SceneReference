@@ -35,7 +35,7 @@ namespace Eflatun.SceneReference
             /// <summary>
             /// Path to the generated addressable scene GUID to address map file. Relative to the 'Assets/Resources' folder.
             /// </summary>
-            public static readonly ConvertedPath AddressableSceneGuidToAddressMapFile = new ConvertedPath(Path.Combine(SceneDataMapsFolder.GivenPath, "AddressableSceneGuidToAddressMap.generated.json"));
+            public static readonly ConvertedPath SceneGuidToAddressMapFile = new ConvertedPath(Path.Combine(SceneDataMapsFolder.GivenPath, "SceneGuidToAddressMap.generated.json"));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Eflatun.SceneReference
             /// <summary>
             /// Path to the generated addressable scene GUID to address map file. Absolute.
             /// </summary>
-            public static readonly ConvertedPath AddressableSceneGuidToAddressMapFile = new ConvertedPath(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.AddressableSceneGuidToAddressMapFile.GivenPath));
+            public static readonly ConvertedPath SceneGuidToAddressMapFile = new ConvertedPath(Path.Combine(ResourcesFolder.GivenPath, RelativeToResources.SceneGuidToAddressMapFile.GivenPath));
         }
     }
 }

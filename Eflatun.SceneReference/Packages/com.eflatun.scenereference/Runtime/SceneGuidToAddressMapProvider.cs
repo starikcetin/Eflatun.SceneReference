@@ -18,19 +18,19 @@ namespace Eflatun.SceneReference
     /// <see cref="TryGetGuidFromAddress"/> methods.
     /// </remarks>
     [PublicAPI]
-    public static class AddressableSceneGuidToAddressMapProvider
+    public static class SceneGuidToAddressMapProvider
     {
-        private static Dictionary<string, string> _addressableSceneGuidToAddressMap;
+        private static Dictionary<string, string> _sceneGuidToAddressMap;
 
         /// <summary>
         /// The scene GUID to address map for addressable scenes.
         /// </summary>
-        public static IReadOnlyDictionary<string, string> AddressableSceneGuidToAddressMap
+        public static IReadOnlyDictionary<string, string> SceneGuidToAddressMap
         {
             get
             {
                 LoadIfNotAlready();
-                return _addressableSceneGuidToAddressMap;
+                return _sceneGuidToAddressMap;
             }
         }
 
@@ -47,7 +47,7 @@ namespace Eflatun.SceneReference
 #if ESR_ADDRESSABLES
             LoadIfNotAlready();
 
-            var matchingEntries = _addressableSceneGuidToAddressMap.Where(x => x.Value == address).ToArray();
+            var matchingEntries = _sceneGuidToAddressMap.Where(x => x.Value == address).ToArray();
 
             if (matchingEntries.Length < 1)
             {
@@ -98,7 +98,7 @@ namespace Eflatun.SceneReference
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void LoadIfNotAlready()
         {
-            if (_addressableSceneGuidToAddressMap == null)
+            if (_sceneGuidToAddressMap == null)
             {
                 Load();
             }
@@ -107,12 +107,12 @@ namespace Eflatun.SceneReference
         private static void Load()
         {
 #if ESR_ADDRESSABLES
-            var genFilePath = Paths.RelativeToResources.AddressableSceneGuidToAddressMapFile.UnixPath.WithoutExtension();
+            var genFilePath = Paths.RelativeToResources.SceneGuidToAddressMapFile.UnixPath.WithoutExtension();
             var genFile = Resources.Load<TextAsset>(genFilePath);
 
             if (genFile == null)
             {
-                Logger.Error("Addressable scene GUID to address map file not found!");
+                Logger.Error("Scene GUID to address map file not found!");
                 return;
             }
 
@@ -125,7 +125,7 @@ namespace Eflatun.SceneReference
 
         private static void FillWith(Dictionary<string, string> addressableSceneGuidToAddress)
         {
-            _addressableSceneGuidToAddressMap = addressableSceneGuidToAddress;
+            _sceneGuidToAddressMap = addressableSceneGuidToAddress;
         }
     }
 }

@@ -39,8 +39,8 @@ namespace Eflatun.SceneReference.Editor
                 var sceneGuidToPathMap = GenerateSceneGuidToPathMap(allSceneGuids);
                 WriteSceneGuidToPathMap(sceneGuidToPathMap);
 
-                var addressableSceneGuidToAddressMap = GenerateAddressableSceneGuidToAddressMap(allSceneGuids);
-                WriteAddressableSceneGuidToAddressMap(addressableSceneGuidToAddressMap);
+                var sceneGuidToAddressMap = GenerateSceneGuidToAddressMap(allSceneGuids);
+                WriteSceneGuidToAddressMap(sceneGuidToAddressMap);
             }
             finally
             {
@@ -71,7 +71,7 @@ namespace Eflatun.SceneReference.Editor
             SceneGuidToPathMapProvider.DirectAssign(sceneGuidToPathMap);
         }
 
-        private static Dictionary<string, string> GenerateAddressableSceneGuidToAddressMap(string[] allSceneGuids)
+        private static Dictionary<string, string> GenerateSceneGuidToAddressMap(string[] allSceneGuids)
         {
 #if ESR_ADDRESSABLES
             var addressableSettings = AddressableAssetSettingsDefaultObject.Settings;
@@ -80,23 +80,23 @@ namespace Eflatun.SceneReference.Editor
                 .Select(addressableSettings.FindAssetEntry)
                 .Where(x => x != null);
 
-            var addressableSceneGuidToAddressMap = addressableSceneAssetEntries.ToDictionary(
+            var sceneGuidToAddressMap = addressableSceneAssetEntries.ToDictionary(
                 x => x.guid, // key generator: take guids
                 x => x.address // value generator: take addresses
             );
 
-            return addressableSceneGuidToAddressMap;
+            return sceneGuidToAddressMap;
 #else // ESR_ADDRESSABLES
             return new Dictionary<string, string>();
 #endif // ESR_ADDRESSABLES
         }
 
-        private static void WriteAddressableSceneGuidToAddressMap(Dictionary<string, string> addressableSceneGuidToAddressMap)
+        private static void WriteSceneGuidToAddressMap(Dictionary<string, string> sceneGuidToAddressMap)
         {
-            var jsonRaw = JsonConvert.SerializeObject(addressableSceneGuidToAddressMap, SettingsManager.SceneDataMaps.JsonFormatting.value);
-            File.WriteAllText(Paths.Absolute.AddressableSceneGuidToAddressMapFile.PlatformPath, jsonRaw);
+            var jsonRaw = JsonConvert.SerializeObject(sceneGuidToAddressMap, SettingsManager.SceneDataMaps.JsonFormatting.value);
+            File.WriteAllText(Paths.Absolute.SceneGuidToAddressMapFile.PlatformPath, jsonRaw);
 
-            AddressableSceneGuidToAddressMapProvider.DirectAssign(addressableSceneGuidToAddressMap);
+            SceneGuidToAddressMapProvider.DirectAssign(sceneGuidToAddressMap);
         }
     }
 }

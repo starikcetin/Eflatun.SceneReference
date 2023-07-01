@@ -178,7 +178,7 @@ namespace Eflatun.SceneReference
 
             try
             {
-                var guidFromMap = AddressableSceneGuidToAddressMapProvider.GetGuidFromAddress(address);
+                var guidFromMap = SceneGuidToAddressMapProvider.GetGuidFromAddress(address);
                 return new SceneReference(guidFromMap);
             }
             catch (AddressNotFoundException e)
@@ -305,7 +305,7 @@ namespace Eflatun.SceneReference
                     throw new InvalidSceneReferenceException();
                 }
 
-                if (!AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap.TryGetValue(Guid, out var addressFromMap))
+                if (!SceneGuidToAddressMapProvider.SceneGuidToAddressMap.TryGetValue(Guid, out var addressFromMap))
                 {
                     throw new SceneNotAddressableException();
                 }
@@ -338,7 +338,7 @@ namespace Eflatun.SceneReference
                     }
 
 #if ESR_ADDRESSABLES
-                    if (AddressableSceneGuidToAddressMapProvider.AddressableSceneGuidToAddressMap.ContainsKey(Guid))
+                    if (SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(Guid))
                     {
                         return SceneReferenceState.Addressable;
                     }
