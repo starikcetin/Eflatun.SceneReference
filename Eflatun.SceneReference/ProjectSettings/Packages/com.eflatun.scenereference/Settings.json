@@ -2,6 +2,16 @@
     "m_Dictionary": {
         "m_DictionaryValues": [
             {
+                "type": "Eflatun.SceneReference.Editor.SceneDataMapsGeneratorTriggers, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "key": "SceneDataMaps.GenerationTriggers",
+                "value": "{\"m_Value\":-1}"
+            },
+            {
+                "type": "Newtonsoft.Json.Formatting, Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
+                "key": "SceneDataMaps.JsonFormatting",
+                "value": "{\"m_Value\":1}"
+            },
+            {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "PropertyDrawer.ShowInlineSceneInBuildUtility",
                 "value": "{\"m_Value\":true}"
@@ -15,16 +25,6 @@
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "SceneDataMaps.FailBuildIfGenerationFails",
                 "value": "{\"m_Value\":true}"
-            },
-            {
-                "type": "Eflatun.SceneReference.Editor.SceneDataMapsGeneratorTriggers, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                "key": "SceneDataMaps.GenerationTriggers",
-                "value": "{\"m_Value\":-1}"
-            },
-            {
-                "type": "Newtonsoft.Json.Formatting, Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
-                "key": "SceneDataMaps.JsonFormatting",
-                "value": "{\"m_Value\":1}"
             }
         ]
     }
