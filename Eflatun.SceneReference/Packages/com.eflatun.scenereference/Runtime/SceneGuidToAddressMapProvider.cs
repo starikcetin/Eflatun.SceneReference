@@ -89,9 +89,9 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// IMPORTANT: This method does NOT check if addressables support is enabled or not! It will assign no matter what.
         /// </summary>
-        internal static void DirectAssign(Dictionary<string, string> addressableSceneGuidToAddress)
+        internal static void DirectAssign(Dictionary<string, string> sceneGuidToAddressMap)
         {
-            FillWith(addressableSceneGuidToAddress);
+            FillWith(sceneGuidToAddressMap);
         }
 
         [Preserve]
@@ -123,9 +123,9 @@ namespace Eflatun.SceneReference
 #endif // ESR_ADDRESSABLES
         }
 
-        private static void FillWith(Dictionary<string, string> addressableSceneGuidToAddress)
+        private static void FillWith(Dictionary<string, string> sceneGuidToAddressMap)
         {
-            _sceneGuidToAddressMap = addressableSceneGuidToAddress;
+            _sceneGuidToAddressMap = sceneGuidToAddressMap;
         }
     }
 }
