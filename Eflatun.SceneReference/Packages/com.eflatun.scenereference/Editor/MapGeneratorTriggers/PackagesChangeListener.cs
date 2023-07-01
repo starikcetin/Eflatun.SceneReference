@@ -19,7 +19,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
             }
             else
             {
-                Logger.Warn($"Skipping scene GUID to path map generation after package changes. It is recommended to enable map generation after package changes, as an outdated map can result in broken scene references in runtime. You can enable it in {SettingsManager.SettingsMenuPathForDisplay}.");
+                Logger.Warn($"Skipping scene data maps generation after package changes. It is recommended to enable map generation after package changes, as an outdated map can result in broken scene references in runtime. You can enable it in {SettingsManager.SettingsMenuPathForDisplay}.");
             }
         }
     }
