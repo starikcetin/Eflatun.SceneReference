@@ -11,10 +11,10 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
     {
         static AddressablesChangeListener()
         {
-            AddressableAssetSettingsDefaultObject.Settings.OnModification += OnSettingsModificationCustom;
+            AddressableAssetSettingsDefaultObject.Settings.OnModification += OnAddressablesChange;
         }
 
-        private static void OnSettingsModificationCustom(AddressableAssetSettings s, AddressableAssetSettings.ModificationEvent e, object o)
+        private static void OnAddressablesChange(AddressableAssetSettings s, AddressableAssetSettings.ModificationEvent e, object o)
         {
             if (e == AddressableAssetSettings.ModificationEvent.EntryAdded ||
                 e == AddressableAssetSettings.ModificationEvent.EntryRemoved ||
