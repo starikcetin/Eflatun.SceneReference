@@ -4,11 +4,11 @@ using JetBrains.Annotations;
 namespace Eflatun.SceneReference.Editor
 {
     /// <summary>
-    /// Identifiers for places that perform scene GUID to path map generation generation.
+    /// Identifiers for places that trigger <see cref="SceneDataMapsGenerator"/>.
     /// </summary>
     [PublicAPI]
     [Flags]
-    public enum SceneGuidToPathMapGenerationTriggers
+    public enum SceneDataMapsGeneratorTriggers
     {
         None = 0,
         All = ~0,

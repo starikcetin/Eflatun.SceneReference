@@ -13,9 +13,9 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 
         private static void RegisteredPackagesEventHandler(PackageRegistrationEventArgs obj)
         {
-            if (SettingsManager.SceneGuidToPathMap.IsGenerationTriggerEnabled(SceneGuidToPathMapGenerationTriggers.AfterPackagesResolve))
+            if (SettingsManager.SceneDataMaps.IsGenerationTriggerEnabled(SceneDataMapsGeneratorTriggers.AfterPackagesResolve))
             {
-                SceneGuidToPathMapGenerator.Run();
+                SceneDataMapsGenerator.Run();
             }
             else
             {

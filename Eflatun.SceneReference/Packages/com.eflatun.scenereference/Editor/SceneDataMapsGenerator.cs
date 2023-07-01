@@ -12,10 +12,10 @@ using UnityEditor.AddressableAssets;
 namespace Eflatun.SceneReference.Editor
 {
     /// <summary>
-    /// Generates and writes the scene GUID to path map.
+    /// Generates and writes the scene data maps.
     /// </summary>
     [PublicAPI]
-    public static class SceneGuidToPathMapGenerator
+    public static class SceneDataMapsGenerator
     {
         private const string DotKeepFileContent = "Add this file to version control. See for explanation: https://stackoverflow.com/a/17929518/6301627";
 
@@ -23,14 +23,14 @@ namespace Eflatun.SceneReference.Editor
         /// Runs the generator.
         /// </summary>
         /// <remarks>
-        /// The menu item "Tools/Eflatun/Scene Reference/Run Scene GUID to Path Map Generator" executes this method.
+        /// The menu item "Tools/Eflatun/Scene Reference/Generate Scene Data Maps" executes this method.
         /// </remarks>
-        [MenuItem("Tools/" + Constants.MenuPrefixBase + "/Run Scene GUID to Path Map Generator", priority = -3130)]
+        [MenuItem("Tools/" + Constants.MenuPrefixBase + "/Generate Scene Data Maps", priority = -3130)]
         public static void Run()
         {
             try
             {
-                Logger.Debug("Generating maps.");
+                Logger.Debug("Generating scene data maps.");
 
                 WriteScaffolding();
 
@@ -50,8 +50,8 @@ namespace Eflatun.SceneReference.Editor
 
         private static void WriteScaffolding()
         {
-            Directory.CreateDirectory(Paths.Absolute.SceneGuidToPathMapFolder.PlatformPath);
-            File.WriteAllText(Paths.Absolute.SceneGuidToPathMapDotKeepFile.PlatformPath, DotKeepFileContent);
+            Directory.CreateDirectory(Paths.Absolute.SceneDataMapsFolder.PlatformPath);
+            File.WriteAllText(Paths.Absolute.SceneDataMapsDotKeepFile.PlatformPath, DotKeepFileContent);
         }
 
         private static Dictionary<string, string> GenerateSceneGuidToPathMap(string[] allSceneGuids)
@@ -65,7 +65,7 @@ namespace Eflatun.SceneReference.Editor
 
         private static void WriteSceneGuidToPathMap(Dictionary<string, string> sceneGuidToPathMap)
         {
-            var jsonRaw = JsonConvert.SerializeObject(sceneGuidToPathMap, SettingsManager.SceneGuidToPathMap.JsonFormatting.value);
+            var jsonRaw = JsonConvert.SerializeObject(sceneGuidToPathMap, SettingsManager.SceneDataMaps.JsonFormatting.value);
             File.WriteAllText(Paths.Absolute.SceneGuidToPathMapFile.PlatformPath, jsonRaw);
 
             SceneGuidToPathMapProvider.DirectAssign(sceneGuidToPathMap);
@@ -93,7 +93,7 @@ namespace Eflatun.SceneReference.Editor
 
         private static void WriteAddressableSceneGuidToAddressMap(Dictionary<string, string> addressableSceneGuidToAddressMap)
         {
-            var jsonRaw = JsonConvert.SerializeObject(addressableSceneGuidToAddressMap, SettingsManager.SceneGuidToPathMap.JsonFormatting.value);
+            var jsonRaw = JsonConvert.SerializeObject(addressableSceneGuidToAddressMap, SettingsManager.SceneDataMaps.JsonFormatting.value);
             File.WriteAllText(Paths.Absolute.AddressableSceneGuidToAddressMapFile.PlatformPath, jsonRaw);
 
             AddressableSceneGuidToAddressMapProvider.DirectAssign(addressableSceneGuidToAddressMap);
