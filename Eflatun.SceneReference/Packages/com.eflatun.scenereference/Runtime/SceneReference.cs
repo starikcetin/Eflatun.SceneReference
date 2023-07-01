@@ -300,7 +300,7 @@ namespace Eflatun.SceneReference
                     throw new EmptySceneReferenceException();
                 }
 
-                if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out _))
+                if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(Guid))
                 {
                     throw new InvalidSceneReferenceException();
                 }
