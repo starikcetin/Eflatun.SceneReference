@@ -163,8 +163,8 @@ namespace Eflatun.SceneReference
         /// <param name="address">Address of the scene to reference.</param>
         /// <returns>A new <see cref="SceneReference"/>.</returns>
         /// <exception cref="SceneReferenceCreationException">Throws if the given address is null or whitespace.</exception>
-        /// <exception cref="SceneReferenceCreationException">Throws if the given address is not found in the addressable scene GUID to address map.</exception>
-        /// <exception cref="SceneReferenceCreationException">Throws if the given address matches multiple entries from the addressable scene GUID to address map.</exception>
+        /// <exception cref="SceneReferenceCreationException">Throws if the given address is not found in the scene GUID to address map.</exception>
+        /// <exception cref="SceneReferenceCreationException">Throws if the given address matches multiple entries from the scene GUID to address map.</exception>
         /// <exception cref="AddressablesSupportDisabledException">Throws if the addressables support is disabled.</exception>
         public static SceneReference FromAddress(string address)
         {
@@ -184,20 +184,20 @@ namespace Eflatun.SceneReference
             catch (AddressNotFoundException e)
             {
                 throw new SceneReferenceCreationException(
-                    $"Given address is not found in the addressable scene GUID to address map. Address: '{address}'"
+                    $"Given address is not found in the scene GUID to address map. Address: '{address}'"
                     + "\nThis can happen for these reasons:"
                     + "\n1. The asset with the given address either doesn't exist or is not a scene. To fix this, make sure you provide the address of a valid scene."
-                    + "\n2. The addressable scene GUID to address map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
+                    + "\n2. The scene GUID to address map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
                     , e
                 );
             }
             catch (AddressNotUniqueException e)
             {
                 throw new SceneReferenceCreationException(
-                    $"Given address matches multiple entries in addressable scene GUID to address map. Address: '{address}'"
+                    $"Given address matches multiple entries in scene GUID to address map. Address: '{address}'"
                     + "\nThis can happen for these reasons:"
                     + "\n1. There are multiple addressable scenes with the same given address. To fix this, make sure there is only one addressable scene with the given address."
-                    + "\n2. The addressable scene GUID to address map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
+                    + "\n2. The scene GUID to address map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
                     , e
                 );
             }
@@ -288,7 +288,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
         /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
-        /// <exception cref="SceneNotAddressableException">Throws if the scene is not in the addressable scene GUID to address map.</exception>
+        /// <exception cref="SceneNotAddressableException">Throws if the scene is not in the scene GUID to address map.</exception>
         /// <exception cref="AddressablesSupportDisabledException">Throws if the addressables support is disabled.</exception>
         public string Address
         {
