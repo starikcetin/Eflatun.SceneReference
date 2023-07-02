@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,15 +23,13 @@ namespace Eflatun.SceneReference.Editor
     {
         private static readonly SceneReferenceOptionsAttribute DefaultOptionsAttribute = new SceneReferenceOptionsAttribute();
 
-        private enum SceneBuildSettingsState
+        private enum SceneBundlingState
         {
-            None,
-            NotIncluded,
-            Disabled,
-            Enabled,
-#if ESR_ADDRESSABLES
-            Addressable,
-#endif // ESR_ADDRESSABLES
+            NoScene = 0,
+            Nowhere = 1,
+            InBuildDisabled = 2,
+            InBuildEnabled = 3,
+            Addressable = 4,
         }
 
         private SerializedProperty _assetSerializedProperty;
@@ -41,7 +39,7 @@ namespace Eflatun.SceneReference.Editor
         private string _guid;
         private string _path;
         private EditorBuildSettingsScene _sceneInBuildSettings;
-        private SceneBuildSettingsState _sceneBuildSettingsState;
+        private SceneBundlingState _sceneBundlingState;
         private SceneReferenceOptionsAttribute _optionsAttribute;
 
 #if ESR_ADDRESSABLES
@@ -82,25 +80,25 @@ namespace Eflatun.SceneReference.Editor
 
             if (_asset == null)
             {
-                _sceneBuildSettingsState = SceneBuildSettingsState.None;
+                _sceneBundlingState = SceneBundlingState.NoScene;
             }
 #if ESR_ADDRESSABLES
             else if (_addressableEntry != null)
             {
-                _sceneBuildSettingsState = SceneBuildSettingsState.Addressable;
+                _sceneBundlingState = SceneBundlingState.Addressable;
             }
 #endif // ESR_ADDRESSABLES
             else if (_sceneInBuildSettings == null)
             {
-                _sceneBuildSettingsState = SceneBuildSettingsState.NotIncluded;
+                _sceneBundlingState = SceneBundlingState.Nowhere;
             }
             else if (!_sceneInBuildSettings.enabled)
             {
-                _sceneBuildSettingsState = SceneBuildSettingsState.Disabled;
+                _sceneBundlingState = SceneBundlingState.InBuildDisabled;
             }
             else
             {
-                _sceneBuildSettingsState = SceneBuildSettingsState.Enabled;
+                _sceneBundlingState = SceneBundlingState.InBuildEnabled;
             }
         }
 
@@ -128,10 +126,10 @@ namespace Eflatun.SceneReference.Editor
 
             if (IsColoringEnabled)
             {
-                GUI.color = _sceneBuildSettingsState switch
+                GUI.color = _sceneBundlingState switch
                 {
-                    SceneBuildSettingsState.NotIncluded => Color.red,
-                    SceneBuildSettingsState.Disabled => Color.yellow,
+                    SceneBundlingState.Nowhere => Color.red,
+                    SceneBundlingState.InBuildDisabled => Color.yellow,
                     _ => colorToRestore
                 };
             }
@@ -182,18 +180,18 @@ namespace Eflatun.SceneReference.Editor
         {
             var tools = new List<ITool>();
 
-            if (_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
+            if (_sceneBundlingState == SceneBundlingState.Nowhere)
             {
                 tools.Add(new AddToBuildTool(_path, _asset));
             }
 
-            if (_sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
+            if (_sceneBundlingState == SceneBundlingState.InBuildDisabled)
             {
                 tools.Add(new EnableInBuildTool(_path, _guid, _asset));
             }
 
 #if ESR_ADDRESSABLES
-            if(_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded || _sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
+            if(_sceneBundlingState == SceneBundlingState.Nowhere || _sceneBundlingState == SceneBundlingState.InBuildDisabled)
             {
                 tools.Add(new MakeAddressableTool(_path, _guid, _asset));
             }
