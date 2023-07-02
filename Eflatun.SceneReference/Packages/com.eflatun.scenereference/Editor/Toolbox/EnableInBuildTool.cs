@@ -1,10 +1,16 @@
+using System;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Eflatun.SceneReference.Editor.Toolbox
 {
-    public class EnableInBuildTool : ITool
+    /// <summary>
+    /// Before: In build and disabled.<br/>
+    /// After: In build and enabled.
+    /// </summary>
+    internal class EnableInBuildTool : ITool
     {
         private readonly string _scenePath;
         private readonly string _sceneGuid;
@@ -17,10 +23,13 @@ namespace Eflatun.SceneReference.Editor.Toolbox
             _sceneAsset = sceneAsset;
         }
 
-        public void Draw()
+        public void Draw(Action closeToolbox)
         {
             if (GUILayout.Button("Enable in build...", EditorStyles.toolbarButton))
             {
+                // Prevents an editor crash. https://issuetracker.unity3d.com/issues/crash-on-guiview-oninputevent-when-opening-an-editorwindow-from-a-genericmenu-in-a-popup-window
+                closeToolbox.Invoke();
+
                 Perform();
             }
         }

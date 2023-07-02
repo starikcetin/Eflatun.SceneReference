@@ -33,7 +33,7 @@ namespace Eflatun.SceneReference.Editor.Toolbox
 
             foreach (var tool in _tools)
             {
-                tool.Draw();
+                tool.Draw(Close);
             }
         }
 
@@ -42,6 +42,11 @@ namespace Eflatun.SceneReference.Editor.Toolbox
             const int width = 200;
             var contentHeight = _tools.Count == 0 ? EditorGUIUtility.singleLineHeight : _tools.Sum(x => x.GetHeight());
             return new Vector2(width, EditorGUIUtility.singleLineHeight + contentHeight + 5);
+        }
+
+        private void Close()
+        {
+            editorWindow.Close();
         }
     }
 }

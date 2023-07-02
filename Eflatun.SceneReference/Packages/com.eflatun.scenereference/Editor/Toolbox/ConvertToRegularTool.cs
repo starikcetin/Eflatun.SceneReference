@@ -1,10 +1,15 @@
+using System;
 using UnityEditor;
 
 namespace Eflatun.SceneReference.Editor.Toolbox
 {
-    public class ConvertToRegularTool : ITool
+    /// <summary>
+    /// Before: Addressable.<br/>
+    /// After: In build and enabled.
+    /// </summary>
+    internal class ConvertToRegularTool : ITool
     {
-        public void Draw()
+        public void Draw(Action closeToolbox)
         {
         }
 

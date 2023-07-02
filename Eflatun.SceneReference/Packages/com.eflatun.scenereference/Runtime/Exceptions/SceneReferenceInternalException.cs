@@ -13,6 +13,9 @@ namespace Eflatun.SceneReference.Exceptions
             where TException : Exception =>
             new SceneReferenceInternalException(location, $"Impossible exception \"{typeof(TException).Name}\". Exception: \n{exception.ToString()}");
 
+        public static Exception EditorCode(string location, string description) =>
+            new SceneReferenceInternalException(location, $"Editor code, {description}");
+
         private SceneReferenceInternalException(string location, string info)
             : base($"If you are seeing this, something has gone wrong internally. Please open an issue on Github (https://github.com/starikcetin/Eflatun.SceneReference/issues) and include the following information:\nLocation: {location}\nInfo: {info}")
         {

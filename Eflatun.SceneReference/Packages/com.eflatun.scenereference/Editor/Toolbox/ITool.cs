@@ -1,8 +1,10 @@
+using System;
+
 namespace Eflatun.SceneReference.Editor.Toolbox
 {
     internal interface ITool
     {
-        public void Draw();
+        void Draw(Action closeToolbox);
         float GetHeight();
     }
 }

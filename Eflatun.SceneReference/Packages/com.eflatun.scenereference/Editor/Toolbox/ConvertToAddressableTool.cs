@@ -1,10 +1,17 @@
+#if ESR_ADDRESSABLES
+
+using System;
 using UnityEditor;
 
 namespace Eflatun.SceneReference.Editor.Toolbox
 {
-    public class ConvertToAddressableTool : ITool
+    /// <summary>
+    /// Before: In build (enabled or disabled).<br/>
+    /// After: Addressable.
+    /// </summary>
+    internal class ConvertToAddressableTool : ITool
     {
-        public void Draw()
+        public void Draw(Action closeToolbox)
         {
         }
 
@@ -14,3 +21,5 @@ namespace Eflatun.SceneReference.Editor.Toolbox
         }
     }
 }
+
+#endif

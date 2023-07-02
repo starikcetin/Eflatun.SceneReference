@@ -1,10 +1,15 @@
+using System;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor.Toolbox
 {
-    public class AddToBuildTool : ITool
+    /// <summary>
+    /// Before: Not in build and not addressable.<br/>
+    /// After: In build and enabled.
+    /// </summary>
+    internal class AddToBuildTool : ITool
     {
         private readonly string _scenePath;
         private readonly UnityEngine.Object _sceneAsset;
@@ -15,10 +20,13 @@ namespace Eflatun.SceneReference.Editor.Toolbox
             _sceneAsset = sceneAsset;
         }
 
-        public void Draw()
+        public void Draw(Action closeToolbox)
         {
             if (GUILayout.Button("Add to build...", EditorStyles.toolbarButton))
             {
+                // Prevents an editor crash. https://issuetracker.unity3d.com/issues/crash-on-guiview-oninputevent-when-opening-an-editorwindow-from-a-genericmenu-in-a-popup-window
+                closeToolbox.Invoke();
+
                 Perform();
             }
         }

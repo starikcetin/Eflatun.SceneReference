@@ -192,6 +192,13 @@ namespace Eflatun.SceneReference.Editor
                 tools.Add(new EnableInBuildTool(_path, _guid, _asset));
             }
 
+#if ESR_ADDRESSABLES
+            if(_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded || _sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
+            {
+                tools.Add(new MakeAddressableTool(_path, _guid, _asset));
+            }
+#endif // ESR_ADDRESSABLES
+
             return new ToolboxPopupWindow(tools);
         }
     }

@@ -1,5 +1,6 @@
-﻿using System.IO;
-using UnityEditor;
+﻿using System;
+using System.IO;
+using Eflatun.SceneReference.Exceptions;
 
 namespace Eflatun.SceneReference.Editor.Utility
 {
@@ -18,6 +19,34 @@ namespace Eflatun.SceneReference.Editor.Utility
             false
 #endif // ESR_ADDRESSABLES
         ;
+
+        private static Type _addressablesGroupsWindowType;
+        /// <summary>The <see cref="Type"/> of the Addressables Groups editor window.</summary>
+        public static Type AddressablesGroupsWindowType
+        {
+            get
+            {
+                if (_addressablesGroupsWindowType == null)
+                {
+                    var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                    foreach (var assembly in assemblies)
+                    {
+                        var type = assembly.GetType("UnityEditor.AddressableAssets.GUI.AddressableAssetsWindow");
+                        if (type != null)
+                        {
+                            _addressablesGroupsWindowType = type;
+                        }
+                    }
+                }
+
+                if (_addressablesGroupsWindowType == null)
+                {
+                    throw SceneReferenceInternalException.EditorCode("48302749", "Could not find addressables groups window type.");
+                }
+
+                return _addressablesGroupsWindowType;
+            }
+        }
 
         /// <summary>
         /// Returns true if the given <paramref name="path"/> ends with the file extension ".unity".
