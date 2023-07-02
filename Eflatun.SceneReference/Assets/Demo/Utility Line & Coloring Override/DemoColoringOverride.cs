@@ -7,20 +7,20 @@ namespace Eflatun.SceneReference.Demo
         [SerializeField] private SceneReference noOptions;
 
         [Space]
-        [SceneReferenceOptions(Coloring = ColoringBehaviour.DoNotOverride)]
+        [SceneReferenceOptions(SceneInBuildColoring = ColoringBehaviour.DoNotOverride)]
         [SerializeField] private SceneReference doNotOverride;
 
         [Space]
-        [SceneReferenceOptions(Coloring = ColoringBehaviour.Disabled)]
+        [SceneReferenceOptions(SceneInBuildColoring = ColoringBehaviour.Disabled)]
         [SerializeField] private SceneReference disabled;
 
         [Space]
-        [SceneReferenceOptions(Coloring = ColoringBehaviour.Enabled)]
+        [SceneReferenceOptions(SceneInBuildColoring = ColoringBehaviour.Enabled)]
         [SerializeField] private new SceneReference enabled;
 
         // You can use properties too:
         // [field: Space]
-        // [field: SceneReferenceOptions(Coloring = ColoringBehaviour.Disabled)]
+        // [field: SceneReferenceOptions(SceneInBuildColoring = ColoringBehaviour.Disabled)]
         // [field: SerializeField]
         // public SceneReference DisabledProperty { get; private set; }
     }

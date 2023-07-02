@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -46,12 +46,20 @@ namespace Eflatun.SceneReference.Editor
         private AddressableAssetEntry _addressableEntry;
 #endif // ESR_ADDRESSABLES
 
-        private bool IsColoringEnabled => _optionsAttribute.Coloring switch
+        private bool ShouldColorSceneInBuild => _optionsAttribute.SceneInBuildColoring switch
         {
             ColoringBehaviour.Enabled => true,
             ColoringBehaviour.Disabled => false,
             ColoringBehaviour.DoNotOverride => SettingsManager.PropertyDrawer.ColorBasedOnSceneInBuildState.value,
-            _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.Coloring), _optionsAttribute.Coloring, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.SceneInBuildColoring), _optionsAttribute.SceneInBuildColoring, null)
+        };
+
+        private bool ShouldColorAddressable => _optionsAttribute.AddressableColoring switch
+        {
+            ColoringBehaviour.Enabled => true,
+            ColoringBehaviour.Disabled => false,
+            ColoringBehaviour.DoNotOverride => SettingsManager.AddressablesSupport.ColorAddressableScenes.value,
+            _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.AddressableColoring), _optionsAttribute.AddressableColoring, null)
         };
 
         private bool IsToolboxEnabled => _optionsAttribute.Toolbox switch
@@ -123,16 +131,13 @@ namespace Eflatun.SceneReference.Editor
             EditorGUI.BeginProperty(position, GUIContent.none, property);
 
             var colorToRestore = GUI.color;
-
-            if (IsColoringEnabled)
+            GUI.color = _sceneBundlingState switch
             {
-                GUI.color = _sceneBundlingState switch
-                {
-                    SceneBundlingState.Nowhere => Color.red,
-                    SceneBundlingState.InBuildDisabled => Color.yellow,
-                    _ => colorToRestore
-                };
-            }
+                SceneBundlingState.Nowhere when ShouldColorSceneInBuild => Color.red,
+                SceneBundlingState.InBuildDisabled when ShouldColorSceneInBuild => Color.yellow,
+                SceneBundlingState.Addressable when ShouldColorAddressable => Color.cyan,
+                _ => colorToRestore
+            };
 
             // draw scene asset selector
             var toolboxButtonWidth = EditorGUIUtility.singleLineHeight;

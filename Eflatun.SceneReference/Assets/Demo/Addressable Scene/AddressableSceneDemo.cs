@@ -10,6 +10,9 @@ public class AddressableSceneDemo : MonoBehaviour
 {
     [SerializeField] private SceneReference addressableSceneRef;
 
+    [SceneReferenceOptions(AddressableColoring = ColoringBehaviour.Disabled)]
+    [SerializeField] private SceneReference noAddressableColoring;
+
     private void Start()
     {
         Debug.Log($"State: {addressableSceneRef.State}");

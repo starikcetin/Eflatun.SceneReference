@@ -16,10 +16,10 @@ namespace Eflatun.SceneReference.Demo
         [Serializable]
         public class InnerContainer
         {
-            [field: SceneReferenceOptions(Toolbox = ToolboxBehaviour.Disabled, Coloring = ColoringBehaviour.Disabled)]
+            [field: SceneReferenceOptions(Toolbox = ToolboxBehaviour.Disabled, SceneInBuildColoring = ColoringBehaviour.Disabled)]
             [field: SerializeField] public List<SceneReference> SceneReferencesProp { get; private set; }
 
-            [SceneReferenceOptions(Toolbox = ToolboxBehaviour.Disabled, Coloring = ColoringBehaviour.Disabled)] 
+            [SceneReferenceOptions(Toolbox = ToolboxBehaviour.Disabled, SceneInBuildColoring = ColoringBehaviour.Disabled)] 
             [SerializeField] private List<SceneReference> sceneReferencesField;
         }
     

@@ -124,6 +124,15 @@ namespace Eflatun.SceneReference.Editor
         {
             private const string CategoryName = "Addressables Support";
 
+            /// <summary>
+            /// Should we color the property to draw attention for addressable scenes?<br/>
+            /// It is recommended to leave this option at 'true', as it will help you easily distinguish addressable scenes.
+            /// </summary>
+            /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
+            [field: UserSetting(CategoryName, "Color Addressable Scenes", "Should we color the property to draw attention for addressable scenes?\n\nIt is recommended to leave this option at 'true', as it will help you easily distinguish addressable scenes.")]
+            public static ProjectSetting<bool> ColorAddressableScenes { get; }
+                = new ProjectSetting<bool>("AddressablesSupport.ColorAddressableScenes", true);
+
             [UserSettingBlock(CategoryName)]
             private static void Draw(string searchContext)
             {

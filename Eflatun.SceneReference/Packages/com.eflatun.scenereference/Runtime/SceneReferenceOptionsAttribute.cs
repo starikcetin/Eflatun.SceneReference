@@ -11,15 +11,23 @@ namespace Eflatun.SceneReference
     public class SceneReferenceOptionsAttribute : Attribute
     {
         /// <summary>
-        /// <inheritdoc cref="ColoringBehaviour"/>
+        /// For scene-in-build state.<br/>
+        /// <inheritdoc cref="ColoringBehaviour"/><br/>
         /// Defaults to <see cref="ColoringBehaviour.DoNotOverride"/>.
         /// </summary>
-        public ColoringBehaviour Coloring = ColoringBehaviour.DoNotOverride;
+        public ColoringBehaviour SceneInBuildColoring = ColoringBehaviour.DoNotOverride;
 
         /// <summary>
-        /// <inheritdoc cref="ToolboxBehaviour"/>
+        /// <inheritdoc cref="ToolboxBehaviour"/><br/>
         /// Defaults to <see cref="ToolboxBehaviour.DoNotOverride"/>.
         /// </summary>
         public ToolboxBehaviour Toolbox = ToolboxBehaviour.DoNotOverride;
+
+        /// <summary>
+        /// For addressable scenes.<br/>
+        /// <inheritdoc cref="ColoringBehaviour"/><br/>
+        /// Defaults to <see cref="ColoringBehaviour.DoNotOverride"/>.
+        /// </summary>
+        public ColoringBehaviour AddressableColoring = ColoringBehaviour.DoNotOverride;
     }
 }

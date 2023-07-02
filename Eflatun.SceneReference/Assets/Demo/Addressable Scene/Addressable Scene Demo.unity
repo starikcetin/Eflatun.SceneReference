@@ -239,6 +239,9 @@ MonoBehaviour:
   addressableSceneRef:
     asset: {fileID: 102900000, guid: 9035c3d9637db67459a347d73514c868, type: 3}
     guid: 9035c3d9637db67459a347d73514c868
+  noAddressableColoring:
+    asset: {fileID: 102900000, guid: 9035c3d9637db67459a347d73514c868, type: 3}
+    guid: 9035c3d9637db67459a347d73514c868
 --- !u!4 &891274440
 Transform:
   m_ObjectHideFlags: 0

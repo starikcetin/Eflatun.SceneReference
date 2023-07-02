@@ -5,7 +5,7 @@ namespace Eflatun.SceneReference.Demo
 {
     public class ListOverrideDemo : MonoBehaviour
     {
-        [SceneReferenceOptions(Toolbox = ToolboxBehaviour.Disabled, Coloring = ColoringBehaviour.Disabled)] 
+        [SceneReferenceOptions(Toolbox = ToolboxBehaviour.Disabled, SceneInBuildColoring = ColoringBehaviour.Disabled)] 
         [SerializeField] private List<SceneReference> sceneReferences;
     }
 }
