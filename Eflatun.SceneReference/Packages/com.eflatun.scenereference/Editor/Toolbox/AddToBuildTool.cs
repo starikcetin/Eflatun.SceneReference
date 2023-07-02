@@ -33,7 +33,7 @@ namespace Eflatun.SceneReference.Editor.Toolbox
 
         public float GetHeight()
         {
-            return EditorGUIUtility.singleLineHeight;
+            return EditorStyles.toolbarButton.fixedHeight;
         }
 
         private void Perform()

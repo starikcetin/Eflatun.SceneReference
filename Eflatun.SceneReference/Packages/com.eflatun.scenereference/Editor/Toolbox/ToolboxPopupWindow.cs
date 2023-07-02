@@ -24,9 +24,10 @@ namespace Eflatun.SceneReference.Editor.Toolbox
 
             if(_tools.Count == 0)
             {
+                GUILayout.Space(2);
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                GUILayout.Label("No tools available.");
+                GUILayout.Label("No tools available.", new GUIStyle { normal = { textColor = Color.grey }});
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
             }
@@ -40,8 +41,11 @@ namespace Eflatun.SceneReference.Editor.Toolbox
         public override Vector2 GetWindowSize()
         {
             const int width = 200;
-            var contentHeight = _tools.Count == 0 ? EditorGUIUtility.singleLineHeight : _tools.Sum(x => x.GetHeight());
-            return new Vector2(width, EditorGUIUtility.singleLineHeight + contentHeight + 5);
+            const int bottomPadding = 5;
+            var contentHeight = _tools.Count == 0
+                ? EditorGUIUtility.singleLineHeight
+                : _tools.Sum(x => x.GetHeight());
+            return new Vector2(width, EditorGUIUtility.singleLineHeight + contentHeight + bottomPadding);
         }
 
         private void Close()
