@@ -58,14 +58,14 @@ _Although it is highly discouraged, you can replace `2.1.0` with `upm` to get th
 
 _You can skip this section if you are not using version control in your project._
 
-It is generally a recommended practice to ignore auto-generated files in version control. `Eflatun.SceneReference` auto-generates a JSON file with the path `Assets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json`. We recommend you ignore this file and its corresponding `.meta` file in your version control.
+It is generally a recommended practice to ignore auto-generated files in version control. `Eflatun.SceneReference` auto-generates JSON files with format `Assets/Resources/Eflatun/SceneReference/<MAP_NAME>.generated.json`. We recommend you ignore these files and their corresponding `.meta` files in your version control.
 
 If you are using Git, you can do so by adding the following lines to your `.gitignore` file:
 
 ```gitignore
-# Eflatun.SceneReference auto-generated map file
-**/[Aa]ssets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json
-**/[Aa]ssets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json.meta
+# Eflatun.SceneReference auto-generated map files
+**/[Aa]ssets/Resources/Eflatun/SceneReference/*.generated.json
+**/[Aa]ssets/Resources/Eflatun/SceneReference/*.generated.json.meta
 ```
 
 # Usage
