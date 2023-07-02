@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-This release introduces support for addressable scenes. 
+This release introduces support for addressable scenes.
 
 There are breaking changes to settings. Please visit the settings page and re-apply all your settings as soon as you update.
 
