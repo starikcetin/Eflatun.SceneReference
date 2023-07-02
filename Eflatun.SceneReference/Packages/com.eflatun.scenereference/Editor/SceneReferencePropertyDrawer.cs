@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Eflatun.SceneReference.Editor.Toolbox;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
@@ -119,68 +121,6 @@ namespace Eflatun.SceneReference.Editor
             _guidSerializedProperty.stringValue = newGuid.ToString();
         }
 
-        private void FixInBuildSettings()
-        {
-            var changed = false;
-            var tempScenes = EditorBuildSettings.scenes.ToList();
-
-            if (_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
-            {
-                var title = "Add Scene to Build Settings?";
-                var body = $"Would you like to add the following scene to build settings?\n\n{_path}";
-
-                switch (EditorUtility.DisplayDialogComplex(title, body, "Add to Build", "Cancel", "Open Build Settings"))
-                {
-                    case 0:
-                    {
-                        tempScenes.Add(new EditorBuildSettingsScene(_path, true));
-                        changed = true;
-                        break;
-                    }
-                    case 1:
-                    {
-                        // 1 is cancel
-                        break;
-                    }
-                    case 2:
-                    {
-                        PingAssetAndOpenBuildSettings();
-                        break;
-                    }
-                }
-            }
-            else if (_sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
-            {
-                var title = "Enable Scene in Build Settings?";
-                var body = $"Would you like to enable the following scene in build settings?\n\n{_path}";
-
-                switch (EditorUtility.DisplayDialogComplex(title, body, "Enable in Build", "Cancel", "Open Build Settings"))
-                {
-                    case 0:
-                    {
-                        tempScenes.Single(x => x.guid.ToString() == _guid).enabled = true;
-                        changed = true;
-                        break;
-                    }
-                    case 1:
-                    {
-                        // 1 is cancel
-                        break;
-                    }
-                    case 2:
-                    {
-                        PingAssetAndOpenBuildSettings();
-                        break;
-                    }
-                }
-            }
-
-            if (changed)
-            {
-                EditorBuildSettings.scenes = tempScenes.ToArray();
-            }
-        }
-
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             Init(property);
@@ -202,34 +142,26 @@ namespace Eflatun.SceneReference.Editor
             // draw scene asset selector
             var selectorFieldRect = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             selectorFieldRect.height = EditorGUIUtility.singleLineHeight;
+            var toolboxButtonWidth = EditorGUIUtility.singleLineHeight;
+            selectorFieldRect.width -= toolboxButtonWidth + 2;
+            var toolboxButtonRect = new Rect
+            {
+                x = selectorFieldRect.x + selectorFieldRect.width + 2,
+                width = toolboxButtonWidth,
+                y = selectorFieldRect.y + 1,
+                height = selectorFieldRect.height - 1
+            };
+
             var newAsset = EditorGUI.ObjectField(selectorFieldRect, _asset, typeof(SceneAsset), false);
             SetWith(newAsset);
 
-            // draw utility line if needed
-            if (IsUtilityLineEnabled && NeedsBuildSettingsFix)
+            // TODO: we should ship our own icon to prevent this breaking in the future
+            var settingsIcon = EditorGUIUtility.IconContent("SettingsIcon");
+            var toolboxButton = GUI.Button(toolboxButtonRect, settingsIcon, EditorStyles.iconButton);
+            if (toolboxButton)
             {
-                var buttonRect = new Rect(position)
-                {
-                    // x = selectorFieldRect.x,
-                    y = position.y + EditorGUIUtility.singleLineHeight,
-                    // width = selectorFieldRect.width,
-                    height = EditorGUIUtility.singleLineHeight
-                };
-
-                var buttonText = _sceneBuildSettingsState switch
-                {
-                    SceneBuildSettingsState.NotIncluded => "Add to Build...",
-                    SceneBuildSettingsState.Disabled => "Enable in Build...",
-                    _ => throw new ArgumentOutOfRangeException(nameof(_sceneBuildSettingsState), _sceneBuildSettingsState, null)
-                };
-
-                if (GUI.Button(buttonRect, buttonText))
-                {
-                    FixInBuildSettings();
-
-                    // This prevents Unity from throwing 'InvalidOperationException: Stack empty.' at 'EditorGUI.EndProperty'.
-                    GUIUtility.ExitGUI();
-                }
+                var toolboxPopupWindow = CreateToolboxPopupWindow();
+                PopupWindow.Show(toolboxButtonRect, toolboxPopupWindow);
             }
 
             GUI.color = colorToRestore;
@@ -238,17 +170,24 @@ namespace Eflatun.SceneReference.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            Init(property);
-
-            return _asset && IsUtilityLineEnabled && NeedsBuildSettingsFix
-                ? EditorGUIUtility.singleLineHeight * 2
-                : EditorGUIUtility.singleLineHeight;
+            return EditorGUIUtility.singleLineHeight;
         }
 
-        private void PingAssetAndOpenBuildSettings()
+        private ToolboxPopupWindow CreateToolboxPopupWindow()
         {
-            EditorGUIUtility.PingObject(_asset);
-            EditorWindow.GetWindow<BuildPlayerWindow>();
+            var tools = new List<ITool>();
+
+            if (IsUtilityLineEnabled && NeedsBuildSettingsFix && _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
+            {
+                tools.Add(new AddToBuildTool(_path, _asset));
+            }
+
+            if (IsUtilityLineEnabled && NeedsBuildSettingsFix && _sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
+            {
+                tools.Add(new EnableInBuildTool(_path, _guid, _asset));
+            }
+
+            return new ToolboxPopupWindow(tools);
         }
     }
 }
