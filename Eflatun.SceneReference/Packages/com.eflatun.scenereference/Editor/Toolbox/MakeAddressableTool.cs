@@ -50,8 +50,7 @@ namespace Eflatun.SceneReference.Editor.Toolbox
             {
                 case 0:
                 {
-                    var defaultGroup = AddressableAssetSettingsDefaultObject.Settings.DefaultGroup;
-                    AddressableAssetSettingsDefaultObject.Settings.CreateOrMoveEntry(_sceneGuid, defaultGroup);
+                    EditorUtils.AddToDefaultAddressableGroup(_sceneGuid);
                     break;
                 }
                 case 1:

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Eflatun.SceneReference.Editor.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -38,9 +39,6 @@ namespace Eflatun.SceneReference.Editor.Toolbox
 
         private void Perform()
         {
-            var changed = false;
-            var tempScenes = EditorBuildSettings.scenes.ToList();
-
             var title = "Add Scene to Build Settings?";
             var body = $"Would you like to add the following scene to build settings?\n\n{_scenePath}";
 
@@ -48,8 +46,7 @@ namespace Eflatun.SceneReference.Editor.Toolbox
             {
                 case 0:
                 {
-                    tempScenes.Add(new EditorBuildSettingsScene(_scenePath, true));
-                    changed = true;
+                    EditorUtils.AddSceneToBuild(_scenePath);
                     break;
                 }
                 case 1:
@@ -63,11 +60,6 @@ namespace Eflatun.SceneReference.Editor.Toolbox
                     EditorWindow.GetWindow<BuildPlayerWindow>();
                     break;
                 }
-            }
-
-            if (changed)
-            {
-                EditorBuildSettings.scenes = tempScenes.ToArray();
             }
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Eflatun.SceneReference.Editor.Utility;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -41,9 +42,6 @@ namespace Eflatun.SceneReference.Editor.Toolbox
 
         private void Perform()
         {
-            var changed = false;
-            var tempScenes = EditorBuildSettings.scenes.ToList();
-
             var title = "Enable Scene in Build Settings?";
             var body = $"Would you like to enable the following scene in build settings?\n\n{_scenePath}";
 
@@ -51,8 +49,7 @@ namespace Eflatun.SceneReference.Editor.Toolbox
             {
                 case 0:
                 {
-                    tempScenes.Single(x => x.guid.ToString() == _sceneGuid).enabled = true;
-                    changed = true;
+                    EditorUtils.EnableSceneInBuild(_sceneGuid);
                     break;
                 }
                 case 1:
@@ -66,11 +63,6 @@ namespace Eflatun.SceneReference.Editor.Toolbox
                     EditorWindow.GetWindow<BuildPlayerWindow>();
                     break;
                 }
-            }
-
-            if (changed)
-            {
-                EditorBuildSettings.scenes = tempScenes.ToArray();
             }
         }
     }
