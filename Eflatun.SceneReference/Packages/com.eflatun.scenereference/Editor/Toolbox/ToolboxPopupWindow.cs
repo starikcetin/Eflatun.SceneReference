@@ -18,7 +18,7 @@ namespace Eflatun.SceneReference.Editor.Toolbox
         {
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label("Scene Reference ToolboxPopupWindow", EditorStyles.boldLabel);
+            GUILayout.Label("Scene Reference Toolbox", EditorStyles.boldLabel);
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 

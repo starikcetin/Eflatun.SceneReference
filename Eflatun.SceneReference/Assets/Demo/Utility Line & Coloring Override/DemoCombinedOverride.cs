@@ -7,23 +7,23 @@ namespace Eflatun.SceneReference.Demo
         [SerializeField] private SceneReference noOptions;
 
         [Space]
-        [SceneReferenceOptions(Coloring = ColoringBehaviour.DoNotOverride, UtilityLine = UtilityLineBehaviour.DoNotOverride)]
+        [SceneReferenceOptions(Coloring = ColoringBehaviour.DoNotOverride, Toolbox = ToolboxBehaviour.DoNotOverride)]
         [SerializeField] private SceneReference doNotOverride;
 
         [Space]
-        [SceneReferenceOptions(Coloring = ColoringBehaviour.Disabled, UtilityLine = UtilityLineBehaviour.Disabled)]
+        [SceneReferenceOptions(Coloring = ColoringBehaviour.Disabled, Toolbox = ToolboxBehaviour.Disabled)]
         [SerializeField] private SceneReference bothDisabled;
 
         [Space]
-        [SceneReferenceOptions(Coloring = ColoringBehaviour.Enabled, UtilityLine = UtilityLineBehaviour.Enabled)]
+        [SceneReferenceOptions(Coloring = ColoringBehaviour.Enabled, Toolbox = ToolboxBehaviour.Enabled)]
         [SerializeField] private SceneReference bothEnabled;
 
         [Space]
-        [SceneReferenceOptions(Coloring = ColoringBehaviour.Enabled, UtilityLine = UtilityLineBehaviour.Disabled)]
+        [SceneReferenceOptions(Coloring = ColoringBehaviour.Enabled, Toolbox = ToolboxBehaviour.Disabled)]
         [SerializeField] private SceneReference onlyColor;
 
         [Space]
-        [SceneReferenceOptions(Coloring = ColoringBehaviour.Disabled, UtilityLine = UtilityLineBehaviour.Enabled)]
+        [SceneReferenceOptions(Coloring = ColoringBehaviour.Disabled, Toolbox = ToolboxBehaviour.Enabled)]
         [SerializeField] private SceneReference onlyUtility;
     }
 }

@@ -17,9 +17,9 @@ namespace Eflatun.SceneReference
         public ColoringBehaviour Coloring = ColoringBehaviour.DoNotOverride;
 
         /// <summary>
-        /// <inheritdoc cref="UtilityLineBehaviour"/>
-        /// Defaults to <see cref="UtilityLineBehaviour.DoNotOverride"/>.
+        /// <inheritdoc cref="ToolboxBehaviour"/>
+        /// Defaults to <see cref="ToolboxBehaviour.DoNotOverride"/>.
         /// </summary>
-        public UtilityLineBehaviour UtilityLine = UtilityLineBehaviour.DoNotOverride;
+        public ToolboxBehaviour Toolbox = ToolboxBehaviour.DoNotOverride;
     }
 }

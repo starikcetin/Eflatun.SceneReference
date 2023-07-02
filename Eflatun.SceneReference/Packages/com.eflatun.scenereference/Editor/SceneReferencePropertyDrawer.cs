@@ -48,9 +48,6 @@ namespace Eflatun.SceneReference.Editor
         private AddressableAssetEntry _addressableEntry;
 #endif // ESR_ADDRESSABLES
 
-        private bool NeedsBuildSettingsFix => _sceneBuildSettingsState == SceneBuildSettingsState.Disabled
-                                              || _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded;
-
         private bool IsColoringEnabled => _optionsAttribute.Coloring switch
         {
             ColoringBehaviour.Enabled => true,
@@ -59,12 +56,12 @@ namespace Eflatun.SceneReference.Editor
             _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.Coloring), _optionsAttribute.Coloring, null)
         };
 
-        private bool IsUtilityLineEnabled => _optionsAttribute.UtilityLine switch
+        private bool IsToolboxEnabled => _optionsAttribute.Toolbox switch
         {
-            UtilityLineBehaviour.Enabled => true,
-            UtilityLineBehaviour.Disabled => false,
-            UtilityLineBehaviour.DoNotOverride => SettingsManager.PropertyDrawer.ShowInlineSceneInBuildUtility.value,
-            _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.UtilityLine), _optionsAttribute.UtilityLine, null)
+            ToolboxBehaviour.Enabled => true,
+            ToolboxBehaviour.Disabled => false,
+            ToolboxBehaviour.DoNotOverride => SettingsManager.PropertyDrawer.ShowInlineToolbox.value,
+            _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.Toolbox), _optionsAttribute.Toolbox, null)
         };
 
         private void Init(SerializedProperty property)
@@ -140,28 +137,36 @@ namespace Eflatun.SceneReference.Editor
             }
 
             // draw scene asset selector
+            var toolboxButtonWidth = EditorGUIUtility.singleLineHeight;
             var selectorFieldRect = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             selectorFieldRect.height = EditorGUIUtility.singleLineHeight;
-            var toolboxButtonWidth = EditorGUIUtility.singleLineHeight;
-            selectorFieldRect.width -= toolboxButtonWidth + 2;
-            var toolboxButtonRect = new Rect
+
+            if (IsToolboxEnabled)
             {
-                x = selectorFieldRect.x + selectorFieldRect.width + 2,
-                width = toolboxButtonWidth,
-                y = selectorFieldRect.y + 1,
-                height = selectorFieldRect.height - 1
-            };
+                selectorFieldRect.width -= toolboxButtonWidth + 2;
+            }
 
             var newAsset = EditorGUI.ObjectField(selectorFieldRect, _asset, typeof(SceneAsset), false);
             SetWith(newAsset);
 
-            // TODO: we should ship our own icon to prevent this breaking in the future
-            var settingsIcon = EditorGUIUtility.IconContent("SettingsIcon");
-            var toolboxButton = GUI.Button(toolboxButtonRect, settingsIcon, EditorStyles.iconButton);
-            if (toolboxButton)
+            if (IsToolboxEnabled)
             {
-                var toolboxPopupWindow = CreateToolboxPopupWindow();
-                PopupWindow.Show(toolboxButtonRect, toolboxPopupWindow);
+                var toolboxButtonRect = new Rect
+                {
+                    x = selectorFieldRect.x + selectorFieldRect.width + 2,
+                    width = toolboxButtonWidth,
+                    y = selectorFieldRect.y + 1,
+                    height = selectorFieldRect.height - 1
+                };
+
+                // TODO: we should ship our own icon to prevent this breaking in the future
+                var settingsIcon = EditorGUIUtility.IconContent("SettingsIcon");
+                var toolboxButton = GUI.Button(toolboxButtonRect, settingsIcon, EditorStyles.iconButton);
+                if (toolboxButton)
+                {
+                    var toolboxPopupWindow = CreateToolboxPopupWindow();
+                    PopupWindow.Show(toolboxButtonRect, toolboxPopupWindow);
+                }
             }
 
             GUI.color = colorToRestore;
@@ -177,12 +182,12 @@ namespace Eflatun.SceneReference.Editor
         {
             var tools = new List<ITool>();
 
-            if (IsUtilityLineEnabled && NeedsBuildSettingsFix && _sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
+            if (_sceneBuildSettingsState == SceneBuildSettingsState.NotIncluded)
             {
                 tools.Add(new AddToBuildTool(_path, _asset));
             }
 
-            if (IsUtilityLineEnabled && NeedsBuildSettingsFix && _sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
+            if (_sceneBuildSettingsState == SceneBuildSettingsState.Disabled)
             {
                 tools.Add(new EnableInBuildTool(_path, _guid, _asset));
             }

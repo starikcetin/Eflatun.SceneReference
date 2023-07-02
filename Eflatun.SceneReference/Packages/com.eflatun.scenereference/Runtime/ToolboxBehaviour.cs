@@ -3,10 +3,10 @@
 namespace Eflatun.SceneReference
 {
     /// <summary>
-    /// The inspector utility line override behaviour for scene-in-build validation of <see cref="SceneReference"/> fields.
+    /// The inspector toolbox button override behaviour for <see cref="SceneReference"/> fields.
     /// </summary>
     [PublicAPI]
-    public enum UtilityLineBehaviour
+    public enum ToolboxBehaviour
     {
         /// <summary>
         /// Use the project settings.
@@ -14,12 +14,12 @@ namespace Eflatun.SceneReference
         DoNotOverride = 0,
 
         /// <summary>
-        /// Force enable the utility line, disregard project settings.
+        /// Force enable the toolbox button, disregard project settings.
         /// </summary>
         Enabled = 1,
 
         /// <summary>
-        /// Force disable the utility line, disregard project settings.
+        /// Force disable the toolbox button, disregard project settings.
         /// </summary>
         Disabled = 2
     }
