@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-    Provides GUID, Path, Build Index, and Name.
+    Provides GUID, Path, Build Index, Name, and Address.
 </p>
 <br>
 
