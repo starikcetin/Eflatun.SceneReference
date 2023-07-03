@@ -353,7 +353,7 @@ var sceneGuid = SceneGuidToPathMapProvider.ScenePathToGuidMap[scenePath];
 
 ### Scene GUID to Address Map
 
-> **Warning**<br/>
+> **Note**<br/>
 > This map is only relevant if addressables support is enabled.
 
 The `SceneGuidToAddressMapProvider` static class is responsible for providing the scene GUID to scene address mapping to the rest of the code. Unlike `SceneGuidToPathMapProvider`, this class cannot provide an inverse map, because the address of an asset is not guaranteed to be unique due to the design of addressables. Instead, it provides two methods called `GetGuidFromAddress` and `TryGetGuidFromAddress` that serve the same purpose.
@@ -513,10 +513,16 @@ var fromSceneAsset = new SceneReference(sceneAsset);
 ```
 
 > **Warning**<br/>
-> - Constructors and factory methods validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid.
-> - The default constructor always creates an empty instance, but it never throws.
-> - The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor-use only. Do NOT use it in runtime code.
-> - `FromAddress` factory method throws `AddressablesSupportDisabledException` if addressables support is disabled.
+> Constructors and factory methods validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid.
+
+> **Warning**<br/>
+> The default constructor always creates an empty instance, but it never throws.
+
+> **Warning**<br/>
+> The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor-use only. Do NOT use it in runtime code.
+
+> **Warning**<br/>
+> `FromAddress` factory method throws `AddressablesSupportDisabledException` if addressables support is disabled.
 
 # Exceptions
 
