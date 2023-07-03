@@ -5,11 +5,11 @@ namespace Eflatun.SceneReference.Demo
 {
     public class Demo : MonoBehaviour
     {
-        [SerializeField] private SceneReference scene;
-        [SerializeField] private SceneReference anotherScene;
-        [SerializeField] private SceneReference yetAnotherScene;
-
-        [SerializeField] private SceneReference empty;
+        [SerializeField] private SceneReference sceneA;
+        [SerializeField] private SceneReference sceneB;
+        [SerializeField] private SceneReference sceneC;
+        [SerializeField] private SceneReference sceneD;
+        [SerializeField] private SceneReference sceneE;
 
         [SerializeField] private List<SceneReference> sceneReferenceList;
     }

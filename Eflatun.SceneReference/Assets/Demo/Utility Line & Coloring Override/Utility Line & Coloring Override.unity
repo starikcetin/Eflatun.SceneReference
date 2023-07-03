@@ -246,16 +246,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513f72474ff4e324e893c4801d983eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene:
+  sceneA:
     asset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
     guid: 1d6d932bbdf133c41aa34e00b02bdd1d
-  anotherScene:
+  sceneB:
     asset: {fileID: 102900000, guid: fb949268f5f24df4eadb2a5028fca33a, type: 3}
     guid: fb949268f5f24df4eadb2a5028fca33a
-  yetAnotherScene:
+  sceneC:
     asset: {fileID: 102900000, guid: 63cbeaf10b76c5c4dacdf7685d4acdb6, type: 3}
     guid: 63cbeaf10b76c5c4dacdf7685d4acdb6
-  empty:
+  sceneD:
+    asset: {fileID: 102900000, guid: 9035c3d9637db67459a347d73514c868, type: 3}
+    guid: 9035c3d9637db67459a347d73514c868
+  sceneE:
     asset: {fileID: 0}
     guid: 00000000000000000000000000000000
   sceneReferenceList:
@@ -265,6 +268,8 @@ MonoBehaviour:
     guid: fb949268f5f24df4eadb2a5028fca33a
   - asset: {fileID: 102900000, guid: 63cbeaf10b76c5c4dacdf7685d4acdb6, type: 3}
     guid: 63cbeaf10b76c5c4dacdf7685d4acdb6
+  - asset: {fileID: 102900000, guid: 9035c3d9637db67459a347d73514c868, type: 3}
+    guid: 9035c3d9637db67459a347d73514c868
   - asset: {fileID: 0}
     guid: 00000000000000000000000000000000
 --- !u!4 &314337509
