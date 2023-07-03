@@ -64,7 +64,7 @@ There are breaking changes to settings. Please visit the settings page and re-ap
 
 ### Changed
 - The concept of Utility Line is replaced with the concept of Toolbox. In summary, instead of drawing buttons as a second line below the field, we instead draw a small button to the end of the field on the same line. When clicked, a toolbox popup appears with all the utilities.
-- `SceneReferenceOptionsAttribute.Coloring` (now named `SceneReferenceOptionsAttribute.SceneInBuildColoring`) still controls the same types of coloring cases, but since they used to be all the cases, the field was implicitly controlling the entire coloring behaviour. While its semantics are not changed, since there are now other coloring cases, it is no longer the only field that controls the coloring behaviour.
+- `SceneInBuildColoring` argument (previously named `Coloring`) of `SceneReferenceOptionsAttribute` still controls the same types of coloring cases, but since they used to be all the cases, the field was implicitly controlling the entire coloring behaviour. While its semantics are not changed, since there are now other coloring cases, it is no longer the only field that controls the entire coloring behaviour.
 
 ### Removed
 

@@ -117,7 +117,7 @@ var sceneAddress = mySceneReference.Address;
 
 ## Validation
 
-You can check `State` property to make sure a `SceneReference` is completely valid before using it.
+You can check `State` property to make sure a `SceneReference` is completely valid before using it. It will also give you information regarding the type of the scene it references.
 
 ```cs
 // Import Runtime namespace
@@ -133,7 +133,7 @@ if (mySceneReference.State == SceneReferenceState.Regular)
     // The scene is safe to use. It references a regular scene.
 }
 
-// If you have addressables support enabled, you can also get this state
+// If you have addressables support enabled, you can also get this state:
 if (mySceneReference.State == SceneReferenceState.Addressable)
 {
     // The scene is safe to use. It references an addressable scene.
@@ -143,7 +143,12 @@ if (mySceneReference.State == SceneReferenceState.Addressable)
 
 ## Inline Validation & Fix Utilities
 
-Unity only includes in a build the scenes that are added and enabled in build settings, and addressables only pack scenes that are included in an addressable group. `Eflatun.SceneReference` on the other hand, allows you to assign onto it any scene you wish. This behaviour may cause runtime bugs when loading scenes. To prevent these potential bugs, `Eflatun.SceneReference` provides inline validation and fix utilities.
+A scene will be accessible in runtime only if one of the following is true:
+
+1. The scene is added and enabled in build settings.
+2. The scene is in an addressables group.
+
+`Eflatun.SceneReference` on the other hand, allows you to assign onto it any scene you wish. This behaviour may cause runtime bugs when loading scenes. To prevent these potential bugs, `Eflatun.SceneReference` provides inline validation and fix utilities.
 
 In this example:
 
@@ -159,7 +164,7 @@ In this example:
 > **Note**
 > Addressable scenes are only available if addressables support is enabled.
 
-If we click on the little gear (⚙️) icon to the right of the field, we can see the validation and fix utilities. For `Scene B` field, we get the following tools:
+If we click on the little gear (⚙️) icon to the right of the field, a toolbox popup will open that contains the fix utilities. For `Scene B` field, we get the following tools:
 
 ![.assets/toolbox_disabled.png](.assets/toolbox_disabled.png)
 
@@ -170,7 +175,7 @@ And for `Scene C` field, we get the following tools:
 > **Note**
 > You will only see the `Make addressable...` tool if you have addressables support enabled.
 
-Clicking on the `Enable in build...` button gives us this prompt, which enables us to quickly fix the situation:
+Clicking on the `Enable in build...` button gives us this prompt:
 
 ![.assets/validation_enable_prompt.png](.assets/validation_enable_prompt.png)
 
@@ -182,7 +187,7 @@ And `Make addressable...` button gives the following prompt:
 
 ![.assets/validation_addressable_prompt.png](.assets/validation_addressable_prompt.png)
 
-Using these prompts, we can quickly alleviate the situation, and prevent potential runtime bugs when loading these scenes.
+Using these prompts, we can quickly alleviate the situation, and prevent potential runtime bugs when using these scenes.
 
 # Settings
 
@@ -201,17 +206,20 @@ Look for the `Eflatun` category in the left panel. Select the `Scene Reference` 
 
 ### Color Addressable Scenes
 
-Should we color the property to draw attention for scenes that are either not in build or disabled in build?
+Should we color the property to draw attention for addressable scenes?
 
-Unity only bundles scenes that are added and enabled in build settings. Therefore, you would want to validate whether the scene you assign to a SceneReference is added and enabled in build settings.
+Addressable scenes should be handled differently than regular scenes in runtime, through the addressables API. Therefore, you would want quickly identify if an `Eflatun.SceneReference` references an addressable scene or not.
 
 It is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.
+
+> **Note**
+> This setting does not apply to regular scenes. They have their own coloring mechanism. It is controlled by the _Color Based On Scene-In-Build State_ setting under the _Property Drawer_ category.
 
 ## Property Drawer
 
 ### Show Inline Toolbox
 
-Should we show the inline gear (⚙️) button that opens a toolbox?
+Should we show the inline gear (⚙️) buttons that open a toolbox?
 
 Unity only bundles scenes that are added and enabled in build settings, and addressables only pack scenes that are in an Addressable Group. Therefore, you would want to make sure the scene you assign to a SceneReference is either added and enabled in build settings, or is in an addressable group. The toolbox provides tools for you to quickly take action in these cases.
 
@@ -232,7 +240,7 @@ It is recommended to leave this option at 'true', as it will help you identify m
 
 ### Generation Triggers
 
-Controls when the Scene GUID to Path Map gets regenerated.
+Controls when the scene data maps get regenerated.
 
 - After Scene Asset Change: Regenerate the map every time a scene asset changes (delete, create, move, rename).
 
@@ -293,7 +301,7 @@ You can trigger the generator from your editor code:
 using Eflatun.SceneReference.Editor;
 
 // Run the generator. Only do this in Editor code!
-SceneGuidToPathMapGenerator.Run();
+SceneDataMapsGenerator.Run();
 ```
 
 ## Accessing Settings in Editor Code
@@ -305,10 +313,10 @@ You can read and manipulate `Eflatun.SceneReference` settings from your editor c
 using Eflatun.SceneReference.Editor;
 
 // Access a setting. Only do this in Editor code!
-var generationTriggers = SettingsManager.SceneGuidToPathMap.GenerationTriggers;
+var generationTriggers = SettingsManager.SceneDataMaps.GenerationTriggers;
 
 // Change a setting. Only do this in Editor code!
-SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
+SettingsManager.SceneDataMaps.GenerationTriggers = GenerationTriggers.All;
 ```
 
 > **Warning**
@@ -318,17 +326,17 @@ SettingsManager.SceneGuidToPathMap.GenerationTriggers = GenerationTriggers.All;
 
 You can access the maps directly from both runtime and editor code. There are no side-effects of accessing the maps directly.
 
-In runtime, there are no performance penalties. The generated file is parsed automatically either upon the first access to `SceneGuidToPathMapProvider.SceneGuidToPathMap` or during `RuntimeInitializeLoadType.BeforeSceneLoad`, whichever comes first. It is guaranteed that the map is parsed only once.
+In runtime, there are no performance penalties. The generated file is parsed automatically either upon the first access to the maps from a provider or during `RuntimeInitializeLoadType.BeforeSceneLoad`, whichever comes first. It is guaranteed that the generated file is parsed only once. Each provider does this for itself, there is no coordination between them.
 
-In editor, there are also no performance penalties except for one case. The generator assigns the map directly to the provider upon every generation. This prevents unnecessarily parsing the map file. However, if the provider loses the value assigned by the generator due to Unity [reloading the domain](https://docs.unity3d.com/Manual/DomainReloading.html), and some code tries to access the map before the generator runs again, then the provider has to parse the map file itself. This is what happens in that scenario:
+In editor, there are also no performance penalties except for one case. The generator assigns the map directly to the providers upon every generation. This prevents unnecessarily parsing the map file. However, if the providers lose the values assigned by the generator due to Unity [reloading the domain](https://docs.unity3d.com/Manual/DomainReloading.html), and some code tries to access the map before the generator runs again, then the providers have to parse the map file themselves. This is what happens in that scenario:
 
-1. Generator runs and directly assigns the map to the provider.
+1. Generator runs and directly assigns the map to the providers.
 2. Something happens which triggers Unity to [reload the domain](https://docs.unity3d.com/Manual/DomainReloading.html).
-3. You access `SceneGuidToPathMapProvider.SceneGuidToPathMap`.
+3. You access the map from a provider.
 4. Provider checks to see if it still has the map values, and realizes they are lost.
 5. Provider parses the map file.
 
-### GUID to Path Map
+### Scene GUID to Path Map
 
 The `SceneGuidToPathMapProvider` static class is responsible for providing the scene GUID to scene path mapping to the rest of the code. There are two maps, one maps from GUIDs to paths, and the other one maps from paths to GUIDs. Both maps are inversely equivalent.
 
@@ -343,16 +351,16 @@ var scenePath = SceneGuidToPathMapProvider.SceneGuidToPathMap[sceneGuid];
 var sceneGuid = SceneGuidToPathMapProvider.ScenePathToGuidMap[scenePath];
 ```
 
-### GUID to Address Map
+### Scene GUID to Address Map
 
 > **Warning**
 > This map is only relevant if addressables support is enabled.
 
-The `SceneGuidToAddressMapProvider` static class is responsible for providing the scene GUID to scene address mapping to the rest of the code. Unlike `SceneGuidToPathMapProvider`, this class cannot provide an inverse map, because the address of a scene is not guaranteed to be unique due to the design of addressables. Instead, it provides two methods called `GetGuidFromAddress` and `TryGetGuidFromAddress` that serve the same purpose.
+The `SceneGuidToAddressMapProvider` static class is responsible for providing the scene GUID to scene address mapping to the rest of the code. Unlike `SceneGuidToPathMapProvider`, this class cannot provide an inverse map, because the address of an asset is not guaranteed to be unique due to the design of addressables. Instead, it provides two methods called `GetGuidFromAddress` and `TryGetGuidFromAddress` that serve the same purpose.
 
 Getting the GUID from address can fail in following cases:
-1. No scene with the given address is found in the map (`AddressNotFoundException`).
-2. Multiple scenes have the given address (`AddressNotUniqueException`).
+1. No scene with the given address found in the map (`AddressNotFoundException`).
+2. Multiple scenes found with the given address in the map (`AddressNotUniqueException`).
 3. Addressables support is disabled (`AddressablesSupportDisabledException`).
 
 ```cs
@@ -365,10 +373,10 @@ var sceneAddress = SceneGuidToAddressMapProvider.SceneGuidToAddressMap[sceneGuid
 // Get the scene GUID from a scene address. You can do this both in runtime and in editor.
 
 // First way. Will throw exceptions on faliure.
-var sceneGuid = SceneGuidToPathMapProvider.GetGuidFromAddress(sceneAddress);
+var sceneGuid = SceneGuidToAddressMapProvider.GetGuidFromAddress(sceneAddress);
 
 // Second way. Returns a bool that represents success or failure.
-if(SceneGuidToPathMapProvider.TryGetGuidFromAddress(sceneAddress, out var sceneGuid)) 
+if(SceneGuidToAddressMapProvider.TryGetGuidFromAddress(sceneAddress, out var sceneGuid)) 
 {
     // Success. sceneGuid is valid.
 }
