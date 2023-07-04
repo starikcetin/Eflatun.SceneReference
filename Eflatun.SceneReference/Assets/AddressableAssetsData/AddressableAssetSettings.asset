@@ -63,6 +63,20 @@ MonoBehaviour:
       - m_Id: 729f7c47c8c44484b9d04a87444fbfdb
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: 65496bb581a3b964eb4115c067006774
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 39735132db9615043ba1c61ce7e772d9
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+    - m_InheritedParent: 
+      m_Id: 12078613a5031214aac4e704a298037e
+      m_ProfileName: Editor Hosted
+      m_Values:
+      - m_Id: 2f6e1665c81f96e43ae79c98804152d8
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: 58f3f26e2e79916468d59dc70eec6ec3
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: 729f7c47c8c44484b9d04a87444fbfdb
+        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+      - m_Id: 65496bb581a3b964eb4115c067006774
         m_Value: ServerData/[BuildTarget]
       - m_Id: 39735132db9615043ba1c61ce7e772d9
         m_Value: http://[PrivateIpAddress]:[HostingServicePort]
@@ -116,7 +130,7 @@ MonoBehaviour:
           m_Key: HostingServiceUploadSpeed
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.String
-          m_Data: Library/com.unity.addressables/aa/Windows/StandaloneWindows64;ServerData/StandaloneWindows64
+          m_Data: Library/com.unity.addressables/aa/Windows/StandaloneWindows64
           m_Key: ContentRoot
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.Boolean

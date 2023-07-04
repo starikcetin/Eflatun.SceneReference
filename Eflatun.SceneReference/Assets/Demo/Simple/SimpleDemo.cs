@@ -1,27 +1,35 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 namespace Eflatun.SceneReference.Demo
 {
     public class SimpleDemo : MonoBehaviour
     {
-        [SerializeField] private SceneReference sceneARef;
-        [SerializeField] private SceneReference sceneBRef;
-        [SerializeField] private SceneReference sceneCRef;
+        [SerializeField] private SceneReference regularA;
+        [SerializeField] private SceneReference regularB;
+        [SerializeField] private SceneReference addressableA;
+        [SerializeField] private SceneReference addressableB;
 
-        public void LoadA()
+        public void LoadRegularA()
         {
-            SceneManager.LoadScene(sceneARef.BuildIndex);
+            SceneManager.LoadScene(regularA.BuildIndex);
         }
 
-        public void LoadB()
+        public void LoadRegularB()
         {
-            SceneManager.LoadScene(sceneBRef.BuildIndex);
+            SceneManager.LoadScene(regularB.BuildIndex);
         }
 
-        public void LoadC()
+        public void LoadAddressableA()
         {
-            SceneManager.LoadScene(sceneCRef.BuildIndex);
+            Addressables.LoadSceneAsync(addressableA.Address).WaitForCompletion();
+        }
+
+        public void LoadAddressableB()
+        {
+            Addressables.LoadSceneAsync(addressableB.Address).WaitForCompletion();
         }
     }
 }
