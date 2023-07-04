@@ -107,7 +107,6 @@ namespace Eflatun.SceneReference.Editor
             /// It is recommended to leave this option enabled, as the toolbox saves you a lot of time.
             /// </summary>
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-            // TODO: docs
             [field: UserSetting(CategoryName, "Show Inline Toolbox", "Should we show the inline gear button that opens a toolbox?\n\nUnity only bundles scenes that are added and enabled in build settings, and addressables only pack scenes that are in an Addressable Group. Therefore, you would want to make sure the scene you assign to a SceneReference is either added and enabled in build settings, or is in an addressable group. The toolbox provides tools for you to quickly take action in these cases.\n\nIt is recommended to leave this option enabled, as the toolbox saves you a lot of time.")]
             public static ProjectSetting<bool> ShowInlineToolbox { get; }
                 = new ProjectSetting<bool>("PropertyDrawer.ShowInlineToolbox", true);
