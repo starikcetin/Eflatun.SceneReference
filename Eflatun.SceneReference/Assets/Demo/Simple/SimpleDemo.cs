@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+#if ESR_ADDRESSABLES
+using UnityEngine.AddressableAssets;
+#endif // ESR_ADDRESSABLES
 
 namespace Eflatun.SceneReference.Demo
 {
@@ -55,10 +58,12 @@ namespace Eflatun.SceneReference.Demo
             {
                 yield return SceneManager.LoadSceneAsync(sceneReference.Path);
             }
+#if ESR_ADDRESSABLES
             else if (sceneReference.State == SceneReferenceState.Addressable)
             {
                 yield return Addressables.LoadSceneAsync(sceneReference.Address);
             }
+#endif // ESR_ADDRESSABLES
         }
     }
 }
