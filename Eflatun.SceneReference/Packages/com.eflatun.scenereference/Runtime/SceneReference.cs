@@ -165,7 +165,7 @@ namespace Eflatun.SceneReference
         /// <exception cref="SceneReferenceCreationException">Throws if the given address is null or whitespace.</exception>
         /// <exception cref="SceneReferenceCreationException">Throws if the given address is not found in the scene GUID to address map.</exception>
         /// <exception cref="SceneReferenceCreationException">Throws if the given address matches multiple entries from the scene GUID to address map.</exception>
-        /// <exception cref="AddressablesSupportDisabledException">Throws if the addressables support is disabled.</exception>
+        /// <exception cref="AddressablesSupportDisabledException">Throws if addressables support is disabled.</exception>
         public static SceneReference FromAddress(string address)
         {
 #if ESR_ADDRESSABLES
@@ -184,20 +184,20 @@ namespace Eflatun.SceneReference
             catch (AddressNotFoundException e)
             {
                 throw new SceneReferenceCreationException(
-                    $"Given address is not found in the scene GUID to address map. Address: '{address}'"
-                    + "\nThis can happen for these reasons:"
-                    + "\n1. The asset with the given address either doesn't exist or is not a scene. To fix this, make sure you provide the address of a valid scene."
-                    + "\n2. The scene GUID to address map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
+                    $"Given address is not found in the Scene GUID to Address Map. Address: {address}." +
+                    "\nThis can happen for these reasons:" +
+                    "\n1. The asset with the given address either doesn't exist or is not a scene. To fix this, make sure you provide the address of a valid addressable scene." +
+                    "\n2. The Scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
                     , e
                 );
             }
             catch (AddressNotUniqueException e)
             {
                 throw new SceneReferenceCreationException(
-                    $"Given address matches multiple entries in scene GUID to address map. Address: '{address}'"
-                    + "\nThis can happen for these reasons:"
-                    + "\n1. There are multiple addressable scenes with the same given address. To fix this, make sure there is only one addressable scene with the given address."
-                    + "\n2. The scene GUID to address map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
+                    $"Given address matches multiple scenes in the Scene GUID to Address Map. Address: {address}." +
+                    "\nThrown if a given address matches multiple entries in the Scene GUID to Address Map. This can happen for these reasons:" +
+                    "\n1. There are multiple addressable scenes with the same given address. To fix this, make sure there is only one addressable scene with the given address." +
+                    "\n2. The Scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
                     , e
                 );
             }
@@ -279,17 +279,17 @@ namespace Eflatun.SceneReference
         /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
         /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
         /// <remarks>
-        /// You can check <see cref="Scene.IsValid"/> to see if the value of this property is valid.
+        /// You can check <see cref="Scene.IsValid"/> on the return value to see if it is valid.
         /// </remarks>
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
         /// <summary>
-        /// Address of this scene.
+        /// Address of the scene.
         /// </summary>
         /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
         /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
         /// <exception cref="SceneNotAddressableException">Throws if the scene is not in the scene GUID to address map.</exception>
-        /// <exception cref="AddressablesSupportDisabledException">Throws if the addressables support is disabled.</exception>
+        /// <exception cref="AddressablesSupportDisabledException">Throws if addressables support is disabled.</exception>
         public string Address
         {
             get
@@ -317,29 +317,20 @@ namespace Eflatun.SceneReference
             }
         }
 
-        /// <summary>
         /// <inheritdoc cref="SceneReferenceState"/>
-        /// </summary>
         public SceneReferenceState State
         {
             get
             {
-                // TODO: getting HasValue beforehand to make sure the internal exception is thrown if necessary before everything else. Ideally, the internal exception should be thrown in the Guid property instead, so the exception coverage is greater. Inline this usage after moving the internal exception to the Guid property.
-                var hasValue = HasValue;
-
-                var isInSceneGuidToPathMap = SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path);
-
-                if (hasValue && isInSceneGuidToPathMap)
+                if (HasValue && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path))
                 {
-                    var isInBuildAndEnabled = SceneUtility.GetBuildIndexByScenePath(path) != -1;
-                    if (isInBuildAndEnabled)
+                    if (SceneUtility.GetBuildIndexByScenePath(path) != -1)
                     {
                         return SceneReferenceState.Regular;
                     }
 
 #if ESR_ADDRESSABLES
-                    var isInSceneGuidToAddressMap = SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(Guid);
-                    if (isInSceneGuidToAddressMap)
+                    if (SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(Guid))
                     {
                         return SceneReferenceState.Addressable;
                     }

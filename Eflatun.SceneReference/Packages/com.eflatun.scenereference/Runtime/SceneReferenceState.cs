@@ -14,7 +14,7 @@ namespace Eflatun.SceneReference
     public enum SceneReferenceState
     {
         /// <summary>
-        /// The <see cref="SceneReference"/> is not safe to use.
+        /// The <see cref="SceneReference"/> is not safe to use. Something is wrong.
         /// </summary>
         Unsafe = 0,
 
@@ -24,7 +24,8 @@ namespace Eflatun.SceneReference
         Regular = 1,
 
         /// <summary>
-        /// The <see cref="SceneReference"/> is safe to use, and it references an addressable scene. This state is only possible if the addressables support is enabled.
+        /// The <see cref="SceneReference"/> is safe to use, and it references an addressable scene.
+        /// This state is only possible if the addressables support is enabled.
         /// </summary>
         Addressable = 2,
     }

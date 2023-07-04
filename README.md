@@ -201,6 +201,8 @@ Look for the `Eflatun` category in the left panel. Select the `Scene Reference` 
 
 ## Addressables Support
 
+Settings regarding addressables support.
+
 > **Note**<br/>
 > Settings under this category are only relevant if you have addressables support enabled.
 
@@ -210,16 +212,18 @@ Should we color the property to draw attention for addressable scenes?
 
 Addressable scenes should be handled differently than regular scenes in runtime, through the addressables API. Therefore, you would want quickly identify if an `Eflatun.SceneReference` references an addressable scene or not.
 
-It is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.
+It is recommended to leave this option at 'true', as it will help you easily distinguish addressable scenes.
 
 > **Note**<br/>
 > This setting does not apply to regular scenes. They have their own coloring mechanism. It is controlled by the _Color Based On Scene-In-Build State_ setting under the _Property Drawer_ category.
 
 ## Property Drawer
 
+Settings regarding the property drawer.
+
 ### Show Inline Toolbox
 
-Should we show the inline gear (⚙️) buttons that open a toolbox?
+Should we show the inline gear (⚙️) button that opens a toolbox?
 
 Unity only bundles scenes that are added and enabled in build settings, and addressables only pack scenes that are in an Addressable Group. Therefore, you would want to make sure the scene you assign to a SceneReference is either added and enabled in build settings, or is in an addressable group. The toolbox provides tools for you to quickly take action in these cases.
 
@@ -238,21 +242,23 @@ It is recommended to leave this option at 'true', as it will help you identify m
 
 ## Scene Data Maps
 
+Settings regarding the scene data maps and the generator.
+
 ### Generation Triggers
 
 Controls when the scene data maps get regenerated.
 
-- After Scene Asset Change: Regenerate the map every time a scene asset changes (delete, create, move, rename).
+- After Scene Asset Change: Regenerate the maps every time a scene asset changes (delete, create, move, rename).
 
-- Before Enter Play Mode: Regenerate the map before entering play mode in the editor.
+- Before Enter Play Mode: Regenerate the maps before entering play mode in the editor.
 
-- Before Build: Regenerate the map before a build.
+- Before Build: Regenerate the maps before a build.
 
-- After Packages Resolve: Regenerate the map after UPM packages are resolved.
+- After Packages Resolve: Regenerate the maps after UPM packages are resolved.
 
-- After Addressables Change: Regenerate the map after addressable group entries change. Only relevant if you have addressables support enabled.
+- After Addressables Change: Regenerate the maps after addressable group entries change. Only relevant if you have addressables support enabled.
 
-It is recommended that you leave this option at _All_ unless you are debugging something. Failure to generate the map when needed can result in broken scene references in runtime.
+It is recommended that you leave this option at _All_ unless you are debugging something. Failure to generate the maps when needed can result in broken scene references in runtime.
 
 > **Note**<br/>
 > _All_ and _Everything_ are the same thing. They both represent all triggers.
@@ -265,7 +271,7 @@ It is recommended to leave this option at _Indented_, as it will help with versi
 
 ### Fail Build If Generation Fails
 
-Should we fail a build if map generations fail?
+Should we fail a build if scene data maps generation fails?
 
 Only relevant if _Before Build_ generation trigger is enabled.
 
@@ -558,9 +564,7 @@ Thrown if a given address is not found in the Scene GUID to Address Map. This ca
 
 1. The asset with the given address either doesn't exist or is not a scene. To fix this, make sure you provide the address of a valid scene.
 
-2. The scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.
-
-You cannot avoid this exception. It indicates that there is a bug in your project.
+2. The Scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.
 
 > **Note**<br/>
 > This exception will never be thrown if addressables support is disabled.
@@ -572,8 +576,6 @@ Thrown if a given address matches multiple entries in the Scene GUID to Address 
 1. There are multiple addressable scenes with the same given address. To fix this, make sure there is only one addressable scene with the given address.
 
 2. The Scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.
-
-You cannot avoid this exception. It indicates that there is a bug in your project.
 
 > **Note**<br/>
 > This exception will never be thrown if addressables support is disabled.
@@ -591,7 +593,7 @@ You can avoid this exception by making sure the `State` property is `Addressable
 
 Thrown if an operation that requires addressables support is attempted while addressables support is disabled.
 
-You can avoid this exception by making sure addressables support is enabled.
+To fix it, make sure addressables support is enabled.
 
 ## `SceneReferenceInternalException`
 

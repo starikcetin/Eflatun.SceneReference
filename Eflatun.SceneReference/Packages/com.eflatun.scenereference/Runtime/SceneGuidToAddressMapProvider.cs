@@ -10,9 +10,10 @@ using Newtonsoft.Json;
 namespace Eflatun.SceneReference
 {
     /// <summary>
-    /// Provides the scene GUID to path map. Can be used in both editor and runtime.
+    /// Provides the scene GUID to address map. Can be used in both editor and runtime.
     /// </summary>
     /// <remarks>
+    /// This map is only relevant if addressables support is enabled.<p/>
     /// Unlike <see cref="SceneGuidToPathMapProvider"/>, this class can not provide an inverse map because address
     /// of an asset does not have to be unique. Instead, it provides <see cref="GetGuidFromAddress"/> and
     /// <see cref="TryGetGuidFromAddress"/> methods.
@@ -23,7 +24,7 @@ namespace Eflatun.SceneReference
         private static Dictionary<string, string> _sceneGuidToAddressMap;
 
         /// <summary>
-        /// The scene GUID to address map for addressable scenes.
+        /// The scene GUID to address map.
         /// </summary>
         public static IReadOnlyDictionary<string, string> SceneGuidToAddressMap
         {
@@ -40,7 +41,7 @@ namespace Eflatun.SceneReference
         /// <param name="address">Address of the scene.</param>
         /// <returns>GUID of the scene.</returns>
         /// <exception cref="AddressNotFoundException">Thrown if no scene with the given address is found in the map.</exception>
-        /// <exception cref="AddressNotUniqueException">Thrown if multiple scenes have the given address.</exception>
+        /// <exception cref="AddressNotUniqueException">Thrown if multiple scenes found with the given address in the map.</exception>
         /// <exception cref="AddressablesSupportDisabledException">Thrown if addressables support is disabled.</exception>
         public static string GetGuidFromAddress(string address)
         {

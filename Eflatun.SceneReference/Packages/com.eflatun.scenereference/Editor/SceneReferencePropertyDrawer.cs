@@ -38,8 +38,8 @@ namespace Eflatun.SceneReference.Editor
         private UnityEngine.Object _asset;
         private string _guid;
         private string _path;
-        private EditorBuildSettingsScene _sceneInBuildSettings;
-        private SceneBundlingState _sceneBundlingState;
+        private EditorBuildSettingsScene _buildEntry;
+        private SceneBundlingState _bundlingState;
         private SceneReferenceOptionsAttribute _optionsAttribute;
 
 #if ESR_ADDRESSABLES
@@ -62,7 +62,7 @@ namespace Eflatun.SceneReference.Editor
             _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.AddressableColoring), _optionsAttribute.AddressableColoring, null)
         };
 
-        private bool IsToolboxEnabled => _optionsAttribute.Toolbox switch
+        private bool ShouldShowToolbox => _optionsAttribute.Toolbox switch
         {
             ToolboxBehaviour.Enabled => true,
             ToolboxBehaviour.Disabled => false,
@@ -78,7 +78,7 @@ namespace Eflatun.SceneReference.Editor
             _asset = _assetSerializedProperty.objectReferenceValue;
             _guid = _guidSerializedProperty.stringValue;
             _path = AssetDatabase.GetAssetPath(_asset);
-            _sceneInBuildSettings = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
+            _buildEntry = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
 
 #if ESR_ADDRESSABLES
             _addressableEntry = AddressableAssetSettingsDefaultObject.Settings.FindAssetEntry(_guid);
@@ -88,25 +88,25 @@ namespace Eflatun.SceneReference.Editor
 
             if (_asset == null)
             {
-                _sceneBundlingState = SceneBundlingState.NoScene;
+                _bundlingState = SceneBundlingState.NoScene;
             }
 #if ESR_ADDRESSABLES
             else if (_addressableEntry != null)
             {
-                _sceneBundlingState = SceneBundlingState.Addressable;
+                _bundlingState = SceneBundlingState.Addressable;
             }
 #endif // ESR_ADDRESSABLES
-            else if (_sceneInBuildSettings == null)
+            else if (_buildEntry == null)
             {
-                _sceneBundlingState = SceneBundlingState.Nowhere;
+                _bundlingState = SceneBundlingState.Nowhere;
             }
-            else if (!_sceneInBuildSettings.enabled)
+            else if (!_buildEntry.enabled)
             {
-                _sceneBundlingState = SceneBundlingState.InBuildDisabled;
+                _bundlingState = SceneBundlingState.InBuildDisabled;
             }
             else
             {
-                _sceneBundlingState = SceneBundlingState.InBuildEnabled;
+                _bundlingState = SceneBundlingState.InBuildEnabled;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Eflatun.SceneReference.Editor
             EditorGUI.BeginProperty(position, GUIContent.none, property);
 
             var colorToRestore = GUI.color;
-            GUI.color = _sceneBundlingState switch
+            GUI.color = _bundlingState switch
             {
                 SceneBundlingState.Nowhere when ShouldColorSceneInBuild => Color.red,
                 SceneBundlingState.InBuildDisabled when ShouldColorSceneInBuild => Color.yellow,
@@ -144,7 +144,7 @@ namespace Eflatun.SceneReference.Editor
             var selectorFieldRect = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             selectorFieldRect.height = EditorGUIUtility.singleLineHeight;
 
-            if (IsToolboxEnabled)
+            if (ShouldShowToolbox)
             {
                 selectorFieldRect.width -= toolboxButtonWidth + 2;
             }
@@ -152,7 +152,7 @@ namespace Eflatun.SceneReference.Editor
             var newAsset = EditorGUI.ObjectField(selectorFieldRect, _asset, typeof(SceneAsset), false);
             SetWith(newAsset);
 
-            if (IsToolboxEnabled)
+            if (ShouldShowToolbox)
             {
                 var toolboxButtonRect = new Rect
                 {
@@ -185,18 +185,18 @@ namespace Eflatun.SceneReference.Editor
         {
             var tools = new List<ITool>();
 
-            if (_sceneBundlingState == SceneBundlingState.Nowhere)
+            if (_bundlingState == SceneBundlingState.Nowhere)
             {
                 tools.Add(new AddToBuildTool(_path, _asset));
             }
 
-            if (_sceneBundlingState == SceneBundlingState.InBuildDisabled)
+            if (_bundlingState == SceneBundlingState.InBuildDisabled)
             {
                 tools.Add(new EnableInBuildTool(_path, _guid, _asset));
             }
 
 #if ESR_ADDRESSABLES
-            if(_sceneBundlingState == SceneBundlingState.Nowhere || _sceneBundlingState == SceneBundlingState.InBuildDisabled)
+            if(_bundlingState == SceneBundlingState.Nowhere || _bundlingState == SceneBundlingState.InBuildDisabled)
             {
                 tools.Add(new MakeAddressableTool(_path, _guid, _asset));
             }

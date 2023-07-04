@@ -5,13 +5,16 @@ using JetBrains.Annotations;
 namespace Eflatun.SceneReference.Exceptions
 {
     /// <summary>
-    /// Thrown if the addressables support is disabled.
+    /// Thrown if an operation that requires addressables support is attempted while addressables support is disabled.<p/>
+    /// You can avoid this exception by making sure addressables support is enabled.
     /// </summary>
     [PublicAPI]
     [Serializable]
     public class AddressablesSupportDisabledException : SceneReferenceException
     {
-        private const string ExceptionMessage = "Addressables support is disabled. To fix this, make sure you have addressables support enabled.";
+        private const string ExceptionMessage =
+            "An operation that requires addressables support is attempted while addressables support is disabled." +
+            "\nYou can avoid this exception by making sure addressables support is enabled.";
 
         internal AddressablesSupportDisabledException() : base(ExceptionMessage)
         {

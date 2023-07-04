@@ -5,14 +5,16 @@ using JetBrains.Annotations;
 namespace Eflatun.SceneReference.Exceptions
 {
     /// <summary>
-    /// Thrown if a <see cref="SceneReference"/> is not addressable.
+    /// Thrown if addressables-specific operations are attempted on a <see cref="SceneReference"/> that is assigned a non-addressable scene.<p/>
+    /// You can avoid this exception by making sure the <see cref="SceneReference.State"/> property is <see cref="SceneReferenceState.Addressable"/>.
     /// </summary>
     [PublicAPI]
     [Serializable]
     public class SceneNotAddressableException : SceneReferenceException
     {
         private const string ExceptionMessage =
-            "The scene referenced by the SceneReference is not addressable. To fix this, make sure the scene is addressable.";
+            "An addressables-specific operation is attempted on a SceneReference that is assigned a non-addressable scene." +
+            "\nYou can avoid this exception by making sure the State property is Addressable.";
 
         internal SceneNotAddressableException() : base(ExceptionMessage)
         {

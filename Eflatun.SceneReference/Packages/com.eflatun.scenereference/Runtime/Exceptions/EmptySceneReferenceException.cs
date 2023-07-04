@@ -13,7 +13,7 @@ namespace Eflatun.SceneReference.Exceptions
     public class EmptySceneReferenceException : SceneReferenceException
     {
         private const string ExceptionMessage =
-            "The SceneReference is empty (not assigned anything). To fix this, make sure to assign a valid scene to the SceneReference.";
+            "The SceneReference is empty (not assigned anything). To fix this, make sure the 'SceneReference' is assigned a valid scene asset.";
 
         internal EmptySceneReferenceException() : base(ExceptionMessage)
         {
