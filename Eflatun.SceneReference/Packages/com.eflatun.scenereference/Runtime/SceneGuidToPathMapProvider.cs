@@ -41,9 +41,9 @@ namespace Eflatun.SceneReference
             }
         }
 
-        internal static void DirectAssign(Dictionary<string, string> sceneGuidToPath)
+        internal static void DirectAssign(Dictionary<string, string> sceneGuidToPathMap)
         {
-            FillWith(sceneGuidToPath);
+            FillWith(sceneGuidToPathMap);
         }
 
         [Preserve]
@@ -71,10 +71,10 @@ namespace Eflatun.SceneReference
             FillWith(deserialized);
         }
 
-        private static void FillWith(Dictionary<string, string> sceneGuidToPath)
+        private static void FillWith(Dictionary<string, string> sceneGuidToPathMap)
         {
-            _sceneGuidToPathMap = sceneGuidToPath;
-            _scenePathToGuidMap = sceneGuidToPath.ToDictionary(x => x.Value, x => x.Key);
+            _sceneGuidToPathMap = sceneGuidToPathMap;
+            _scenePathToGuidMap = sceneGuidToPathMap.ToDictionary(x => x.Value, x => x.Key);
         }
     }
 }

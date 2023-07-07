@@ -7,15 +7,15 @@ namespace Eflatun.SceneReference.Demo
         [SerializeField] private SceneReference noOptions;
 
         [Space]
-        [SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.DoNotOverride)]
+        [SceneReferenceOptions(Toolbox = ToolboxBehaviour.DoNotOverride)]
         [SerializeField] private SceneReference doNotOverride;
 
         [Space]
-        [SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Disabled)]
+        [SceneReferenceOptions(Toolbox = ToolboxBehaviour.Disabled)]
         [SerializeField] private SceneReference disabled;
 
         [Space]
-        [SceneReferenceOptions(UtilityLine = UtilityLineBehaviour.Enabled)]
+        [SceneReferenceOptions(Toolbox = ToolboxBehaviour.Enabled)]
         [SerializeField] private new SceneReference enabled;
     }
 }

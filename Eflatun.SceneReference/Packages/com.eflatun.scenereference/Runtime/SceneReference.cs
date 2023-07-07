@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Eflatun.SceneReference.Exceptions;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -157,6 +158,77 @@ namespace Eflatun.SceneReference
         }
 
         /// <summary>
+        /// Creates a new <see cref="SceneReference"/> which references the scene with the given address.
+        /// </summary>
+        /// <param name="address">Address of the scene to reference.</param>
+        /// <returns>A new <see cref="SceneReference"/>.</returns>
+        /// <exception cref="SceneReferenceCreationException">Throws if the given address is null or whitespace.</exception>
+        /// <exception cref="SceneReferenceCreationException">Throws if the given address is not found in the scene GUID to address map.</exception>
+        /// <exception cref="SceneReferenceCreationException">Throws if the given address matches multiple entries from the scene GUID to address map.</exception>
+        /// <exception cref="AddressablesSupportDisabledException">Throws if addressables support is disabled.</exception>
+        public static SceneReference FromAddress(string address)
+        {
+#if ESR_ADDRESSABLES
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                throw new SceneReferenceCreationException(
+                    $"Given address is null or whitespace. Path: '{address}'" +
+                    "\nTo fix this, make sure you provide the address of a valid addressable scene.");
+            }
+
+            try
+            {
+                var guidFromMap = SceneGuidToAddressMapProvider.GetGuidFromAddress(address);
+                return new SceneReference(guidFromMap);
+            }
+            catch (AddressNotFoundException e)
+            {
+                throw new SceneReferenceCreationException(
+                    $"Given address is not found in the Scene GUID to Address Map. Address: {address}." +
+                    "\nThis can happen for these reasons:" +
+                    "\n1. The asset with the given address either doesn't exist or is not a scene. To fix this, make sure you provide the address of a valid addressable scene." +
+                    "\n2. The Scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
+                    , e
+                );
+            }
+            catch (AddressNotUniqueException e)
+            {
+                throw new SceneReferenceCreationException(
+                    $"Given address matches multiple scenes in the Scene GUID to Address Map. Address: {address}." +
+                    "\nThrown if a given address matches multiple entries in the Scene GUID to Address Map. This can happen for these reasons:" +
+                    "\n1. There are multiple addressable scenes with the same given address. To fix this, make sure there is only one addressable scene with the given address." +
+                    "\n2. The Scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled."
+                    , e
+                );
+            }
+            catch (AddressablesSupportDisabledException e)
+            {
+                // internal exceptions should not be documented as part of the public API
+                throw SceneReferenceInternalException.ExceptionImpossible("48302749", e);
+            }
+#else // ESR_ADDRESSABLES
+            throw new AddressablesSupportDisabledException();
+#endif // ESR_ADDRESSABLES
+        }
+
+        /// <summary>
+        /// Is this <see cref="SceneReference"/> assigned something?
+        /// </summary>
+        private bool HasValue
+        {
+            get
+            {
+                if (!Guid.IsValidGuid())
+                {
+                    // internal exceptions should not be documented as part of the public API
+                    throw SceneReferenceInternalException.InvalidGuid("54783205", Guid);
+                }
+
+                return Guid != Utils.AllZeroGuid;
+            }
+        }
+
+        /// <summary>
         /// GUID of the scene asset.
         /// </summary>
         public string Guid => guid.GuardGuidAgainstNullOrWhitespace();
@@ -164,8 +236,8 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// Path to the scene asset.
         /// </summary>
-        /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
-        /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
+        /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
+        /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
         public string Path
         {
             get
@@ -187,107 +259,87 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// Build index of the scene.
         /// </summary>
-        /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
-        /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
+        /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
+        /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
         /// <remarks>
-        /// This property will return <c>-1</c> if <see cref="IsInBuildAndEnabled"/> is <c>false</c>.
+        /// This property will return <c>-1</c> if the scene is not added and enabled in the build settings.
         /// </remarks>
         public int BuildIndex => SceneUtility.GetBuildIndexByScenePath(Path);
 
         /// <summary>
         /// Name of the scene asset. Without '.unity' extension.
         /// </summary>
-        /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
-        /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
+        /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
+        /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
         public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
 
         /// <summary>
         /// The <see cref="Scene"/> struct for this scene. Only valid if the scene is currently loaded.
         /// </summary>
-        /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
-        /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
+        /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
+        /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
         /// <remarks>
-        /// You can check <see cref="Scene.IsValid"/> to see if the value of this property is valid.<p/>
-        /// If <see cref="IsInBuildAndEnabled"/> is <c>false</c>, the scene can never be loaded, and therefore this property can never have a valid value.
+        /// You can check <see cref="Scene.IsValid"/> on the return value to see if it is valid.
         /// </remarks>
         public Scene LoadedScene => SceneManager.GetSceneByPath(Path);
 
         /// <summary>
-        /// Is this <see cref="SceneReference"/> assigned something?
+        /// Address of the scene.
         /// </summary>
-        /// <remarks>
-        /// Only check this property if you need partial validations, as this property alone does not communicate whether this <see cref="SceneReference"/> is absolutely safe to use.<p/>
-        /// If you only need to check if it is completely safe to use a <see cref="SceneReference"/> without knowing where exactly the problem is, then only check <see cref="IsSafeToUse"/> instead. Checking only <see cref="IsSafeToUse"/> is sufficient for the majority of the use cases.
-        /// </remarks>
-        /// <seealso cref="IsInSceneGuidToPathMap"/>
-        /// <seealso cref="IsInBuildAndEnabled"/>
-        /// <seealso cref="IsSafeToUse"/>
-        public bool HasValue
+        /// <exception cref="EmptySceneReferenceException">Throws if nothing is assigned to this SceneReference.</exception>
+        /// <exception cref="InvalidSceneReferenceException">Throws if the scene is not in the scene GUID to path map.</exception>
+        /// <exception cref="SceneNotAddressableException">Throws if the scene is not in the scene GUID to address map.</exception>
+        /// <exception cref="AddressablesSupportDisabledException">Throws if addressables support is disabled.</exception>
+        public string Address
         {
             get
             {
-                if (!Guid.IsValidGuid())
-                {
-                    // internal exceptions should not be documented as part of the public API
-                    throw SceneReferenceInternalException.InvalidGuid("54783205", Guid);
-                }
-
-                return Guid != Utils.AllZeroGuid;
-            }
-        }
-
-        /// <summary>
-        /// Does the scene GUID to path map contain the scene?
-        /// </summary>
-        /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
-        /// <remarks>
-        /// Only check this property if you need partial validations, as this property alone does not communicate whether this <see cref="SceneReference"/> is absolutely safe to use.<p/>
-        /// If you only need to check if it is completely safe to use a <see cref="SceneReference"/> without knowing where exactly the problem is, then only check <see cref="IsSafeToUse"/> instead. Checking only <see cref="IsSafeToUse"/> is sufficient for the majority of the use cases.
-        /// </remarks>
-        /// <seealso cref="HasValue"/>
-        /// <seealso cref="IsInBuildAndEnabled"/>
-        /// <seealso cref="IsSafeToUse"/>
-        public bool IsInSceneGuidToPathMap
-        {
-            get
-            {
+#if ESR_ADDRESSABLES
                 if (!HasValue)
                 {
                     throw new EmptySceneReferenceException();
                 }
 
-                return SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(Guid);
+                if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(Guid))
+                {
+                    throw new InvalidSceneReferenceException();
+                }
+
+                if (!SceneGuidToAddressMapProvider.SceneGuidToAddressMap.TryGetValue(Guid, out var addressFromMap))
+                {
+                    throw new SceneNotAddressableException();
+                }
+
+                return addressFromMap;
+#else // ESR_ADDRESSABLES
+                throw new AddressablesSupportDisabledException();
+#endif // ESR_ADDRESSABLES
             }
         }
 
-        /// <summary>
-        /// Is the scene added and enabled in Build Settings?
-        /// </summary>
-        /// <exception cref="EmptySceneReferenceException">Throws if <see cref="HasValue"/> is <c>false</c>.</exception>
-        /// <exception cref="InvalidSceneReferenceException">Throws if <see cref="IsInSceneGuidToPathMap"/> is <c>false</c>.</exception>
-        /// <remarks>
-        /// Only check this property if you need partial validations, as this property alone does not communicate whether this <see cref="SceneReference"/> is absolutely safe to use.<p/>
-        /// If you only need to check if it is completely safe to use a <see cref="SceneReference"/> without knowing where exactly the problem is, then only check <see cref="IsSafeToUse"/> instead. Checking only <see cref="IsSafeToUse"/> is sufficient for the majority of the use cases.
-        /// </remarks>
-        /// <seealso cref="HasValue"/>
-        /// <seealso cref="IsInSceneGuidToPathMap"/>
-        /// <seealso cref="IsSafeToUse"/>
-        public bool IsInBuildAndEnabled => BuildIndex != -1;
+        /// <inheritdoc cref="SceneReferenceState"/>
+        public SceneReferenceState State
+        {
+            get
+            {
+                if (HasValue && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path))
+                {
+                    if (SceneUtility.GetBuildIndexByScenePath(path) != -1)
+                    {
+                        return SceneReferenceState.Regular;
+                    }
 
-        /// <summary>
-        /// Is this <see cref="SceneReference"/> safe to use?
-        /// </summary>
-        /// <remarks>
-        /// Checking this property alone is sufficient for the majority of the validation use cases, as this property absolutely communicates whether this <see cref="SceneReference"/> is safe to use.<p/>
-        /// Checking this property is equivalent to checking all partial validation properties (namely: <see cref="HasValue"/>, <see cref="IsInSceneGuidToPathMap"/>, and <see cref="IsInBuildAndEnabled"/>) in the correct order, but it provides a slightly better performance. If you need those validations partially, you can check them instead of this property. Keep in mind that the use cases that require partial validation are rare and few.
-        /// </remarks>
-        /// <seealso cref="HasValue"/>
-        /// <seealso cref="IsInSceneGuidToPathMap"/>
-        /// <seealso cref="IsInBuildAndEnabled"/>
-        public bool IsSafeToUse =>
-            HasValue
-            && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path)
-            && SceneUtility.GetBuildIndexByScenePath(path) != -1;
+#if ESR_ADDRESSABLES
+                    if (SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(Guid))
+                    {
+                        return SceneReferenceState.Addressable;
+                    }
+#endif // ESR_ADDRESSABLES
+                }
+
+                return SceneReferenceState.Unsafe;
+            }
+        }
 
         /// <inheritdoc cref="GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)"/>
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)

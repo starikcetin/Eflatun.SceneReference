@@ -1,27 +1,69 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+#if ESR_ADDRESSABLES
+using UnityEngine.AddressableAssets;
+#endif // ESR_ADDRESSABLES
 
 namespace Eflatun.SceneReference.Demo
 {
     public class SimpleDemo : MonoBehaviour
     {
-        [SerializeField] private SceneReference sceneARef;
-        [SerializeField] private SceneReference sceneBRef;
-        [SerializeField] private SceneReference sceneCRef;
+        [Header("Scenes")]
+        [SerializeField] private SceneReference regularA;
+        [SerializeField] private SceneReference regularB;
+        [SerializeField] private SceneReference addressableA;
+        [SerializeField] private SceneReference addressableB;
 
-        public void LoadA()
+        [Header("Demo Tools")]
+        [SerializeField] private GameObject buttonsPanel;
+        [SerializeField] private GameObject loadingPanel;
+        [SerializeField] private Text loadingText;
+
+        public void LoadRegularA()
         {
-            SceneManager.LoadScene(sceneARef.BuildIndex);
+            StartCoroutine(LoadScene(regularA));
         }
 
-        public void LoadB()
+        public void LoadRegularB()
         {
-            SceneManager.LoadScene(sceneBRef.BuildIndex);
+            StartCoroutine(LoadScene(regularB));
         }
 
-        public void LoadC()
+        public void LoadAddressableA()
         {
-            SceneManager.LoadScene(sceneCRef.BuildIndex);
+            StartCoroutine(LoadScene(addressableA));
+        }
+
+        public void LoadAddressableB()
+        {
+            StartCoroutine(LoadScene(addressableB));
+        }
+
+        private IEnumerator LoadScene(SceneReference sceneReference)
+        {
+            if (sceneReference.State == SceneReferenceState.Unsafe)
+            {
+                throw new Exception("Unsafe scene reference, can't load.");
+            }
+
+            buttonsPanel.SetActive(false);
+            loadingPanel.SetActive(true);
+            loadingText.text = $"Loading {sceneReference.Name}...";
+
+            if (sceneReference.State == SceneReferenceState.Regular)
+            {
+                yield return SceneManager.LoadSceneAsync(sceneReference.Path);
+            }
+#if ESR_ADDRESSABLES
+            else if (sceneReference.State == SceneReferenceState.Addressable)
+            {
+                yield return Addressables.LoadSceneAsync(sceneReference.Address);
+            }
+#endif // ESR_ADDRESSABLES
         }
     }
 }

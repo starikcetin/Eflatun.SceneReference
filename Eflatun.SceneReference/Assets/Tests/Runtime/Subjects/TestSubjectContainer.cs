@@ -60,5 +60,37 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
         [field: SerializeField] public SceneReference[] PropArrayNotSceneAsset { get; private set; }
         public List<SceneReference> fieldListNotSceneAsset;
         [field: SerializeField] public List<SceneReference> PropListNotSceneAsset { get; private set; }
+
+        [field: Header("Addressable1Scene")]
+        public SceneReference fieldAddressable1Scene;
+        [field: SerializeField] public SceneReference PropAddressable1Scene { get; private set; }
+        public SceneReference[] fieldArrayAddressable1Scene;
+        [field: SerializeField] public SceneReference[] PropArrayAddressable1Scene { get; private set; }
+        public List<SceneReference> fieldListAddressable1Scene;
+        [field: SerializeField] public List<SceneReference> PropListAddressable1Scene { get; private set; }
+
+        [field: Header("Addressable2Scene")]
+        public SceneReference fieldAddressable2Scene;
+        [field: SerializeField] public SceneReference PropAddressable2Scene { get; private set; }
+        public SceneReference[] fieldArrayAddressable2Scene;
+        [field: SerializeField] public SceneReference[] PropArrayAddressable2Scene { get; private set; }
+        public List<SceneReference> fieldListAddressable2Scene;
+        [field: SerializeField] public List<SceneReference> PropListAddressable2Scene { get; private set; }
+
+        [field: Header("AddressableDuplicateAddressAScene")]
+        public SceneReference fieldAddressableDuplicateAddressAScene;
+        [field: SerializeField] public SceneReference PropAddressableDuplicateAddressAScene { get; private set; }
+        public SceneReference[] fieldArrayAddressableDuplicateAddressAScene;
+        [field: SerializeField] public SceneReference[] PropArrayAddressableDuplicateAddressAScene { get; private set; }
+        public List<SceneReference> fieldListAddressableDuplicateAddressAScene;
+        [field: SerializeField] public List<SceneReference> PropListAddressableDuplicateAddressAScene { get; private set; }
+
+        [field: Header("AddressableDuplicateAddressBScene")]
+        public SceneReference fieldAddressableDuplicateAddressBScene;
+        [field: SerializeField] public SceneReference PropAddressableDuplicateAddressBScene { get; private set; }
+        public SceneReference[] fieldArrayAddressableDuplicateAddressBScene;
+        [field: SerializeField] public SceneReference[] PropArrayAddressableDuplicateAddressBScene { get; private set; }
+        public List<SceneReference> fieldListAddressableDuplicateAddressBScene;
+        [field: SerializeField] public List<SceneReference> PropListAddressableDuplicateAddressBScene { get; private set; }
     }
 }

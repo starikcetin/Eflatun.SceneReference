@@ -11,14 +11,7 @@ namespace Eflatun.SceneReference.Demo
         // Start is called before the first frame update
         void Start()
         {
-            if (scene.HasValue)
-            {
-                Debug.Log("not null");
-            }
-            else
-            {
-                Debug.Log("null");
-            }
+            Debug.Log($"State: {scene.State}");
         }
     }
 }

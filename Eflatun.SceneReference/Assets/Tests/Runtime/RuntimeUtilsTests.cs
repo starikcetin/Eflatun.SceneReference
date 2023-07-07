@@ -100,5 +100,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
             const string invalidGuid = "abcdefx9";
             Assert.AreEqual(invalidGuid, invalidGuid.GuardGuidAgainstNullOrWhitespace());
         }
+
+        [Test]
+        public void IsAddressablesPackagePresent_Works()
+        {
+            Assert.AreEqual(TestUtils.IsAddressablesPackagePresent, Eflatun.SceneReference.Utility.Utils.IsAddressablesPackagePresent);
+        }
     }
 }

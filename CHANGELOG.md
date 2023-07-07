@@ -7,11 +7,64 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+This release introduces support for addressable scenes.
+
+There are breaking changes to settings. Please visit the settings page and re-apply all your settings as soon as you update.
+
 ### Breaking Changes
+- `SceneGuidToPathMapGenerator` is renamed to `SceneDataMapsGenerator`.
+- `SceneGuidToPathMapGenerationTriggers` is renamed to `SceneDataMapsGeneratorTriggers`.
+- Settings changes:
+  - Scene GUID to Path Map (new name Scene Data Maps) category:
+    - The category is renamed from `SceneGuidToPathMap` to `SceneDataMaps`.
+    - Key of the `GenerationTriggers` setting is changed from `SceneGuidToPathMap.GenerationTriggers` to `SceneDataMaps.GenerationTriggers`.
+    - Key of the `JsonFormatting` setting is changed from `SceneGuidToPathMap.JsonFormatting` to `SceneDataMaps.JsonFormatting`.
+    - Key of the `FailBuildIfGenerationFails` setting is changed from `SceneGuidToPathMap.FailBuildIfGenerationFails` to `SceneDataMaps.FailBuildIfGenerationFails`.
+  - Property Drawer category:
+    - `ShowInlineSceneInBuildUtility` setting is renamed to `ShowInlineToolbox`. The key is also changed from `PropertyDrawer.ShowInlineSceneInBuildUtility` to `PropertyDrawer.ShowInlineToolbox`.
+- All exceptions are moved from the `Eflatun.SceneReference` namespace to the new `Eflatun.SceneReference.Exceptions` namespace.
+- Following valiation properties are removed from `SceneReference`. They are instead replaced with a more informative `State` property. See the _Added_ section.
+  - `IsInSceneGuidToPathMap`: removed.
+  - `IsInBuildAndEnabled`: removed.
+  - `IsSafeToUse`: removed.
+  - `HasValue`: no longer public.
+- `SceneReferenceOptionsAttribute` changes:
+  - `Coloring` field is renamed to `SceneInBuildColoring`. It still controls the same cases of coloring, but they are no longer all the coloring options. See the _Changes_ section.
+  - `UtilityLine` field is removed. Its replacement is the `Toolbox` field. See the _Added_ section.
 
 ### Added
+- `SceneDataMapsGenerator` now also generates a scene GUID to address map. The map will be empty if addressables support is disabled.
+- New map generation triggers:
+  - `AfterPackagesResolve`: Triggers after packages are resolved.
+  - `AfterAddressablesChange`: Triggers after addressable groups change.
+- Property drawer can optionally color addressables scenes differently to draw attention to them.
+- New inline utilties:
+  - `Make Addressable`: Makes the scene addressable.
+- New settings:
+  - Addressables Support (`AddressablesSupport`) category:
+    - `ColorAddressableScenes` setting: If enabled, scene references that have an addressable scene will be colored differently.
+    - An info box that displays the current addressables support status.
+- New exceptions:
+  - `AddressNotFoundException`
+  - `AddressNotUniqueException`
+  - `AddressablesSupportDisabledException`
+  - `SceneNotAddressableException`
+- `SceneGuidToAddressMapProvider` class: Provides a map of scene GUIDs to their address. Very similar to `SceneGuidToPathMapProvider`, with the exception that it cannot provide an inverse map. This is because the address of an asset is not guaranteed to be unique. Instead, it provides `GetGuidFromAddress` and `TryGetGuidFromAddress` methods.
+- `SceneReference.FromAddress` factory method: Creates a `SceneReference` from the given address.
+- `SceneReference.Address` property.
+- `SceneReference.State` property: This property replaces all previously exposed validation methods. It returns a `SceneReferenceState` enum, which describes the state of the `SceneReference` in terms of usage.
+- `SceneReferenceState` enum: Describes the state of the `SceneReference` in terms of usage.
+  - `Unsafe`: The `SceneReference` is not safe to use.
+  - `Regular`: The `SceneReference` is safe to use, and it references a regular scene.
+  - `Addressable`: The `SceneReference` is safe to use, and it references an addressable scene. This state is only possible if addressables support is enabled.
+- `SceneReferenceOptionsAttribute` new fields:
+  - `Toolbox`: Controls the visibility of the toolbox button. It replaces the now deleted `UtilityLine` field.
+  - `AddressableColoring`: Controls the coloring behaviour of the addressable scenes.
+- `ToolboxBehaviour` enum. Replaces the now deleted `UtilityLineBehaviour` enum with the same semantics.
 
 ### Changed
+- The concept of Utility Line is replaced with the concept of Toolbox. In summary, instead of drawing buttons as a second line below the field, we instead draw a small button to the end of the field on the same line. When clicked, a toolbox popup appears with all the utilities.
+- `SceneInBuildColoring` argument (previously named `Coloring`) of `SceneReferenceOptionsAttribute` still controls the same types of coloring cases, but since they used to be all the cases, the field was implicitly controlling the entire coloring behaviour. While its semantics are not changed, since there are now other coloring cases, it is no longer the only field that controls the entire coloring behaviour.
 
 ### Removed
 
@@ -52,6 +105,7 @@ We renamed some of our internal serialized fields. Since we utilize `FormerlySer
 - Internal serialized field name changes:
 	- `SceneReference.sceneAsset` to `SceneReference.asset`
 	- `SceneReference.sceneAssetGuidHex` to `SceneReference.guid`
+- Menu item `Tools/Eflatun/Scene Reference/Run Scene GUID to Path Map Generator` is renamed to `Tools/Eflatun/Scene Reference/Generate Scene Data Maps`.
 
 ### Fixed
 - Prevent empty scene GUID hex in Unity serialized `SceneReference` instances.

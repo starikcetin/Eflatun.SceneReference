@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Eflatun.SceneReference.Exceptions;
 using UnityEngine;
 using UnityEngine.Assertions;
 

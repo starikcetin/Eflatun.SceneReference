@@ -175,5 +175,89 @@ namespace Eflatun.SceneReference.Tests.Runtime
             var xmlRaw = TestUtils.SerializeToXml(_testMb.fieldNotSceneAsset);
             Assert.AreEqual(TestUtils.NotSceneAssetXmlRaw, xmlRaw);
         }
+
+        [Test]
+        public void SerializesToJson_Addressable1Scene()
+        {
+            var jsonRaw = TestUtils.SerializeToJson(_testMb.fieldAddressable1Scene);
+            Assert.AreEqual(TestUtils.Addressable1SceneJsonRaw, jsonRaw);
+        }
+
+        [Test]
+        public void SerializesToBinary_Addressable1Scene()
+        {
+            var binaryBase64 = TestUtils.SerializeToBinaryBase64(_testMb.fieldAddressable1Scene);
+            Assert.AreEqual(TestUtils.Addressable1SceneBinaryBase64, binaryBase64);
+        }
+
+        [Test]
+        public void SerializesToXml_Addressable1Scene()
+        {
+            var xmlRaw = TestUtils.SerializeToXml(_testMb.fieldAddressable1Scene);
+            Assert.AreEqual(TestUtils.Addressable1SceneXmlRaw, xmlRaw);
+        }
+
+        [Test]
+        public void SerializesToJson_Addressable2Scene()
+        {
+            var jsonRaw = TestUtils.SerializeToJson(_testMb.fieldAddressable2Scene);
+            Assert.AreEqual(TestUtils.Addressable2SceneJsonRaw, jsonRaw);
+        }
+
+        [Test]
+        public void SerializesToBinary_Addressable2Scene()
+        {
+            var binaryBase64 = TestUtils.SerializeToBinaryBase64(_testMb.fieldAddressable2Scene);
+            Assert.AreEqual(TestUtils.Addressable2SceneBinaryBase64, binaryBase64);
+        }
+
+        [Test]
+        public void SerializesToXml_Addressable2Scene()
+        {
+            var xmlRaw = TestUtils.SerializeToXml(_testMb.fieldAddressable2Scene);
+            Assert.AreEqual(TestUtils.Addressable2SceneXmlRaw, xmlRaw);
+        }
+
+        [Test]
+        public void SerializesToJson_AddressableDuplicateAddressAScene()
+        {
+            var jsonRaw = TestUtils.SerializeToJson(_testMb.fieldAddressableDuplicateAddressAScene);
+            Assert.AreEqual(TestUtils.AddressableDuplicateAddressASceneJsonRaw, jsonRaw);
+        }
+
+        [Test]
+        public void SerializesToBinary_AddressableDuplicateAddressAScene()
+        {
+            var binaryBase64 = TestUtils.SerializeToBinaryBase64(_testMb.fieldAddressableDuplicateAddressAScene);
+            Assert.AreEqual(TestUtils.AddressableDuplicateAddressASceneBinaryBase64, binaryBase64);
+        }
+
+        [Test]
+        public void SerializesToXml_AddressableDuplicateAddressAScene()
+        {
+            var xmlRaw = TestUtils.SerializeToXml(_testMb.fieldAddressableDuplicateAddressAScene);
+            Assert.AreEqual(TestUtils.AddressableDuplicateAddressASceneXmlRaw, xmlRaw);
+        }
+
+        [Test]
+        public void SerializesToJson_AddressableDuplicateAddressBScene()
+        {
+            var jsonRaw = TestUtils.SerializeToJson(_testMb.fieldAddressableDuplicateAddressBScene);
+            Assert.AreEqual(TestUtils.AddressableDuplicateAddressBSceneJsonRaw, jsonRaw);
+        }
+
+        [Test]
+        public void SerializesToBinary_AddressableDuplicateAddressBScene()
+        {
+            var binaryBase64 = TestUtils.SerializeToBinaryBase64(_testMb.fieldAddressableDuplicateAddressBScene);
+            Assert.AreEqual(TestUtils.AddressableDuplicateAddressBSceneBinaryBase64, binaryBase64);
+        }
+
+        [Test]
+        public void SerializesToXml_AddressableDuplicateAddressBScene()
+        {
+            var xmlRaw = TestUtils.SerializeToXml(_testMb.fieldAddressableDuplicateAddressBScene);
+            Assert.AreEqual(TestUtils.AddressableDuplicateAddressBSceneXmlRaw, xmlRaw);
+        }
     }
 }
