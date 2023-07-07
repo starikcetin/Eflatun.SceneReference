@@ -189,7 +189,7 @@ It is recommended that you leave this option at _All_ unless you are debugging s
 
 ### JSON Formatting
 
-Controls the Scene Data Maps Generator's JSON formatting.
+Controls the Scene GUID to Path Map Generator's JSON formatting.
 
 It is recommended to leave this option at _Indented_, as it will help with version control and make the generated file human-readable.
 
@@ -217,7 +217,7 @@ Running the generator has no side-effects.
 
 ### Via Menu Item
 
-You can trigger the generator via a menu item. Find it under `Tools/Eflatun/Scene Reference/Run Scene Data Maps Generator`:
+You can trigger the generator via a menu item. Find it under `Tools/Eflatun/Scene Reference/Run Scene GUID to Path Map Generator`:
 
 ![.assets/generator_menu.png](.assets/generator_menu.png)
 
