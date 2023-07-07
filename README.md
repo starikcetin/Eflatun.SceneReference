@@ -46,13 +46,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `2.1.0` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `3.0.0` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#2.1.0"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.0.0"
 ```
 
-_Although it is highly discouraged, you can replace `2.1.0` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `3.0.0` with `upm` to get the latest version instead of a specific one._
 
 ## Ignore Auto-Generated Map Files in Version Control
 
