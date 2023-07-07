@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
-namespace Eflatun.SceneReference
+namespace Eflatun.SceneReference.Exceptions
 {
     /// <summary>
     /// Thrown if a <see cref="SceneReference"/> is empty (not assigned anything).
@@ -13,7 +13,7 @@ namespace Eflatun.SceneReference
     public class EmptySceneReferenceException : SceneReferenceException
     {
         private const string ExceptionMessage =
-            "The SceneReference is empty (not assigned anything). To fix this, make sure to assign a valid scene to the SceneReference.";
+            "The SceneReference is empty (not assigned anything). To fix this, make sure the 'SceneReference' is assigned a valid scene asset.";
 
         internal EmptySceneReferenceException() : base(ExceptionMessage)
         {

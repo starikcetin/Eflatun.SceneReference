@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
-namespace Eflatun.SceneReference
+namespace Eflatun.SceneReference.Exceptions
 {
     /// <summary>
     /// Thrown when something goes wrong during the creation of a <see cref="SceneReference"/>.

@@ -3,7 +3,7 @@
 namespace Eflatun.SceneReference
 {
     /// <summary>
-    /// The inspector coloring override behaviour for scene-in-build validation of <see cref="SceneReference"/> fields.
+    /// The inspector coloring override behaviour for <see cref="SceneReference"/> fields.
     /// </summary>
     [PublicAPI]
     public enum ColoringBehaviour

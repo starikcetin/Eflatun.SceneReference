@@ -14,6 +14,17 @@ namespace Eflatun.SceneReference.Utility
         public const string AllZeroGuid = "00000000000000000000000000000000";
 
         /// <summary>
+        /// Returns whether the addressables package is installed in the project.
+        /// </summary>
+        public static bool IsAddressablesPackagePresent =>
+#if ESR_ADDRESSABLES
+            true
+#else // ESR_ADDRESSABLES
+            false
+#endif // ESR_ADDRESSABLES
+        ;
+
+        /// <summary>
         /// Returns the given <paramref name="path"/> without file extension.
         /// </summary>
         public static string WithoutExtension(this string path) => path.BeforeLast('.');
