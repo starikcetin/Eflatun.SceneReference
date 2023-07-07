@@ -18,7 +18,7 @@
         {
             "name": "com.unity.addressables",
             "expression": "[1.0.0,2.0.0)",
-            "define": "ESR_ADDRESSABLES_1XX"
+            "define": "ESR_ADDRESSABLES_1_X_X"
         }
     ],
     "noEngineReferences": false
