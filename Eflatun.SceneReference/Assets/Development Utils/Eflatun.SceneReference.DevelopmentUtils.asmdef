@@ -11,6 +11,17 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+	"versionDefines": [
+        {
+            "name": "com.unity.addressables",
+            "expression": "",
+            "define": "ESR_ADDRESSABLES"
+        },
+        {
+            "name": "com.unity.addressables",
+            "expression": "[1.0.0,2.0.0)",
+            "define": "ESR_ADDRESSABLES_1_X_X"
+        }
+    ],
     "noEngineReferences": false
 }
