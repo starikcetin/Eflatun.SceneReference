@@ -294,7 +294,7 @@ Running the generator has no side-effects.
 
 ### Via Menu Item
 
-You can trigger the generator via a menu item. Find it under `Tools/Eflatun/Scene Reference/Run Scene Data Maps Generator`:
+You can trigger the generator via a menu item. Find it under `Tools/Eflatun/Scene Reference/Generate Scene Data Maps`:
 
 ![.assets/generator_menu.png](.assets/generator_menu.png)
 

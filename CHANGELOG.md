@@ -105,6 +105,7 @@ We renamed some of our internal serialized fields. Since we utilize `FormerlySer
 - Internal serialized field name changes:
 	- `SceneReference.sceneAsset` to `SceneReference.asset`
 	- `SceneReference.sceneAssetGuidHex` to `SceneReference.guid`
+- Menu item `Tools/Eflatun/Scene Reference/Run Scene GUID to Path Map Generator` is renamed to `Tools/Eflatun/Scene Reference/Generate Scene Data Maps`.
 
 ### Fixed
 - Prevent empty scene GUID hex in Unity serialized `SceneReference` instances.
