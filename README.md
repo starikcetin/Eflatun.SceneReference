@@ -141,14 +141,14 @@ if (mySceneReference.State == SceneReferenceState.Addressable)
 
 ```
 
-## Inline Validation & Fix Utilities
+## Inline Inspector Utilities
 
 A scene will be accessible in runtime only if one of the following is true:
 
 1. The scene is added and enabled in build settings.
 2. The scene is in an addressables group.
 
-`Eflatun.SceneReference` on the other hand, allows you to assign onto it any scene you wish. This behaviour may cause runtime bugs when loading scenes. To prevent these potential bugs, `Eflatun.SceneReference` provides inline validation and fix utilities.
+`Eflatun.SceneReference` on the other hand, allows you to assign onto it any scene you wish. This behaviour may cause runtime bugs when loading scenes. To prevent these potential bugs, `Eflatun.SceneReference` provides inline inspector utilities.
 
 In this example:
 
@@ -173,7 +173,7 @@ And for `Scene C` field, we get the following tools:
 ![.assets/toolbox_nowhere.png](.assets/toolbox_nowhere.png)
 
 > **Note**<br/>
-> You will only see the `Make addressable...` tool if you have addressables support enabled.
+> You will only see the `Make addressable...` tool if addressables support is enabled.
 
 Clicking on the `Enable in build...` button gives us this prompt:
 
@@ -204,7 +204,7 @@ Look for the `Eflatun` category in the left panel. Select the `Scene Reference` 
 Settings regarding addressables support.
 
 > **Note**<br/>
-> Settings under this category are only relevant if you have addressables support enabled.
+> Settings under this category are only relevant if addressables support is enabled.
 
 ### Color Addressable Scenes
 
@@ -392,9 +392,9 @@ else
 }
 ```
 
-## Overriding Inline Validation Settings Per Field
+## Overriding Inline Inspector Utility Settings Per Field
 
-You can override the behaviour of the inline validation project settings on a per-field basis using the `[SceneReferenceOptions]` attribute. For example, in order to disable all inline validations, use the attribute as such:
+You can override the inline inspector utility project settings on a per-field basis using the `[SceneReferenceOptions]` attribute. For example, in order to disable all inline utilities, use the attribute as such:
 
 ```cs
 [SceneReferenceOptions(SceneInBuildColoring = ColoringBehaviour.Disabled, Toolbox = ToolboxBehaviour.Disabled, AddressableColoring = ColoringBehaviour.Disabled)]

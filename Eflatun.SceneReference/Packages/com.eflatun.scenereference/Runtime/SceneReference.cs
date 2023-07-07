@@ -204,7 +204,7 @@ namespace Eflatun.SceneReference
             catch (AddressablesSupportDisabledException e)
             {
                 // internal exceptions should not be documented as part of the public API
-                throw SceneReferenceInternalException.ImpossibleException("48302749", e);
+                throw SceneReferenceInternalException.ExceptionImpossible("48302749", e);
             }
 #else // ESR_ADDRESSABLES
             throw new AddressablesSupportDisabledException();

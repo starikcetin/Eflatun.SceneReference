@@ -33,7 +33,7 @@ There are breaking changes to settings. Please visit the settings page and re-ap
   - `UtilityLine` field is removed. Its replacement is the `Toolbox` field. See the _Added_ section.
 
 ### Added
-- `SceneDataMapsGenerator` now also generates a scene GUID to address map if addressables support is enabled.
+- `SceneDataMapsGenerator` now also generates a scene GUID to address map. The map will be empty if addressables support is disabled.
 - New map generation triggers:
   - `AfterPackagesResolve`: Triggers after packages are resolved.
   - `AfterAddressablesChange`: Triggers after addressable groups change.

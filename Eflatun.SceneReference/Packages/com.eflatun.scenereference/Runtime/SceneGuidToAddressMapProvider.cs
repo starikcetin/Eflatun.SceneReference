@@ -13,7 +13,7 @@ namespace Eflatun.SceneReference
     /// Provides the scene GUID to address map. Can be used in both editor and runtime.
     /// </summary>
     /// <remarks>
-    /// This map is only relevant if addressables support is enabled.<p/>
+    /// This map is only relevant if addressables support is enabled. It will be empty if addressables support is disabled.<p/>
     /// Unlike <see cref="SceneGuidToPathMapProvider"/>, this class can not provide an inverse map because address
     /// of an asset does not have to be unique. Instead, it provides <see cref="GetGuidFromAddress"/> and
     /// <see cref="TryGetGuidFromAddress"/> methods.
