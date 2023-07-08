@@ -19,6 +19,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
+## [3.1.0] - 2023-07-08
+
+### Added
+- Log level of the editor logger can now be controlled with the new setting `Logging/Editor Log Level`.
+
+### Removed
+- Removed the suggestion to output generated files as indented for source control reasons. This is because we are suggesting to ignore the generated files.
+
+
+
 ## [3.0.0] - 2023-07-07
 
 This release introduces support for addressable scenes.
