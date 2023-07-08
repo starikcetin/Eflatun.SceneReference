@@ -217,6 +217,17 @@ It is recommended to leave this option at 'true', as it will help you easily dis
 > **Note**<br/>
 > This setting does not apply to regular scenes. They have their own coloring mechanism. It is controlled by the _Color Based On Scene-In-Build State_ setting under the _Property Drawer_ category.
 
+## Logging
+
+Settings regarding logging.
+
+> **Note**<br/>
+> Exceptions will always be logged.
+
+### Editor Log Level
+
+Log level for the editor logger. It is recommended to leave this at `Debug`.
+
 ## Property Drawer
 
 Settings regarding the property drawer.

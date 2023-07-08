@@ -30,7 +30,7 @@ namespace Eflatun.SceneReference.Editor
         {
             try
             {
-                Logger.Debug("Generating scene data maps.");
+                EditorLogger.Debug("Generating scene data maps.");
 
                 WriteScaffolding();
 

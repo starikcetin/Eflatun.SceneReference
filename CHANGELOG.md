@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Breaking Changes
 
 ### Added
+- Log level of the editor logger can now be controlled with the new setting `Logging/Editor Log Level`.
 
 ### Changed
 
