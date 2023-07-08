@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 ### Removed
+- Removed the suggestion to output generated files as indented for source control reasons. This is because we are suggesting to ignore the generated files.
 
 ### Fixed
 

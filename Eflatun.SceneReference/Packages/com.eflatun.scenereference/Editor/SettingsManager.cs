@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Eflatun.SceneReference.Editor.Utility;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
@@ -66,10 +66,10 @@ namespace Eflatun.SceneReference.Editor
 
             /// <summary>
             /// Controls the Scene Data Maps Generator's JSON formatting.<br/>
-            /// It is recommended to leave this option at <c>Indented</c>, as it will help with version control and make the generated files human-readable.
+            /// It is recommended to leave this option at <c>Indented</c> as it will make the generated files human-readable.
             /// </summary>
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-            [field: UserSetting(CategoryName, "JSON Formatting", "Controls the Scene Data Maps Generator's JSON formatting.\n\nIt is recommended to leave this option at _Indented_, as it will help with version control and make the generated files human-readable.")]
+            [field: UserSetting(CategoryName, "JSON Formatting", "Controls the Scene Data Maps Generator's JSON formatting.\n\nIt is recommended to leave this option at 'Indented' as it will make the generated files human-readable.")]
             public static ProjectSetting<Formatting> JsonFormatting { get; }
                 = new ProjectSetting<Formatting>("SceneDataMaps.JsonFormatting", Formatting.Indented);
 
