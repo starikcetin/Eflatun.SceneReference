@@ -163,5 +163,29 @@ namespace Eflatun.SceneReference.Editor
                 }
             }
         }
+
+        /// <summary>
+        /// Settings regarding logging.
+        /// </summary>
+        /// <remarks>
+        /// Exceptions will always be logged.<p/>
+        /// <inheritdoc cref="SettingsManager"/>
+        /// </remarks>
+        [PublicAPI]
+        public static class Logging
+        {
+            private const string CategoryName = "Logging";
+
+            /// <summary>
+            /// Log level for the editor logger. It is recommended to leave this at <see cref="LogLevel.Debug"/>.
+            /// </summary>
+            /// <remarks>
+            /// Exceptions will always be logged.<p/>
+            /// <inheritdoc cref="SettingsManager"/>
+            /// </remarks>
+            [field: UserSetting(CategoryName, "Editor Log Level", "Log level for the editor logger. It is recommended to leave this at 'Debug'.")]
+            public static ProjectSetting<LogLevel> EditorLogLevel { get; }
+                = new ProjectSetting<LogLevel>("Logging.EditorLogLevel", LogLevel.Debug);
+        }
     }
 }
