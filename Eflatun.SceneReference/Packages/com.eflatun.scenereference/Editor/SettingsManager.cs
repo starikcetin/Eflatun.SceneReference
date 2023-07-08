@@ -66,10 +66,10 @@ namespace Eflatun.SceneReference.Editor
 
             /// <summary>
             /// Controls the Scene Data Maps Generator's JSON formatting.<br/>
-            /// It is recommended to leave this option at <c>Indented</c>, as it will help with version control and make the generated files human-readable.
+            /// It is recommended to leave this option at <c>Indented</c> as it will make the generated files human-readable.
             /// </summary>
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-            [field: UserSetting(CategoryName, "JSON Formatting", "Controls the Scene Data Maps Generator's JSON formatting.\n\nIt is recommended to leave this option at _Indented_, as it will help with version control and make the generated files human-readable.")]
+            [field: UserSetting(CategoryName, "JSON Formatting", "Controls the Scene Data Maps Generator's JSON formatting.\n\nIt is recommended to leave this option at 'Indented' as it will make the generated files human-readable.")]
             public static ProjectSetting<Formatting> JsonFormatting { get; }
                 = new ProjectSetting<Formatting>("SceneDataMaps.JsonFormatting", Formatting.Indented);
 
@@ -79,7 +79,7 @@ namespace Eflatun.SceneReference.Editor
             /// It is recommended to leave this option at <c>true</c>, as a failed map generation can result in broken scene references in runtime.
             /// </summary>
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-            [field: UserSetting(CategoryName, "Fail Build If Generation Fails", "Should we fail a build if scene data maps generation fails?\n\nOnly relevant if 'Before Build' generation trigger is enabled.\n\nIt is recommended to leave this option at _true_, as a failed map generation can result in broken scene references in runtime.")]
+            [field: UserSetting(CategoryName, "Fail Build If Generation Fails", "Should we fail a build if scene data maps generation fails?\n\nOnly relevant if 'Before Build' generation trigger is enabled.\n\nIt is recommended to leave this option at 'true', as a failed map generation can result in broken scene references in runtime.")]
             public static ProjectSetting<bool> FailBuildIfGenerationFails { get; }
                 = new ProjectSetting<bool>("SceneDataMaps.FailBuildIfGenerationFails", true);
 
@@ -117,7 +117,7 @@ namespace Eflatun.SceneReference.Editor
             /// It is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.
             /// </summary>
             /// <remarks>
-            /// This setting does not apply to addressable scenes. They have their own coloring mechanism. It is controlled by the _Color Addressable Scenes_ setting under the _Addressables Support_ category.<br/>
+            /// This setting does not apply to addressable scenes. They have their own coloring mechanism. It is controlled by the <see cref="AddressablesSupport.ColorAddressableScenes"/> setting under the <see cref="AddressablesSupport"/> category.<br/>
             /// <inheritdoc cref="SettingsManager"/>
             /// </remarks>
             [field: UserSetting(CategoryName, "Color Based On Scene-In-Build State", "Should we color the property to draw attention for scenes that are either not in build or disabled in build?\n\nUnity only bundles scenes that are added and enabled in build settings. Therefore, you would want to validate whether the scene you assign to a SceneReference is added and enabled in build settings.\n\nIt is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.\n\nNote: This setting does not apply to addressable scenes. They have their own coloring mechanism. It is controlled by the 'Color Addressable Scenes' setting under the 'Addressables Support' category.")]
@@ -143,7 +143,7 @@ namespace Eflatun.SceneReference.Editor
             /// It is recommended to leave this option at <c>true</c>, as it will help you easily distinguish addressable scenes.
             /// </summary>
             /// <remarks>
-            /// This setting does not apply to regular scenes. They have their own coloring mechanism. It is controlled by the _Color Based On Scene-In-Build State_ setting under the _Property Drawer_ category.<br/>
+            /// This setting does not apply to regular scenes. They have their own coloring mechanism. It is controlled by the <see cref="PropertyDrawer.ColorBasedOnSceneInBuildState"/> setting under the <see cref="PropertyDrawer"/> category.<br/>
             /// <inheritdoc cref="SettingsManager"/>
             /// </remarks>
             [field: UserSetting(CategoryName, "Color Addressable Scenes", "Should we color the property to draw attention for addressable scenes?\n\nAddressable scenes should be handled differently than regular scenes in runtime, through the addressables API. Therefore, you would want quickly identify if a SceneReference references an addressable scene or not.\n\nIt is recommended to leave this option at 'true', as it will help you easily distinguish addressable scenes.\n\nNote: This setting does not apply to regular scenes. They have their own coloring mechanism. It is controlled by the 'Color Based On Scene-In-Build State' setting under the 'Property Drawer' category.")]

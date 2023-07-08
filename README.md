@@ -278,7 +278,7 @@ It is recommended that you leave this option at _All_ unless you are debugging s
 
 Controls the Scene Data Maps Generator's JSON formatting.
 
-It is recommended to leave this option at _Indented_, as it will help with version control and make the generated files human-readable.
+It is recommended to leave this option at _Indented_ as it will make the generated files human-readable.
 
 ### Fail Build If Generation Fails
 
