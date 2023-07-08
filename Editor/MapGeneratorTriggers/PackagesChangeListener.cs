@@ -21,7 +21,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
             }
             else
             {
-                Logger.Warn($"Skipping scene data maps generation after packages resolve. It is recommended to enable map generation after packages resolve, as an outdated map can result in broken scene references in runtime. You can enable it in {SettingsManager.SettingsMenuPathForDisplay}.");
+                EditorLogger.Warn($"Skipping scene data maps generation after packages resolve. It is recommended to enable map generation after packages resolve, as an outdated map can result in broken scene references in runtime. You can enable it in {SettingsManager.SettingsMenuPathForDisplay}.");
             }
         }
     }

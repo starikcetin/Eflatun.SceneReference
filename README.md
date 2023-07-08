@@ -46,13 +46,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `3.0.0` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `3.1.0` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.0.0"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.1.0"
 ```
 
-_Although it is highly discouraged, you can replace `3.0.0` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `3.1.0` with `upm` to get the latest version instead of a specific one._
 
 ## Ignore Auto-Generated Map Files in Version Control
 
@@ -217,6 +217,17 @@ It is recommended to leave this option at 'true', as it will help you easily dis
 > **Note**<br/>
 > This setting does not apply to regular scenes. They have their own coloring mechanism. It is controlled by the _Color Based On Scene-In-Build State_ setting under the _Property Drawer_ category.
 
+## Logging
+
+Settings regarding logging.
+
+> **Note**<br/>
+> Exceptions will always be logged.
+
+### Editor Log Level
+
+Log level for the editor logger. It is recommended to leave this at `Debug`.
+
 ## Property Drawer
 
 Settings regarding the property drawer.
@@ -267,7 +278,7 @@ It is recommended that you leave this option at _All_ unless you are debugging s
 
 Controls the Scene Data Maps Generator's JSON formatting.
 
-It is recommended to leave this option at _Indented_, as it will help with version control and make the generated files human-readable.
+It is recommended to leave this option at _Indented_ as it will make the generated files human-readable.
 
 ### Fail Build If Generation Fails
 
