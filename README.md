@@ -20,9 +20,11 @@
 <br>
 
 <p align="center">
-  <a href="https://github.com/starikcetin/Eflatun.SceneReference/"><img src="https://img.shields.io/static/v1?label=GitHub&logo=github&message=Eflatun.SceneReference&color=blueviolet" alt="GitHub badge"/></a>
+  <a href="https://github.com/starikcetin/Eflatun.SceneReference/"><img src="https://img.shields.io/static/v1?color=6243c4&label=GitHub&message=Eflatun.SceneReference" alt="GitHub badge"/></a>
   &nbsp;
-  <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/npm/v/com.eflatun.scenereference?label=OpenUPM&logo=unity&registry_uri=https://package.openupm.com" alt="OpenUPM badge"/></a>
+  <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/npm/v/com.eflatun.scenereference?color=6243c4&label=OpenUPM&registry_uri=https://package.openupm.com" alt="OpenUPM badge"/></a>
+  &nbsp;
+  <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/badge/dynamic/json?color=6243c4&label=Downloads&suffix=/month&query=$.downloads&url=https://package.openupm.com/Downloads/point/last-month/com.eflatun.scenereference" alt="Monthly downloads badge"/></a>
 </p>
 <br>
 
