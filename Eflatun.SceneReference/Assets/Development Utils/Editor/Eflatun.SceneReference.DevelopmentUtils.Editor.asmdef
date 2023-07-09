@@ -25,6 +25,16 @@
             "name": "com.unity.addressables",
             "expression": "[1.0.0,2.0.0)",
             "define": "ESR_ADDRESSABLES_1_X_X"
+        },
+		{
+            "name": "com.unity.entities",
+            "expression": "",
+            "define": "ESR_ENTITIES"
+        },
+        {
+            "name": "com.unity.entities",
+            "expression": "[1.0.0,2.0.0)",
+            "define": "ESR_ENTITIES_1_X_X"
         }
     ],
     "noEngineReferences": false
