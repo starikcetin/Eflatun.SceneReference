@@ -24,7 +24,7 @@
   &nbsp;
   <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/npm/v/com.eflatun.scenereference?color=6243c4&label=OpenUPM&registry_uri=https://package.openupm.com" alt="OpenUPM badge"/></a>
   &nbsp;
-  <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/badge/dynamic/json?color=6243c4&label=Downloads&suffix=/month&query=%24.downloads&url=https://package.openupm.com/Downloads/point/last-month/com.eflatun.scenereference" alt="Monthly downloads badge"/></a>
+  <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/badge/dynamic/json?color=6243c4&label=Downloads&suffix=/month&query=$.downloads&url=https://package.openupm.com/Downloads/point/last-month/com.eflatun.scenereference" alt="Monthly downloads badge"/></a>
 </p>
 <br>
 
