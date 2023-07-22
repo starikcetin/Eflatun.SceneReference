@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+- Implemented workaround for a Unity bug that caused our settings page to throw exceptions and not display in Unity `2022.3.4f1`.
 
 
 
