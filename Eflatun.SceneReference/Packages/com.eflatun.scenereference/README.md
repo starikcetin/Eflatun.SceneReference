@@ -20,9 +20,11 @@
 <br>
 
 <p align="center">
-  <a href="https://github.com/starikcetin/Eflatun.SceneReference/"><img src="https://img.shields.io/static/v1?label=GitHub&logo=github&message=Eflatun.SceneReference&color=blueviolet" alt="GitHub badge"/></a>
+  <a href="https://github.com/starikcetin/Eflatun.SceneReference/"><img src="https://img.shields.io/static/v1?color=6243c4&label=GitHub&message=Eflatun.SceneReference" alt="GitHub badge"/></a>
   &nbsp;
-  <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/npm/v/com.eflatun.scenereference?label=OpenUPM&logo=unity&registry_uri=https://package.openupm.com" alt="OpenUPM badge"/></a>
+  <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/npm/v/com.eflatun.scenereference?color=6243c4&label=OpenUPM&registry_uri=https://package.openupm.com" alt="OpenUPM badge"/></a>
+  &nbsp;
+  <a href="https://openupm.com/packages/com.eflatun.scenereference/"><img src="https://img.shields.io/badge/dynamic/json?color=6243c4&label=Downloads&suffix=/month&query=$.downloads&url=https://package.openupm.com/Downloads/point/last-month/com.eflatun.scenereference" alt="Monthly downloads badge"/></a>
 </p>
 <br>
 
@@ -46,13 +48,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `3.1.0` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `3.1.1` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.1.0"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.1.1"
 ```
 
-_Although it is highly discouraged, you can replace `3.1.0` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `3.1.1` with `upm` to get the latest version instead of a specific one._
 
 ## Ignore Auto-Generated Map Files in Version Control
 
