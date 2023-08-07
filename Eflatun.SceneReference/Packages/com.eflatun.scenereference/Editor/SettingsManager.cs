@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.SettingsManagement;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor
 {
@@ -60,7 +61,7 @@ namespace Eflatun.SceneReference.Editor
             /// <inheritdoc cref="SettingsManager"/>
             /// </remarks>
             /// <seealso cref="IsGenerationTriggerEnabled"/>
-            [field: UserSetting(CategoryName, "Generation Triggers", "Controls when the scene data maps get regenerated.\n\n• AAfter Scene Asset Change: Regenerate the maps every time a scene asset changes (delete, create, move, rename).\n\n• Before Enter Play Mode: Regenerate the maps before entering play mode in the editor.\n\n• Before Build: Regenerate the maps before a build.\n\n• After Packages Resolve: Regenerate the maps after UPM packages are resolved.\n\n• After Addressables Change: Regenerate the maps after addressable group entries change. Only relevant if you have addressables support enabled.\n\nIt is recommended that you leave this option at 'All' unless you are debugging something. Failure to generate the maps when needed can result in broken scene references in runtime.\n\nNote: 'All' and 'Everything' are the same thing. They both represent all triggers.")]
+            [field: UserSetting]
             public static ProjectSetting<SceneDataMapsGeneratorTriggers> GenerationTriggers { get; }
                 = new ProjectSetting<SceneDataMapsGeneratorTriggers>("SceneDataMaps.GenerationTriggers", SceneDataMapsGeneratorTriggers.All);
 
@@ -90,6 +91,24 @@ namespace Eflatun.SceneReference.Editor
             /// <seealso cref="GenerationTriggers"/>
             public static bool IsGenerationTriggerEnabled(SceneDataMapsGeneratorTriggers trigger) =>
                 GenerationTriggers.value.IncludesFlag(trigger);
+            
+            [UserSettingBlock(CategoryName)]
+            private static void Draw(string searchContext)
+            {
+                // Draw GenerationTriggers field.
+                {
+                    var oldPublic = GenerationTriggers.value;
+                    var oldInternal = (InternalSceneDataMapsGeneratorTriggers)oldPublic;
+                    var label = new GUIContent("Generation Triggers", "Controls when the scene data maps get regenerated.\n\n• After Scene Asset Change: Regenerate the maps every time a scene asset changes (delete, create, move, rename).\n\n• Before Enter Play Mode: Regenerate the maps before entering play mode in the editor.\n\n• Before Build: Regenerate the maps before a build.\n\n• After Packages Resolve: Regenerate the maps after UPM packages are resolved.\n\n• After Addressables Change: Regenerate the maps after addressable group entries change. Only relevant if you have addressables support enabled.\n\nIt is recommended that you leave this option at 'All' unless you are debugging something. Failure to generate the maps when needed can result in broken scene references in runtime.\n\nNote: 'All' and 'Everything' are the same thing. They both represent all triggers.");
+                    var newInternal = EditorGUILayout.EnumFlagsField(label, oldInternal);
+                    SettingsGUILayout.DoResetContextMenuForLastRect(GenerationTriggers);
+                    var newPublic = (SceneDataMapsGeneratorTriggers)newInternal;
+                    if (newPublic != oldPublic)
+                    {
+                        GenerationTriggers.value = newPublic;
+                    }
+                }
+            }
         }
 
         /// <summary>

@@ -20,6 +20,13 @@ This release adds support for Entity `SubScene`s.
 
 
 
+## [3.1.1] - 2023-07-22
+
+### Fixed
+- Implemented workaround for a Unity bug that caused our settings page to throw exceptions and not display in Unity `2022.3.4f1`.
+
+
+
 ## [3.1.0] - 2023-07-08
 
 ### Added

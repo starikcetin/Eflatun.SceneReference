@@ -7,13 +7,13 @@
                 "value": "{\"m_Value\":-1}"
             },
             {
-                "type": "Newtonsoft.Json.Formatting, Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
-                "key": "SceneDataMaps.JsonFormatting",
-                "value": "{\"m_Value\":1}"
+                "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "AddressablesSupport.ColorAddressableScenes",
+                "value": "{\"m_Value\":true}"
             },
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-                "key": "PropertyDrawer.ShowInlineSceneInBuildUtility",
+                "key": "PropertyDrawer.ShowInlineToolbox",
                 "value": "{\"m_Value\":true}"
             },
             {
@@ -27,24 +27,14 @@
                 "value": "{\"m_Value\":true}"
             },
             {
-                "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-                "key": "PropertyDrawer.ShowInlineToolbox",
-                "value": "{\"m_Value\":true}"
-            },
-            {
-                "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-                "key": "PropertyDrawer.ColorBasedOnSceneBundlingState",
-                "value": "{\"m_Value\":true}"
-            },
-            {
-                "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-                "key": "AddressablesSupport.ColorAddressableScenes",
-                "value": "{\"m_Value\":true}"
-            },
-            {
                 "type": "Eflatun.SceneReference.LogLevel, Eflatun.SceneReference, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "Logging.EditorLogLevel",
                 "value": "{\"m_Value\":10}"
+            },
+            {
+                "type": "Newtonsoft.Json.Formatting, Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
+                "key": "SceneDataMaps.JsonFormatting",
+                "value": "{\"m_Value\":1}"
             }
         ]
     }
