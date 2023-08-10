@@ -11,6 +11,21 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
     {
         static AddressablesChangeListener()
         {
+            EditorApplication.update += DelayedInitialization;
+        }
+
+        /// <summary>
+        /// Wait for Editor to finish compiling before initializing. Otherwise AddressableAssetSettingsDefaultObject.Settings returns null.
+        /// </summary>
+        private static void DelayedInitialization()
+        {
+            if (EditorApplication.isCompiling || EditorApplication.isUpdating)
+            {
+                return;
+            }
+
+            EditorApplication.update -= DelayedInitialization; 
+            //now its safe to initialize:
             AddressableAssetSettingsDefaultObject.Settings.OnModification += OnAddressablesChange;
         }
 
