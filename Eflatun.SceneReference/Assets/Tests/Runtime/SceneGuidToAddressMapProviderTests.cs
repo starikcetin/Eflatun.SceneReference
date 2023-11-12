@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eflatun.SceneReference.Exceptions;
 using Eflatun.SceneReference.Tests.Runtime.Utils;
+using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
 
 namespace Eflatun.SceneReference.Tests.Runtime
@@ -11,7 +12,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         public void DirectAssign_Works()
         {
             // cleanup
-            var toRestore = new Dictionary<string, string>(SceneGuidToAddressMapProvider.SceneGuidToAddressMap);
+            var toRestore = SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ToDictionary();
 
             var expected = new Dictionary<string, string>()
             {

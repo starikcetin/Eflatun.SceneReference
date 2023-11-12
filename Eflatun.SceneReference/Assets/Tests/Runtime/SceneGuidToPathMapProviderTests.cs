@@ -53,7 +53,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         public void DirectAssign_Works()
         {
             // cleanup
-            var toRestore = new Dictionary<string, string>(SceneGuidToPathMapProvider.SceneGuidToPathMap);
+            var toRestore = SceneGuidToPathMapProvider.SceneGuidToPathMap.ToDictionary();
 
             var expected = new Dictionary<string, string>()
             {
