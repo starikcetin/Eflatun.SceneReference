@@ -164,7 +164,16 @@ namespace Eflatun.SceneReference.Editor
 
                 // TODO: we should ship our own icon to prevent this breaking in the future
                 var settingsIcon = EditorGUIUtility.IconContent("SettingsIcon");
-                var toolboxButton = GUI.Button(toolboxButtonRect, settingsIcon, EditorStyles.iconButton);
+
+// Backwards compatibility (https://github.com/starikcetin/Eflatun.SceneReference/issues/74)
+#if UNITY_2022_1_OR_NEWER
+                var toolboxButtonStyle = EditorStyles.iconButton;
+#else
+                var toolboxButtonStyle = EditorStyles.miniButton;
+                toolboxButtonStyle.padding = new RectOffset(1, 1, 1, 1);
+#endif
+
+                var toolboxButton = GUI.Button(toolboxButtonRect, settingsIcon, toolboxButtonStyle);
                 if (toolboxButton)
                 {
                     var toolboxPopupWindow = CreateToolboxPopupWindow();

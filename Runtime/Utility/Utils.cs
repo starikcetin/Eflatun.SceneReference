@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Eflatun.SceneReference.Utility
@@ -56,5 +57,30 @@ namespace Eflatun.SceneReference.Utility
         /// </summary>
         public static string GuardGuidAgainstNullOrWhitespace(this string guid) =>
             string.IsNullOrWhiteSpace(guid) ? AllZeroGuid : guid;
+
+// Backwards compatibility: KVP deconstruction is not built-in for Unity versions before 2021.3.
+#if !UNITY_2021_3_OR_NEWER
+        /// <summary>
+        /// Allows deconstructing <see cref="KeyValuePair{TKey, TValue}"/> (for <see cref="Dictionary{TKey, TValue}"/>).
+        /// </summary>
+        public static void Deconstruct<TKey, TValue>(this KeyValuePair<TKey, TValue> kvp, out TKey key, out TValue value)
+        {
+            key = kvp.Key;
+            value = kvp.Value;
+        }
+#endif
+
+        /// <summary>
+        /// Convert <see cref="IReadOnlyDictionary{TKey, TValue}"/> to <see cref="Dictionary{TKey, TValue}"/>.
+        /// </summary>
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> readOnly)
+        {
+// Backwards compatibility: Dictionary did not have a constructor that took in an IReadOnlyDictionary for Unity versions before 2021.3.
+#if UNITY_2021_3_OR_NEWER
+            return new Dictionary<TKey, TValue>(readOnly);
+#else
+            return readOnly.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+#endif
+        }
     }
 }
