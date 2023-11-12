@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -169,6 +169,7 @@ namespace Eflatun.SceneReference.Editor
                 var toolboxButtonStyle = EditorStyles.iconButton;
 #else
                 var toolboxButtonStyle = EditorStyles.miniButton;
+                toolboxButtonStyle.padding = new RectOffset(1, 1, 1, 1);
 #endif
                 
                 var toolboxButton = GUI.Button(toolboxButtonRect, settingsIcon, toolboxButtonStyle);
