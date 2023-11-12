@@ -81,7 +81,14 @@ namespace Eflatun.SceneReference.Editor
             _buildEntry = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
 
 #if ESR_ADDRESSABLES
-            _addressableEntry = AddressableAssetSettingsDefaultObject.Settings.FindAssetEntry(_guid);
+            if (AddressableAssetSettingsDefaultObject.SettingsExists)
+            {
+                _addressableEntry = AddressableAssetSettingsDefaultObject.Settings.FindAssetEntry(_guid);
+            }
+            else
+            {
+                _addressableEntry = null;
+            }
 #endif // ESR_ADDRESSABLES
 
             _optionsAttribute = fieldInfo.GetCustomAttribute<SceneReferenceOptionsAttribute>(false) ?? DefaultOptionsAttribute;
