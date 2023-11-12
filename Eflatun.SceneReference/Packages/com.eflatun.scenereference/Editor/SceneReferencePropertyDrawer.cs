@@ -165,11 +165,11 @@ namespace Eflatun.SceneReference.Editor
                 // TODO: we should ship our own icon to prevent this breaking in the future
                 var settingsIcon = EditorGUIUtility.IconContent("SettingsIcon");
                 
-                #if UNITY_2022_1_OR_NEWER
-                    var toolboxButtonStyle = EditorStyles.iconButton;
-                #else
-                    var toolboxButtonStyle = EditorStyles.miniButton;
-                #endif
+#if UNITY_2022_1_OR_NEWER
+                var toolboxButtonStyle = EditorStyles.iconButton;
+#else
+                var toolboxButtonStyle = EditorStyles.miniButton;
+#endif
                 
                 var toolboxButton = GUI.Button(toolboxButtonRect, settingsIcon, toolboxButtonStyle);
                 if (toolboxButton)
