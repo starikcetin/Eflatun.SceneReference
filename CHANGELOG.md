@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+- Prevent null reference errors when addressables package is installed, but addressables settings are not initialized.
 
 
 
