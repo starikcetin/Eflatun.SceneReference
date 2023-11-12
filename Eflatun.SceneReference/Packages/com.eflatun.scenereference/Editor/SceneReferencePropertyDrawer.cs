@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -164,14 +164,14 @@ namespace Eflatun.SceneReference.Editor
 
                 // TODO: we should ship our own icon to prevent this breaking in the future
                 var settingsIcon = EditorGUIUtility.IconContent("SettingsIcon");
-                
+
 #if UNITY_2022_1_OR_NEWER
                 var toolboxButtonStyle = EditorStyles.iconButton;
 #else
                 var toolboxButtonStyle = EditorStyles.miniButton;
                 toolboxButtonStyle.padding = new RectOffset(1, 1, 1, 1);
 #endif
-                
+
                 var toolboxButton = GUI.Button(toolboxButtonRect, settingsIcon, toolboxButtonStyle);
                 if (toolboxButton)
                 {
