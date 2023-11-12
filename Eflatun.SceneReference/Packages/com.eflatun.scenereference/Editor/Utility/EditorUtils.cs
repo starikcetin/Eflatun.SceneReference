@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Eflatun.SceneReference.Exceptions;
 using UnityEditor;
+using UnityEngine;
 
 #if ESR_ADDRESSABLES
 using UnityEditor.AddressableAssets;
@@ -85,6 +86,12 @@ namespace Eflatun.SceneReference.Editor.Utility
         /// </summary>
         public static void AddToDefaultAddressableGroup(string sceneGuid)
         {
+            if (!AddressableAssetSettingsDefaultObject.SettingsExists)
+            {
+                EditorLogger.Warn("Addressables settings not found. Skipping adding to group.");
+                return;
+            }
+
             var defaultGroup = AddressableAssetSettingsDefaultObject.Settings.DefaultGroup;
             AddressableAssetSettingsDefaultObject.Settings.CreateOrMoveEntry(sceneGuid, defaultGroup);
         }

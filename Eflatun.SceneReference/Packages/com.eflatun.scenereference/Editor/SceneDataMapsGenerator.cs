@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEditor;
+using UnityEngine;
 
 #if ESR_ADDRESSABLES
 using UnityEditor.AddressableAssets;
@@ -74,6 +75,12 @@ namespace Eflatun.SceneReference.Editor
         private static Dictionary<string, string> GenerateSceneGuidToAddressMap(string[] allSceneGuids)
         {
 #if ESR_ADDRESSABLES
+            if (!AddressableAssetSettingsDefaultObject.SettingsExists)
+            {
+                EditorLogger.Warn("Addressables settings not found. Skipping map generation.");
+                return new Dictionary<string, string>();
+            }
+            
             var addressableSettings = AddressableAssetSettingsDefaultObject.Settings;
 
             var addressableSceneAssetEntries = allSceneGuids
