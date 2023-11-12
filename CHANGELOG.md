@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+- Backwards compatibility: Use `EditorStyles.miniButton` instead of non-existent `EditorStyles.iconButton` for Unity versions earlier than 2022.1.
 
 
 
