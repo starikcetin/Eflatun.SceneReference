@@ -322,9 +322,9 @@ namespace Eflatun.SceneReference
         {
             get
             {
-                if (HasValue && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path))
+                if (HasValue)
                 {
-                    if (SceneUtility.GetBuildIndexByScenePath(path) != -1)
+                    if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path) && SceneUtility.GetBuildIndexByScenePath(path) != -1)
                     {
                         return SceneReferenceState.Regular;
                     }
