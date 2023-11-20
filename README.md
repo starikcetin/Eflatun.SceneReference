@@ -170,6 +170,9 @@ if (mySceneReference.UnsafeReason == SceneReferenceState.NotInBuild)
 ```
 
 > **Note**<br/>
+> `Empty` has priority over all other reasons.
+
+> **Note**<br/>
 > `NotInMaps` has priority over `NotInBuild`.
 
 ## Inline Inspector Utilities

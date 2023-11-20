@@ -12,6 +12,7 @@ namespace Eflatun.SceneReference
     /// </list>
     /// </summary>
     /// <remarks>
+    /// <see cref="Empty"/> has priority over all other reasons.<br/>
     /// <see cref="NotInMaps"/> has priority over <see cref="NotInBuild"/>.
     /// </remarks>
     [PublicAPI]
