@@ -19,6 +19,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
+## [3.2.0] - 2023-11-20
+
+### Added
+- `SceneReference.UnsafeReason` property: Provides the reasoning behind why a `SceneReference` was deemed unsafe.
+- `SceneReferenceUnsafeReason` enum: Possible reasons for a `SceneReference` to be deemed unsafe.
+
+### Fixed
+- `SceneDataMapsGenerator` no longer runs on scene saves.
+
+
+
 ## [3.1.3] - 2023-11-12
 
 ### Fixed

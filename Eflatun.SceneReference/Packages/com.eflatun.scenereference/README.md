@@ -48,13 +48,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `3.1.3` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `3.2.0` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.1.3"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.2.0"
 ```
 
-_Although it is highly discouraged, you can replace `3.1.3` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `3.2.0` with `upm` to get the latest version instead of a specific one._
 
 ## Ignore Auto-Generated Map Files in Version Control
 
@@ -140,8 +140,40 @@ if (mySceneReference.State == SceneReferenceState.Addressable)
 {
     // The scene is safe to use. It references an addressable scene.
 }
-
 ```
+
+If you need to know why a `SceneReference` is deemed unsafe, you can check the `UnsafeReason` property.
+
+```cs
+// Import Runtime namespace
+using Eflatun.SceneReference;
+
+if (mySceneReference.UnsafeReason == SceneReferenceState.None)
+{
+    // All good. Safe to use.
+}
+
+if (mySceneReference.UnsafeReason == SceneReferenceState.Empty)
+{
+    // mySceneReference is empty. It is not referencing anything. 
+}
+
+if (mySceneReference.UnsafeReason == SceneReferenceState.NotInMaps)
+{
+    // The scene referenced by mySceneReference is not found in any of the maps.
+}
+
+if (mySceneReference.UnsafeReason == SceneReferenceState.NotInBuild)
+{
+    // The scene referenced by mySceneReference is not added and enabled in build.
+}
+```
+
+> **Note**<br/>
+> `Empty` has priority over all other reasons.
+
+> **Note**<br/>
+> `NotInMaps` has priority over `NotInBuild`.
 
 ## Inline Inspector Utilities
 
