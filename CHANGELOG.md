@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Breaking Changes
 
 ### Added
+- `SceneReference.UnsafeReason` property: Provides the reasoning behind why a `SceneReference` was deemed unsafe.
+- `SceneReferenceUnsafeReason` enum: Possible reasons for a `SceneReference` to be deemed unsafe.
 
 ### Changed
 

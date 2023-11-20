@@ -121,6 +121,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(EnabledSceneGuid, sr.Guid);
             Assert.AreEqual(EnabledSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
+            Assert.AreEqual(SceneReferenceUnsafeReason.None, sr.UnsafeReason);
 
             if (IsAddressablesPackagePresent)
             {
@@ -149,8 +150,10 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 // Figure out a way to disable that behaviour and then get rid of this define check.
 #if UNITY_EDITOR
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
+            Assert.AreEqual(SceneReferenceUnsafeReason.NotInBuild, sr.UnsafeReason);
 #else // UNITY_EDITOR
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
+            Assert.AreEqual(SceneReferenceUnsafeReason.None, sr.UnsafeReason);
 #endif // UNITY_EDITOR
 
             if (IsAddressablesPackagePresent)
@@ -176,6 +179,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(NotInBuildSceneGuid, sr.Guid);
             Assert.AreEqual(NotInBuildSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
+            Assert.AreEqual(SceneReferenceUnsafeReason.NotInBuild, sr.UnsafeReason);
 
             if (IsAddressablesPackagePresent)
             {
@@ -200,6 +204,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(AllZeroGuid, sr.Guid);
             Assert.AreEqual(AllZeroGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
+            Assert.AreEqual(SceneReferenceUnsafeReason.Empty, sr.UnsafeReason);
 
             if (IsAddressablesPackagePresent)
             {
@@ -230,6 +235,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(expectedGuid, sr.Guid);
             Assert.AreEqual(expectedGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
+            Assert.AreEqual(SceneReferenceUnsafeReason.NotInMaps, sr.UnsafeReason);
 
             if (IsAddressablesPackagePresent)
             {
@@ -265,11 +271,13 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             if (IsAddressablesPackagePresent)
             {
                 Assert.AreEqual(SceneReferenceState.Addressable, sr.State);
+                Assert.AreEqual(SceneReferenceUnsafeReason.None, sr.UnsafeReason);
                 Assert.AreEqual(expectedAddress, sr.Address);
             }
             else
             {
                 Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
+                Assert.AreEqual(SceneReferenceUnsafeReason.NotInBuild, sr.UnsafeReason);
                 Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
             }
         }
