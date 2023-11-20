@@ -140,7 +140,33 @@ if (mySceneReference.State == SceneReferenceState.Addressable)
 {
     // The scene is safe to use. It references an addressable scene.
 }
+```
 
+If you need to know why a `SceneReference` is deemed unsafe, you can check the `UnsafeReason` property.
+
+```cs
+// Import Runtime namespace
+using Eflatun.SceneReference;
+
+if (mySceneReference.UnsafeReason == SceneReferenceState.None)
+{
+    // All good. Safe to use.
+}
+
+if (mySceneReference.UnsafeReason == SceneReferenceState.Empty)
+{
+    // mySceneReference is empty. It is not referencing anything. 
+}
+
+if (mySceneReference.UnsafeReason == SceneReferenceState.NotInMaps)
+{
+    // The scene referenced by mySceneReference is not found in any of the maps.
+}
+
+if (mySceneReference.UnsafeReason == SceneReferenceState.NotInBuild)
+{
+    // The scene referenced by mySceneReference is not added and enabled in build.
+}
 ```
 
 ## Inline Inspector Utilities
