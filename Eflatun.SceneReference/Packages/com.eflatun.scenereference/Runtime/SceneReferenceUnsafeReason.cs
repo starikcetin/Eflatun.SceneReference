@@ -11,6 +11,9 @@ namespace Eflatun.SceneReference
     /// <item><see cref="NotInBuild"/>: <inheritdoc cref="NotInBuild"/></item>
     /// </list>
     /// </summary>
+    /// <remarks>
+    /// <see cref="NotInMaps"/> has priority over <see cref="NotInBuild"/>.
+    /// </remarks>
     [PublicAPI]
     public enum SceneReferenceUnsafeReason
     {

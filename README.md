@@ -169,6 +169,9 @@ if (mySceneReference.UnsafeReason == SceneReferenceState.NotInBuild)
 }
 ```
 
+> **Note**<br/>
+> `NotInMaps` has priority over `NotInBuild`.
+
 ## Inline Inspector Utilities
 
 A scene will be accessible in runtime only if one of the following is true:
