@@ -8,7 +8,9 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
     {
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
-            var hasSceneChange = importedAssets
+            var createdAssets = importedAssets.Except(SceneGuidToPathMapProvider.SceneGuidToPathMap.Values);
+
+            var hasSceneChange = createdAssets
                 .Concat(deletedAssets)
                 .Concat(movedAssets)
                 .Concat(movedFromAssetPaths)
