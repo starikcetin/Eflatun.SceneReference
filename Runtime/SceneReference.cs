@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -318,13 +319,14 @@ namespace Eflatun.SceneReference
         }
 
         /// <inheritdoc cref="SceneReferenceState"/>
+        /// <seealso cref="UnsafeReason"/>
         public SceneReferenceState State
         {
             get
             {
-                if (HasValue && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path))
+                if (HasValue)
                 {
-                    if (SceneUtility.GetBuildIndexByScenePath(path) != -1)
+                    if (SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path) && SceneUtility.GetBuildIndexByScenePath(path) != -1)
                     {
                         return SceneReferenceState.Regular;
                     }
@@ -338,6 +340,38 @@ namespace Eflatun.SceneReference
                 }
 
                 return SceneReferenceState.Unsafe;
+            }
+        }
+
+        /// <inheritdoc cref="SceneReferenceUnsafeReason"/>
+        /// <seealso cref="State"/>
+        public SceneReferenceUnsafeReason UnsafeReason
+        {
+            get
+            {
+                if (!HasValue)
+                {
+                    return SceneReferenceUnsafeReason.Empty;
+                }
+
+#if ESR_ADDRESSABLES
+                if (SceneGuidToAddressMapProvider.SceneGuidToAddressMap.TryGetValue(Guid, out var address))
+                {
+                    return SceneReferenceUnsafeReason.None;
+                }
+#endif
+
+                if (!SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out var path))
+                {
+                    return SceneReferenceUnsafeReason.NotInMaps;
+                }
+
+                if (SceneUtility.GetBuildIndexByScenePath(path) == -1)
+                {
+                    return SceneReferenceUnsafeReason.NotInBuild;
+                }
+
+                return SceneReferenceUnsafeReason.None;
             }
         }
 
