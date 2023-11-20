@@ -319,6 +319,7 @@ namespace Eflatun.SceneReference
         }
 
         /// <inheritdoc cref="SceneReferenceState"/>
+        /// <seealso cref="UnsafeReason"/>
         public SceneReferenceState State
         {
             get
@@ -342,6 +343,8 @@ namespace Eflatun.SceneReference
             }
         }
 
+        /// <inheritdoc cref="SceneReferenceUnsafeReason"/>
+        /// <seealso cref="State"/>
         public SceneReferenceUnsafeReason UnsafeReason
         {
             get
