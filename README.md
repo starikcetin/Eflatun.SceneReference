@@ -148,22 +148,22 @@ If you need to know why a `SceneReference` is deemed unsafe, you can check the `
 // Import Runtime namespace
 using Eflatun.SceneReference;
 
-if (mySceneReference.UnsafeReason == SceneReferenceState.None)
+if (mySceneReference.UnsafeReason == SceneReferenceUnsafeReason.None)
 {
     // All good. Safe to use.
 }
 
-if (mySceneReference.UnsafeReason == SceneReferenceState.Empty)
+if (mySceneReference.UnsafeReason == SceneReferenceUnsafeReason.Empty)
 {
     // mySceneReference is empty. It is not referencing anything. 
 }
 
-if (mySceneReference.UnsafeReason == SceneReferenceState.NotInMaps)
+if (mySceneReference.UnsafeReason == SceneReferenceUnsafeReason.NotInMaps)
 {
     // The scene referenced by mySceneReference is not found in any of the maps.
 }
 
-if (mySceneReference.UnsafeReason == SceneReferenceState.NotInBuild)
+if (mySceneReference.UnsafeReason == SceneReferenceUnsafeReason.NotInBuild)
 {
     // The scene referenced by mySceneReference is not added and enabled in build.
 }
