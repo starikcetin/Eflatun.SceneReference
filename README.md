@@ -76,8 +76,8 @@ If you are using Git, you can do so by adding the following lines to your `.giti
 
 `Eflatun.SceneReference` has support for addressables. It will be enabled or disabled automatically depending on whether you have the addressables package installed in your project. Please refer to the [Addressables Package Documentation](https://docs.unity3d.com/Packages/com.unity.addressables@latest) for information on how to install addressables package in your project.
 
-> **Note**<br/>
-> In accordance with the [Principle of least astonishment](https://en.wikipedia.org/wiki/Principle_of_least_astonishment), the public API and settings that concern addressables will still be visible even if addressables support is disabled. This is a deliberate design decision to prevent the overwhelming amount of compiler errors you would face otherwise, if you later decide to uninstall addressables from your project. This way, you only need to perform a minimal amount of refactors to your code in that case.
+> [!NOTE]<br/>
+> As a deliberate design decision in accordance with the [Principle of least astonishment](https://en.wikipedia.org/wiki/Principle_of_least_astonishment), the public API and settings that concern addressables will still be visible even if addressables support is disabled. This way, if you later decide to uninstall addressables from your project, you will not face an overwhelming amount of compiler errors. This enables you to transition between using and not using addressables with only a minimal amount of refactors.
 
 # Usage
 
@@ -169,11 +169,9 @@ if (mySceneReference.UnsafeReason == SceneReferenceState.NotInBuild)
 }
 ```
 
-> **Note**<br/>
-> `Empty` has priority over all other reasons.
-
-> **Note**<br/>
-> `NotInMaps` has priority over `NotInBuild`.
+> [!IMPORTANT]<br/>
+> - `Empty` has priority over all other reasons.
+> - `NotInMaps` has priority over `NotInBuild`.
 
 ## Inline Inspector Utilities
 
@@ -195,7 +193,7 @@ In this example:
 - `Scene E` field is not assigned anything. It is empty.
 - Similarly for the `Scene Reference List` property.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > Addressable scenes are only available if addressables support is enabled.
 
 If we click on the little gear (⚙️) icon to the right of the field, a toolbox popup will open that contains the fix utilities. For `Scene B` field, we get the following tools:
@@ -206,7 +204,7 @@ And for `Scene C` field, we get the following tools:
 
 ![.assets/toolbox_nowhere.png](.assets/toolbox_nowhere.png)
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > You will only see the `Make addressable...` tool if addressables support is enabled.
 
 Clicking on the `Enable in build...` button gives us this prompt:
@@ -237,7 +235,7 @@ Look for the `Eflatun` category in the left panel. Select the `Scene Reference` 
 
 Settings regarding addressables support.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > Settings under this category are only relevant if addressables support is enabled.
 
 ### Color Addressable Scenes
@@ -248,14 +246,14 @@ Addressable scenes should be handled differently than regular scenes in runtime,
 
 It is recommended to leave this option at 'true', as it will help you easily distinguish addressable scenes.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > This setting does not apply to regular scenes. They have their own coloring mechanism. It is controlled by the _Color Based On Scene-In-Build State_ setting under the _Property Drawer_ category.
 
 ## Logging
 
 Settings regarding logging.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > Exceptions will always be logged.
 
 ### Editor Log Level
@@ -282,7 +280,7 @@ Unity only bundles scenes that are added and enabled in build settings. Therefor
 
 It is recommended to leave this option at 'true', as it will help you identify many potential runtime errors.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > This setting does not apply to addressable scenes. They have their own coloring mechanism. It is controlled by the _Color Addressable Scenes_ setting under the _Addressables Support_ category.
 
 ## Scene Data Maps
@@ -305,7 +303,7 @@ Controls when the scene data maps get regenerated.
 
 It is recommended that you leave this option at _All_ unless you are debugging something. Failure to generate the maps when needed can result in broken scene references in runtime.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > _All_ and _Everything_ are the same thing. They both represent all triggers.
 
 ### JSON Formatting
@@ -328,7 +326,7 @@ It is recommended to leave this option at _true_, as a failed map generation can
 
 `Eflatun.SceneReference` uses a JSON generator in editor-time to produce map files. You can find them at this location: `Assets/Resources/Eflatun/SceneReference`. They all end with `.generated.json`.
 
-> **Warning**<br/>
+> [!WARNING]<br/>
 > Map files are auto-generated, do not edit them. Any edits will be lost at the next generation.
 
 ## Running the Generator Manually
@@ -370,12 +368,12 @@ var generationTriggers = SettingsManager.SceneDataMaps.GenerationTriggers;
 SettingsManager.SceneDataMaps.GenerationTriggers = GenerationTriggers.All;
 ```
 
-> **Warning**<br/>
-> Changing settings from code may have unintended consequences. Make sure you now what you are doing.
+> [!WARNING]<br/>
+> Changing settings from code may have unintended consequences. Make sure you know what you are doing.
 
 ## Accessing the Maps Directly
 
-You can access the maps directly from both runtime and editor code. There are no side-effects of accessing the maps directly.
+You can access the maps directly from both runtime and editor code. There are no side effects of accessing the maps directly.
 
 In runtime, there are no performance penalties. The generated file is parsed automatically either upon the first access to the maps from a provider or during `RuntimeInitializeLoadType.BeforeSceneLoad`, whichever comes first. It is guaranteed that the generated file is parsed only once. Each provider does this for itself, there is no coordination between them.
 
@@ -404,7 +402,7 @@ var sceneGuid = SceneGuidToPathMapProvider.ScenePathToGuidMap[scenePath];
 
 ### Scene GUID to Address Map
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > This map is only relevant if addressables support is enabled.
 
 The `SceneGuidToAddressMapProvider` static class is responsible for providing the scene GUID to scene address mapping to the rest of the code. Unlike `SceneGuidToPathMapProvider`, this class cannot provide an inverse map, because the address of an asset is not guaranteed to be unique due to the design of addressables. Instead, it provides two methods called `GetGuidFromAddress` and `TryGetGuidFromAddress` that serve the same purpose.
@@ -455,7 +453,7 @@ You don't have to supply both fields at once. Missing fields will have the defau
 [SerializeField] private SceneReference scene;
 ```
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > `AddressableColoring` argument is only relevant if addressables support is enabled.
 
 ## Custom Serialization
@@ -483,7 +481,7 @@ SceneReference deserialized = JsonConvert.DeserializeObject<SceneReference>(json
 
 ### Binary serialization via `System.Runtime.Serialization.Formatters.Binary`
 
-> **Warning**<br/>
+> [!CAUTION]<br/>
 > We strongly advise against using `BinaryFormatter` as it is inconsistent and has inherent security risks. Only use it if you absolutely have to.
 
 Example `SceneReference` serialization to binary and back via `System.Runtime.Serialization.Formatters.Binary`:
@@ -563,17 +561,13 @@ UnityEngine.Object sceneAsset = /* ... */;
 var fromSceneAsset = new SceneReference(sceneAsset);
 ```
 
-> **Warning**<br/>
-> Constructors and factory methods validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid.
+> [!IMPORTANT]<br/>
+> - Constructors and factory methods validate their arguments and throw exceptions of type `SceneReferenceCreationException` if they are invalid.
+> - The default constructor always creates an empty instance, but it never throws.
+> - `FromAddress` factory method throws `AddressablesSupportDisabledException` if addressables support is disabled.
 
-> **Warning**<br/>
-> The default constructor always creates an empty instance, but it never throws.
-
-> **Warning**<br/>
-> The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor-use only. Do NOT use it in runtime code.
-
-> **Warning**<br/>
-> `FromAddress` factory method throws `AddressablesSupportDisabledException` if addressables support is disabled.
+> [!CAUTION]<br/>
+> The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor use only. Do NOT use it in runtime code.
 
 # Exceptions
 
@@ -611,7 +605,7 @@ Thrown if a given address is not found in the Scene GUID to Address Map. This ca
 
 2. The Scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > This exception will never be thrown if addressables support is disabled.
 
 ## `AddressNotUniqueException`
@@ -622,7 +616,7 @@ Thrown if a given address matches multiple entries in the Scene GUID to Address 
 
 2. The Scene GUID to Address Map is outdated. To fix this, you can either manually run the generator, or enable generation triggers. It is highly recommended to keep all the generation triggers enabled.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > This exception will never be thrown if addressables support is disabled.
 
 ## `SceneNotAddressableException`
@@ -631,7 +625,7 @@ Thrown if addressables-specific operations are attempted on a `SceneReference` t
 
 You can avoid this exception by making sure the `State` property is `Addressable`.
 
-> **Note**<br/>
+> [!NOTE]<br/>
 > This exception will never be thrown if addressables support is disabled.
 
 ## `AddressablesSupportDisabledException`
