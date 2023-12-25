@@ -8,8 +8,6 @@ using UnityEngine;
 using System;
 using UnityEngine.Scripting;
 
-
-
 #if ESR_ADDRESSABLES
 using UnityEditor.AddressableAssets;
 #endif // ESR_ADDRESSABLES
