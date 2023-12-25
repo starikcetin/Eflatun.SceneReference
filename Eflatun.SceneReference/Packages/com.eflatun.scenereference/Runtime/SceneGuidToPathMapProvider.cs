@@ -20,25 +20,30 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// The scene GUID to path map.
         /// </summary>
-        public static IReadOnlyDictionary<string, string> SceneGuidToPathMap
-        {
-            get
-            {
-                LoadIfNotAlready();
-                return _sceneGuidToPathMap;
-            }
-        }
+        public static IReadOnlyDictionary<string, string> SceneGuidToPathMap => GetSceneGuidToPathMap(true);
 
         /// <summary>
         /// The scene path to GUID map.
         /// </summary>
-        public static IReadOnlyDictionary<string, string> ScenePathToGuidMap
+        public static IReadOnlyDictionary<string, string> ScenePathToGuidMap => GetScenePathToGuidMap(true);
+
+        [Preserve]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void RuntimeInit()
         {
-            get
-            {
-                LoadIfNotAlready();
-                return _scenePathToGuidMap;
-            }
+            LoadIfNotAlready(true);
+        }
+
+        internal static IReadOnlyDictionary<string, string> GetSceneGuidToPathMap(bool errorIfMissingDuringLoad)
+        {
+            LoadIfNotAlready(errorIfMissingDuringLoad);
+            return _sceneGuidToPathMap;
+        }
+
+        internal static IReadOnlyDictionary<string, string> GetScenePathToGuidMap(bool errorIfMissingDuringLoad)
+        {
+            LoadIfNotAlready(errorIfMissingDuringLoad);
+            return _scenePathToGuidMap;
         }
 
         internal static void DirectAssign(Dictionary<string, string> sceneGuidToPathMap)
@@ -46,24 +51,26 @@ namespace Eflatun.SceneReference
             FillWith(sceneGuidToPathMap);
         }
 
-        [Preserve]
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void LoadIfNotAlready()
+        private static void LoadIfNotAlready(bool errorIfMissing)
         {
             if (_sceneGuidToPathMap == null)
             {
-                Load();
+                Load(errorIfMissing);
             }
         }
 
-        private static void Load()
+        private static void Load(bool errorIfMissing)
         {
             var genFilePath = Paths.RelativeToResources.SceneGuidToPathMapFile.UnixPath.WithoutExtension();
             var genFile = Resources.Load<TextAsset>(genFilePath);
 
             if (genFile == null)
             {
-                Logger.Error("Scene GUID to path map file not found!");
+                if (errorIfMissing)
+                {
+                    Logger.Error("Scene GUID to path map file not found!");
+                }
+
                 return;
             }
 
