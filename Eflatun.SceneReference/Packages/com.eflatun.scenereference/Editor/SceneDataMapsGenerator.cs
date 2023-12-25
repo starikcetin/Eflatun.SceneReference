@@ -5,6 +5,10 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using System;
+using UnityEngine.Scripting;
+
+
 
 #if ESR_ADDRESSABLES
 using UnityEditor.AddressableAssets;
@@ -33,7 +37,7 @@ namespace Eflatun.SceneReference.Editor
             {
                 EditorLogger.Debug("Generating scene data maps.");
 
-                WriteScaffolding();
+                EnsureScaffolding();
 
                 var allSceneGuids = AssetDatabase.FindAssets("t:Scene");
 
@@ -49,10 +53,22 @@ namespace Eflatun.SceneReference.Editor
             }
         }
 
-        private static void WriteScaffolding()
+        internal static void EnsureScaffolding()
         {
             Directory.CreateDirectory(Paths.Absolute.SceneDataMapsFolder.PlatformPath);
             File.WriteAllText(Paths.Absolute.SceneDataMapsDotKeepFile.PlatformPath, DotKeepFileContent);
+
+            if (!File.Exists(Paths.Absolute.SceneGuidToPathMapFile.PlatformPath))
+            {
+                File.WriteAllText(Paths.Absolute.SceneGuidToPathMapFile.PlatformPath, "{}");
+            }
+
+#if ESR_ADDRESSABLES
+            if (!File.Exists(Paths.Absolute.SceneGuidToAddressMapFile.PlatformPath))
+            {
+                File.WriteAllText(Paths.Absolute.SceneGuidToAddressMapFile.PlatformPath, "{}");
+            }
+#endif // ESR_ADDRESSABLES
         }
 
         private static Dictionary<string, string> GenerateSceneGuidToPathMap(string[] allSceneGuids)
