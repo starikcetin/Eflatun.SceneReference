@@ -16,6 +16,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+
+
+
+## [3.2.1] - 2023-12-27
+
+### Fixed
 - Prevent `Scene GUID to path map file not found!` errors and null reference exceptions in `SceneAssetPostprocessor` if the scene GUID to path map file is missing.
 - Prevent null reference exceptions at project launch due to addressables settings not being loaded yet.
 - Ensure map files are always generated at editor startup, even if they are empty.
