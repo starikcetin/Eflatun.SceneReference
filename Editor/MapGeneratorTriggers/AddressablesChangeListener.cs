@@ -1,54 +1,16 @@
 ﻿#if ESR_ADDRESSABLES
 
-using Eflatun.SceneReference.Editor.Utility;
-using System.Linq;
 using UnityEditor;
-using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
-using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 {
     [InitializeOnLoad]
     internal class AddressablesChangeListener : AssetPostprocessor
     {
-        private static bool _isSubscribed;
-
         static AddressablesChangeListener()
         {
-            if (AddressableAssetSettingsDefaultObject.SettingsExists)
-            {
-                if (!_isSubscribed)
-                {
-                    AddressableAssetSettingsDefaultObject.Settings.OnModification += OnAddressablesChange;
-                    _isSubscribed = true;
-                }
-            }
-            else
-            {
-                EditorLogger.Warn("Addressables settings not found. Skipping subscribing to addressables changes.");
-            }
-        }
-
-        private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
-        {
-            if (AddressableAssetSettingsDefaultObject.SettingsExists)
-            {
-                if (!_isSubscribed)
-                {
-                    EditorLogger.Debug("Found addressables settings. Subscribing to addressables changes.");
-                    AddressableAssetSettingsDefaultObject.Settings.OnModification += OnAddressablesChange;
-                    _isSubscribed = true;
-                }
-            }
-            else
-            {
-                if (_isSubscribed)
-                {
-                    EditorLogger.Warn("Lost addressables settings. Unsubscribing from addressables changes.");
-                    _isSubscribed = false;
-                }
-            }
+            AddressableAssetSettings.OnModificationGlobal += OnAddressablesChange;
         }
 
         private static void OnAddressablesChange(AddressableAssetSettings s, AddressableAssetSettings.ModificationEvent e, object o)
