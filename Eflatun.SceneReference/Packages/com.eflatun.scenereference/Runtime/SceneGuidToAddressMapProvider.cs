@@ -1,11 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
 using Eflatun.SceneReference.Exceptions;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Scripting;
+
+#if !UNITY_EDITOR
 using Eflatun.SceneReference.Utility;
-using Newtonsoft.Json;
+#endif
 
 namespace Eflatun.SceneReference
 {
@@ -22,6 +25,24 @@ namespace Eflatun.SceneReference
     public static class SceneGuidToAddressMapProvider
     {
         private static Dictionary<string, string> _sceneGuidToAddressMap;
+
+        private static string MapJson
+        {
+            get
+            {
+#if ESR_ADDRESSABLES
+#if UNITY_EDITOR
+                return EditorMapStore.SceneGuidToAddressMapJson;
+#else
+                var genFilePath = Paths.RelativeToResources.SceneGuidToAddressMapFile.WithoutExtension();
+                var genFile = Resources.Load<TextAsset>(genFilePath);
+                return genFile.text;
+#endif // UNITY_EDITOR
+#else // ESR_ADDRESSABLES
+                return "{}";
+#endif // ESR_ADDRESSABLES
+            }
+        }
 
         /// <summary>
         /// The scene GUID to address map.
@@ -107,21 +128,16 @@ namespace Eflatun.SceneReference
 
         private static void Load()
         {
-#if ESR_ADDRESSABLES
-            var genFilePath = Paths.RelativeToResources.SceneGuidToAddressMapFile.UnixPath.WithoutExtension();
-            var genFile = Resources.Load<TextAsset>(genFilePath);
+            var json = MapJson;
 
-            if (genFile == null)
+            if (string.IsNullOrWhiteSpace(json))
             {
                 Logger.Error("Scene GUID to address map file not found!");
                 return;
             }
 
-            var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(genFile.text);
+            var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
             FillWith(deserialized);
-#else // ESR_ADDRESSABLES
-            FillWith(new Dictionary<string, string>());
-#endif // ESR_ADDRESSABLES
         }
 
         private static void FillWith(Dictionary<string, string> sceneGuidToAddressMap)

@@ -6,8 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [Unreleased]
+There are fundamental changes to the editor-time behaviour in this release. Please examine carefully before upgrading.
 
 ### Breaking Changes
+- From now on, map files are only generated during a build, and removed right after. In editor-time, maps are instead stored in and fetched from User Settings. You can remove the generated files and folders from your project, and remove the corresponding lines from your source control's ignore settings.
 
 ### Added
 

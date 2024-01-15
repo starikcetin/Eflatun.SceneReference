@@ -56,20 +56,6 @@ Add the following line to the `dependencies` section of your project's `manifest
 
 _Although it is highly discouraged, you can replace `3.2.1` with `upm` to get the latest version instead of a specific one._
 
-## Ignore Auto-Generated Map Files in Version Control
-
-_You can skip this section if you are not using version control in your project._
-
-It is generally a recommended practice to ignore auto-generated files in version control. `Eflatun.SceneReference` auto-generates JSON files with format `Assets/Resources/Eflatun/SceneReference/<MAP_NAME>.generated.json`. We recommend you ignore these files and their corresponding `.meta` files in your version control.
-
-If you are using Git, you can do so by adding the following lines to your `.gitignore` file:
-
-```gitignore
-# Eflatun.SceneReference auto-generated map files
-**/[Aa]ssets/Resources/Eflatun/SceneReference/*.generated.json
-**/[Aa]ssets/Resources/Eflatun/SceneReference/*.generated.json.meta
-```
-
 ## Optional Dependencies
 
 ### Addressables Support
@@ -324,7 +310,7 @@ It is recommended to leave this option at _true_, as a failed map generation can
 
 ## Generated Files
 
-`Eflatun.SceneReference` uses a JSON generator in editor-time to produce map files. You can find them at this location: `Assets/Resources/Eflatun/SceneReference`. They all end with `.generated.json`.
+`Eflatun.SceneReference` uses a JSON generator to produce map files during a build, and deletes them right after. You can find them at this location: `Assets/Resources`. They all start with `Eflatun_SceneReference_` and end with `.generated.json`.
 
 > [!WARNING]<br/>
 > Map files are auto-generated, do not edit them. Any edits will be lost at the next generation.
@@ -377,13 +363,13 @@ You can access the maps directly from both runtime and editor code. There are no
 
 In runtime, there are no performance penalties. The generated file is parsed automatically either upon the first access to the maps from a provider or during `RuntimeInitializeLoadType.BeforeSceneLoad`, whichever comes first. It is guaranteed that the generated file is parsed only once. Each provider does this for itself, there is no coordination between them.
 
-In editor, there are also no performance penalties except for one case. The generator assigns the map directly to the providers upon every generation. This prevents unnecessarily parsing the map file. However, if the providers lose the values assigned by the generator due to Unity [reloading the domain](https://docs.unity3d.com/Manual/DomainReloading.html), and some code tries to access the map before the generator runs again, then the providers have to parse the map file themselves. This is what happens in that scenario:
+In editor, there are also no performance penalties except for one case. The generator assigns the map directly to the providers upon every generation. This prevents unnecessarily parsing the map file/store. However, if the providers lose the values assigned by the generator due to Unity [reloading the domain](https://docs.unity3d.com/Manual/DomainReloading.html), and some code tries to access the map before the generator runs again, then the providers have to parse the map file/store themselves. This is what happens in that scenario:
 
 1. Generator runs and directly assigns the map to the providers.
 2. Something happens which triggers Unity to [reload the domain](https://docs.unity3d.com/Manual/DomainReloading.html).
 3. You access the map from a provider.
 4. Provider checks to see if it still has the map values, and realizes they are lost.
-5. Provider parses the map file.
+5. Provider parses the map file/store.
 
 ### Scene GUID to Path Map
 
