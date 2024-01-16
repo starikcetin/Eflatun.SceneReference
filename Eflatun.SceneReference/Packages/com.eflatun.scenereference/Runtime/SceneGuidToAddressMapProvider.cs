@@ -1,14 +1,17 @@
 using Eflatun.SceneReference.Exceptions;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Scripting;
 
 #if !UNITY_EDITOR
 using Eflatun.SceneReference.Utility;
 #endif
+
+#if ESR_ADDRESSABLES
+using Newtonsoft.Json;
+using System.Linq;
+#endif // ESR_ADDRESSABLES
 
 namespace Eflatun.SceneReference
 {
@@ -105,24 +108,21 @@ namespace Eflatun.SceneReference
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void LoadIfNotAlready()
         {
+            if (_sceneGuidToAddressMap != null)
+            {
+                return;
+            }
+
+#if ESR_ADDRESSABLES
             static string GetMapJson()
             {
-#if ESR_ADDRESSABLES
 #if UNITY_EDITOR
                 return EditorMapStore.SceneGuidToAddressMapJson;
-#else
+#else // UNITY_EDITOR
                 var genFilePath = Paths.RelativeToResources.SceneGuidToAddressMapFile.WithoutExtension();
                 var genFile = Resources.Load<TextAsset>(genFilePath);
                 return genFile == null ? null : genFile.text;
 #endif // UNITY_EDITOR
-#else // ESR_ADDRESSABLES
-                return null;
-#endif // ESR_ADDRESSABLES
-            }
-
-            if (_sceneGuidToAddressMap != null)
-            {
-                return;
             }
 
             var json = GetMapJson();
@@ -136,6 +136,9 @@ namespace Eflatun.SceneReference
 
             var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
             FillWith(deserialized);
+#else // ESR_ADDRESSABLES
+            FillWith(new Dictionary<string, string>());
+#endif // ESR_ADDRESSABLES
         }
     }
 }
