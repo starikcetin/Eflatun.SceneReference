@@ -1,5 +1,4 @@
 ﻿#if UNITY_EDITOR
-using JetBrains.Annotations;
 using UnityEditor;
 
 namespace Eflatun.SceneReference
@@ -10,7 +9,9 @@ namespace Eflatun.SceneReference
 
         public static readonly string SceneGuidToPathMapJson_Key = $"{KeyPrefix}SceneGuidToPathMapJson";
 
-        [CanBeNull]
+        /// <remarks>
+        /// Null if missing.
+        /// </remarks>
         public static string SceneGuidToPathMapJson
         {
             get => EditorUserSettings.GetConfigValue(SceneGuidToPathMapJson_Key);
@@ -19,7 +20,9 @@ namespace Eflatun.SceneReference
 
         public static readonly string SceneGuidToAddressMapJson_Key = $"{KeyPrefix}SceneGuidToAddressMapJson";
 
-        [CanBeNull]
+        /// <remarks>
+        /// Null if missing.
+        /// </remarks>
         public static string SceneGuidToAddressMapJson
         {
             get => EditorUserSettings.GetConfigValue(SceneGuidToAddressMapJson_Key);

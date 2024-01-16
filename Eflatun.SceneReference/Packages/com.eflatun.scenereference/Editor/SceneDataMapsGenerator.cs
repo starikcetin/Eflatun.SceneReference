@@ -18,16 +18,14 @@ namespace Eflatun.SceneReference.Editor
     [PublicAPI]
     public static class SceneDataMapsGenerator
     {
-        private const string DotKeepFileContent = "Add this file to version control. See for explanation: https://stackoverflow.com/a/17929518/6301627";
-
-        [MenuItem("Tools/" + Constants.MenuPrefixBase + "/Generate Scene Data Maps (Do not Output Files)", priority = -3130)]
-        private static void RunMenuItemNoOutput()
+        [MenuItem("Tools/" + Constants.MenuPrefixBase + "/Generate Scene Data Maps (Don't Output Files)", priority = -3130)]
+        private static void RunNoOutputMenuItem()
         {
             Run(false);
         }
 
         [MenuItem("Tools/" + Constants.MenuPrefixBase + "/Generate Scene Data Maps (Output Files)", priority = -3130)]
-        private static void RunMenuItemAndOutput()
+        private static void RunAndOutputMenuItem()
         {
             Run(true);
         }
@@ -65,16 +63,16 @@ namespace Eflatun.SceneReference.Editor
 
         internal static void CleanFileOutput()
         {
-            File.Delete(Paths.Absolute.SceneGuidToPathMapFile.PlatformPath);
-            File.Delete(Paths.Absolute.SceneGuidToPathMapMetaFile.PlatformPath);
+            EditorUtils.DeleteFileIfExists(Paths.Absolute.SceneGuidToPathMapFile.PlatformPath);
+            EditorUtils.DeleteFileIfExists(Paths.Absolute.SceneGuidToPathMapMetaFile.PlatformPath);
 
-            File.Delete(Paths.Absolute.SceneGuidToAddressMapFile.PlatformPath);
-            File.Delete(Paths.Absolute.SceneGuidToAddressMapMetaFile.PlatformPath);
+            EditorUtils.DeleteFileIfExists(Paths.Absolute.SceneGuidToAddressMapFile.PlatformPath);
+            EditorUtils.DeleteFileIfExists(Paths.Absolute.SceneGuidToAddressMapMetaFile.PlatformPath);
 
-            if (EditorUtils.IsDirectoryEmpty(Paths.ResourcesFolder.PlatformPath))
+            if (Directory.Exists(Paths.ResourcesFolder.PlatformPath) && EditorUtils.IsDirectoryEmpty(Paths.ResourcesFolder.PlatformPath))
             {
                 Directory.Delete(Paths.ResourcesFolder.PlatformPath);
-                File.Delete(Paths.ResourcesMetaFile.PlatformPath);
+                EditorUtils.DeleteFileIfExists(Paths.ResourcesMetaFile.PlatformPath);
             }
         }
 

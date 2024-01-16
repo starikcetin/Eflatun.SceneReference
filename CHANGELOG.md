@@ -18,6 +18,7 @@ There are fundamental changes to the editor-time behaviour in this release. Plea
 ### Removed
 
 ### Fixed
+- Prevent null ref exceptions during runtime caused by uninitialized map providers when the maps are missing.
 
 
 

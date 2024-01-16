@@ -20,6 +20,9 @@ namespace Eflatun.SceneReference
         private static Dictionary<string, string> _sceneGuidToPathMap;
         private static Dictionary<string, string> _scenePathToGuidMap;
 
+        /// <remarks>
+        /// Null if missing.
+        /// </remarks>
         private static string MapJson
         {
             get
@@ -29,7 +32,7 @@ namespace Eflatun.SceneReference
 #else
                 var genFilePath = Paths.RelativeToResources.SceneGuidToPathMapFile.WithoutExtension();
                 var genFile = Resources.Load<TextAsset>(genFilePath);
-                return genFile.text;
+                return genFile == null ? null : genFile.text;
 #endif
             }
         }
@@ -37,11 +40,17 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// The scene GUID to path map.
         /// </summary>
+        /// <remarks>
+        /// Default value is empty dictionary, never null.
+        /// </remarks>
         public static IReadOnlyDictionary<string, string> SceneGuidToPathMap => GetSceneGuidToPathMap(true);
 
         /// <summary>
         /// The scene path to GUID map.
         /// </summary>
+        /// <remarks>
+        /// Default value is empty dictionary, never null.
+        /// </remarks>
         public static IReadOnlyDictionary<string, string> ScenePathToGuidMap => GetScenePathToGuidMap(true);
 
         [Preserve]
@@ -84,9 +93,10 @@ namespace Eflatun.SceneReference
             {
                 if (errorIfMissing)
                 {
-                    Logger.Error("Scene GUID to path map file not found!");
+                    Logger.Error("Scene GUID to path map not found!");
                 }
 
+                FillWith(new Dictionary<string, string>());
                 return;
             }
 

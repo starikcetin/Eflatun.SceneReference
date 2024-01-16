@@ -26,6 +26,9 @@ namespace Eflatun.SceneReference
     {
         private static Dictionary<string, string> _sceneGuidToAddressMap;
 
+        /// <remarks>
+        /// Null if missing.
+        /// </remarks>
         private static string MapJson
         {
             get
@@ -36,10 +39,10 @@ namespace Eflatun.SceneReference
 #else
                 var genFilePath = Paths.RelativeToResources.SceneGuidToAddressMapFile.WithoutExtension();
                 var genFile = Resources.Load<TextAsset>(genFilePath);
-                return genFile.text;
+                return genFile == null ? null : genFile.text;
 #endif // UNITY_EDITOR
 #else // ESR_ADDRESSABLES
-                return "{}";
+                return null;
 #endif // ESR_ADDRESSABLES
             }
         }
@@ -47,6 +50,9 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// The scene GUID to address map.
         /// </summary>
+        /// <remarks>
+        /// Default value is empty dictionary, never null.
+        /// </remarks>
         public static IReadOnlyDictionary<string, string> SceneGuidToAddressMap
         {
             get
@@ -132,7 +138,8 @@ namespace Eflatun.SceneReference
 
             if (string.IsNullOrWhiteSpace(json))
             {
-                Logger.Error("Scene GUID to address map file not found!");
+                Logger.Error("Scene GUID to address map not found!");
+                FillWith(new Dictionary<string, string>());
                 return;
             }
 

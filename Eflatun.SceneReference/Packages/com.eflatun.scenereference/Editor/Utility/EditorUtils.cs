@@ -100,5 +100,17 @@ namespace Eflatun.SceneReference.Editor.Utility
         {
             return !Directory.EnumerateFileSystemEntries(path).Any();
         }
+
+        public static void DeleteFileIfExists(string path)
+        {
+            try
+            {
+                File.Delete(path);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                // ignored
+            }
+        }
     }
 }
