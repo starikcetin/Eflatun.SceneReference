@@ -20,23 +20,6 @@ namespace Eflatun.SceneReference
         private static Dictionary<string, string> _sceneGuidToPathMap;
         private static Dictionary<string, string> _scenePathToGuidMap;
 
-        /// <remarks>
-        /// Null if missing.
-        /// </remarks>
-        private static string MapJson
-        {
-            get
-            {
-#if UNITY_EDITOR
-                return EditorMapStore.SceneGuidToPathMapJson;
-#else
-                var genFilePath = Paths.RelativeToResources.SceneGuidToPathMapFile.WithoutExtension();
-                var genFile = Resources.Load<TextAsset>(genFilePath);
-                return genFile == null ? null : genFile.text;
-#endif
-            }
-        }
-
         /// <summary>
         /// The scene GUID to path map.
         /// </summary>
@@ -72,22 +55,31 @@ namespace Eflatun.SceneReference
             return _scenePathToGuidMap;
         }
 
-        internal static void DirectAssign(Dictionary<string, string> sceneGuidToPathMap)
+        internal static void FillWith(Dictionary<string, string> sceneGuidToPathMap)
         {
-            FillWith(sceneGuidToPathMap);
+            _sceneGuidToPathMap = sceneGuidToPathMap;
+            _scenePathToGuidMap = sceneGuidToPathMap.ToDictionary(x => x.Value, x => x.Key);
         }
 
         private static void LoadIfNotAlready(bool errorIfMissing)
         {
-            if (_sceneGuidToPathMap == null)
+            static string _LoadJson()
             {
-                Load(errorIfMissing);
+#if UNITY_EDITOR
+                return EditorMapStore.SceneGuidToPathMapJson;
+#else
+                var genFilePath = Paths.RelativeToResources.SceneGuidToPathMapFile.WithoutExtension();
+                var genFile = Resources.Load<TextAsset>(genFilePath);
+                return genFile == null ? null : genFile.text;
+#endif
             }
-        }
 
-        private static void Load(bool errorIfMissing)
-        {
-            var json = MapJson;
+            if (_sceneGuidToPathMap != null)
+            {
+                return;
+            }
+
+            var json = _LoadJson();
 
             if (string.IsNullOrWhiteSpace(json))
             {
@@ -102,12 +94,6 @@ namespace Eflatun.SceneReference
 
             var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
             FillWith(deserialized);
-        }
-
-        private static void FillWith(Dictionary<string, string> sceneGuidToPathMap)
-        {
-            _sceneGuidToPathMap = sceneGuidToPathMap;
-            _scenePathToGuidMap = sceneGuidToPathMap.ToDictionary(x => x.Value, x => x.Key);
         }
     }
 }

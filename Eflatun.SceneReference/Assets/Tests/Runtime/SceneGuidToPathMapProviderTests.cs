@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Eflatun.SceneReference.Tests.Runtime.Utils;
+﻿using Eflatun.SceneReference.Tests.Runtime.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Eflatun.SceneReference.Tests.Runtime
 {
@@ -50,7 +50,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DirectAssign_Works()
+        public void FillWith_Works()
         {
             // cleanup
             var toRestore = SceneGuidToPathMapProvider.SceneGuidToPathMap.ToDictionary();
@@ -61,11 +61,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
                 {"bar", "b"},
                 {"baz", "c"},
             };
-            SceneGuidToPathMapProvider.DirectAssign(expected);
+            SceneGuidToPathMapProvider.FillWith(expected);
             CollectionAssert.AreEquivalent(expected, SceneGuidToPathMapProvider.SceneGuidToPathMap);
 
             // cleanup
-            SceneGuidToPathMapProvider.DirectAssign(toRestore);
+            SceneGuidToPathMapProvider.FillWith(toRestore);
         }
 
         [Test]

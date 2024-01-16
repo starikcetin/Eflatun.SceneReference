@@ -95,7 +95,7 @@ namespace Eflatun.SceneReference.Editor
             }
 
             EditorMapStore.SceneGuidToPathMapJson = jsonRaw;
-            SceneGuidToPathMapProvider.DirectAssign(sceneGuidToPathMap);
+            SceneGuidToPathMapProvider.FillWith(sceneGuidToPathMap);
         }
 
         private static Dictionary<string, string> GenerateSceneGuidToAddressMap(string[] allSceneGuids)
@@ -134,7 +134,7 @@ namespace Eflatun.SceneReference.Editor
             }
 
             EditorMapStore.SceneGuidToAddressMapJson = jsonRaw;
-            SceneGuidToAddressMapProvider.DirectAssign(sceneGuidToAddressMap);
+            SceneGuidToAddressMapProvider.FillWith(sceneGuidToAddressMap);
         }
     }
 }

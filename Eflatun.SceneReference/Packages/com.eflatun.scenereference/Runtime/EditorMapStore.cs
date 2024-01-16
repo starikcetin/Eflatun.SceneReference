@@ -7,7 +7,7 @@ namespace Eflatun.SceneReference
     {
         private static readonly string KeyPrefix = $"Eflatun_SceneReference_";
 
-        public static readonly string SceneGuidToPathMapJson_Key = $"{KeyPrefix}SceneGuidToPathMapJson";
+        private static readonly string SceneGuidToPathMapJson_Key = $"{KeyPrefix}SceneGuidToPathMapJson";
 
         /// <remarks>
         /// Null if missing.
@@ -18,7 +18,7 @@ namespace Eflatun.SceneReference
             set => EditorUserSettings.SetConfigValue(SceneGuidToPathMapJson_Key, value);
         }
 
-        public static readonly string SceneGuidToAddressMapJson_Key = $"{KeyPrefix}SceneGuidToAddressMapJson";
+        private static readonly string SceneGuidToAddressMapJson_Key = $"{KeyPrefix}SceneGuidToAddressMapJson";
 
         /// <remarks>
         /// Null if missing.

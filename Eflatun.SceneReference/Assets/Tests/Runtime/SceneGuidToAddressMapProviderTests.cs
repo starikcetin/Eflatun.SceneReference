@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using Eflatun.SceneReference.Exceptions;
+﻿using Eflatun.SceneReference.Exceptions;
 using Eflatun.SceneReference.Tests.Runtime.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Eflatun.SceneReference.Tests.Runtime
 {
     public class SceneGuidToAddressMapProviderTests
     {
         [Test]
-        public void DirectAssign_Works()
+        public void FillWith_Works()
         {
             // cleanup
             var toRestore = SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ToDictionary();
@@ -20,11 +20,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
                 {"bar", "b"},
                 {"baz", "c"},
             };
-            SceneGuidToAddressMapProvider.DirectAssign(expected);
+            SceneGuidToAddressMapProvider.FillWith(expected);
             CollectionAssert.AreEquivalent(expected, SceneGuidToAddressMapProvider.SceneGuidToAddressMap);
 
             // cleanup
-            SceneGuidToAddressMapProvider.DirectAssign(toRestore);
+            SceneGuidToAddressMapProvider.FillWith(toRestore);
         }
 
         [Test]

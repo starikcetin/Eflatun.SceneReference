@@ -26,27 +26,6 @@ namespace Eflatun.SceneReference
     {
         private static Dictionary<string, string> _sceneGuidToAddressMap;
 
-        /// <remarks>
-        /// Null if missing.
-        /// </remarks>
-        private static string MapJson
-        {
-            get
-            {
-#if ESR_ADDRESSABLES
-#if UNITY_EDITOR
-                return EditorMapStore.SceneGuidToAddressMapJson;
-#else
-                var genFilePath = Paths.RelativeToResources.SceneGuidToAddressMapFile.WithoutExtension();
-                var genFile = Resources.Load<TextAsset>(genFilePath);
-                return genFile == null ? null : genFile.text;
-#endif // UNITY_EDITOR
-#else // ESR_ADDRESSABLES
-                return null;
-#endif // ESR_ADDRESSABLES
-            }
-        }
-
         /// <summary>
         /// The scene GUID to address map.
         /// </summary>
@@ -114,27 +93,39 @@ namespace Eflatun.SceneReference
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// IMPORTANT: This method does NOT check if addressables support is enabled or not! It will assign no matter what.
-        /// </summary>
-        internal static void DirectAssign(Dictionary<string, string> sceneGuidToAddressMap)
+        /// </remarks>
+        internal static void FillWith(Dictionary<string, string> sceneGuidToAddressMap)
         {
-            FillWith(sceneGuidToAddressMap);
+            _sceneGuidToAddressMap = sceneGuidToAddressMap;
         }
 
         [Preserve]
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void LoadIfNotAlready()
         {
-            if (_sceneGuidToAddressMap == null)
+            static string GetMapJson()
             {
-                Load();
+#if ESR_ADDRESSABLES
+#if UNITY_EDITOR
+                return EditorMapStore.SceneGuidToAddressMapJson;
+#else
+                var genFilePath = Paths.RelativeToResources.SceneGuidToAddressMapFile.WithoutExtension();
+                var genFile = Resources.Load<TextAsset>(genFilePath);
+                return genFile == null ? null : genFile.text;
+#endif // UNITY_EDITOR
+#else // ESR_ADDRESSABLES
+                return null;
+#endif // ESR_ADDRESSABLES
             }
-        }
 
-        private static void Load()
-        {
-            var json = MapJson;
+            if (_sceneGuidToAddressMap != null)
+            {
+                return;
+            }
+
+            var json = GetMapJson();
 
             if (string.IsNullOrWhiteSpace(json))
             {
@@ -145,11 +136,6 @@ namespace Eflatun.SceneReference
 
             var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
             FillWith(deserialized);
-        }
-
-        private static void FillWith(Dictionary<string, string> sceneGuidToAddressMap)
-        {
-            _sceneGuidToAddressMap = sceneGuidToAddressMap;
         }
     }
 }
