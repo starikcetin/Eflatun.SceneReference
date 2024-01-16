@@ -327,6 +327,9 @@ You can trigger the generator via a menu item. Find it under `Tools/Eflatun/Scen
 
 ![.assets/generator_menu.png](.assets/generator_menu.png)
 
+> [!TIP]<br/>
+> Automatic generation only outputs files during a build. The menu item with the file output only exists for debugging purposes.
+
 ### In Editor Code
 
 You can trigger the generator from your editor code:
