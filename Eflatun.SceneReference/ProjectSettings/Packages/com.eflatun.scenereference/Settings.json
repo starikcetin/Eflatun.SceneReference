@@ -29,12 +29,12 @@
             {
                 "type": "Eflatun.SceneReference.LogLevel, Eflatun.SceneReference, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "Logging.EditorLogLevel",
-                "value": "{\"m_Value\":10}"
+                "value": "{\"m_Value\":20}"
             },
             {
                 "type": "Newtonsoft.Json.Formatting, Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
                 "key": "SceneDataMaps.JsonFormatting",
-                "value": "{\"m_Value\":1}"
+                "value": "{\"m_Value\":0}"
             }
         ]
     }

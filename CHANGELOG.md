@@ -15,6 +15,8 @@ There are fundamental changes to the editor-time behaviour in this release. Plea
 ### Added
 
 ### Changed
+- Default value of `EditorLogLevel` setting is now `Warning`, it was previously `Debug`.
+- Default value of `JsonFormatting` setting is now `None`, it was previously `Indented`.
 
 ### Removed
 
