@@ -308,9 +308,19 @@ It is recommended to leave this option at _true_, as a failed map generation can
 
 # Advanced Usage
 
-## Generated Files
+## Generation Outputs
 
-`Eflatun.SceneReference` uses a JSON generator to produce map files during a build, and deletes them right after. You can find them at this location: `Assets/Resources`. They all start with `Eflatun_SceneReference_` and end with `.generated.json`.
+`Eflatun.SceneReference` outputs generated maps to three locations:
+1. JSON files under `Assets/Resources`. They all start with `Eflatun_SceneReference_` and end with `.generated.json`.
+2. `UserSettings`.
+3. Internal direct assign to the providers.
+
+The steps 2 and 3 run for all generations. The JSON files on the other hand, will only be generated in two circumstances:
+1. Manaully running the generator via the relevant menu item.
+2. During a build if the _Before Build_ generation trigger is enabled.
+
+> [!NOTE]<br/>
+> If the _Before Build_ generation trigger is enabled, JSON map files will also be cleaned up after a build.
 
 > [!WARNING]<br/>
 > Map files are auto-generated, do not edit them. Any edits will be lost at the next generation.
@@ -319,7 +329,7 @@ It is recommended to leave this option at _true_, as a failed map generation can
 
 The generator runs automatically according to the triggers selected in the settings. However, if for some reason you need to run the generator yourself, you can do so. 
 
-Running the generator has no side-effects.
+Running the generator has no side-effects (other than the JSON file output if you select the corresponding option).
 
 ### Via Menu Item
 
@@ -328,7 +338,7 @@ You can trigger the generator via a menu item. Find it under `Tools/Eflatun/Scen
 ![.assets/generator_menu.png](.assets/generator_menu.png)
 
 > [!TIP]<br/>
-> Automatic generation only outputs files during a build. The menu item with the file output only exists for debugging purposes.
+> Automatic generation (i.e. generation triggers) only outputs files during a build. With menu items, you decide whether to output files or not.
 
 ### In Editor Code
 
@@ -338,8 +348,11 @@ You can trigger the generator from your editor code:
 // Import Editor namespace
 using Eflatun.SceneReference.Editor;
 
-// Run the generator. Only do this in Editor code!
-SceneDataMapsGenerator.Run();
+// Run the generator and output files. Only do this in Editor code!
+SceneDataMapsGenerator.Run(true);
+
+// Run the generator and but do not output files. Only do this in Editor code!
+SceneDataMapsGenerator.Run(false);
 ```
 
 ## Accessing Settings in Editor Code

@@ -9,6 +9,12 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 
         public void OnPostprocessBuild(BuildReport report)
         {
+            if (!SettingsManager.SceneDataMaps.IsGenerationTriggerEnabled(SceneDataMapsGeneratorTriggers.BeforeBuild))
+            {
+                // do not log anything, as a warning is already logged in BuildPreProcessor
+                return;
+            }
+
             SceneDataMapsGenerator.CleanFileOutput();
         }
     }

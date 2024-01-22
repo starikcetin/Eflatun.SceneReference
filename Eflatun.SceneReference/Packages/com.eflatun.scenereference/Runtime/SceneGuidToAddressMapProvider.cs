@@ -108,13 +108,8 @@ namespace Eflatun.SceneReference
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void LoadIfNotAlready()
         {
-            if (_sceneGuidToAddressMap != null)
-            {
-                return;
-            }
-
 #if ESR_ADDRESSABLES
-            static string GetMapJson()
+            static string _LoadJson()
             {
 #if UNITY_EDITOR
                 return EditorMapStore.SceneGuidToAddressMapJson;
@@ -125,7 +120,12 @@ namespace Eflatun.SceneReference
 #endif // UNITY_EDITOR
             }
 
-            var json = GetMapJson();
+            if (_sceneGuidToAddressMap != null)
+            {
+                return;
+            }
+
+            var json = _LoadJson();
 
             if (string.IsNullOrWhiteSpace(json))
             {
