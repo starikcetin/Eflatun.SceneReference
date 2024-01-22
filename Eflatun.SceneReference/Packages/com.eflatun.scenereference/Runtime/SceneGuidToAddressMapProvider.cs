@@ -108,6 +108,11 @@ namespace Eflatun.SceneReference
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void LoadIfNotAlready()
         {
+            if (_sceneGuidToAddressMap != null)
+            {
+                return;
+            }
+
 #if ESR_ADDRESSABLES
             static string _LoadJson()
             {
@@ -118,11 +123,6 @@ namespace Eflatun.SceneReference
                 var genFile = Resources.Load<TextAsset>(genFilePath);
                 return genFile == null ? null : genFile.text;
 #endif // UNITY_EDITOR
-            }
-
-            if (_sceneGuidToAddressMap != null)
-            {
-                return;
             }
 
             var json = _LoadJson();
