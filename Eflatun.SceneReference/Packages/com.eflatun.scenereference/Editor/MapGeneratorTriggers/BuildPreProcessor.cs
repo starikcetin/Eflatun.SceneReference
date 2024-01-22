@@ -19,7 +19,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
 
             try
             {
-                SceneDataMapsGenerator.Run();
+                SceneDataMapsGenerator.Run(true);
             }
             catch (Exception ex)
             {

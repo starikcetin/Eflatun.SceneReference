@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Eflatun.SceneReference.Editor.Utility;
+using System.Collections.Generic;
 using System.Linq;
-using Eflatun.SceneReference.Editor.Utility;
 using UnityEditor;
 
 namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
@@ -19,7 +19,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
             {
                 if (SettingsManager.SceneDataMaps.IsGenerationTriggerEnabled(SceneDataMapsGeneratorTriggers.AfterSceneAssetChange))
                 {
-                    SceneDataMapsGenerator.Run();
+                    SceneDataMapsGenerator.Run(false);
                 }
                 else
                 {

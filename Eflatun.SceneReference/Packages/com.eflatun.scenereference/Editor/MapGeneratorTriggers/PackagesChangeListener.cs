@@ -17,7 +17,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
         {
             if (SettingsManager.SceneDataMaps.IsGenerationTriggerEnabled(SceneDataMapsGeneratorTriggers.AfterPackagesResolve))
             {
-                SceneDataMapsGenerator.Run();
+                SceneDataMapsGenerator.Run(false);
             }
             else
             {
