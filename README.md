@@ -30,6 +30,9 @@
 
 # Installation
 
+> [!IMPORTANT]<br/>
+> Minimum compatible Unity version is `2020.3.48f1`.
+
 ## Get `Eflatun.SceneReference`
 
 ### With OpenUPM (recommended)
