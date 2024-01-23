@@ -1,6 +1,6 @@
 {
 	"name": "com.eflatun.scenereference",
-	"version": "3.2.1",
+	"version": "4.0.0",
 	"displayName": "Eflatun.SceneReference",
 	"description": "Scene References for Runtime and Editor. Strongly typed, robust, and reliable. Provides Asset GUID, Scene Path, Build Index, and Scene Name.\nhttps://github.com/starikcetin/Eflatun.SceneReference",
 	"documentationUrl": "https://github.com/starikcetin/Eflatun.SceneReference/blob/main/README.md",
@@ -23,5 +23,7 @@
 	"dependencies": {
 		"com.unity.settings-manager": "2.0.1",
 		"com.unity.nuget.newtonsoft-json": "3.0.2"
-	}
+	},
+	"unity": "2020.3",
+	"unityRelease": "48f1"
 }

@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using Eflatun.SceneReference.Exceptions;
 using UnityEditor;
-using UnityEngine;
 
 #if ESR_ADDRESSABLES
 using UnityEditor.AddressableAssets;
@@ -96,5 +95,22 @@ namespace Eflatun.SceneReference.Editor.Utility
             AddressableAssetSettingsDefaultObject.Settings.CreateOrMoveEntry(sceneGuid, defaultGroup);
         }
 #endif // ESR_ADDRESSABLES
+
+        public static bool IsDirectoryEmpty(string path)
+        {
+            return !Directory.EnumerateFileSystemEntries(path).Any();
+        }
+
+        public static void DeleteFileIfExists(string path)
+        {
+            try
+            {
+                File.Delete(path);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                // ignored
+            }
+        }
     }
 }

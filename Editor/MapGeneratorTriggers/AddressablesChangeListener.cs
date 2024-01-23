@@ -23,7 +23,7 @@ namespace Eflatun.SceneReference.Editor.MapGeneratorTriggers
             {
                 if (SettingsManager.SceneDataMaps.IsGenerationTriggerEnabled(SceneDataMapsGeneratorTriggers.AfterAddressablesChange))
                 {
-                    SceneDataMapsGenerator.Run();
+                    SceneDataMapsGenerator.Run(false);
                 }
                 else
                 {

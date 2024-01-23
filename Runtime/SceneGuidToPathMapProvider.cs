@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Eflatun.SceneReference.Utility;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Scripting;
+
+#if !UNITY_EDITOR
+using Eflatun.SceneReference.Utility;
+#endif
 
 namespace Eflatun.SceneReference
 {
@@ -20,11 +23,17 @@ namespace Eflatun.SceneReference
         /// <summary>
         /// The scene GUID to path map.
         /// </summary>
+        /// <remarks>
+        /// Default value is empty dictionary, never null.
+        /// </remarks>
         public static IReadOnlyDictionary<string, string> SceneGuidToPathMap => GetSceneGuidToPathMap(true);
 
         /// <summary>
         /// The scene path to GUID map.
         /// </summary>
+        /// <remarks>
+        /// Default value is empty dictionary, never null.
+        /// </remarks>
         public static IReadOnlyDictionary<string, string> ScenePathToGuidMap => GetScenePathToGuidMap(true);
 
         [Preserve]
@@ -46,42 +55,45 @@ namespace Eflatun.SceneReference
             return _scenePathToGuidMap;
         }
 
-        internal static void DirectAssign(Dictionary<string, string> sceneGuidToPathMap)
+        internal static void FillWith(Dictionary<string, string> sceneGuidToPathMap)
         {
-            FillWith(sceneGuidToPathMap);
+            _sceneGuidToPathMap = sceneGuidToPathMap;
+            _scenePathToGuidMap = sceneGuidToPathMap.ToDictionary(x => x.Value, x => x.Key);
         }
 
         private static void LoadIfNotAlready(bool errorIfMissing)
         {
-            if (_sceneGuidToPathMap == null)
+            static string _LoadJson()
             {
-                Load(errorIfMissing);
+#if UNITY_EDITOR
+                return EditorMapStore.SceneGuidToPathMapJson;
+#else
+                var genFilePath = Paths.RelativeToResources.SceneGuidToPathMapFile.WithoutExtension();
+                var genFile = Resources.Load<TextAsset>(genFilePath);
+                return genFile == null ? null : genFile.text;
+#endif
             }
-        }
 
-        private static void Load(bool errorIfMissing)
-        {
-            var genFilePath = Paths.RelativeToResources.SceneGuidToPathMapFile.UnixPath.WithoutExtension();
-            var genFile = Resources.Load<TextAsset>(genFilePath);
-
-            if (genFile == null)
+            if (_sceneGuidToPathMap != null)
             {
-                if (errorIfMissing)
-                {
-                    Logger.Error("Scene GUID to path map file not found!");
-                }
-
                 return;
             }
 
-            var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(genFile.text);
-            FillWith(deserialized);
-        }
+            var json = _LoadJson();
 
-        private static void FillWith(Dictionary<string, string> sceneGuidToPathMap)
-        {
-            _sceneGuidToPathMap = sceneGuidToPathMap;
-            _scenePathToGuidMap = sceneGuidToPathMap.ToDictionary(x => x.Value, x => x.Key);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                if (errorIfMissing)
+                {
+                    Logger.Error("Scene GUID to path map not found!");
+                }
+
+                FillWith(new Dictionary<string, string>());
+                return;
+            }
+
+            var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            FillWith(deserialized);
         }
     }
 }

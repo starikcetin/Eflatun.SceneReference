@@ -1,10 +1,10 @@
-﻿using System.Reflection;
-using Eflatun.SceneReference.Editor.Utility;
+﻿using Eflatun.SceneReference.Editor.Utility;
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.SettingsManagement;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Eflatun.SceneReference.Editor
@@ -67,12 +67,12 @@ namespace Eflatun.SceneReference.Editor
 
             /// <summary>
             /// Controls the Scene Data Maps Generator's JSON formatting.<br/>
-            /// It is recommended to leave this option at <c>Indented</c> as it will make the generated files human-readable.
+            /// It is recommended to leave this option at <see cref="Formatting.None"/>, as it will make the generated files smaller in size.
             /// </summary>
             /// <remarks><inheritdoc cref="SettingsManager"/></remarks>
-            [field: UserSetting(CategoryName, "JSON Formatting", "Controls the Scene Data Maps Generator's JSON formatting.\n\nIt is recommended to leave this option at 'Indented' as it will make the generated files human-readable.")]
+            [field: UserSetting(CategoryName, "JSON Formatting", "Controls the Scene Data Maps Generator's JSON formatting.\n\nIt is recommended to leave this option at 'None', as it will make the generated files smaller in size.")]
             public static ProjectSetting<Formatting> JsonFormatting { get; }
-                = new ProjectSetting<Formatting>("SceneDataMaps.JsonFormatting", Formatting.Indented);
+                = new ProjectSetting<Formatting>("SceneDataMaps.JsonFormatting", Formatting.None);
 
             /// <summary>
             /// Should we fail a build if scene data maps generation fails?<br/>
@@ -91,7 +91,7 @@ namespace Eflatun.SceneReference.Editor
             /// <seealso cref="GenerationTriggers"/>
             public static bool IsGenerationTriggerEnabled(SceneDataMapsGeneratorTriggers trigger) =>
                 GenerationTriggers.value.IncludesFlag(trigger);
-            
+
             [UserSettingBlock(CategoryName)]
             private static void Draw(string searchContext)
             {
@@ -196,15 +196,15 @@ namespace Eflatun.SceneReference.Editor
             private const string CategoryName = "Logging";
 
             /// <summary>
-            /// Log level for the editor logger. It is recommended to leave this at <see cref="LogLevel.Debug"/>.
+            /// Log level for the editor logger. It is recommended to leave this at <see cref="LogLevel.Warning"/>.
             /// </summary>
             /// <remarks>
             /// Exceptions will always be logged.<p/>
             /// <inheritdoc cref="SettingsManager"/>
             /// </remarks>
-            [field: UserSetting(CategoryName, "Editor Log Level", "Log level for the editor logger. It is recommended to leave this at 'Debug'.")]
+            [field: UserSetting(CategoryName, "Editor Log Level", "Log level for the editor logger. It is recommended to leave this at 'Warning'.")]
             public static ProjectSetting<LogLevel> EditorLogLevel { get; }
-                = new ProjectSetting<LogLevel>("Logging.EditorLogLevel", LogLevel.Debug);
+                = new ProjectSetting<LogLevel>("Logging.EditorLogLevel", LogLevel.Warning);
         }
     }
 }
