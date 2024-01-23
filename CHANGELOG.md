@@ -11,6 +11,7 @@ There are fundamental changes to the editor-time behaviour in this release. Plea
 ### Breaking Changes
 - From now on, map files are only generated during a build, and removed right after. In editor-time, maps are instead stored in and fetched from User Settings. You can remove the generated files and folders from your project, and remove the corresponding lines from your source control's ignore settings.
 - `SceneDataMapsGenerator.Run` now takes a booelan argument that controls whether to ouput files or not.
+- Minimum compatible Unity version is set to `2020.3.48f1`.
 
 ### Added
 
