@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [Unreleased]
+
+### Breaking Changes
+
+### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+
+## [4.0.0] - 2024-01-23
 There are fundamental changes to the editor-time behaviour in this release. Please examine carefully before upgrading.
 
 ### Breaking Changes
@@ -13,13 +27,9 @@ There are fundamental changes to the editor-time behaviour in this release. Plea
 - `SceneDataMapsGenerator.Run` now takes a booelan argument that controls whether to ouput files or not.
 - Minimum compatible Unity version is set to `2020.3.48f1`.
 
-### Added
-
 ### Changed
 - Default value of `EditorLogLevel` setting is now `Warning`, it was previously `Debug`.
 - Default value of `JsonFormatting` setting is now `None`, it was previously `Indented`.
-
-### Removed
 
 ### Fixed
 - Prevent null ref exceptions during runtime caused by uninitialized map providers when the maps are missing.
