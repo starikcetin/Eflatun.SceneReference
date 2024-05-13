@@ -2,6 +2,9 @@
 using Eflatun.SceneReference.Utility;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.SettingsManagement;
@@ -205,6 +208,122 @@ namespace Eflatun.SceneReference.Editor
             [field: UserSetting(CategoryName, "Editor Log Level", "Log level for the editor logger. It is recommended to leave this at 'Warning'.")]
             public static ProjectSetting<LogLevel> EditorLogLevel { get; }
                 = new ProjectSetting<LogLevel>("Logging.EditorLogLevel", LogLevel.Warning);
+        }
+
+        [PublicAPI]
+        public static class UtilityIgnores
+        {
+            private const string CategoryName = "Utility Ignores";
+
+            [field: UserSetting]
+            public static ProjectSetting<UtilityIgnoreMode> ColoringIgnoreMode { get; }
+                = new ProjectSetting<UtilityIgnoreMode>("UtilityIgnores.ColoringIgnoreMode", UtilityIgnoreMode.Disabled);
+
+            [field: UserSetting]
+            public static ProjectSetting<UtilityIgnoreMode> ToolboxIgnoreMode { get; }
+                = new ProjectSetting<UtilityIgnoreMode>("UtilityIgnores.ToolboxIgnoreMode", UtilityIgnoreMode.Disabled);
+
+            [field: UserSetting]
+            public static ProjectSetting<List<string>> ColoringIgnoresList { get; }
+                = new ProjectSetting<List<string>>("UtilityIgnores.ColoringIgnoresList", new List<string>());
+
+            [field: UserSetting]
+            public static ProjectSetting<List<string>> ToolboxIgnoresList { get; }
+                = new ProjectSetting<List<string>>("UtilityIgnores.ToolboxIgnoresList", new List<string>());
+
+            [field: UserSetting]
+            public static ProjectSetting<string> ColoringIgnoresGlobs { get; }
+                = new ProjectSetting<string>("UtilityIgnores.ColoringIgnoresGlobs", string.Empty);
+
+            [field: UserSetting]
+            public static ProjectSetting<string> ToolboxIgnoresGlobs { get; }
+                = new ProjectSetting<string>("UtilityIgnores.ToolboxIgnoresGlobs", string.Empty);
+
+            [UserSettingBlock(CategoryName)]
+            private static void Draw(string searchContext)
+            {
+                EditorGUI.BeginChangeCheck();
+
+                DrawUtilityIgnores("Coloring", ColoringIgnoreMode, ColoringIgnoresList, ColoringIgnoresGlobs);
+                DrawUtilityIgnores("Toolbox", ToolboxIgnoreMode, ToolboxIgnoresList, ToolboxIgnoresGlobs);
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Settings.Save();
+                }
+            }
+
+            private static void DrawUtilityIgnores(string title,
+                ProjectSetting<UtilityIgnoreMode> ignoreMode,
+                ProjectSetting<List<string>> ignoresList,
+                ProjectSetting<string> ignoresGlobs)
+            {
+                ignoreMode.value = (UtilityIgnoreMode)EditorGUILayout.EnumPopup($"{title} Ignore Mode", ignoreMode.value);
+
+                switch (ignoreMode.value)
+                {
+                    case UtilityIgnoreMode.Disabled:
+                        break;
+
+                    case UtilityIgnoreMode.List:
+                        EditorGUI.BeginChangeCheck();
+
+                        EditorGUILayout.BeginHorizontal();
+
+                        EditorGUILayout.LabelField($"{title} Ignored Scenes");
+
+                        if (GUILayout.Button("Clear"))
+                        {
+                            ignoresList.value.Clear();
+                        }
+
+                        if (GUILayout.Button("+"))
+                        {
+                            ignoresList.value.Add(string.Empty);
+                        }
+
+                        EditorGUILayout.EndHorizontal();
+
+                        for (var i = 0; i < ignoresList.value.Count; i++)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+
+                            EditorGUILayout.LabelField(i.ToString(), GUILayout.Width(20));
+
+                            var guid = ignoresList.value[i];
+                            var obj = AssetDatabase.LoadAssetAtPath<SceneAsset>(AssetDatabase.GUIDToAssetPath(guid));
+                            var sceneAsset = EditorGUILayout.ObjectField(obj, typeof(SceneAsset), false) as SceneAsset;
+
+                            ignoresList.value[i] = sceneAsset == null
+                                ? string.Empty
+                                : AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(sceneAsset));
+
+                            if (GUILayout.Button("-", GUILayout.Width(20)))
+                            {
+                                ignoresList.value.RemoveAt(i);
+                            }
+
+                            EditorGUILayout.EndHorizontal();
+                        }
+
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            ignoresList.value = ignoresList.value.ToList();
+                        }
+
+                        EditorGUILayout.Separator();
+                        break;
+
+                    case UtilityIgnoreMode.Globs:
+                        EditorGUILayout.LabelField($"{title} Ignore Patterns");
+                        ignoresGlobs.value = EditorGUILayout.TextArea(ignoresGlobs.value);
+                        EditorGUILayout.Separator();
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
     }
 }
