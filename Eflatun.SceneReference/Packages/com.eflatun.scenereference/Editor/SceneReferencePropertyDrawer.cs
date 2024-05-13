@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -46,7 +46,23 @@ namespace Eflatun.SceneReference.Editor
         private AddressableAssetEntry _addressableEntry;
 #endif // ESR_ADDRESSABLES
 
-        private bool ShouldColorSceneInBuild => _optionsAttribute.SceneInBuildColoring switch
+        private bool IsColoringIgnored => SettingsManager.UtilityIgnores.ColoringIgnoreMode.value switch
+        {
+            UtilityIgnoreMode.Disabled => false,
+            UtilityIgnoreMode.List => SettingsManager.UtilityIgnores.ColoringIgnoresList.value.Contains(_guid),
+            UtilityIgnoreMode.Globs => false /* TODO */,
+            _ => throw new ArgumentOutOfRangeException(nameof(SettingsManager.UtilityIgnores.ColoringIgnoreMode), SettingsManager.UtilityIgnores.ColoringIgnoreMode, null)
+        };
+
+        private bool IsToolboxIgnored => SettingsManager.UtilityIgnores.ToolboxIgnoreMode.value switch
+        {
+            UtilityIgnoreMode.Disabled => false,
+            UtilityIgnoreMode.List => SettingsManager.UtilityIgnores.ToolboxIgnoresList.value.Contains(_guid),
+            UtilityIgnoreMode.Globs => false /* TODO */,
+            _ => throw new ArgumentOutOfRangeException(nameof(SettingsManager.UtilityIgnores.ToolboxIgnoreMode), SettingsManager.UtilityIgnores.ToolboxIgnoreMode, null)
+        };
+
+        private bool ShouldColorSceneInBuild => !IsColoringIgnored && _optionsAttribute.SceneInBuildColoring switch
         {
             ColoringBehaviour.Enabled => true,
             ColoringBehaviour.Disabled => false,
@@ -54,7 +70,7 @@ namespace Eflatun.SceneReference.Editor
             _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.SceneInBuildColoring), _optionsAttribute.SceneInBuildColoring, null)
         };
 
-        private bool ShouldColorAddressable => _optionsAttribute.AddressableColoring switch
+        private bool ShouldColorAddressable => !IsColoringIgnored && _optionsAttribute.AddressableColoring switch
         {
             ColoringBehaviour.Enabled => true,
             ColoringBehaviour.Disabled => false,
@@ -62,7 +78,7 @@ namespace Eflatun.SceneReference.Editor
             _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.AddressableColoring), _optionsAttribute.AddressableColoring, null)
         };
 
-        private bool ShouldShowToolbox => _optionsAttribute.Toolbox switch
+        private bool ShouldShowToolbox => !IsToolboxIgnored && _optionsAttribute.Toolbox switch
         {
             ToolboxBehaviour.Enabled => true,
             ToolboxBehaviour.Disabled => false,
@@ -212,7 +228,7 @@ namespace Eflatun.SceneReference.Editor
             }
 
 #if ESR_ADDRESSABLES
-            if(_bundlingState == SceneBundlingState.Nowhere || _bundlingState == SceneBundlingState.InBuildDisabled)
+            if (_bundlingState == SceneBundlingState.Nowhere || _bundlingState == SceneBundlingState.InBuildDisabled)
             {
                 tools.Add(new MakeAddressableTool(_path, _guid, _asset));
             }
