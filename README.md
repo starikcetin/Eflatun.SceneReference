@@ -574,6 +574,82 @@ var fromSceneAsset = new SceneReference(sceneAsset);
 > [!CAUTION]<br/>
 > The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor use only. Do NOT use it in runtime code.
 
+## Using a `SceneReference` as a Parameter with a `UnityEvent`
+
+There are two ways you can fill-in parameters of a listener when you are invoking them via a `UnityEvent`:
+
+### Dynamically Provided
+
+Dynamically provided parameters are filled in by the code that invokes the event. You do not assign them in the inspector. In this case, you do not need to do anything special. Simply connect a `UnityEvent<SceneReference>` to a method that accepts a `SceneReference` as a parameter and it will work.
+
+Example of a `UnityEvent` emitter and a listener that can use a dynamically provided `SceneReference` parameter:
+
+```cs
+public class Emitter : MonoBehaviour
+{
+    public SceneReference scene;
+    public UnityEvent<SceneReference> raised;
+
+    void Raise()
+    {
+        raised.Invoke(scene);
+    }
+}
+
+public class Listener : MonoBehaviour
+{
+    public void Listen(SceneReference scene)
+    {
+        // ...
+    }
+}
+```
+
+### Statically Assigned
+
+Statically assigned parameters are those that the listener takes in, but the emitter doesn't provide. Therefore Unity asks you to fill them in yourself during the wiring of the event. If you are doing this in the inspector, then you won't be able to fill a missing `SceneReference` in there. In fact, Unity won't even allow you to select a method as a listener that requires a `SceneReference` to be assigned statically.
+
+> [!NOTE]<br/>
+> This is a limitation with `UnityEvent`s, please see the relevant Unity documentation for more information. To summarize: `UnityEvent` supports predefined (static) calls with primitive arguments, and arguments of type `UnityEngine.Object`. Since `SceneReference` is none of those, it can only be used with dynamic calls.
+
+Example of a `UnityEvent` emitter and a listener that requires a `SceneReference` parameter to be filled in statically:
+
+```cs
+public class Emitter : MonoBehaviour
+{
+    public UnityEvent raised;
+
+    void Raise()
+    {
+        raised.Invoke();
+    }
+}
+
+public class Listener : MonoBehaviour
+{
+    public void Listen(SceneReference scene)
+    {
+        // ...
+    }
+}
+```
+
+As a workaround, we provide you with a `SceneReferenceUnityEventAdapter` class that allows you to indirectly use a statically assigned `SceneReference` parameter to a `UnityEvent` listener by acting as an adapter between the emitters and listeners. Please investigate the screenshot below to see how the emitter-side is set up, and the code block below that to see how the listener-side looks.
+
+![.assets/event_adapter.png](.assets/event_adapter.png)
+
+```cs
+public class SceneLoader : MonoBehaviour
+{
+    public void LoadScene(SceneReference scene)
+    {
+        // ...
+    }
+}
+```
+
+In the screenshot, the `OnClick` event of the button is being listened by the `Raise` method of the adapter. The `Raised` event of the adapter is being listened by the `LoadScene` method of the scene loader class. Notice the `Scene` serialized field on the adapter. The `scene` parameter of `LoadScene` method of the scene loader class is filled with the `Scene` serialized field of the adapter. This way, while we are unable to wire `LoadScene` and `OnClick` directly together, we can wire them through the `SceneReferenceUnityEventAdapter` class acting as a middleman.
+
 # Exceptions
 
 ## `EmptySceneReferenceException`
