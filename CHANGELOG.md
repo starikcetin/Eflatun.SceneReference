@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Breaking Changes
 
 ### Added
+- `SceneReferenceUnityEventAdapter` class: A utility `MonoBehaviour` that allows using statically provided `SceneReference`s as parameters to a `UnityEvent`.
 
 ### Changed
 
