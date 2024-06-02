@@ -634,7 +634,7 @@ public class Listener : MonoBehaviour
 }
 ```
 
-As a workaround, we provide you with a `SceneReferenceUnityEventAdapter` class that allows you to simulate a statically assigned `SceneReference` parameter to a `UnityEvent` listener by acting as an adapter between the emitters and listeners. Please investigate the screenshot below to see how the emitter-side is set up, and the code block below that to see how the listener-side looks.
+As a workaround, we provide you with a `SceneReferenceUnityEventAdapter` class that allows you to indirectly use a statically assigned `SceneReference` parameter to a `UnityEvent` listener by acting as an adapter between the emitters and listeners. Please investigate the screenshot below to see how the emitter-side is set up, and the code block below that to see how the listener-side looks.
 
 ![.assets/event_adapter.png](.assets/event_adapter.png)
 
@@ -648,7 +648,7 @@ public class SceneLoader : MonoBehaviour
 }
 ```
 
-In the screenshot, the `OnClick` event of the button is being listened by the `Raise` method of the adapter. The `Raised` event of the adapter is being listened by the `LoadScene` method of the demo class. Notice the `Scene` serialized field on the adapter. The `scene` parameter of `LoadScene` method of the demo class is filled with the `Scene` serialized field of the adapter. This way, while we are unable to wire `LoadScene` and `OnClick` directly, we can simulate it using the `SceneReferenceUnityEventAdapter` class as a middleman.
+In the screenshot, the `OnClick` event of the button is being listened by the `Raise` method of the adapter. The `Raised` event of the adapter is being listened by the `LoadScene` method of the scene loader class. Notice the `Scene` serialized field on the adapter. The `scene` parameter of `LoadScene` method of the scene loader class is filled with the `Scene` serialized field of the adapter. This way, while we are unable to wire `LoadScene` and `OnClick` directly together, we can wire them through the `SceneReferenceUnityEventAdapter` class acting as a middleman.
 
 # Exceptions
 
