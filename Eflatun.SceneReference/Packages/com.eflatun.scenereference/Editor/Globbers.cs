@@ -1,4 +1,6 @@
 ﻿using DotNet.Globbing;
+using System;
+using System.Linq;
 
 namespace Eflatun.SceneReference.Editor
 {
@@ -9,21 +11,24 @@ namespace Eflatun.SceneReference.Editor
 
         internal class Globber
         {
-            private Glob Glob;
+            private Glob[] Globs;
 
-            public Globber(string pattern)
+            public Globber(string patterns)
             {
-                SetPattern(pattern);
+                SetPattern(patterns);
             }
 
-            public void SetPattern(string pattern)
+            public void SetPattern(string patterns)
             {
-                Glob = string.IsNullOrWhiteSpace(pattern) ? null : Glob.Parse(pattern);
+                Globs = patterns
+                    .Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => string.IsNullOrWhiteSpace(x) ? null : Glob.Parse(x))
+                    .ToArray();
             }
 
             public bool IsIgnored(string path)
             {
-                return Glob != null && Glob.IsMatch(path);
+                return Globs.Any(x => x.IsMatch(path));
             }
         }
     }
