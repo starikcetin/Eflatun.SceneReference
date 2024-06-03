@@ -59,12 +59,12 @@
             {
                 "type": "Eflatun.SceneReference.Editor.UtilityIgnoreMode, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "UtilityIgnores.ColoringIgnoreMode",
-                "value": "{\"m_Value\":0}"
+                "value": "{\"m_Value\":2}"
             },
             {
                 "type": "Eflatun.SceneReference.Editor.UtilityIgnoreMode, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "UtilityIgnores.ToolboxIgnoreMode",
-                "value": "{\"m_Value\":0}"
+                "value": "{\"m_Value\":2}"
             }
         ]
     }

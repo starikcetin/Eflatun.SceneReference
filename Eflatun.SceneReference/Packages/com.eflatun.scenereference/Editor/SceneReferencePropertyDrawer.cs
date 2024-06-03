@@ -46,21 +46,8 @@ namespace Eflatun.SceneReference.Editor
         private AddressableAssetEntry _addressableEntry;
 #endif // ESR_ADDRESSABLES
 
-        private bool IsColoringIgnored => SettingsManager.UtilityIgnores.ColoringIgnoreMode.value switch
-        {
-            UtilityIgnoreMode.Disabled => false,
-            UtilityIgnoreMode.List => SettingsManager.UtilityIgnores.ColoringIgnoresList.value.Contains(_guid),
-            UtilityIgnoreMode.Globs => false /* TODO */,
-            _ => throw new ArgumentOutOfRangeException(nameof(SettingsManager.UtilityIgnores.ColoringIgnoreMode), SettingsManager.UtilityIgnores.ColoringIgnoreMode, null)
-        };
-
-        private bool IsToolboxIgnored => SettingsManager.UtilityIgnores.ToolboxIgnoreMode.value switch
-        {
-            UtilityIgnoreMode.Disabled => false,
-            UtilityIgnoreMode.List => SettingsManager.UtilityIgnores.ToolboxIgnoresList.value.Contains(_guid),
-            UtilityIgnoreMode.Globs => false /* TODO */,
-            _ => throw new ArgumentOutOfRangeException(nameof(SettingsManager.UtilityIgnores.ToolboxIgnoreMode), SettingsManager.UtilityIgnores.ToolboxIgnoreMode, null)
-        };
+        private bool IsColoringIgnored => SettingsManager.UtilityIgnores.IsIgnoredForColoring(_path, _guid);
+        private bool IsToolboxIgnored => SettingsManager.UtilityIgnores.IsIgnoredForToolbox(_path, _guid);
 
         private bool ShouldColorSceneInBuild => !IsColoringIgnored && _optionsAttribute.SceneInBuildColoring switch
         {
@@ -188,7 +175,7 @@ namespace Eflatun.SceneReference.Editor
                 // TODO: we should ship our own icon to prevent this breaking in the future
                 var settingsIcon = EditorGUIUtility.IconContent("SettingsIcon");
 
-// Backwards compatibility (https://github.com/starikcetin/Eflatun.SceneReference/issues/74)
+                // Backwards compatibility (https://github.com/starikcetin/Eflatun.SceneReference/issues/74)
 #if UNITY_2022_1_OR_NEWER
                 var toolboxButtonStyle = EditorStyles.iconButton;
 #else

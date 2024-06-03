@@ -16,7 +16,7 @@ namespace Eflatun.SceneReference.Editor
     /// Manages and contains settings for Scene Reference.
     /// </summary>
     /// <remarks>
-    /// Changing the settings from code may have unintended consequences. Make sure you now what you are doing.
+    /// Changing the settings from code may have unintended consequences. Make sure you know what you are doing.
     /// </remarks>
     [PublicAPI]
     public static class SettingsManager
@@ -239,15 +239,44 @@ namespace Eflatun.SceneReference.Editor
             public static ProjectSetting<string> ToolboxIgnoresGlobs { get; }
                 = new ProjectSetting<string>("UtilityIgnores.ToolboxIgnoresGlobs", string.Empty);
 
+            public static bool IsIgnoredForToolbox(string path, string guid) => ToolboxIgnoreMode.value switch
+            {
+                UtilityIgnoreMode.Disabled => false,
+                UtilityIgnoreMode.List => ToolboxIgnoresList.value.Contains(guid),
+                UtilityIgnoreMode.Globs => Globbers.Toolbox.IsIgnored(path),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            public static bool IsIgnoredForColoring(string path, string guid) => ColoringIgnoreMode.value switch
+            {
+                UtilityIgnoreMode.Disabled => false,
+                UtilityIgnoreMode.List => ColoringIgnoresList.value.Contains(guid),
+                UtilityIgnoreMode.Globs => Globbers.Coloring.IsIgnored(path),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
             [UserSettingBlock(CategoryName)]
             private static void Draw(string searchContext)
             {
+                var shouldSave = false;
+
                 EditorGUI.BeginChangeCheck();
-
                 DrawUtilityIgnores("Coloring", ColoringIgnoreMode, ColoringIgnoresList, ColoringIgnoresGlobs);
-                DrawUtilityIgnores("Toolbox", ToolboxIgnoreMode, ToolboxIgnoresList, ToolboxIgnoresGlobs);
-
                 if (EditorGUI.EndChangeCheck())
+                {
+                    Globbers.Coloring.SetPattern(ColoringIgnoresGlobs.value);
+                    shouldSave = true;
+                }
+
+                EditorGUI.BeginChangeCheck();
+                DrawUtilityIgnores("Toolbox", ToolboxIgnoreMode, ToolboxIgnoresList, ToolboxIgnoresGlobs);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Globbers.Toolbox.SetPattern(ToolboxIgnoresGlobs.value);
+                    shouldSave = true;
+                }
+
+                if (shouldSave)
                 {
                     Settings.Save();
                 }
