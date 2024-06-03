@@ -1,6 +1,5 @@
-﻿using DotNet.Globbing;
-using System;
-using System.Linq;
+﻿using System;
+using Matcher = Ignore.Ignore;
 
 namespace Eflatun.SceneReference.Editor
 {
@@ -11,7 +10,7 @@ namespace Eflatun.SceneReference.Editor
 
         internal class Globber
         {
-            private Glob[] Globs;
+            private Matcher Matcher;
 
             public Globber(string patterns)
             {
@@ -20,15 +19,14 @@ namespace Eflatun.SceneReference.Editor
 
             public void SetPattern(string patterns)
             {
-                Globs = patterns
-                    .Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => string.IsNullOrWhiteSpace(x) ? null : Glob.Parse(x))
-                    .ToArray();
+                Matcher = new Matcher();
+                var split = patterns.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                Matcher.Add(split);
             }
 
             public bool IsIgnored(string path)
             {
-                return Globs.Any(x => x.IsMatch(path));
+                return Matcher.IsIgnored(path);
             }
         }
     }
