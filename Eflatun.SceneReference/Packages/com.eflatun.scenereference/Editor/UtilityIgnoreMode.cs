@@ -4,6 +4,6 @@ namespace Eflatun.SceneReference.Editor
     {
         Disabled = 0,
         List = 1,
-        Globs = 2,
+        Patterns = 2,
     }
 }

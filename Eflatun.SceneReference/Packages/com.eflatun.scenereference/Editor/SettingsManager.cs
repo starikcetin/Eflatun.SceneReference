@@ -232,18 +232,18 @@ namespace Eflatun.SceneReference.Editor
                 = new ProjectSetting<List<string>>("UtilityIgnores.ToolboxIgnoresList", new List<string>());
 
             [field: UserSetting]
-            public static ProjectSetting<string> ColoringIgnoresGlobs { get; }
-                = new ProjectSetting<string>("UtilityIgnores.ColoringIgnoresGlobs", string.Empty);
+            public static ProjectSetting<string> ColoringIgnoresPatterns { get; }
+                = new ProjectSetting<string>("UtilityIgnores.ColoringIgnoresPatterns", string.Empty);
 
             [field: UserSetting]
-            public static ProjectSetting<string> ToolboxIgnoresGlobs { get; }
-                = new ProjectSetting<string>("UtilityIgnores.ToolboxIgnoresGlobs", string.Empty);
+            public static ProjectSetting<string> ToolboxIgnoresPatterns { get; }
+                = new ProjectSetting<string>("UtilityIgnores.ToolboxIgnoresPatterns", string.Empty);
 
             public static bool IsIgnoredForToolbox(string path, string guid) => ToolboxIgnoreMode.value switch
             {
                 UtilityIgnoreMode.Disabled => false,
                 UtilityIgnoreMode.List => ToolboxIgnoresList.value.Contains(guid),
-                UtilityIgnoreMode.Globs => Globbers.Toolbox.IsIgnored(path),
+                UtilityIgnoreMode.Patterns => IgnoreCheckers.Toolbox.IsIgnored(path),
                 _ => throw new ArgumentOutOfRangeException()
             };
 
@@ -251,7 +251,7 @@ namespace Eflatun.SceneReference.Editor
             {
                 UtilityIgnoreMode.Disabled => false,
                 UtilityIgnoreMode.List => ColoringIgnoresList.value.Contains(guid),
-                UtilityIgnoreMode.Globs => Globbers.Coloring.IsIgnored(path),
+                UtilityIgnoreMode.Patterns => IgnoreCheckers.Coloring.IsIgnored(path),
                 _ => throw new ArgumentOutOfRangeException()
             };
 
@@ -261,18 +261,18 @@ namespace Eflatun.SceneReference.Editor
                 var shouldSave = false;
 
                 EditorGUI.BeginChangeCheck();
-                DrawUtilityIgnores("Coloring", ColoringIgnoreMode, ColoringIgnoresList, ColoringIgnoresGlobs);
+                DrawUtilityIgnores("Coloring", ColoringIgnoreMode, ColoringIgnoresList, ColoringIgnoresPatterns);
                 if (EditorGUI.EndChangeCheck())
                 {
-                    Globbers.Coloring.SetPattern(ColoringIgnoresGlobs.value);
+                    IgnoreCheckers.Coloring.SetPatterns(ColoringIgnoresPatterns.value);
                     shouldSave = true;
                 }
 
                 EditorGUI.BeginChangeCheck();
-                DrawUtilityIgnores("Toolbox", ToolboxIgnoreMode, ToolboxIgnoresList, ToolboxIgnoresGlobs);
+                DrawUtilityIgnores("Toolbox", ToolboxIgnoreMode, ToolboxIgnoresList, ToolboxIgnoresPatterns);
                 if (EditorGUI.EndChangeCheck())
                 {
-                    Globbers.Toolbox.SetPattern(ToolboxIgnoresGlobs.value);
+                    IgnoreCheckers.Toolbox.SetPatterns(ToolboxIgnoresPatterns.value);
                     shouldSave = true;
                 }
 
@@ -285,7 +285,7 @@ namespace Eflatun.SceneReference.Editor
             private static void DrawUtilityIgnores(string title,
                 ProjectSetting<UtilityIgnoreMode> ignoreMode,
                 ProjectSetting<List<string>> ignoresList,
-                ProjectSetting<string> ignoresGlobs)
+                ProjectSetting<string> ignoresPatterns)
             {
                 ignoreMode.value = (UtilityIgnoreMode)EditorGUILayout.EnumPopup($"{title} Ignore Mode", ignoreMode.value);
 
@@ -343,9 +343,9 @@ namespace Eflatun.SceneReference.Editor
                         EditorGUILayout.Separator();
                         break;
 
-                    case UtilityIgnoreMode.Globs:
+                    case UtilityIgnoreMode.Patterns:
                         EditorGUILayout.LabelField($"{title} Ignore Patterns");
-                        ignoresGlobs.value = EditorGUILayout.TextArea(ignoresGlobs.value);
+                        ignoresPatterns.value = EditorGUILayout.TextArea(ignoresPatterns.value);
                         EditorGUILayout.Separator();
                         break;
 

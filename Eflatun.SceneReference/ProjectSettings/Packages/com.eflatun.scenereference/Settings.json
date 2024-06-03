@@ -57,6 +57,16 @@
                 "value": "{\"m_Value\":\"\"}"
             },
             {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "UtilityIgnores.ColoringIgnoresPatterns",
+                "value": "{\"m_Value\":\"\"}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "UtilityIgnores.ToolboxIgnoresPatterns",
+                "value": "{\"m_Value\":\"\"}"
+            },
+            {
                 "type": "Eflatun.SceneReference.Editor.UtilityIgnoreMode, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "UtilityIgnores.ColoringIgnoreMode",
                 "value": "{\"m_Value\":2}"
