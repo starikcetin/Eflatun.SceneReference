@@ -9,6 +9,8 @@ namespace Eflatun.SceneReference.Editor
 
         internal class IgnoreChecker
         {
+            private static readonly string[] LineSeperators = new string[] { "\r\n", "\r", "\n" };
+
             private Ignore.Ignore Checker;
 
             public IgnoreChecker(string patterns)
@@ -19,7 +21,7 @@ namespace Eflatun.SceneReference.Editor
             public void SetPatterns(string patterns)
             {
                 Checker = new Ignore.Ignore();
-                var split = patterns.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                var split = patterns.Split(LineSeperators, StringSplitOptions.RemoveEmptyEntries);
                 Checker.Add(split);
             }
 

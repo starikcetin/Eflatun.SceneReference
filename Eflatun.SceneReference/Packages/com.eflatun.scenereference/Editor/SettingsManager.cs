@@ -294,7 +294,7 @@ namespace Eflatun.SceneReference.Editor
             /// Make sure to call <see cref="ApplyColoringIgnoresPatterns"/> after modifying this setting via code.
             /// </summary>
             /// <remarks>
-            /// The patterns are evaluated together, just like <c>.gitignore</c> files. Each entry corresponds to one line, which in turn corresponds to one pattern. The following library is used for matching patterns: <see href="https://github.com/goelhardik/ignore"/><p/>
+            /// The patterns are evaluated together, just like <c>.gitignore</c> files. Each line corresponds to one pattern. The following library is used for matching patterns: <see href="https://github.com/goelhardik/ignore"/><p/>
             /// <inheritdoc cref="SettingsManager"/>
             /// </remarks>
             [field: UserSetting]
