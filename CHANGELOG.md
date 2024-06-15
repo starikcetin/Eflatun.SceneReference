@@ -10,14 +10,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Breaking Changes
 
 ### Added
-- `SceneReferenceUnityEventAdapter` class: A utility `MonoBehaviour` that allows using statically provided `SceneReference`s as parameters to a `UnityEvent`.
-- Utility Ignores: A set of settings that allow ignoring certain scenes from having the inline utilities.
 
 ### Changed
 
 ### Removed
 
 ### Fixed
+
+
+
+## [4.1.0] - 2024-06-16
+
+### Added
+- `SceneReferenceUnityEventAdapter` class: A utility `MonoBehaviour` that allows using statically provided `SceneReference`s as parameters to a `UnityEvent`.
+- Utility Ignores: A set of settings that allow ignoring certain scenes from having the inline utilities.
 
 
 
