@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -46,7 +46,10 @@ namespace Eflatun.SceneReference.Editor
         private AddressableAssetEntry _addressableEntry;
 #endif // ESR_ADDRESSABLES
 
-        private bool ShouldColorSceneInBuild => _optionsAttribute.SceneInBuildColoring switch
+        private bool IsColoringIgnored => SettingsManager.UtilityIgnores.IsIgnoredForColoring(_path, _guid);
+        private bool IsToolboxIgnored => SettingsManager.UtilityIgnores.IsIgnoredForToolbox(_path, _guid);
+
+        private bool ShouldColorSceneInBuild => !IsColoringIgnored && _optionsAttribute.SceneInBuildColoring switch
         {
             ColoringBehaviour.Enabled => true,
             ColoringBehaviour.Disabled => false,
@@ -54,7 +57,7 @@ namespace Eflatun.SceneReference.Editor
             _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.SceneInBuildColoring), _optionsAttribute.SceneInBuildColoring, null)
         };
 
-        private bool ShouldColorAddressable => _optionsAttribute.AddressableColoring switch
+        private bool ShouldColorAddressable => !IsColoringIgnored && _optionsAttribute.AddressableColoring switch
         {
             ColoringBehaviour.Enabled => true,
             ColoringBehaviour.Disabled => false,
@@ -62,7 +65,7 @@ namespace Eflatun.SceneReference.Editor
             _ => throw new ArgumentOutOfRangeException(nameof(_optionsAttribute.AddressableColoring), _optionsAttribute.AddressableColoring, null)
         };
 
-        private bool ShouldShowToolbox => _optionsAttribute.Toolbox switch
+        private bool ShouldShowToolbox => !IsToolboxIgnored && _optionsAttribute.Toolbox switch
         {
             ToolboxBehaviour.Enabled => true,
             ToolboxBehaviour.Disabled => false,
@@ -212,7 +215,7 @@ namespace Eflatun.SceneReference.Editor
             }
 
 #if ESR_ADDRESSABLES
-            if(_bundlingState == SceneBundlingState.Nowhere || _bundlingState == SceneBundlingState.InBuildDisabled)
+            if (_bundlingState == SceneBundlingState.Nowhere || _bundlingState == SceneBundlingState.InBuildDisabled)
             {
                 tools.Add(new MakeAddressableTool(_path, _guid, _asset));
             }

@@ -309,6 +309,34 @@ Only relevant if _Before Build_ generation trigger is enabled.
 
 It is recommended to leave this option at _true_, as a failed map generation can result in broken scene references in runtime.
 
+## Utility Ignores
+
+Settings for preventing certain scenes from having inline utilities.
+
+### Coloring Ignore Mode / Toolbox Ignore Mode
+
+The mode of operation for preventing certain scenes from having the inline coloring/toolbox utility.
+
+- Disabled: Nothing will be ignored.
+
+- List: The scenes in the _Coloring Ignores List_ / _Toolbox Ignores List_ will not be colored / will not have toolboxes.
+
+- Patterns: The scenes with paths matching the patterns in the _Coloring Ignore Patterns_ / _Toolbox Ignore Patterns_ text box will not be colored / will not have toolboxes.
+
+### Coloring Ignored Scenes / Toolbox Ignored Scenes
+
+The scenes in this list will not be colored / will not have toolboxes. This setting is visible only when _Coloring Ignore Mode_ / _Toolbox Ignore Mode_ is set to _List_.
+
+### Coloring Ignore Patterns / Toolbox Ignore Patterns
+
+The scenes with paths matching the patterns in this setting will not be colored / will not have toolboxes. This setting is visible only when _Coloring Ignore Mode_ / _Toolbox Ignore Mode_ is set to _Patterns_.
+
+> ![TIP]<br/>
+> The patterns are evaluated together, just like `.gitignore` files. Each line corresponds to one pattern.
+
+> ![IMPORTANT]<br/>
+> The following library is used for matching patterns: https://github.com/goelhardik/ignore
+
 # Advanced Usage
 
 ## Generation Outputs
@@ -375,6 +403,9 @@ SettingsManager.SceneDataMaps.GenerationTriggers = GenerationTriggers.All;
 
 > [!WARNING]<br/>
 > Changing settings from code may have unintended consequences. Make sure you know what you are doing.
+
+> [!IMPORTANT]<br/>
+> Make sure to call the corresponding `UtilityIgnores.ApplyColoringIgnoresPatterns` or `UtilityIgnores.ApplyToolboxIgnoresPatterns` methods right after you manipulate `UtilityIgnores.ColoringIgnoresPatterns` or `UtilityIgnores.ToolboxIgnoresPatterns` settings via code. Otherwise, your changes won't take effect until a later point in time _(to be specific, until the next a domain reload or until changing these settings from the settings menu, whichever comes first)_.
 
 ## Accessing the Maps Directly
 
@@ -726,6 +757,8 @@ If you come across this exception, make sure to create a bug report by [opening 
 * This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks to [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
 
 * README header inspired by [Angular's README](https://github.com/angular/angular/blob/main/README.md).
+
+* This project uses [goelhardik's ignore](https://github.com/goelhardik/ignore) for matching glob patterns.
 
 # Similar Projects
 If this project doesn't suit your needs, you can always let me know by [opening an issue](https://github.com/starikcetin/Eflatun.SceneReference/issues) or [creating a discussion](https://github.com/starikcetin/Eflatun.SceneReference/discussions) and I will see what we can do about it. If you think you absolutely need another approach, here are some similar projects to check out:

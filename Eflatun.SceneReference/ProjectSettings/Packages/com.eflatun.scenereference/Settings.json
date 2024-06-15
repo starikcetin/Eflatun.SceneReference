@@ -35,6 +35,46 @@
                 "type": "Newtonsoft.Json.Formatting, Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed",
                 "key": "SceneDataMaps.JsonFormatting",
                 "value": "{\"m_Value\":0}"
+            },
+            {
+                "type": "System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "UtilityIgnores.ColoringIgnoresList",
+                "value": "{\"m_Value\":[]}"
+            },
+            {
+                "type": "System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "UtilityIgnores.ToolboxIgnoresList",
+                "value": "{\"m_Value\":[]}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "UtilityIgnores.ToolboxIgnoresGlobs",
+                "value": "{\"m_Value\":\"\"}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "UtilityIgnores.ColoringIgnoresGlobs",
+                "value": "{\"m_Value\":\"\"}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "UtilityIgnores.ColoringIgnoresPatterns",
+                "value": "{\"m_Value\":\"\"}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "UtilityIgnores.ToolboxIgnoresPatterns",
+                "value": "{\"m_Value\":\"\"}"
+            },
+            {
+                "type": "Eflatun.SceneReference.Editor.UtilityIgnoreMode, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "key": "UtilityIgnores.ColoringIgnoreMode",
+                "value": "{\"m_Value\":2}"
+            },
+            {
+                "type": "Eflatun.SceneReference.Editor.UtilityIgnoreMode, Eflatun.SceneReference.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "key": "UtilityIgnores.ToolboxIgnoreMode",
+                "value": "{\"m_Value\":2}"
             }
         ]
     }
