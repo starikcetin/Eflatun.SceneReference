@@ -19,6 +19,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
+## [4.1.0] - 2024-06-16
+
+### Added
+- `SceneReferenceUnityEventAdapter` class: A utility `MonoBehaviour` that allows using statically provided `SceneReference`s as parameters to a `UnityEvent`.
+- Utility Ignores: A set of settings that allow ignoring certain scenes from having the inline utilities.
+
+
+
 ## [4.0.0] - 2024-01-23
 There are fundamental changes to the editor-time behaviour in this release. Please examine carefully before upgrading.
 
