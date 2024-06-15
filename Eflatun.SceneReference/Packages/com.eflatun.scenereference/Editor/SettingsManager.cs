@@ -210,36 +210,131 @@ namespace Eflatun.SceneReference.Editor
                 = new ProjectSetting<LogLevel>("Logging.EditorLogLevel", LogLevel.Warning);
         }
 
+        /// <summary>
+        /// Settings for preventing certain scenes from having inline utilities.
+        /// </summary>
+        /// <remarks>
+        /// <inheritdoc cref="SettingsManager"/>
+        /// </remarks>
         [PublicAPI]
         public static class UtilityIgnores
         {
             private const string CategoryName = "Utility Ignores";
 
+            /// <summary>
+            /// The mode of operation for preventing certain scenes from having the inline coloring utility.
+            /// <list type="bullet">
+            /// <item>
+            /// <term><see cref="UtilityIgnoreMode.Disabled"/></term>
+            /// <description>Nothing will be ignored.</description>
+            /// </item>
+            /// <item>
+            /// <term><see cref="UtilityIgnoreMode.List"/></term>
+            /// <description>The scenes with GUIDs in <see cref="ColoringIgnoresList"/> will not be colored.</description>
+            /// </item>
+            /// <item>
+            /// <term><see cref="UtilityIgnoreMode.Patterns"/></term>
+            /// <description>The scenes with paths matching the patterns in <see cref="ColoringIgnoresPatterns"/> will not be colored.</description>
+            /// </item>
+            /// </list>
+            /// </summary>
+            /// <remarks>
+            /// <inheritdoc cref="SettingsManager"/>
+            /// </remarks>
             [field: UserSetting]
             public static ProjectSetting<UtilityIgnoreMode> ColoringIgnoreMode { get; }
                 = new ProjectSetting<UtilityIgnoreMode>("UtilityIgnores.ColoringIgnoreMode", UtilityIgnoreMode.Disabled);
 
+            /// <summary>
+            /// The mode of operation for preventing certain scenes from having the inline toolbox utility.
+            /// <list type="bullet">
+            /// <item>
+            /// <term><see cref="UtilityIgnoreMode.Disabled"/></term>
+            /// <description>Nothing will be ignored.</description>
+            /// </item>
+            /// <item>
+            /// <term><see cref="UtilityIgnoreMode.List"/></term>
+            /// <description>The scenes with GUIDs in <see cref="ToolboxIgnoresList"/> will not have toolboxes.</description>
+            /// </item>
+            /// <item>
+            /// <term><see cref="UtilityIgnoreMode.Patterns"/></term>
+            /// <description>The scenes with paths matching the patterns in <see cref="ToolboxIgnoresPatterns"/> will not have toolboxes.</description>
+            /// </item>
+            /// </list>
+            /// </summary>
+            /// <remarks>
+            /// <inheritdoc cref="SettingsManager"/>
+            /// </remarks>
             [field: UserSetting]
             public static ProjectSetting<UtilityIgnoreMode> ToolboxIgnoreMode { get; }
                 = new ProjectSetting<UtilityIgnoreMode>("UtilityIgnores.ToolboxIgnoreMode", UtilityIgnoreMode.Disabled);
 
+            /// <summary>
+            /// If the <see cref="ColoringIgnoreMode"/> is set to <see cref="UtilityIgnoreMode.List"/>, the scenes with GUIDs in this list will not be colored.
+            /// </summary>
+            /// <remarks>
+            /// <inheritdoc cref="SettingsManager"/>
+            /// </remarks>
             [field: UserSetting]
             public static ProjectSetting<List<string>> ColoringIgnoresList { get; }
                 = new ProjectSetting<List<string>>("UtilityIgnores.ColoringIgnoresList", new List<string>());
 
+            /// <summary>
+            /// If the <see cref="ToolboxIgnoreMode"/> is set to <see cref="UtilityIgnoreMode.List"/>, the scenes with GUIDs in this list will not have toolboxes.
+            /// </summary>
+            /// <remarks>
+            /// <inheritdoc cref="SettingsManager"/>
+            /// </remarks>
             [field: UserSetting]
             public static ProjectSetting<List<string>> ToolboxIgnoresList { get; }
                 = new ProjectSetting<List<string>>("UtilityIgnores.ToolboxIgnoresList", new List<string>());
 
+            /// <summary>
+            /// If the <see cref="ColoringIgnoreMode"/> is set to <see cref="UtilityIgnoreMode.Patterns"/>, the scenes with paths matching the patterns in this setting will not be colored.<p/>
+            /// Make sure to call <see cref="ApplyColoringIgnoresPatterns"/> after modifying this setting via code.
+            /// </summary>
+            /// <remarks>
+            /// The patterns are evaluated together, just like <c>.gitignore</c> files. Each entry corresponds to one line, which in turn corresponds to one pattern. The following library is used for matching patterns: <see href="https://github.com/goelhardik/ignore"/><p/>
+            /// <inheritdoc cref="SettingsManager"/>
+            /// </remarks>
             [field: UserSetting]
             public static ProjectSetting<string> ColoringIgnoresPatterns { get; }
                 = new ProjectSetting<string>("UtilityIgnores.ColoringIgnoresPatterns", string.Empty);
 
+            /// <summary>
+            /// If the <see cref="ToolboxIgnoreMode"/> is set to <see cref="UtilityIgnoreMode.Patterns"/>, the scenes with paths matching the patterns in this setting will not have toolboxes.
+            /// Make sure to call <see cref="ApplyToolboxIgnoresPatterns"/> after modifying this setting via code.
+            /// </summary>
+            /// <remarks>
+            /// <inheritdoc cref="ColoringIgnoresPatterns"/>
+            /// </remarks>
             [field: UserSetting]
             public static ProjectSetting<string> ToolboxIgnoresPatterns { get; }
                 = new ProjectSetting<string>("UtilityIgnores.ToolboxIgnoresPatterns", string.Empty);
 
-            public static bool IsIgnoredForToolbox(string path, string guid) => ToolboxIgnoreMode.value switch
+            /// <summary>
+            /// Call this after modifying <see cref="ColoringIgnoresPatterns"/> via code.
+            /// </summary>
+            /// <remarks>
+            /// <inheritdoc cref="ColoringIgnoresPatterns"/>
+            /// </remarks>
+            public static void ApplyColoringIgnoresPatterns()
+            {
+                IgnoreCheckers.Coloring.SetPatterns(ColoringIgnoresPatterns.value);
+            }
+
+            /// <summary>
+            /// Call this after modifying <see cref="ToolboxIgnoresPatterns"/> via code.
+            /// </summary>
+            /// <remarks>
+            /// <inheritdoc cref="ColoringIgnoresPatterns"/>
+            /// </remarks>
+            public static void ApplyToolboxIgnoresPatterns()
+            {
+                IgnoreCheckers.Toolbox.SetPatterns(ToolboxIgnoresPatterns.value);
+            }
+
+            internal static bool IsIgnoredForToolbox(string path, string guid) => ToolboxIgnoreMode.value switch
             {
                 UtilityIgnoreMode.Disabled => false,
                 UtilityIgnoreMode.List => ToolboxIgnoresList.value.Contains(guid),
@@ -247,7 +342,7 @@ namespace Eflatun.SceneReference.Editor
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            public static bool IsIgnoredForColoring(string path, string guid) => ColoringIgnoreMode.value switch
+            internal static bool IsIgnoredForColoring(string path, string guid) => ColoringIgnoreMode.value switch
             {
                 UtilityIgnoreMode.Disabled => false,
                 UtilityIgnoreMode.List => ColoringIgnoresList.value.Contains(guid),
@@ -261,18 +356,34 @@ namespace Eflatun.SceneReference.Editor
                 var shouldSave = false;
 
                 EditorGUI.BeginChangeCheck();
-                DrawUtilityIgnores("Coloring", ColoringIgnoreMode, ColoringIgnoresList, ColoringIgnoresPatterns);
+
+                const string patternsSharedTooltip = "The patterns are evaluated together, just like .gitignore files. Each line corresponds to one pattern.\n\nThe following library is used for matching patterns: https://github.com/goelhardik/ignore";
+
+                DrawUtilityIgnores(ColoringIgnoreMode, ColoringIgnoresList, ColoringIgnoresPatterns,
+                    title: "Coloring",
+                    modeTooltip: "The mode of operation for preventing certain scenes from having the inline coloring utility.\n\n• Disabled: Nothing will be ignored.\n\n• List: The scenes with GUIDs in the list will not be colored.\n\n• Patterns: The scenes with paths matching the patterns will not be colored.",
+                    listTooltip: "The scenes in this list will not be colored.",
+                    patternsTooltip: $"The scenes with paths matching the patterns in this setting will not be colored.\n\n{patternsSharedTooltip}"
+                );
+
                 if (EditorGUI.EndChangeCheck())
                 {
-                    IgnoreCheckers.Coloring.SetPatterns(ColoringIgnoresPatterns.value);
+                    ApplyColoringIgnoresPatterns();
                     shouldSave = true;
                 }
 
                 EditorGUI.BeginChangeCheck();
-                DrawUtilityIgnores("Toolbox", ToolboxIgnoreMode, ToolboxIgnoresList, ToolboxIgnoresPatterns);
+
+                DrawUtilityIgnores(ToolboxIgnoreMode, ToolboxIgnoresList, ToolboxIgnoresPatterns,
+                    title: "Toolbox",
+                    modeTooltip: "The mode of operation for preventing certain scenes from having the inline toolbox utility.\n\n• Disabled: Nothing will be ignored.\n\n• List: The scenes with GUIDs in the list will not have toolboxes.\n\n• Patterns: The scenes with paths matching the patterns will not have toolboxes.",
+                    listTooltip: "The scenes in this list will not have toolboxes.",
+                    patternsTooltip: $"The scenes with paths matching the patterns in this setting will not have toolboxes.\n\n{patternsSharedTooltip}"
+                );
+
                 if (EditorGUI.EndChangeCheck())
                 {
-                    IgnoreCheckers.Toolbox.SetPatterns(ToolboxIgnoresPatterns.value);
+                    ApplyToolboxIgnoresPatterns();
                     shouldSave = true;
                 }
 
@@ -282,12 +393,15 @@ namespace Eflatun.SceneReference.Editor
                 }
             }
 
-            private static void DrawUtilityIgnores(string title,
-                ProjectSetting<UtilityIgnoreMode> ignoreMode,
+            private static void DrawUtilityIgnores(ProjectSetting<UtilityIgnoreMode> ignoreMode,
                 ProjectSetting<List<string>> ignoresList,
-                ProjectSetting<string> ignoresPatterns)
+                ProjectSetting<string> ignoresPatterns,
+                string title,
+                string modeTooltip,
+                string listTooltip,
+                string patternsTooltip)
             {
-                ignoreMode.value = (UtilityIgnoreMode)EditorGUILayout.EnumPopup($"{title} Ignore Mode", ignoreMode.value);
+                ignoreMode.value = (UtilityIgnoreMode)EditorGUILayout.EnumPopup(new GUIContent($"{title} Ignore Mode", modeTooltip), ignoreMode.value);
 
                 switch (ignoreMode.value)
                 {
@@ -299,7 +413,7 @@ namespace Eflatun.SceneReference.Editor
 
                         EditorGUILayout.BeginHorizontal();
 
-                        EditorGUILayout.LabelField($"{title} Ignored Scenes");
+                        EditorGUILayout.LabelField(new GUIContent($"{title} Ignored Scenes", listTooltip));
 
                         if (GUILayout.Button("Clear"))
                         {
@@ -344,7 +458,7 @@ namespace Eflatun.SceneReference.Editor
                         break;
 
                     case UtilityIgnoreMode.Patterns:
-                        EditorGUILayout.LabelField($"{title} Ignore Patterns");
+                        EditorGUILayout.LabelField(new GUIContent($"{title} Ignore Patterns", patternsTooltip));
                         ignoresPatterns.value = EditorGUILayout.TextArea(ignoresPatterns.value);
                         EditorGUILayout.Separator();
                         break;
