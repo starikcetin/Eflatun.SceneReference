@@ -51,13 +51,13 @@ openupm add com.eflatun.scenereference
 
 ### With Git URL
 
-Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `4.0.0` with the version you want to install.
+Add the following line to the `dependencies` section of your project's `manifest.json` file. Replace `4.1.0` with the version you want to install.
 
 ```json
-"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#4.0.0"
+"com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#4.1.0"
 ```
 
-_Although it is highly discouraged, you can replace `4.0.0` with `upm` to get the latest version instead of a specific one._
+_Although it is highly discouraged, you can replace `4.1.0` with `upm` to get the latest version instead of a specific one._
 
 ## Optional Dependencies
 
@@ -309,6 +309,34 @@ Only relevant if _Before Build_ generation trigger is enabled.
 
 It is recommended to leave this option at _true_, as a failed map generation can result in broken scene references in runtime.
 
+## Utility Ignores
+
+Settings for preventing certain scenes from having inline utilities.
+
+### Coloring Ignore Mode / Toolbox Ignore Mode
+
+The mode of operation for preventing certain scenes from having the inline coloring/toolbox utility.
+
+- Disabled: Nothing will be ignored.
+
+- List: The scenes in the _Coloring Ignores List_ / _Toolbox Ignores List_ will not be colored / will not have toolboxes.
+
+- Patterns: The scenes with paths matching the patterns in the _Coloring Ignore Patterns_ / _Toolbox Ignore Patterns_ text box will not be colored / will not have toolboxes.
+
+### Coloring Ignored Scenes / Toolbox Ignored Scenes
+
+The scenes in this list will not be colored / will not have toolboxes. This setting is visible only when _Coloring Ignore Mode_ / _Toolbox Ignore Mode_ is set to _List_.
+
+### Coloring Ignore Patterns / Toolbox Ignore Patterns
+
+The scenes with paths matching the patterns in this setting will not be colored / will not have toolboxes. This setting is visible only when _Coloring Ignore Mode_ / _Toolbox Ignore Mode_ is set to _Patterns_.
+
+> ![TIP]<br/>
+> The patterns are evaluated together, just like `.gitignore` files. Each line corresponds to one pattern.
+
+> ![IMPORTANT]<br/>
+> The following library is used for matching patterns: https://github.com/goelhardik/ignore
+
 # Advanced Usage
 
 ## Generation Outputs
@@ -375,6 +403,9 @@ SettingsManager.SceneDataMaps.GenerationTriggers = GenerationTriggers.All;
 
 > [!WARNING]<br/>
 > Changing settings from code may have unintended consequences. Make sure you know what you are doing.
+
+> [!IMPORTANT]<br/>
+> Make sure to call the corresponding `UtilityIgnores.ApplyColoringIgnoresPatterns` or `UtilityIgnores.ApplyToolboxIgnoresPatterns` methods right after you manipulate `UtilityIgnores.ColoringIgnoresPatterns` or `UtilityIgnores.ToolboxIgnoresPatterns` settings via code. Otherwise, your changes won't take effect until a later point in time _(to be specific, until the next a domain reload or until changing these settings from the settings menu, whichever comes first)_.
 
 ## Accessing the Maps Directly
 
@@ -574,6 +605,82 @@ var fromSceneAsset = new SceneReference(sceneAsset);
 > [!CAUTION]<br/>
 > The constructor that accepts a scene asset of type `UnityEngine.Object` is for Editor use only. Do NOT use it in runtime code.
 
+## Using a `SceneReference` as a Parameter with a `UnityEvent`
+
+There are two ways you can fill-in parameters of a listener when you are invoking them via a `UnityEvent`:
+
+### Dynamically Provided
+
+Dynamically provided parameters are filled in by the code that invokes the event. You do not assign them in the inspector. In this case, you do not need to do anything special. Simply connect a `UnityEvent<SceneReference>` to a method that accepts a `SceneReference` as a parameter and it will work.
+
+Example of a `UnityEvent` emitter and a listener that can use a dynamically provided `SceneReference` parameter:
+
+```cs
+public class Emitter : MonoBehaviour
+{
+    public SceneReference scene;
+    public UnityEvent<SceneReference> raised;
+
+    void Raise()
+    {
+        raised.Invoke(scene);
+    }
+}
+
+public class Listener : MonoBehaviour
+{
+    public void Listen(SceneReference scene)
+    {
+        // ...
+    }
+}
+```
+
+### Statically Assigned
+
+Statically assigned parameters are those that the listener takes in, but the emitter doesn't provide. Therefore Unity asks you to fill them in yourself during the wiring of the event. If you are doing this in the inspector, then you won't be able to fill a missing `SceneReference` in there. In fact, Unity won't even allow you to select a method as a listener that requires a `SceneReference` to be assigned statically.
+
+> [!NOTE]<br/>
+> This is a limitation with `UnityEvent`s, please see the relevant Unity documentation for more information. To summarize: `UnityEvent` supports predefined (static) calls with primitive arguments, and arguments of type `UnityEngine.Object`. Since `SceneReference` is none of those, it can only be used with dynamic calls.
+
+Example of a `UnityEvent` emitter and a listener that requires a `SceneReference` parameter to be filled in statically:
+
+```cs
+public class Emitter : MonoBehaviour
+{
+    public UnityEvent raised;
+
+    void Raise()
+    {
+        raised.Invoke();
+    }
+}
+
+public class Listener : MonoBehaviour
+{
+    public void Listen(SceneReference scene)
+    {
+        // ...
+    }
+}
+```
+
+As a workaround, we provide you with a `SceneReferenceUnityEventAdapter` class that allows you to indirectly use a statically assigned `SceneReference` parameter to a `UnityEvent` listener by acting as an adapter between the emitters and listeners. Please investigate the screenshot below to see how the emitter-side is set up, and the code block below that to see how the listener-side looks.
+
+![.assets/event_adapter.png](.assets/event_adapter.png)
+
+```cs
+public class SceneLoader : MonoBehaviour
+{
+    public void LoadScene(SceneReference scene)
+    {
+        // ...
+    }
+}
+```
+
+In the screenshot, the `OnClick` event of the button is being listened by the `Raise` method of the adapter. The `Raised` event of the adapter is being listened by the `LoadScene` method of the scene loader class. Notice the `Scene` serialized field on the adapter. The `scene` parameter of `LoadScene` method of the scene loader class is filled with the `Scene` serialized field of the adapter. This way, while we are unable to wire `LoadScene` and `OnClick` directly together, we can wire them through the `SceneReferenceUnityEventAdapter` class acting as a middleman.
+
 # Exceptions
 
 ## `EmptySceneReferenceException`
@@ -650,6 +757,8 @@ If you come across this exception, make sure to create a bug report by [opening 
 * This project is inspired by [JohannesMP's SceneReference](https://github.com/JohannesMP/unity-scene-reference). For many years I have used his original implementation of a runtime Scene Reference. Many thanks to [@JohannesMP](https://github.com/JohannesMP) for saving me countless hours of debugging, and inspiring me to come up with a more robust way to tackle this problem that Unity refuses to solve.
 
 * README header inspired by [Angular's README](https://github.com/angular/angular/blob/main/README.md).
+
+* This project uses [goelhardik's ignore](https://github.com/goelhardik/ignore) for matching glob patterns.
 
 # Similar Projects
 If this project doesn't suit your needs, you can always let me know by [opening an issue](https://github.com/starikcetin/Eflatun.SceneReference/issues) or [creating a discussion](https://github.com/starikcetin/Eflatun.SceneReference/discussions) and I will see what we can do about it. If you think you absolutely need another approach, here are some similar projects to check out:
