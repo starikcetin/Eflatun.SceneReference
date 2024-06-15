@@ -758,7 +758,7 @@ If you come across this exception, make sure to create a bug report by [opening 
 
 * README header inspired by [Angular's README](https://github.com/angular/angular/blob/main/README.md).
 
-* This project uses [goelhardik's ignore](https://github.com/goelhardik/ignore) library for matching glob patterns.
+* This project uses [goelhardik's ignore](https://github.com/goelhardik/ignore) for matching glob patterns.
 
 # Similar Projects
 If this project doesn't suit your needs, you can always let me know by [opening an issue](https://github.com/starikcetin/Eflatun.SceneReference/issues) or [creating a discussion](https://github.com/starikcetin/Eflatun.SceneReference/discussions) and I will see what we can do about it. If you think you absolutely need another approach, here are some similar projects to check out:
