@@ -331,10 +331,10 @@ The scenes in this list will not be colored / will not have toolboxes. This sett
 
 The scenes with paths matching the patterns in this setting will not be colored / will not have toolboxes. This setting is visible only when _Coloring Ignore Mode_ / _Toolbox Ignore Mode_ is set to _Patterns_.
 
-> ![TIP]<br/>
+> [!TIP]<br/>
 > The patterns are evaluated together, just like `.gitignore` files. Each line corresponds to one pattern.
 
-> ![IMPORTANT]<br/>
+> [!IMPORTANT]<br/>
 > The following library is used for matching patterns: https://github.com/goelhardik/ignore
 
 # Advanced Usage
@@ -405,7 +405,7 @@ SettingsManager.SceneDataMaps.GenerationTriggers = GenerationTriggers.All;
 > Changing settings from code may have unintended consequences. Make sure you know what you are doing.
 
 > [!IMPORTANT]<br/>
-> Make sure to call the corresponding `UtilityIgnores.ApplyColoringIgnoresPatterns` or `UtilityIgnores.ApplyToolboxIgnoresPatterns` methods right after you manipulate `UtilityIgnores.ColoringIgnoresPatterns` or `UtilityIgnores.ToolboxIgnoresPatterns` settings via code. Otherwise, your changes won't take effect until a later point in time _(to be specific, until the next a domain reload or until changing these settings from the settings menu, whichever comes first)_.
+> Make sure to call the corresponding `UtilityIgnores.ApplyColoringIgnoresPatterns` or `UtilityIgnores.ApplyToolboxIgnoresPatterns` methods right after you manipulate `UtilityIgnores.ColoringIgnoresPatterns` or `UtilityIgnores.ToolboxIgnoresPatterns` settings via code. Otherwise, your changes won't take effect until the next domain reload or until changing these settings from the settings menu, whichever comes first.
 
 ## Accessing the Maps Directly
 
