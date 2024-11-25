@@ -212,7 +212,6 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -296,7 +295,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -332,14 +330,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source:
-  - asset: {fileID: 102900000, guid: 45ac7250dffb26f4e84eda01a52b8b19, type: 3}
-    guid: 45ac7250dffb26f4e84eda01a52b8b19
-  - asset: {fileID: 102900000, guid: c5d794d51a8a22c46a17330344e5d1f5, type: 3}
-    guid: c5d794d51a8a22c46a17330344e5d1f5
-  - asset: {fileID: 102900000, guid: 50ccd0f8666b55544ac0f21398ad9535, type: 3}
-    guid: 50ccd0f8666b55544ac0f21398ad9535
-  - asset: {fileID: 0}
-    guid: 00000000000000000000000000000000
+  - asset: {fileID: 102900000, guid: 9035c3d9637db67459a347d73514c868, type: 3}
+    guid: 9035c3d9637db67459a347d73514c868
+  - asset: {fileID: 102900000, guid: fb949268f5f24df4eadb2a5028fca33a, type: 3}
+    guid: fb949268f5f24df4eadb2a5028fca33a
+  - asset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
+    guid: 1d6d932bbdf133c41aa34e00b02bdd1d
+  - asset: {fileID: 102900000, guid: 63cbeaf10b76c5c4dacdf7685d4acdb6, type: 3}
+    guid: 63cbeaf10b76c5c4dacdf7685d4acdb6
 --- !u!4 &537211217
 Transform:
   m_ObjectHideFlags: 0
@@ -350,7 +348,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -368,8 +365,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneCSource:
-    asset: {fileID: 102900000, guid: 50ccd0f8666b55544ac0f21398ad9535, type: 3}
-    guid: 50ccd0f8666b55544ac0f21398ad9535
+    asset: {fileID: 102900000, guid: 1d6d932bbdf133c41aa34e00b02bdd1d, type: 3}
+    guid: 1d6d932bbdf133c41aa34e00b02bdd1d
   sceneA:
     asset: {fileID: 0}
     guid: 00000000000000000000000000000000

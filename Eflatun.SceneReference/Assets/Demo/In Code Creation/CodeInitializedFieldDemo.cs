@@ -20,8 +20,8 @@ namespace Eflatun.SceneReference.Demo.InCodeCreation
 
         private void Start()
         {
-            sceneA = new SceneReference("45ac7250dffb26f4e84eda01a52b8b19");
-            sceneB = SceneReference.FromScenePath("Assets/Scenes/SceneB.unity");
+            sceneA = new SceneReference("1d6d932bbdf133c41aa34e00b02bdd1d");
+            sceneB = SceneReference.FromScenePath("Assets/Demo/Demo Utils/Subject Scenes/Enabled In Build.unity");
 
 #if UNITY_EDITOR
             sceneC = new SceneReference(GetAsset(sceneCSource));

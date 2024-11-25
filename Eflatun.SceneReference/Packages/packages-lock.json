@@ -14,11 +14,11 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.19.2",
         "com.unity.modules.assetbundle": "1.0.0",
-        "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.scriptablebuildpipeline": "1.19.2",
         "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -84,6 +84,15 @@
         "com.unity.ext.nunit": "1.0.6",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.textmeshpro": {
+      "version": "3.0.9",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

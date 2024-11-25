@@ -7,22 +7,39 @@ namespace Eflatun.SceneReference.Demo.Validation
 {
     public class ValidationDemo : MonoBehaviour
     {
-        [SerializeField] private SceneReference valid;
-        [SerializeField] private SceneReference disabled;
+        [SerializeField] private SceneReference validRegular;
+        [SerializeField] private SceneReference validAddressable;
+        [SerializeField] private SceneReference disabledInBuild;
         [SerializeField] private SceneReference notInBuild;
         [SerializeField] private SceneReference empty;
+        [SerializeField] private SceneReference gone;
 
         private void Start()
         {
-            Log(valid, nameof(valid));
-            Log(disabled, nameof(disabled));
+            Log(validRegular, nameof(validRegular));
+            Log(validAddressable, nameof(validAddressable));
+            Log(disabledInBuild, nameof(disabledInBuild));
             Log(notInBuild, nameof(notInBuild));
             Log(empty, nameof(empty));
+            Log(gone, nameof(gone));
 
-            Assert.IsTrue(valid.State != SceneReferenceState.Unsafe);
-            Assert.IsTrue(disabled.State == SceneReferenceState.Unsafe);
-            Assert.IsTrue(notInBuild.State == SceneReferenceState.Unsafe);
-            Assert.IsFalse(empty.State == SceneReferenceState.Unsafe);
+            Assert.AreEqual(validRegular.State, SceneReferenceState.Regular);
+            Assert.AreEqual(validRegular.UnsafeReason, SceneReferenceUnsafeReason.None);
+
+            Assert.AreEqual(validAddressable.State, SceneReferenceState.Addressable);
+            Assert.AreEqual(validAddressable.UnsafeReason, SceneReferenceUnsafeReason.None);
+
+            Assert.AreEqual(disabledInBuild.State, SceneReferenceState.Unsafe);
+            Assert.AreEqual(disabledInBuild.UnsafeReason, SceneReferenceUnsafeReason.NotInBuild);
+
+            Assert.AreEqual(notInBuild.State, SceneReferenceState.Unsafe);
+            Assert.AreEqual(notInBuild.UnsafeReason, SceneReferenceUnsafeReason.NotInBuild);
+
+            Assert.AreEqual(empty.State, SceneReferenceState.Unsafe);
+            Assert.AreEqual(empty.UnsafeReason, SceneReferenceUnsafeReason.Empty);
+
+            Assert.AreEqual(gone.State, SceneReferenceState.Unsafe);
+            Assert.AreEqual(gone.UnsafeReason, SceneReferenceUnsafeReason.NotInMaps);
         }
 
         private void Log(SceneReference sceneReference, string memberName)
@@ -100,36 +117,17 @@ namespace Eflatun.SceneReference.Demo.Validation
                 sb.AppendLine($"throws {e.GetType().Name}");
             }
 
-            Debug.Log(sb);
-        }
-
-        private void AssertThrows<TException>(Func<object> func)
-            where TException : Exception
-        {
-            void Act()
-            {
-                var x = func.Invoke();
-            }
-
-            AssertThrows<TException>(Act);
-        }
-
-        private void AssertThrows<TException>(Action action)
-            where TException : Exception
-        {
-            bool didThrow;
-
+            sb.Append($"{nameof(sceneReference.UnsafeReason)}: ");
             try
             {
-                action.Invoke();
-                didThrow = false;
+                sb.AppendLine(sceneReference.UnsafeReason.ToString());
             }
-            catch (TException)
+            catch (Exception e)
             {
-                didThrow = true;
+                sb.AppendLine($"throws {e.GetType().Name}");
             }
 
-            Assert.IsTrue(didThrow);
+            Debug.Log(sb);
         }
     }
 }
