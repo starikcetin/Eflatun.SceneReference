@@ -3,7 +3,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.Validation
 {
     public class ValidationDemo : MonoBehaviour
     {

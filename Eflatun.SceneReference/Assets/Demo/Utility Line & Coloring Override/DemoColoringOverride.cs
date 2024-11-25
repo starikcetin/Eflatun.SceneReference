@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.UtilityLineAndColoringOverride
 {
     public class DemoColoringOverride : MonoBehaviour
     {

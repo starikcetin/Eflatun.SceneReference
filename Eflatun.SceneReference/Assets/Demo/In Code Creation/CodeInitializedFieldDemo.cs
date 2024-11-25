@@ -1,7 +1,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.InCodeCreation
 {
     public class CodeInitializedFieldDemo : MonoBehaviour
     {

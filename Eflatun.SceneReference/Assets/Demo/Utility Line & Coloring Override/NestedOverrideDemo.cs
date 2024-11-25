@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.UtilityLineAndColoringOverride
 {
     public class NestedOverrideDemo : MonoBehaviour
     {
