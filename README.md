@@ -710,6 +710,9 @@ EditorGUILayout.PropertyField(serializedProp);
 > [!TIP]<br/>
 > `serializedObject` is a field of the `Editor` class. See [here](https://docs.unity3d.com/ScriptReference/Editor-serializedObject.html) for documentation.
 
+> [!TIP]<br/>
+> If you are get an `Unsupported type SceneReference` error, try reserializing the asset that is holding the `SceneReference` field. There are no official Unity responses regarding this. We are speculating that this error stems from outdated serialization data. See [here](https://github.com/starikcetin/Eflatun.SceneReference/issues/108#issuecomment-2501821101).
+
 ### Direct Access
 
 Use this option if:
