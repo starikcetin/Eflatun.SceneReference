@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 #endif // ESR_ADDRESSABLES
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.Simple
 {
     public class SimpleDemo : MonoBehaviour
     {

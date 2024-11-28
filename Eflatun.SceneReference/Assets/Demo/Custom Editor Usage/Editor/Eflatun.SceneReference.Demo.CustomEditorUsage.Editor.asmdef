@@ -1,0 +1,30 @@
+{
+    "name": "Eflatun.SceneReference.Demo.CustomEditorUsage.Editor",
+    "rootNamespace": "Eflatun.SceneReference.Demo.CustomEditorUsage.Editor",
+    "references": [
+        "GUID:caca889fed6088d40b22c2d7e2909c31",
+        "GUID:5ed1acd8d38d3f44e865d8ab3e0df477"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.addressables",
+            "expression": "",
+            "define": "ESR_ADDRESSABLES"
+        },
+        {
+            "name": "com.unity.addressables",
+            "expression": "[1.0.0,2.0.0)",
+            "define": "ESR_ADDRESSABLES_1_X_X"
+        }
+    ],
+    "noEngineReferences": false
+}

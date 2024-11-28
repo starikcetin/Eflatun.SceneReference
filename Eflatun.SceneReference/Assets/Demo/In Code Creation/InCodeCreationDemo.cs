@@ -5,7 +5,7 @@ using Eflatun.SceneReference.Exceptions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.InCodeCreation
 {
     public class InCodeCreationDemo : MonoBehaviour
     {

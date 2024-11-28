@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.UtilityLineAndColoringOverride
 {
     public class Demo : MonoBehaviour
     {

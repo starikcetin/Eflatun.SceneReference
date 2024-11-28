@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.CustomSerialization
 {
     public class CustomSerializationDemo : MonoBehaviour
     {

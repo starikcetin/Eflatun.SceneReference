@@ -2,7 +2,7 @@ using UnityEngine;
 
 // https://github.com/starikcetin/Eflatun.SceneReference/issues/29
 
-namespace Eflatun.SceneReference.Demo
+namespace Eflatun.SceneReference.Demo.UnassignedSceneReference
 {
     public class UnassignedSceneReferenceDemo : MonoBehaviour
     {
