@@ -681,6 +681,94 @@ public class SceneLoader : MonoBehaviour
 
 In the screenshot, the `OnClick` event of the button is being listened by the `Raise` method of the adapter. The `Raised` event of the adapter is being listened by the `LoadScene` method of the scene loader class. Notice the `Scene` serialized field on the adapter. The `scene` parameter of `LoadScene` method of the scene loader class is filled with the `Scene` serialized field of the adapter. This way, while we are unable to wire `LoadScene` and `OnClick` directly together, we can wire them through the `SceneReferenceUnityEventAdapter` class acting as a middleman.
 
+## Usage in Editor Code
+
+Depending on the visibility of your field, you have different options on how to display, get, and set a field of type `Eflatun.SceneReference` in your editor code.
+
+Let's assume we have the following `MonoBehaviour` that we are writing a custom editor for:
+
+```cs
+public class CustomEditorUsageDemo : MonoBehaviour
+{
+    public SceneReference PublicScene;
+    [SerializeField] private SceneReference privateScene;
+}
+```
+
+> [!WARNING]<br/>
+> `SerializedProperty.objectReferenceValue` can not be used with fields of type `SceneReference`. You will get the `type is not a supported pptr value` exception if you try. This is because `SerializedProperty.objectReferenceValue` only works with `UnityEngine.Object` types. `SceneReference` does not fit that description, it is a regular C# class.
+
+### `EditorGUILayout.PropertyField`
+
+Use this option if you do not care about the underlying data, and want to let `SceneReference` field do its thing.
+
+```cs
+var serializedProp = serializedObject.FindProperty("privateScene");
+EditorGUILayout.PropertyField(serializedProp);
+```
+
+> [!TIP]<br/>
+> `serializedObject` is a field of the `Editor` class. See [here](https://docs.unity3d.com/ScriptReference/Editor-serializedObject.html) for documentation.
+
+### Direct Access
+
+Use this option if:
+1. You need to get or set the underlying `SceneReference` instance of the field yourself.
+2. The field is visible to your editor code.
+
+```cs
+var targetCasted = (CustomEditorUsageDemo)target;
+
+// read
+var value = targetCasted.PublicScene;
+
+// write
+targetCasted.PublicScene = SceneReference.FromScenePath(_newPathPublicSceneDirect);
+```
+
+> [!TIP]<br/>
+> `target` is a field of the `Editor` class. See [here](https://docs.unity3d.com/ScriptReference/Editor-target.html) for documentation.
+
+### `SerializedProperty.boxedValue`
+
+> [!NOTE]<br/>
+> `SerializedProperty.boxedValue` is only available in Unity 2022.1 and newer.
+
+Use this option if:
+1. You need to get or set the underlying `SceneReference` instance of the field yourself.
+2. The field is not visible to your editor code.
+3. Your Unity version is Unity 2022.1 or newer.
+
+```cs
+var serializedProp = serializedObject.FindProperty("privateScene");
+
+// read
+var value = serializedProp.boxedValue as SceneReference;
+
+// write
+serializedProp.boxedValue = SceneReference.FromScenePath(/* ... */);
+```
+
+> [!TIP]<br/>
+> `serializedObject` is a field of the `Editor` class. See [here](https://docs.unity3d.com/ScriptReference/Editor-serializedObject.html) for documentation.
+
+### Reflection
+
+Use this option if:
+1. You need to get or set the underlying `SceneReference` instance of the field yourself.
+2. The field is not visible to your editor code.
+3. Your Unity version is older than 2022.1.
+
+```cs
+var fieldInfo = target.GetType().GetField("privateScene", BindingFlags.NonPublic | BindingFlags.Instance);
+
+// get
+var value = fieldInfo.GetValue(target) as SceneReference;
+
+// set
+fieldInfo.SetValue(target, SceneReference.FromScenePath(/* ... */));
+```
+
 # Exceptions
 
 ## `EmptySceneReferenceException`

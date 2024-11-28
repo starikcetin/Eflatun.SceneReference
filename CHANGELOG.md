@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Breaking Changes
 
 ### Added
+- Added the "Usage in Editor Code" section to README.
 
 ### Changed
 
