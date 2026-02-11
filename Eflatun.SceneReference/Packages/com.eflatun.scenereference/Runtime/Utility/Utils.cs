@@ -49,8 +49,26 @@ namespace Eflatun.SceneReference.Utility
         /// <summary>
         /// Returns if the given <paramref name="guid"/> is valid. A valid GUID is 32 chars of hexadecimals.
         /// </summary>
-        public static bool IsValidGuid(this string guid) =>
-            guid.Length == 32 && guid.ToUpper().All("0123456789ABCDEF".Contains);
+        public static bool IsValidGuid(this string guid)
+        {
+            if (string.IsNullOrEmpty(guid) || guid.Length != 32)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < guid.Length; i++)
+            {
+                char c = guid[i];
+                bool isValid = (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
+
+                if (!isValid)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// If the given GUID is null or whitespace returns <see cref="AllZeroGuid"/>. Otherwise returns as-is.
