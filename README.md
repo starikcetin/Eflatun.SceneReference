@@ -196,7 +196,7 @@ else
 
 if (mySceneReference.TryGetLoadedScene(out var loadedScene))
 {
-    // `loadedscene` contains the value of `mySceneReference.LoadedScene`.
+    // `loadedScene` contains the value of `mySceneReference.LoadedScene`.
 }
 else
 {
