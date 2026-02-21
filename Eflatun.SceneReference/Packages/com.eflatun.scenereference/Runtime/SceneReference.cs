@@ -385,7 +385,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <param name="path">The path to the scene asset if the return value is <c>true</c>. <c>null</c> otherwise.</param>
         /// <returns>
-        /// <c>true</c> if the following are true, <c>false</c> otherwise.
+        /// <c>true</c> if both of the following are true, <c>false</c> otherwise.
         /// <list type="number">
         /// <item>A scene is assigned to this <see cref="SceneReference"/>.</item>
         /// <item>The scene is in the scene GUID to path map.</item>
@@ -409,7 +409,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <param name="buildIndex">The build index of the scene if the return value is <c>true</c>. <c>-1</c> otherwise.</param>
         /// <returns>
-        /// <c>true</c> if the following are true, <c>false</c> otherwise.
+        /// <c>true</c> if both of the following are true, <c>false</c> otherwise.
         /// <list type="number">
         /// <item>A scene is assigned to this <see cref="SceneReference"/>.</item>
         /// <item>The scene is in the scene GUID to path map.</item>
@@ -434,7 +434,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <param name="name">The name of the scene asset if the return value is <c>true</c>. <c>null</c> otherwise.</param>
         /// <returns>
-        /// <c>true</c> if the following are true, <c>false</c> otherwise.
+        /// <c>true</c> if both of the following are true, <c>false</c> otherwise.
         /// <list type="number">
         /// <item>A scene is assigned to this <see cref="SceneReference"/>.</item>
         /// <item>The scene is in the scene GUID to path map.</item>
@@ -460,7 +460,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <param name="loadedScene">The <see cref="Scene"/> struct of the scene if the return value is <c>true</c>. <c>default</c> otherwise.</param>
         /// <returns>
-        /// <c>true</c> if the following are true, <c>false</c> otherwise.
+        /// <c>true</c> if both of the following are true, <c>false</c> otherwise.
         /// <list type="number">
         /// <item>A scene is assigned to this <see cref="SceneReference"/>.</item>
         /// <item>The scene is in the scene GUID to path map.</item>
@@ -485,7 +485,7 @@ namespace Eflatun.SceneReference
         /// </summary>
         /// <param name="address">The address of the scene if the return value is <c>true</c>. <c>null</c> otherwise.</param>
         /// <returns>
-        /// <c>true</c> if the following are true, <c>false</c> otherwise.
+        /// <c>true</c> if both of the following are true, <c>false</c> otherwise.
         /// <list type="number">
         /// <item>A scene is assigned to this <see cref="SceneReference"/>.</item>
         /// <item>The scene is in the scene GUID to address map.</item>
