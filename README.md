@@ -178,7 +178,7 @@ else
 
 if (mySceneReference.TryGetBuildIndex(out var buildIndex))
 {
-    // `buildindex` contains the value of `mySceneReference.BuildIndex`.
+    // `buildIndex` contains the value of `mySceneReference.BuildIndex`.
 }
 else
 {
