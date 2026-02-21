@@ -162,6 +162,60 @@ if (mySceneReference.UnsafeReason == SceneReferenceUnsafeReason.NotInBuild)
 > - `Empty` has priority over all other reasons.
 > - `NotInMaps` has priority over `NotInBuild`.
 
+## `TryGet` Methods
+
+As an alternative to performing validation followed by property access, you can also use the `TryGet` methods for properties that can throw exceptions.
+
+```cs
+if (mySceneReference.TryGetPath(out var path))
+{
+    // `path` contains the value of `mySceneReference.Path`.
+}
+else
+{
+    // `mySceneReference.Path` would throw an exception.
+}
+
+if (mySceneReference.TryGetBuildIndex(out var buildIndex))
+{
+    // `buildindex` contains the value of `mySceneReference.BuildIndex`.
+}
+else
+{
+    // `mySceneReference.BuildIndex` would throw an exception.
+}
+
+if (mySceneReference.TryGetName(out var name))
+{
+    // `name` contains the value of `mySceneReference.Name`.
+}
+else
+{
+    // `mySceneReference.Name` would throw an exception.
+}
+
+if (mySceneReference.TryGetLoadedScene(out var loadedScene))
+{
+    // `loadedscene` contains the value of `mySceneReference.LoadedScene`.
+}
+else
+{
+    // `mySceneReference.LoadedScene` would throw an exception.
+}
+
+if (mySceneReference.TryGetAddress(out var address))
+{
+    // `address` contains the value of `mySceneReference.Address`.
+}
+else
+{
+    // `mySceneReference.Address` would throw an exception.
+}
+```
+
+> [!IMPORTANT]<br/>
+> `TryGetAddress` method, just like the `Address` property, throws `AddressablesSupportDisabledException` if addressables support is disabled.
+
 ## Inline Inspector Utilities
 
 A scene will be accessible in runtime only if one of the following is true:
