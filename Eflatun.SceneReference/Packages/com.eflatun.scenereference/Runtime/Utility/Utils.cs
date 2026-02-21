@@ -51,17 +51,23 @@ namespace Eflatun.SceneReference.Utility
         /// </summary>
         public static bool IsValidGuid(this string guid)
         {
-            if (string.IsNullOrEmpty(guid) || guid.Length != 32)
+            if (guid.Length != 32)
             {
                 return false;
             }
 
-            for (int i = 0; i < guid.Length; i++)
+            // ReSharper disable once ForCanBeConvertedToForeach
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            for (var i = 0; i < guid.Length; i++)
             {
-                char c = guid[i];
-                bool isValid = (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
+                var guidChar = guid[i];
 
-                if (!isValid)
+                var isGuidCharHexadecimal =
+                    ('0' <= guidChar && guidChar <= '9') ||
+                    ('A' <= guidChar && guidChar <= 'F') ||
+                    ('a' <= guidChar && guidChar <= 'f');
+
+                if (!isGuidCharHexadecimal)
                 {
                     return false;
                 }
