@@ -144,9 +144,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
                 var couldGetAddress = sr.TryGetAddress(out var address);
                 Assert.IsFalse(couldGetAddress);
-
-                // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
-                Assert.AreEqual(null, address);
+                Assert.IsNull(address);
             }
             else
             {
@@ -198,9 +196,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
                 var couldGetAddress = sr.TryGetAddress(out var address);
                 Assert.IsFalse(couldGetAddress);
-
-                // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
-                Assert.AreEqual(null, address);
+                Assert.IsNull(address);
             }
             else
             {
@@ -244,9 +240,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
                 var couldGetAddress = sr.TryGetAddress(out var address);
                 Assert.IsFalse(couldGetAddress);
-
-                // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
-                Assert.AreEqual(null, address);
+                Assert.IsNull(address);
             }
             else
             {
@@ -261,17 +255,13 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
             var couldGetName = sr.TryGetName(out var name);
             Assert.IsFalse(couldGetName);
-
-            // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
-            Assert.AreEqual(null, name);
+            Assert.IsNull(name);
 
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.Path);
 
             var couldGetPath = sr.TryGetPath(out var path);
             Assert.IsFalse(couldGetPath);
-
-            // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
-            Assert.AreEqual(null, path);
+            Assert.IsNull(path);
 
 #if UNITY_EDITOR
             Assert.IsFalse(!!sr.asset);
@@ -294,9 +284,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
                 var couldGetAddress = sr.TryGetAddress(out var address);
                 Assert.IsFalse(couldGetAddress);
-
-                // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
-                Assert.AreEqual(null, address);
+                Assert.IsNull(address);
             }
             else
             {
