@@ -164,7 +164,7 @@ if (mySceneReference.UnsafeReason == SceneReferenceUnsafeReason.NotInBuild)
 
 ## `TryGet` Methods
 
-As an alternative to performing validation followed by property access, you can also use the `TryGet` methods for properties that can throw exceptions.
+Each property that can throw exceptions based on state has a corresponding `TryGet` method. You can opt to call the `TryGet` methods as an alternative to performing validation prior to accessing those properties.
 
 ```cs
 if (mySceneReference.TryGetPath(out var path))

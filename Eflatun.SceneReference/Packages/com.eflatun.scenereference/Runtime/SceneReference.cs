@@ -415,7 +415,9 @@ namespace Eflatun.SceneReference
         /// <item>The scene is in the scene GUID to path map.</item>
         /// </list>
         /// </returns>
-        /// <remarks><paramref name="buildIndex"/> will be <c>-1</c> even when the return value is <c>true</c> if the scene is not added and enabled in the build settings.</remarks>
+        /// <remarks>
+        /// <paramref name="buildIndex"/> will be <c>-1</c> even when the return value is <c>true</c> if the scene is not added and enabled in the build settings.
+        /// </remarks>
         /// <seealso cref="BuildIndex"/>
         public bool TryGetBuildIndex(out int buildIndex)
         {
@@ -440,7 +442,9 @@ namespace Eflatun.SceneReference
         /// <item>The scene is in the scene GUID to path map.</item>
         /// </list>
         /// </returns>
-        /// <remarks>The <paramref name="name"/> will not have the <c>.unity</c> extension.</remarks>
+        /// <remarks>
+        /// The <paramref name="name"/> will not have the <c>.unity</c> extension.
+        /// </remarks>
         /// <seealso cref="Name"/>
         [ContractAnnotation("=> true, name:notnull; => false, name:null")]
         public bool TryGetName(out string name)
@@ -466,7 +470,9 @@ namespace Eflatun.SceneReference
         /// <item>The scene is in the scene GUID to path map.</item>
         /// </list>
         /// </returns>
-        /// <remarks>The <paramref name="loadedScene"/> struct is only valid if the scene is currently loaded. You can check <see cref="Scene.IsValid"/> on it to see if it is valid.</remarks>
+        /// <remarks>
+        /// The <paramref name="loadedScene"/> will be invalid even when the return value is <c>true</c> if the scene is not currently loaded. You can check <see cref="Scene.IsValid"/> to see if it is valid.
+        /// </remarks>
         /// <seealso cref="LoadedScene"/>
         public bool TryGetLoadedScene(out Scene loadedScene)
         {
@@ -505,7 +511,7 @@ namespace Eflatun.SceneReference
             address = null;
             return false;
 #else // ESR_ADDRESSABLES
-                throw new AddressablesSupportDisabledException();
+            throw new AddressablesSupportDisabledException();
 #endif // ESR_ADDRESSABLES
         }
 
