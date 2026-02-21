@@ -137,7 +137,6 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
             Assert.AreEqual(SceneReferenceUnsafeReason.None, sr.UnsafeReason);
 
-
             if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);

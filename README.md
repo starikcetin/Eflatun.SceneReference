@@ -100,7 +100,7 @@ var sceneBuildIndex = mySceneReference.BuildIndex;
 var sceneName = mySceneReference.Name;
 
 // You can only access these when the scene is currently loaded
-var loadedScene = mySceneReference.LoadedScene
+var loadedScene = mySceneReference.LoadedScene;
 
 // You can only access these if you have addressables support enabled
 var sceneAddress = mySceneReference.Address;
