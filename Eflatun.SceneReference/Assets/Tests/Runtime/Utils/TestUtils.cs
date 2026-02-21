@@ -111,38 +111,74 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
         public static void AssertEnabledSceneState(SceneReference sr)
         {
             Assert.AreEqual(EnabledSceneName, sr.Name);
+
+            var couldGetName = sr.TryGetName(out var name);
+            Assert.IsTrue(couldGetName);
+            Assert.AreEqual(EnabledSceneName, name);
+
             Assert.AreEqual(EnabledScenePath, sr.Path);
+
+            var couldGetPath = sr.TryGetPath(out var path);
+            Assert.IsTrue(couldGetPath);
+            Assert.AreEqual(EnabledScenePath, path);
 
 #if UNITY_EDITOR
             Assert.AreEqual(EnabledSceneName, sr.asset.name);
 #endif
 
             Assert.AreEqual(EnabledSceneBuildIndex, sr.BuildIndex);
+
+            var couldGetBuildIndex = sr.TryGetBuildIndex(out var buildIndex);
+            Assert.IsTrue(couldGetBuildIndex);
+            Assert.AreEqual(EnabledSceneBuildIndex, buildIndex);
+
             Assert.AreEqual(EnabledSceneGuid, sr.Guid);
             Assert.AreEqual(EnabledSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
             Assert.AreEqual(SceneReferenceUnsafeReason.None, sr.UnsafeReason);
 
+
             if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
+
+                var couldGetAddress = sr.TryGetAddress(out var address);
+                Assert.IsFalse(couldGetAddress);
+
+                // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
+                Assert.AreEqual(null, address);
             }
             else
             {
                 Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+                Assert.Throws<AddressablesSupportDisabledException>(() => sr.TryGetAddress(out _));
             }
         }
 
         public static void AssertDisabledSceneState(SceneReference sr)
         {
             Assert.AreEqual(DisabledSceneName, sr.Name);
+
+            var couldGetName = sr.TryGetName(out var name);
+            Assert.IsTrue(couldGetName);
+            Assert.AreEqual(DisabledSceneName, name);
+
             Assert.AreEqual(DisabledScenePath, sr.Path);
+
+            var couldGetPath = sr.TryGetPath(out var path);
+            Assert.IsTrue(couldGetPath);
+            Assert.AreEqual(DisabledScenePath, path);
 
 #if UNITY_EDITOR
             Assert.AreEqual(DisabledSceneName, sr.asset.name);
 #endif
 
             Assert.AreEqual(DisabledSceneBuildIndex, sr.BuildIndex);
+
+            var couldGetBuildIndex = sr.TryGetBuildIndex(out var buildIndex);
+            Assert.IsTrue(couldGetBuildIndex);
+            Assert.AreEqual(DisabledSceneBuildIndex, buildIndex);
+
             Assert.AreEqual(DisabledSceneGuid, sr.Guid);
             Assert.AreEqual(DisabledSceneGuid, sr.guid);
 
@@ -159,23 +195,44 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
+
+                var couldGetAddress = sr.TryGetAddress(out var address);
+                Assert.IsFalse(couldGetAddress);
+
+                // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
+                Assert.AreEqual(null, address);
             }
             else
             {
                 Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+                Assert.Throws<AddressablesSupportDisabledException>(() => sr.TryGetAddress(out _));
             }
         }
 
         public static void AssertNotInBuildSceneState(SceneReference sr)
         {
             Assert.AreEqual(NotInBuildSceneName, sr.Name);
+
+            var couldGetName = sr.TryGetName(out var name);
+            Assert.IsTrue(couldGetName);
+            Assert.AreEqual(NotInBuildSceneName, name);
+
             Assert.AreEqual(NotInBuildScenePath, sr.Path);
+
+            var couldGetPath = sr.TryGetPath(out var path);
+            Assert.IsTrue(couldGetPath);
+            Assert.AreEqual(NotInBuildScenePath, path);
 
 #if UNITY_EDITOR
             Assert.AreEqual(NotInBuildSceneName, sr.asset.name);
 #endif
 
             Assert.AreEqual(NotInBuildSceneBuildIndex, sr.BuildIndex);
+
+            var couldGetBuildIndex = sr.TryGetBuildIndex(out var buildIndex);
+            Assert.IsTrue(couldGetBuildIndex);
+            Assert.AreEqual(NotInBuildSceneBuildIndex, buildIndex);
+
             Assert.AreEqual(NotInBuildSceneGuid, sr.Guid);
             Assert.AreEqual(NotInBuildSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
@@ -184,23 +241,48 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<SceneNotAddressableException>(() => _ = sr.Address);
+
+                var couldGetAddress = sr.TryGetAddress(out var address);
+                Assert.IsFalse(couldGetAddress);
+
+                // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
+                Assert.AreEqual(null, address);
             }
             else
             {
                 Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+                Assert.Throws<AddressablesSupportDisabledException>(() => sr.TryGetAddress(out _));
             }
         }
 
         public static void AssertEmptyState(SceneReference sr)
         {
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.Name);
+
+            var couldGetName = sr.TryGetName(out var name);
+            Assert.IsFalse(couldGetName);
+
+            // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
+            Assert.AreEqual(null, name);
+
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.Path);
+
+            var couldGetPath = sr.TryGetPath(out var path);
+            Assert.IsFalse(couldGetPath);
+
+            // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
+            Assert.AreEqual(null, path);
 
 #if UNITY_EDITOR
             Assert.IsFalse(!!sr.asset);
 #endif // UNITY_EDITOR
 
             Assert.Throws<EmptySceneReferenceException>(() => _ = sr.BuildIndex);
+
+            var couldGetBuildIndex = sr.TryGetBuildIndex(out var buildIndex);
+            Assert.IsFalse(couldGetBuildIndex);
+            Assert.AreEqual(-1, buildIndex);
+
             Assert.AreEqual(AllZeroGuid, sr.Guid);
             Assert.AreEqual(AllZeroGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
@@ -209,10 +291,17 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<EmptySceneReferenceException>(() => _ = sr.Address);
+
+                var couldGetAddress = sr.TryGetAddress(out var address);
+                Assert.IsFalse(couldGetAddress);
+
+                // ReSharper disable once ExpressionIsAlwaysNull - Yes, we know, that is what we expect.
+                Assert.AreEqual(null, address);
             }
             else
             {
                 Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+                Assert.Throws<AddressablesSupportDisabledException>(() => sr.TryGetAddress(out _));
             }
         }
 
@@ -225,13 +314,27 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
         private static void AssertInvalidState(SceneReference sr, string expectedGuid)
         {
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Name);
+
+            var couldGetName = sr.TryGetName(out var name);
+            Assert.IsFalse(couldGetName);
+            Assert.IsNull(name);
+
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Path);
+
+            var couldGetPath = sr.TryGetPath(out var path);
+            Assert.IsFalse(couldGetPath);
+            Assert.IsNull(path);
 
 #if UNITY_EDITOR
             Assert.IsFalse(!!sr.asset);
 #endif
 
             Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.BuildIndex);
+
+            var couldGetBuildIndex = sr.TryGetBuildIndex(out var buildIndex);
+            Assert.IsFalse(couldGetBuildIndex);
+            Assert.AreEqual(-1, buildIndex);
+
             Assert.AreEqual(expectedGuid, sr.Guid);
             Assert.AreEqual(expectedGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
@@ -240,10 +343,15 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             if (IsAddressablesPackagePresent)
             {
                 Assert.Throws<InvalidSceneReferenceException>(() => _ = sr.Address);
+
+                var couldGetAddress = sr.TryGetAddress(out var address);
+                Assert.IsFalse(couldGetAddress);
+                Assert.IsNull(address);
             }
             else
             {
                 Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+                Assert.Throws<AddressablesSupportDisabledException>(() => sr.TryGetAddress(out _));
             }
         }
 
@@ -258,13 +366,27 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
         private static void AssertAddressableSceneState(SceneReference sr, string expectedName, string expectedPath, string expectedGuid, string expectedAddress)
         {
             Assert.AreEqual(expectedName, sr.Name);
+
+            var couldGetName = sr.TryGetName(out var name);
+            Assert.IsTrue(couldGetName);
+            Assert.AreEqual(expectedName, name);
+
             Assert.AreEqual(expectedPath, sr.Path);
+
+            var couldGetPath = sr.TryGetPath(out var path);
+            Assert.IsTrue(couldGetPath);
+            Assert.AreEqual(expectedPath, path);
 
 #if UNITY_EDITOR
             Assert.AreEqual(expectedName, sr.asset.name);
 #endif
 
             Assert.AreEqual(-1, sr.BuildIndex);
+
+            var couldGetBuildIndex = sr.TryGetBuildIndex(out var buildIndex);
+            Assert.IsTrue(couldGetBuildIndex);
+            Assert.AreEqual(-1, buildIndex);
+
             Assert.AreEqual(expectedGuid, sr.Guid);
             Assert.AreEqual(expectedGuid, sr.guid);
 
@@ -273,12 +395,17 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
                 Assert.AreEqual(SceneReferenceState.Addressable, sr.State);
                 Assert.AreEqual(SceneReferenceUnsafeReason.None, sr.UnsafeReason);
                 Assert.AreEqual(expectedAddress, sr.Address);
+
+                var couldGetAddress = sr.TryGetAddress(out var address);
+                Assert.IsTrue(couldGetAddress);
+                Assert.AreEqual(expectedAddress, address);
             }
             else
             {
                 Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
                 Assert.AreEqual(SceneReferenceUnsafeReason.NotInBuild, sr.UnsafeReason);
                 Assert.Throws<AddressablesSupportDisabledException>(() => _ = sr.Address);
+                Assert.Throws<AddressablesSupportDisabledException>(() => sr.TryGetAddress(out _));
             }
         }
 
