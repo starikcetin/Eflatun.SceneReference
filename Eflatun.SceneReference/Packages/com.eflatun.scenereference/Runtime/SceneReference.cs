@@ -397,11 +397,11 @@ namespace Eflatun.SceneReference
         {
             if (HasValue && SceneGuidToPathMapProvider.SceneGuidToPathMap.TryGetValue(Guid, out path))
             {
-                return false;
+                return true;
             }
 
             path = null;
-            return true;
+            return false;
         }
 
         /// <summary>
