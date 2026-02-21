@@ -11,6 +11,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 - Added the "Usage in Editor Code" section to README.
+- Added `TryGet` methods for `SceneReference` properties:
+  - `TryGetPath` for `Path`.
+  - `TryGetBuildIndex` for `BuildIndex`.
+  - `TryGetName` for `Name`.
+  - `TryGetLoadedScene` for `LoadedScene`.
+  - `TryGetAddress` for `Address`.
 
 ### Changed
 
