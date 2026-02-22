@@ -23,7 +23,7 @@ namespace Eflatun.SceneReference
     [PublicAPI]
     [Serializable]
     [XmlRoot(XmlRootElementName)]
-    public class SceneReference : ISerializationCallbackReceiver, ISerializable, IXmlSerializable
+    public class SceneReference : ISerializationCallbackReceiver, ISerializable, IXmlSerializable, IEquatable<SceneReference>
     {
         internal const string XmlRootElementName = "Eflatun.SceneReference.SceneReference";
         internal const string CustomSerializationGuidKey = "sceneAssetGuidHex";
@@ -623,5 +623,20 @@ namespace Eflatun.SceneReference
                 : null;
 #endif // UNITY_EDITOR
         }
+
+        public bool Equals(SceneReference other) =>
+            Guid == other?.Guid;
+
+        public override bool Equals(object other) =>
+            Equals(other as SceneReference);
+
+        public override int GetHashCode() =>
+            Guid.GetHashCode();
+
+        public static bool operator ==(SceneReference left, SceneReference right) =>
+            Equals(left, right);
+
+        public static bool operator !=(SceneReference left, SceneReference right) =>
+            !Equals(left, right);
     }
 }
