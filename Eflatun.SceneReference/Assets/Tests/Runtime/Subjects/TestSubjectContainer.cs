@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -92,5 +93,17 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
         [field: SerializeField] public SceneReference[] PropArrayAddressableDuplicateAddressBScene { get; private set; }
         public List<SceneReference> fieldListAddressableDuplicateAddressBScene;
         [field: SerializeField] public List<SceneReference> PropListAddressableDuplicateAddressBScene { get; private set; }
+
+        public SceneReference GetSceneReference(SceneReferenceEqualityTests.SceneType sceneType) => sceneType switch
+        {
+            SceneReferenceEqualityTests.SceneType.NotInBuild => fieldNotInBuildScene,
+            SceneReferenceEqualityTests.SceneType.Disabled => fieldDisabledScene,
+            SceneReferenceEqualityTests.SceneType.Enabled => fieldEnabledScene,
+            SceneReferenceEqualityTests.SceneType.Addressable1 => fieldAddressable1Scene,
+            SceneReferenceEqualityTests.SceneType.Addressable2 => fieldAddressable2Scene,
+            SceneReferenceEqualityTests.SceneType.AddressableDuplicateAddressA => fieldAddressableDuplicateAddressAScene,
+            SceneReferenceEqualityTests.SceneType.AddressableDuplicateAddressB => fieldAddressableDuplicateAddressBScene,
+            _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null)
+        };
     }
 }

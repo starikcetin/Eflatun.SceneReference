@@ -1,0 +1,219 @@
+using System;
+using System.Collections;
+using Eflatun.SceneReference.Tests.Runtime.Subjects;
+using Eflatun.SceneReference.Tests.Runtime.Utils;
+using NUnit.Framework;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
+
+namespace Eflatun.SceneReference.Tests.Runtime
+{
+    public class SceneReferenceEqualityTests
+    {
+        private TestSubjectContainer _testMb;
+
+        [UnitySetUp]
+        public IEnumerator Setup()
+        {
+            yield return SceneManager.LoadSceneAsync(TestUtils.TestSubjectContainerScenePath, LoadSceneMode.Additive);
+            _testMb = UnityEngine.Object.FindObjectOfType<TestSubjectContainer>();
+        }
+
+        [UnityTearDown]
+        public IEnumerator TearDown()
+        {
+            var scene = SceneManager.GetSceneByPath(TestUtils.TestSubjectContainerScenePath);
+            yield return SceneManager.UnloadSceneAsync(scene);
+            _testMb = null;
+        }
+
+        [Test]
+        public void Valid_SameRef(
+            [Values] SceneType sceneType,
+            [Values] ConceptionType conceptionType
+        ) => AssertEquality(
+            true,
+            CreateValid(sceneType, conceptionType)
+        );
+
+        [Test]
+        public void Invalid_SameRef(
+            [Values] ConceptionType conceptionType,
+            [Values] InvalidReason invalidReason
+        ) => AssertEquality(
+            true,
+            CreateInvalid(conceptionType, invalidReason)
+        );
+
+        [Test]
+        public void Valid_Valid(
+            [Values] SceneType sceneTypeA,
+            [Values] ConceptionType conceptionTypeA,
+            [Values] SceneType sceneTypeB,
+            [Values] ConceptionType conceptionTypeB
+        ) => AssertEquality(
+            sceneTypeA == sceneTypeB,
+            CreateValid(sceneTypeA, conceptionTypeA),
+            CreateValid(sceneTypeB, conceptionTypeB)
+        );
+
+        [Test]
+        public void Valid_Invalid(
+            [Values] SceneType sceneTypeA,
+            [Values] ConceptionType conceptionTypeA,
+            [Values] ConceptionType conceptionTypeB,
+            [Values] InvalidReason invalidReasonB
+        ) => AssertEquality(
+            false,
+            CreateValid(sceneTypeA, conceptionTypeA),
+            CreateInvalid(conceptionTypeB, invalidReasonB)
+        );
+
+        [Test]
+        public void Invalid_Invalid(
+            [Values] ConceptionType conceptionTypeA,
+            [Values] InvalidReason invalidReasonA,
+            [Values] ConceptionType conceptionTypeB,
+            [Values] InvalidReason invalidReasonB
+        ) => AssertEquality(
+            invalidReasonA == invalidReasonB,
+            CreateInvalid(conceptionTypeA, invalidReasonA),
+            CreateInvalid(conceptionTypeB, invalidReasonB)
+        );
+
+        private SceneReference CreateValid(SceneType sceneType, ConceptionType conceptionType)
+        {
+            var guid = sceneType switch
+            {
+                SceneType.NotInBuild => TestUtils.NotInBuildSceneGuid,
+                SceneType.Disabled => TestUtils.DisabledSceneGuid,
+                SceneType.Enabled => TestUtils.EnabledSceneGuid,
+                SceneType.Addressable1 => TestUtils.Addressable1SceneGuid,
+                SceneType.Addressable2 => TestUtils.Addressable2SceneGuid,
+                SceneType.AddressableDuplicateAddressA => TestUtils.AddressableDuplicateAddressASceneGuid,
+                SceneType.AddressableDuplicateAddressB => TestUtils.AddressableDuplicateAddressBSceneGuid,
+                _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null),
+            };
+
+            return conceptionType switch
+            {
+                ConceptionType.CreatedInCode => new SceneReference(guid),
+                ConceptionType.DeserializedFromJson => TestUtils.DeserializeFromJson(TestUtils.GetRawJson(guid)),
+                ConceptionType.DeserializedFromXml => TestUtils.DeserializeFromXml(TestUtils.GetRawXml(guid)),
+                ConceptionType.DeserializedFromBinary => TestUtils.DeserializeFromBinaryBase64(TestUtils.GetRawBinaryBase64(guid)),
+                ConceptionType.UnitySerialized => _testMb.GetSceneReference(sceneType),
+                _ => throw new ArgumentOutOfRangeException(nameof(conceptionType), conceptionType, null),
+            };
+        }
+
+        private SceneReference CreateInvalid(ConceptionType conceptionType, InvalidReason invalidReason)
+        {
+            if (conceptionType == ConceptionType.UnitySerialized && invalidReason == InvalidReason.InvalidGuid)
+            {
+                Assert.Ignore("It would take a very dedicated person doing very weird things to get a Unity serialized SceneReference with an invalid guid.");
+            }
+
+            if (conceptionType == ConceptionType.CreatedInCode && (invalidReason == InvalidReason.InvalidGuid || invalidReason == InvalidReason.NotExisting || invalidReason == InvalidReason.NotSceneAsset))
+            {
+                Assert.Ignore("It is not possible to create a SceneReference in code with a guid that is not a valid scene asset because the constructor validates the guid and throws if it is not for a valid scene asset.");
+            }
+
+            if (invalidReason == InvalidReason.Null)
+            {
+                return null;
+            }
+
+            if (invalidReason == InvalidReason.Empty)
+            {
+                return new SceneReference();
+            }
+
+            if (conceptionType == ConceptionType.UnitySerialized)
+            {
+                return invalidReason switch
+                {
+                    InvalidReason.Null => throw new Exception("This branch is already handled above with an if statement."),
+                    InvalidReason.Empty => throw new Exception("This branch is already handled above with an if statement."),
+                    InvalidReason.InvalidGuid => throw new Exception("This branch is already handled above with an if statement."),
+                    InvalidReason.NotExisting => _testMb.fieldNotExisting,
+                    InvalidReason.NotSceneAsset => _testMb.fieldNotSceneAsset,
+                    _ => throw new ArgumentOutOfRangeException(nameof(invalidReason), invalidReason, null)
+                };
+            }
+
+            var guid = invalidReason switch
+            {
+                InvalidReason.Null => throw new Exception("This branch is already handled above with an if statement."),
+                InvalidReason.Empty => throw new Exception("This branch is already handled above with an if statement."),
+                InvalidReason.InvalidGuid => "invalid guid",
+                InvalidReason.NotExisting => TestUtils.NotExistingGuid,
+                InvalidReason.NotSceneAsset => TestUtils.NotSceneAssetGuid,
+                _ => throw new ArgumentOutOfRangeException(nameof(invalidReason), invalidReason, null),
+            };
+
+            return conceptionType switch
+            {
+                ConceptionType.CreatedInCode => new SceneReference(guid),
+                ConceptionType.DeserializedFromJson => TestUtils.DeserializeFromJson(TestUtils.GetRawJson(guid)),
+                ConceptionType.DeserializedFromXml => TestUtils.DeserializeFromXml(TestUtils.GetRawXml(guid)),
+                ConceptionType.DeserializedFromBinary => TestUtils.DeserializeFromBinaryBase64(TestUtils.GetRawBinaryBase64(guid)),
+                ConceptionType.UnitySerialized => throw new Exception("This branch is already handled above with an if statement."),
+                _ => throw new ArgumentOutOfRangeException(nameof(conceptionType), conceptionType, null),
+            };
+        }
+
+        private static void AssertEquality(bool shouldBeEqual, SceneReference a, SceneReference b)
+        {
+            Assert.AreEqual(shouldBeEqual, a == b);
+            Assert.AreEqual(shouldBeEqual, b == a);
+
+            Assert.AreEqual(!shouldBeEqual, a != b);
+            Assert.AreEqual(!shouldBeEqual, b != a);
+
+            Assert.AreEqual(shouldBeEqual, Equals(a, b));
+            Assert.AreEqual(shouldBeEqual, Equals(b, a));
+
+            if (a is {})
+            {
+                Assert.AreEqual(shouldBeEqual, a.Equals(b));
+            }
+
+            if (b is {})
+            {
+                Assert.AreEqual(shouldBeEqual, b.Equals(a));
+            }
+        }
+
+        private static void AssertEquality(bool shouldBeEqual, SceneReference aAndB)
+            => AssertEquality(shouldBeEqual, aAndB, aAndB);
+
+        public enum SceneType
+        {
+            NotInBuild,
+            Disabled,
+            Enabled,
+            Addressable1,
+            Addressable2,
+            AddressableDuplicateAddressA,
+            AddressableDuplicateAddressB,
+        }
+
+        public enum ConceptionType
+        {
+            CreatedInCode,
+            DeserializedFromJson,
+            DeserializedFromXml,
+            DeserializedFromBinary,
+            UnitySerialized,
+        }
+
+        public enum InvalidReason
+        {
+            Null,
+            Empty,
+            InvalidGuid,
+            NotExisting,
+            NotSceneAsset,
+        }
+    }
+}
