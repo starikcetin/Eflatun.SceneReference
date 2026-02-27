@@ -6,7 +6,7 @@ using NUnit.Framework;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-namespace Eflatun.SceneReference.Tests.Runtime
+namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
 {
     public class SceneReferenceEqualityTests
     {
@@ -186,34 +186,5 @@ namespace Eflatun.SceneReference.Tests.Runtime
 
         private static void AssertEquality(bool shouldBeEqual, SceneReference aAndB)
             => AssertEquality(shouldBeEqual, aAndB, aAndB);
-
-        public enum SceneType
-        {
-            NotInBuild,
-            Disabled,
-            Enabled,
-            Addressable1,
-            Addressable2,
-            AddressableDuplicateAddressA,
-            AddressableDuplicateAddressB,
-        }
-
-        public enum ConceptionType
-        {
-            CreatedInCode,
-            DeserializedFromJson,
-            DeserializedFromXml,
-            DeserializedFromBinary,
-            UnitySerialized,
-        }
-
-        public enum InvalidReason
-        {
-            Null,
-            Empty,
-            InvalidGuid,
-            NotExisting,
-            NotSceneAsset,
-        }
     }
 }

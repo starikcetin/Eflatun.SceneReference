@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode;
 using UnityEngine;
 
 namespace Eflatun.SceneReference.Tests.Runtime.Subjects
@@ -94,15 +95,15 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
         public List<SceneReference> fieldListAddressableDuplicateAddressBScene;
         [field: SerializeField] public List<SceneReference> PropListAddressableDuplicateAddressBScene { get; private set; }
 
-        public SceneReference GetSceneReference(SceneReferenceEqualityTests.SceneType sceneType) => sceneType switch
+        public SceneReference GetSceneReference(SceneType sceneType) => sceneType switch
         {
-            SceneReferenceEqualityTests.SceneType.NotInBuild => fieldNotInBuildScene,
-            SceneReferenceEqualityTests.SceneType.Disabled => fieldDisabledScene,
-            SceneReferenceEqualityTests.SceneType.Enabled => fieldEnabledScene,
-            SceneReferenceEqualityTests.SceneType.Addressable1 => fieldAddressable1Scene,
-            SceneReferenceEqualityTests.SceneType.Addressable2 => fieldAddressable2Scene,
-            SceneReferenceEqualityTests.SceneType.AddressableDuplicateAddressA => fieldAddressableDuplicateAddressAScene,
-            SceneReferenceEqualityTests.SceneType.AddressableDuplicateAddressB => fieldAddressableDuplicateAddressBScene,
+            SceneType.NotInBuild => fieldNotInBuildScene,
+            SceneType.Disabled => fieldDisabledScene,
+            SceneType.Enabled => fieldEnabledScene,
+            SceneType.Addressable1 => fieldAddressable1Scene,
+            SceneType.Addressable2 => fieldAddressable2Scene,
+            SceneType.AddressableDuplicateAddressA => fieldAddressableDuplicateAddressAScene,
+            SceneType.AddressableDuplicateAddressB => fieldAddressableDuplicateAddressBScene,
             _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null)
         };
     }
