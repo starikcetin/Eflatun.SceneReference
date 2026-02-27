@@ -17,10 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - `TryGetName` for `Name`.
   - `TryGetLoadedScene` for `LoadedScene`.
   - `TryGetAddress` for `Address`.
-- Added GUID-based equality for `SceneReference`
-  - `IEquatable<SceneReference>`
-  - Equality operators `==` and `!=`
-  - `GetHashCode`
+- GUID-based equality for `SceneReference`.
 
 ### Changed
 
