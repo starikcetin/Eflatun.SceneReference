@@ -625,13 +625,13 @@ namespace Eflatun.SceneReference
         }
 
         public bool Equals(SceneReference other) =>
-            Guid == other?.Guid;
+            StringComparer.OrdinalIgnoreCase.Equals(Guid, other?.Guid);
 
         public override bool Equals(object other) =>
             Equals(other as SceneReference);
 
         public override int GetHashCode() =>
-            Guid.GetHashCode();
+            StringComparer.OrdinalIgnoreCase.GetHashCode(Guid);
 
         public static bool operator ==(SceneReference left, SceneReference right) =>
             Equals(left, right);

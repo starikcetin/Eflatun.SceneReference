@@ -56,7 +56,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
             };
 
             Assert.AreEqual(
-                guid.GetHashCode(),
+                StringComparer.OrdinalIgnoreCase.GetHashCode(guid),
                 sr.GetHashCode()
             );
         }
@@ -79,7 +79,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
             if (invalidReason == InvalidReason.Empty)
             {
                 Assert.AreEqual(
-                    TestUtils.AllZeroGuid.GetHashCode(),
+                    StringComparer.OrdinalIgnoreCase.GetHashCode(TestUtils.AllZeroGuid),
                     new SceneReference().GetHashCode()
                 );
 
@@ -103,7 +103,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
                     case InvalidReason.NotExisting:
                     {
                         Assert.AreEqual(
-                            TestUtils.NotExistingGuid.GetHashCode(),
+                            StringComparer.OrdinalIgnoreCase.GetHashCode(TestUtils.NotExistingGuid),
                             _testMb.fieldNotExisting.GetHashCode()
                         );
 
@@ -113,7 +113,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
                     case InvalidReason.NotSceneAsset:
                     {
                         Assert.AreEqual(
-                            TestUtils.NotSceneAssetGuid.GetHashCode(),
+                            StringComparer.OrdinalIgnoreCase.GetHashCode(TestUtils.NotSceneAssetGuid),
                             _testMb.fieldNotSceneAsset.GetHashCode()
                         );
 
@@ -146,7 +146,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
             };
 
             Assert.AreEqual(
-                guid.GetHashCode(),
+                StringComparer.OrdinalIgnoreCase.GetHashCode(guid),
                 sr.GetHashCode()
             );
         }
