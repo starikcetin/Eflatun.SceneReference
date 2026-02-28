@@ -31,8 +31,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
         public void Valid(
             [Values] SceneType sceneType,
             [Values] ConceptionType conceptionType
-        )
-        {
+        ) {
             var guid = sceneType switch
             {
                 SceneType.NotInBuild => TestUtils.NotInBuildSceneGuid,
