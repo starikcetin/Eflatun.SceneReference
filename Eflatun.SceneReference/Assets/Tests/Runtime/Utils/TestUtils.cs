@@ -462,7 +462,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
             var bytes = new List<byte>
             {
-                // Before GUID: 175 bytes
+                // Before GUID
                 0x00, 0x01, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff,
                 0xff, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x0c, 0x02, 0x00, 0x00, 0x00, 0x4d, 0x45,
@@ -486,14 +486,14 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
                 0x69, 0x64, 0x48, 0x65, 0x78, 0x01, 0x02, 0x00,
                 0x00, 0x00, 0x06, 0x03, 0x00, 0x00, 0x00,
 
-                // GUID length: 1 byte. 0x20 for a valid GUID
+                // GUID length
                 (byte)Encoding.UTF8.GetByteCount(guid),
             };
 
-            // GUID string: 16 bytes for a valid GUID
+            // GUID
             bytes.AddRange(Encoding.UTF8.GetBytes(guid));
 
-            // After GUID: 1 byte. MessageEnd record
+            // After GUID: MessageEnd record
             bytes.Add(0x0b);
 
             return Convert.ToBase64String(bytes.ToArray());
