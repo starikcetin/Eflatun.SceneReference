@@ -84,7 +84,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
             {
                 ConceptionType.CreatedInCode => new SceneReference(guid),
                 ConceptionType.DeserializedViaNewtonsoftJson => TestUtils.DeserializeViaNewtonsoftJson(TestUtils.GetExpectedOutputOfNewtonsoftJson(guid)),
-                ConceptionType.DeserializedFromXml => TestUtils.DeserializeFromXml(TestUtils.GetRawXml(guid)),
+                ConceptionType.DeserializedViaSystemXml => TestUtils.DeserializeViaSystemXml(TestUtils.GetExpectedOutputOfSystemXml(guid)),
                 ConceptionType.DeserializedFromBinary => TestUtils.DeserializeFromBinaryBase64(TestUtils.GetRawBinaryBase64(guid)),
                 ConceptionType.UnitySerialized => TestSubjectContainer.GetSceneReference(sceneType),
                 _ => throw new ArgumentOutOfRangeException(nameof(conceptionType), conceptionType, null),
@@ -140,7 +140,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
             {
                 ConceptionType.CreatedInCode => new SceneReference(guid),
                 ConceptionType.DeserializedViaNewtonsoftJson => TestUtils.DeserializeViaNewtonsoftJson(TestUtils.GetExpectedOutputOfNewtonsoftJson(guid)),
-                ConceptionType.DeserializedFromXml => TestUtils.DeserializeFromXml(TestUtils.GetRawXml(guid)),
+                ConceptionType.DeserializedViaSystemXml => TestUtils.DeserializeViaSystemXml(TestUtils.GetExpectedOutputOfSystemXml(guid)),
                 ConceptionType.DeserializedFromBinary => TestUtils.DeserializeFromBinaryBase64(TestUtils.GetRawBinaryBase64(guid)),
                 ConceptionType.UnitySerialized => throw new Exception("This branch is already handled above with an if statement."),
                 _ => throw new ArgumentOutOfRangeException(nameof(conceptionType), conceptionType, null),

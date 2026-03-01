@@ -39,16 +39,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_EnabledScene()
+        public void SerializesViaSystemXml_EnabledScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(new SceneReference(TestUtils.EnabledSceneGuid));
-            Assert.AreEqual(TestUtils.EnabledSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.EnabledSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(new SceneReference(TestUtils.EnabledSceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromXml_EnabledScene()
+        public void DeserializesViaSystemXml_EnabledScene()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.EnabledSceneXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.EnabledSceneGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertEnabledSceneState(deserialized);
         }
 
@@ -83,16 +85,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_DisabledScene()
+        public void SerializesViaSystemXml_DisabledScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(new SceneReference(TestUtils.DisabledSceneGuid));
-            Assert.AreEqual(TestUtils.DisabledSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.DisabledSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(new SceneReference(TestUtils.DisabledSceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromXml_DisabledScene()
+        public void DeserializesViaSystemXml_DisabledScene()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.DisabledSceneXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.DisabledSceneGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertDisabledSceneState(deserialized);
         }
 
@@ -127,16 +131,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_NotInBuildScene()
+        public void SerializesViaSystemXml_NotInBuildScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(new SceneReference(TestUtils.NotInBuildSceneGuid));
-            Assert.AreEqual(TestUtils.NotInBuildSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.NotInBuildSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(new SceneReference(TestUtils.NotInBuildSceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromXml_NotInBuildScene()
+        public void DeserializesViaSystemXml_NotInBuildScene()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.NotInBuildSceneXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.NotInBuildSceneGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertNotInBuildSceneState(deserialized);
         }
 
@@ -171,16 +177,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_EmptyReference()
+        public void SerializesViaSystemXml_EmptyReference()
         {
-            var xmlRaw = TestUtils.SerializeToXml(new SceneReference());
-            Assert.AreEqual(TestUtils.EmptyReferenceXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AllZeroGuid);
+            var actual = TestUtils.SerializeViaSystemXml(new SceneReference());
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromXml_EmptyReference()
+        public void DeserializesViaSystemXml_EmptyReference()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.EmptyReferenceXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AllZeroGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertEmptyState(deserialized);
         }
 
@@ -200,9 +208,10 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesFromXml_DeletedScene()
+        public void DeserializesViaSystemXml_DeletedScene()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.DeletedSceneXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.DeletedSceneGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertDeletedSceneState(deserialized);
         }
 
@@ -222,9 +231,10 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesFromXml_NotExisting()
+        public void DeserializesViaSystemXml_NotExisting()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.NotExistingXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.NotExistingGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertNotExistingState(deserialized);
         }
 
@@ -244,9 +254,10 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesFromXml_NotSceneAsset()
+        public void DeserializesViaSystemXml_NotSceneAsset()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.NotSceneAssetXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.NotSceneAssetGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertNotSceneAssetState(deserialized);
         }
 
@@ -281,16 +292,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_Addressable1Scene()
+        public void SerializesViaSystemXml_Addressable1Scene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(new SceneReference(TestUtils.Addressable1SceneGuid));
-            Assert.AreEqual(TestUtils.Addressable1SceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.Addressable1SceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(new SceneReference(TestUtils.Addressable1SceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromXml_Addressable1Scene()
+        public void DeserializesViaSystemXml_Addressable1Scene()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.Addressable1SceneXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.Addressable1SceneGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertAddressable1SceneState(deserialized);
         }
 
@@ -325,16 +338,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_Addressable2Scene()
+        public void SerializesViaSystemXml_Addressable2Scene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(new SceneReference(TestUtils.Addressable2SceneGuid));
-            Assert.AreEqual(TestUtils.Addressable2SceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.Addressable2SceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(new SceneReference(TestUtils.Addressable2SceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromXml_Addressable2Scene()
+        public void DeserializesViaSystemXml_Addressable2Scene()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.Addressable2SceneXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.Addressable2SceneGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertAddressable2SceneState(deserialized);
         }
 
@@ -369,16 +384,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_AddressableDuplicateAddressAScene()
+        public void SerializesViaSystemXml_AddressableDuplicateAddressAScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(new SceneReference(TestUtils.AddressableDuplicateAddressASceneGuid));
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressASceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AddressableDuplicateAddressASceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(new SceneReference(TestUtils.AddressableDuplicateAddressASceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromXml_AddressableDuplicateAddressAScene()
+        public void DeserializesViaSystemXml_AddressableDuplicateAddressAScene()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.AddressableDuplicateAddressASceneXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AddressableDuplicateAddressASceneGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertAddressableDuplicateAddressASceneState(deserialized);
         }
 
@@ -413,16 +430,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_AddressableDuplicateAddressBScene()
+        public void SerializesViaSystemXml_AddressableDuplicateAddressBScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(new SceneReference(TestUtils.AddressableDuplicateAddressBSceneGuid));
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressBSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AddressableDuplicateAddressBSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(new SceneReference(TestUtils.AddressableDuplicateAddressBSceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromXml_AddressableDuplicateAddressBScene()
+        public void DeserializesViaSystemXml_AddressableDuplicateAddressBScene()
         {
-            var deserialized = TestUtils.DeserializeFromXml(TestUtils.AddressableDuplicateAddressBSceneXmlRaw);
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AddressableDuplicateAddressBSceneGuid);
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertAddressableDuplicateAddressBSceneState(deserialized);
         }
     }

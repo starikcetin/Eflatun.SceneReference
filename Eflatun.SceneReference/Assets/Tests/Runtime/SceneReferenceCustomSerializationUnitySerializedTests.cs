@@ -30,10 +30,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_EnabledScene()
+        public void SerializesViaSystemXml_EnabledScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.EnabledScene.Field);
-            Assert.AreEqual(TestUtils.EnabledSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.EnabledSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.EnabledScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -52,10 +53,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_DisabledScene()
+        public void SerializesViaSystemXml_DisabledScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.DisabledScene.Field);
-            Assert.AreEqual(TestUtils.DisabledSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.DisabledSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.DisabledScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -74,10 +76,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_NotInBuildScene()
+        public void SerializesViaSystemXml_NotInBuildScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.NotInBuildScene.Field);
-            Assert.AreEqual(TestUtils.NotInBuildSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.NotInBuildSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.NotInBuildScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -96,10 +99,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_Empty()
+        public void SerializesViaSystemXml_Empty()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.Empty.Field);
-            Assert.AreEqual(TestUtils.EmptyReferenceXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AllZeroGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.Empty.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -118,10 +122,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_DeletedScene()
+        public void SerializesViaSystemXml_DeletedScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.DeletedScene.Field);
-            Assert.AreEqual(TestUtils.DeletedSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.DeletedSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.DeletedScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -140,10 +145,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_NotExisting()
+        public void SerializesViaSystemXml_NotExisting()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.NotExisting.Field);
-            Assert.AreEqual(TestUtils.NotExistingXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.NotExistingGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.NotExisting.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -162,10 +168,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_NotSceneAsset()
+        public void SerializesViaSystemXml_NotSceneAsset()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.NotSceneAsset.Field);
-            Assert.AreEqual(TestUtils.NotSceneAssetXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.NotSceneAssetGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.NotSceneAsset.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -184,10 +191,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_Addressable1Scene()
+        public void SerializesViaSystemXml_Addressable1Scene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.Addressable1Scene.Field);
-            Assert.AreEqual(TestUtils.Addressable1SceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.Addressable1SceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.Addressable1Scene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -206,10 +214,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_Addressable2Scene()
+        public void SerializesViaSystemXml_Addressable2Scene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.Addressable2Scene.Field);
-            Assert.AreEqual(TestUtils.Addressable2SceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.Addressable2SceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.Addressable2Scene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -228,10 +237,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_AddressableDuplicateAddressAScene()
+        public void SerializesViaSystemXml_AddressableDuplicateAddressAScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.AddressableDuplicateAddressAScene.Field);
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressASceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AddressableDuplicateAddressASceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.AddressableDuplicateAddressAScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -250,10 +260,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToXml_AddressableDuplicateAddressBScene()
+        public void SerializesViaSystemXml_AddressableDuplicateAddressBScene()
         {
-            var xmlRaw = TestUtils.SerializeToXml(TestSubjectContainer.AddressableDuplicateAddressBScene.Field);
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressBSceneXmlRaw, xmlRaw);
+            var expected = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.AddressableDuplicateAddressBSceneGuid);
+            var actual = TestUtils.SerializeViaSystemXml(TestSubjectContainer.AddressableDuplicateAddressBScene.Field);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

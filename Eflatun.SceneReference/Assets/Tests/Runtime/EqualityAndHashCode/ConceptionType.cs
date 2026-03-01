@@ -4,7 +4,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
     {
         CreatedInCode,
         DeserializedViaNewtonsoftJson,
-        DeserializedFromXml,
+        DeserializedViaSystemXml,
         DeserializedFromBinary,
         UnitySerialized,
     }
