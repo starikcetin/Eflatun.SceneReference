@@ -9,10 +9,10 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
         private void Start()
         {
-            AsBase64OutputOfBinaryFormatter(nameof(scene), scene);
+            LogBase64OutputOfBinaryFormatter(nameof(scene), scene);
         }
 
-        private void AsBase64OutputOfBinaryFormatter(string name, SceneReference sceneReference)
+        private void LogBase64OutputOfBinaryFormatter(string name, SceneReference sceneReference)
         {
             Debug.Log($"{name} BinaryFormatter output as base64: {TestUtils.SerializeToBase64ViaBinaryFormatter(sceneReference)}");
         }
