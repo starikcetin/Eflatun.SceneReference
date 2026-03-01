@@ -47,7 +47,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
         {
             NotStarted,
             InProgress,
-            Finished,
+            Succeeded,
+            Failed,
         }
 
         private static CacheState _cacheState = CacheState.NotStarted;
@@ -61,13 +62,18 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
             {
                 if (DateTime.UtcNow > waitEndUtcTime)
                 {
-                    throw new TimeoutException($"Caching the {nameof(TestSubjectContainer)} took longer than {maxWaitDuration}. This likely means that the caching process got stuck.");
+                    throw new Exception($"{nameof(TestSubjectContainer)}.{nameof(CacheIfNotAlready)}: Existing attempt took longer than {maxWaitDuration}.");
                 }
 
                 yield return null;
             }
 
-            if (_cacheState == CacheState.Finished)
+            if (_cacheState == CacheState.Failed)
+            {
+                throw new Exception($"{nameof(TestSubjectContainer)}.{nameof(CacheIfNotAlready)}: Previously failed.");
+            }
+
+            if (_cacheState == CacheState.Succeeded)
             {
                 yield break;
             }
@@ -75,11 +81,22 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
             _cacheState = CacheState.InProgress;
 
             yield return SceneManager.LoadSceneAsync(TestUtils.TestSubjectContainerScenePath, LoadSceneMode.Additive);
+            var scene = SceneManager.GetSceneByPath(TestUtils.TestSubjectContainerScenePath);
 
-            var container = SceneManager.GetSceneByPath(TestUtils.TestSubjectContainerScenePath)
-                .GetRootGameObjects()
-                .SelectMany(go => go.GetComponentsInChildren<TestSubjectContainer>())
-                .Single();
+            if (!scene.IsValid() || !scene.isLoaded)
+            {
+                _cacheState = CacheState.Failed;
+                throw new Exception($"{nameof(TestSubjectContainer)}.{nameof(CacheIfNotAlready)}: Failed to load the scene at path {TestUtils.TestSubjectContainerScenePath}.");
+            }
+
+            var container = scene.GetRootGameObjects().SelectMany(go => go.GetComponentsInChildren<TestSubjectContainer>()).SingleOrDefault();
+
+            if (container == null)
+            {
+                _cacheState = CacheState.Failed;
+                yield return SceneManager.UnloadSceneAsync(scene);
+                throw new Exception($"{nameof(TestSubjectContainer)}.{nameof(CacheIfNotAlready)}: Expected a single {nameof(TestSubjectContainer)}, but found either none or multiple.");
+            }
 
             EnabledScene = container.enabledScene;
             DisabledScene = container.disabledScene;
@@ -93,9 +110,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
             AddressableDuplicateAddressAScene = container.addressableDuplicateAddressAScene;
             AddressableDuplicateAddressBScene = container.addressableDuplicateAddressBScene;
 
-            yield return SceneManager.UnloadSceneAsync(TestUtils.TestSubjectContainerScenePath);
-
-            _cacheState = CacheState.Finished;
+            yield return SceneManager.UnloadSceneAsync(scene);
+            _cacheState = CacheState.Succeeded;
         }
 
         public static SceneReference GetSceneReference(SceneType sceneType) => sceneType switch
