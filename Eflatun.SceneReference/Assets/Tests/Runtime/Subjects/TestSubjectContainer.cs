@@ -1,110 +1,105 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode;
+using Eflatun.SceneReference.Tests.Runtime.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Eflatun.SceneReference.Tests.Runtime.Subjects
 {
     public class TestSubjectContainer : MonoBehaviour
     {
-        [field: Header("EnabledScene")]
-        public SceneReference fieldEnabledScene;
-        [field: SerializeField] public SceneReference PropEnabledScene { get; private set; }
-        public SceneReference[] fieldArrayEnabledScene;
-        [field: SerializeField] public SceneReference[] PropArrayEnabledScene { get; private set; }
-        public List<SceneReference> fieldListEnabledScene;
-        [field: SerializeField] public List<SceneReference> PropListEnabledScene { get; private set; }
+        [SerializeField] private TestSubject enabledScene;
+        public static TestSubject EnabledScene { get; private set; }
 
-        [field: Header("DisabledScene")]
-        public SceneReference fieldDisabledScene;
-        [field: SerializeField] public SceneReference PropDisabledScene { get; private set; }
-        public SceneReference[] fieldArrayDisabledScene;
-        [field: SerializeField] public SceneReference[] PropArrayDisabledScene { get; private set; }
-        public List<SceneReference> fieldListDisabledScene;
-        [field: SerializeField] public List<SceneReference> PropListDisabledScene { get; private set; }
+        [SerializeField] private TestSubject disabledScene;
+        public static TestSubject DisabledScene { get; private set; }
 
-        [field: Header("NotInBuildScene")]
-        public SceneReference fieldNotInBuildScene;
-        [field: SerializeField] public SceneReference PropNotInBuildScene { get; private set; }
-        public SceneReference[] fieldArrayNotInBuildScene;
-        [field: SerializeField] public SceneReference[] PropArrayNotInBuildScene { get; private set; }
-        public List<SceneReference> fieldListNotInBuildScene;
-        [field: SerializeField] public List<SceneReference> PropListNotInBuildScene { get; private set; }
+        [SerializeField] private TestSubject notInBuildScene;
+        public static TestSubject NotInBuildScene { get; private set; }
 
-        [field: Header("Empty")]
-        public SceneReference fieldEmpty;
-        [field: SerializeField] public SceneReference PropEmpty { get; private set; }
-        public SceneReference[] fieldArrayEmpty;
-        [field: SerializeField] public SceneReference[] PropArrayEmpty { get; private set; }
-        public List<SceneReference> fieldListEmpty;
-        [field: SerializeField] public List<SceneReference> PropListEmpty { get; private set; }
+        [SerializeField] private TestSubject empty;
+        public static TestSubject Empty { get; private set; }
 
-        [field: Header("DeletedScene")]
-        public SceneReference fieldDeletedScene;
-        [field: SerializeField] public SceneReference PropDeletedScene { get; private set; }
-        public SceneReference[] fieldArrayDeletedScene;
-        [field: SerializeField] public SceneReference[] PropArrayDeletedScene { get; private set; }
-        public List<SceneReference> fieldListDeletedScene;
-        [field: SerializeField] public List<SceneReference> PropListDeletedScene { get; private set; }
+        [SerializeField] private TestSubject deletedScene;
+        public static TestSubject DeletedScene { get; private set; }
 
-        [field: Header("NotExisting")]
-        public SceneReference fieldNotExisting;
-        [field: SerializeField] public SceneReference PropNotExisting { get; private set; }
-        public SceneReference[] fieldArrayNotExisting;
-        [field: SerializeField] public SceneReference[] PropArrayNotExisting { get; private set; }
-        public List<SceneReference> fieldListNotExisting;
-        [field: SerializeField] public List<SceneReference> PropListNotExisting { get; private set; }
+        [SerializeField] private TestSubject notExisting;
+        public static TestSubject NotExisting { get; private set; }
 
-        [field: Header("NotSceneAsset")]
-        public SceneReference fieldNotSceneAsset;
-        [field: SerializeField] public SceneReference PropNotSceneAsset { get; private set; }
-        public SceneReference[] fieldArrayNotSceneAsset;
-        [field: SerializeField] public SceneReference[] PropArrayNotSceneAsset { get; private set; }
-        public List<SceneReference> fieldListNotSceneAsset;
-        [field: SerializeField] public List<SceneReference> PropListNotSceneAsset { get; private set; }
+        [SerializeField] private TestSubject notSceneAsset;
+        public static TestSubject NotSceneAsset { get; private set; }
 
-        [field: Header("Addressable1Scene")]
-        public SceneReference fieldAddressable1Scene;
-        [field: SerializeField] public SceneReference PropAddressable1Scene { get; private set; }
-        public SceneReference[] fieldArrayAddressable1Scene;
-        [field: SerializeField] public SceneReference[] PropArrayAddressable1Scene { get; private set; }
-        public List<SceneReference> fieldListAddressable1Scene;
-        [field: SerializeField] public List<SceneReference> PropListAddressable1Scene { get; private set; }
+        [SerializeField] private TestSubject addressable1Scene;
+        public static TestSubject Addressable1Scene { get; private set; }
 
-        [field: Header("Addressable2Scene")]
-        public SceneReference fieldAddressable2Scene;
-        [field: SerializeField] public SceneReference PropAddressable2Scene { get; private set; }
-        public SceneReference[] fieldArrayAddressable2Scene;
-        [field: SerializeField] public SceneReference[] PropArrayAddressable2Scene { get; private set; }
-        public List<SceneReference> fieldListAddressable2Scene;
-        [field: SerializeField] public List<SceneReference> PropListAddressable2Scene { get; private set; }
+        [SerializeField] private TestSubject addressable2Scene;
+        public static TestSubject Addressable2Scene { get; private set; }
 
-        [field: Header("AddressableDuplicateAddressAScene")]
-        public SceneReference fieldAddressableDuplicateAddressAScene;
-        [field: SerializeField] public SceneReference PropAddressableDuplicateAddressAScene { get; private set; }
-        public SceneReference[] fieldArrayAddressableDuplicateAddressAScene;
-        [field: SerializeField] public SceneReference[] PropArrayAddressableDuplicateAddressAScene { get; private set; }
-        public List<SceneReference> fieldListAddressableDuplicateAddressAScene;
-        [field: SerializeField] public List<SceneReference> PropListAddressableDuplicateAddressAScene { get; private set; }
+        [SerializeField] private TestSubject addressableDuplicateAddressAScene;
+        public static TestSubject AddressableDuplicateAddressAScene { get; private set; }
 
-        [field: Header("AddressableDuplicateAddressBScene")]
-        public SceneReference fieldAddressableDuplicateAddressBScene;
-        [field: SerializeField] public SceneReference PropAddressableDuplicateAddressBScene { get; private set; }
-        public SceneReference[] fieldArrayAddressableDuplicateAddressBScene;
-        [field: SerializeField] public SceneReference[] PropArrayAddressableDuplicateAddressBScene { get; private set; }
-        public List<SceneReference> fieldListAddressableDuplicateAddressBScene;
-        [field: SerializeField] public List<SceneReference> PropListAddressableDuplicateAddressBScene { get; private set; }
+        [SerializeField] private TestSubject addressableDuplicateAddressBScene;
+        public static TestSubject AddressableDuplicateAddressBScene { get; private set; }
 
-        public SceneReference GetSceneReference(SceneType sceneType) => sceneType switch
+        private static bool _didCache;
+
+        public static IEnumerator CacheIfNotAlready()
         {
-            SceneType.NotInBuild => fieldNotInBuildScene,
-            SceneType.Disabled => fieldDisabledScene,
-            SceneType.Enabled => fieldEnabledScene,
-            SceneType.Addressable1 => fieldAddressable1Scene,
-            SceneType.Addressable2 => fieldAddressable2Scene,
-            SceneType.AddressableDuplicateAddressA => fieldAddressableDuplicateAddressAScene,
-            SceneType.AddressableDuplicateAddressB => fieldAddressableDuplicateAddressBScene,
-            _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null)
+            if (_didCache)
+            {
+                yield break;
+            }
+
+            _didCache = true;
+
+            yield return SceneManager.LoadSceneAsync(TestUtils.TestSubjectContainerScenePath, LoadSceneMode.Additive);
+            var scene = SceneManager.GetSceneByPath(TestUtils.TestSubjectContainerScenePath);
+
+            if (!scene.IsValid())
+            {
+                throw new Exception($"Couldn't load scene {TestUtils.TestSubjectContainerScenePath}");
+            }
+
+            var containers = FindObjectsOfType<TestSubjectContainer>();
+
+            if (containers.Length < 1)
+            {
+                throw new Exception($"Couldn't find any {nameof(TestSubjectContainer)} in scene {TestUtils.TestSubjectContainerScenePath}");
+            }
+
+            if (containers.Length > 1)
+            {
+                throw new Exception($"Found more than one {nameof(TestSubjectContainer)} in scene {TestUtils.TestSubjectContainerScenePath}");
+            }
+
+            var container = containers[0];
+
+            EnabledScene = container.enabledScene;
+            DisabledScene = container.disabledScene;
+            NotInBuildScene = container.notInBuildScene;
+            Empty = container.empty;
+            DeletedScene = container.deletedScene;
+            NotExisting = container.notExisting;
+            NotSceneAsset = container.notSceneAsset;
+            Addressable1Scene = container.addressable1Scene;
+            Addressable2Scene = container.addressable2Scene;
+            AddressableDuplicateAddressAScene = container.addressableDuplicateAddressAScene;
+            AddressableDuplicateAddressBScene = container.addressableDuplicateAddressBScene;
+
+            yield return SceneManager.UnloadSceneAsync(scene);
+        }
+
+        public static SceneReference GetSceneReference(SceneType sceneType) => sceneType switch
+        {
+            SceneType.NotInBuild => NotInBuildScene.Field,
+            SceneType.Disabled => DisabledScene.Field,
+            SceneType.Enabled => EnabledScene.Field,
+            SceneType.Addressable1 => Addressable1Scene.Field,
+            SceneType.Addressable2 => Addressable2Scene.Field,
+            SceneType.AddressableDuplicateAddressA => AddressableDuplicateAddressAScene.Field,
+            SceneType.AddressableDuplicateAddressB => AddressableDuplicateAddressBScene.Field,
+            _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null),
         };
     }
 }

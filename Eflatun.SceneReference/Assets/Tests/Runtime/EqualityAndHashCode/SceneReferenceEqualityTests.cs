@@ -3,29 +3,14 @@ using System.Collections;
 using Eflatun.SceneReference.Tests.Runtime.Subjects;
 using Eflatun.SceneReference.Tests.Runtime.Utils;
 using NUnit.Framework;
-using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
 {
     public class SceneReferenceEqualityTests
     {
-        private TestSubjectContainer _testMb;
-
         [UnitySetUp]
-        public IEnumerator Setup()
-        {
-            yield return SceneManager.LoadSceneAsync(TestUtils.TestSubjectContainerScenePath, LoadSceneMode.Additive);
-            _testMb = UnityEngine.Object.FindObjectOfType<TestSubjectContainer>();
-        }
-
-        [UnityTearDown]
-        public IEnumerator TearDown()
-        {
-            var scene = SceneManager.GetSceneByPath(TestUtils.TestSubjectContainerScenePath);
-            yield return SceneManager.UnloadSceneAsync(scene);
-            _testMb = null;
-        }
+        public IEnumerator Setup() => TestSubjectContainer.CacheIfNotAlready();
 
         [Test]
         public void Valid_SameRef(
@@ -101,7 +86,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
                 ConceptionType.DeserializedFromJson => TestUtils.DeserializeFromJson(TestUtils.GetRawJson(guid)),
                 ConceptionType.DeserializedFromXml => TestUtils.DeserializeFromXml(TestUtils.GetRawXml(guid)),
                 ConceptionType.DeserializedFromBinary => TestUtils.DeserializeFromBinaryBase64(TestUtils.GetRawBinaryBase64(guid)),
-                ConceptionType.UnitySerialized => _testMb.GetSceneReference(sceneType),
+                ConceptionType.UnitySerialized => TestSubjectContainer.GetSceneReference(sceneType),
                 _ => throw new ArgumentOutOfRangeException(nameof(conceptionType), conceptionType, null),
             };
         }
@@ -135,8 +120,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
                     InvalidReason.Null => throw new Exception("This branch is already handled above with an if statement."),
                     InvalidReason.Empty => throw new Exception("This branch is already handled above with an if statement."),
                     InvalidReason.InvalidGuid => throw new Exception("This branch is already handled above with an if statement."),
-                    InvalidReason.NotExisting => _testMb.fieldNotExisting,
-                    InvalidReason.NotSceneAsset => _testMb.fieldNotSceneAsset,
+                    InvalidReason.NotExisting => TestSubjectContainer.NotExisting.Field,
+                    InvalidReason.NotSceneAsset => TestSubjectContainer.NotSceneAsset.Field,
                     _ => throw new ArgumentOutOfRangeException(nameof(invalidReason), invalidReason, null)
                 };
             }
