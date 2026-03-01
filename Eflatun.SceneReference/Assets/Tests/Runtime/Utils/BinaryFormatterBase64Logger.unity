@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 2055410128}
   - component: {fileID: 2055410127}
   m_Layer: 0
-  m_Name: BinaryBase64Logger
+  m_Name: BinaryFormatterBase64Logger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,27 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bab64053653664195c9024d29bbe06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabledScene:
-    asset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
-    guid: e3f2c1473b766c34ba5b37779d71787e
-  disabledScene:
-    asset: {fileID: 102900000, guid: 7e37b14fa3517514a91937cec5cad27a, type: 3}
-    guid: 7e37b14fa3517514a91937cec5cad27a
-  notInBuildScene:
-    asset: {fileID: 102900000, guid: 63c386231869c904c9b701dd79268476, type: 3}
-    guid: 63c386231869c904c9b701dd79268476
-  empty:
+  scene:
     asset: {fileID: 0}
     guid: 00000000000000000000000000000000
-  deletedScene:
-    asset: {fileID: 102900000, guid: 69c1683d94db0cc469d86e4e865f9f5d, type: 3}
-    guid: 69c1683d94db0cc469d86e4e865f9f5d
-  notExisting:
-    asset: {fileID: 102900000, guid: 2bc1683d94d80cc269d85e4e8a5fcf5d, type: 3}
-    guid: 2bc1683d94d80cc269d85e4e8a5fcf5d
-  notSceneAsset:
-    asset: {fileID: 102900000, guid: 99d2aa5f58f54c44fba8671b66be5259, type: 3}
-    guid: 99d2aa5f58f54c44fba8671b66be5259
 --- !u!4 &2055410128
 Transform:
   m_ObjectHideFlags: 0
