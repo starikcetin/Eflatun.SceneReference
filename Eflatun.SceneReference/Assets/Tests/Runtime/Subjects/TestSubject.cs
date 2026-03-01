@@ -15,11 +15,13 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
         [SerializeField] private SceneReference[] fieldArray;
         public IReadOnlyList<SceneReference> FieldArray => fieldArray;
 
-        [field: SerializeField] public SceneReference[] PropArray { get; private set; }
+        [field: SerializeField] private SceneReference[] PropArrayPrivate { get; set; }
+        public IReadOnlyList<SceneReference> PropArray => PropArrayPrivate;
 
         [SerializeField] private List<SceneReference> fieldList;
         public IReadOnlyList<SceneReference> FieldList => fieldList;
 
-        [field: SerializeField] public List<SceneReference> PropList { get; private set; }
+        [field: SerializeField] private List<SceneReference> PropListPrivate { get; set; }
+        public IReadOnlyList<SceneReference> PropList => PropListPrivate;
     }
 }
