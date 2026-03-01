@@ -48,7 +48,7 @@ namespace Eflatun.SceneReference.Demo.CustomSerialization
 
         private void ViaSystemXml()
         {
-            Debug.Log("--- System.XML ---");
+            Debug.Log("--- System.Xml ---");
             var xmlSerializer = new XmlSerializer(typeof(SceneReference));
             var sb = new StringBuilder();
             using var xmlWriter = XmlWriter.Create(sb);

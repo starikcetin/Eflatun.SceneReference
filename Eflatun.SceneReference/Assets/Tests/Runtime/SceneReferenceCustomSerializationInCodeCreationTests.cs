@@ -33,7 +33,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesViaBinaryFormatterViaBinaryFormatter_EnabledScene()
+        public void DeserializesViaBinaryFormatter_EnabledScene()
         {
             var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.EnabledSceneGuid);
             var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
@@ -81,7 +81,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesViaBinaryFormatterViaBinaryFormatter_DisabledScene()
+        public void DeserializesViaBinaryFormatter_DisabledScene()
         {
             var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.DisabledSceneGuid);
             var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
@@ -129,7 +129,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesViaBinaryFormatterViaBinaryFormatter_NotInBuildScene()
+        public void DeserializesViaBinaryFormatter_NotInBuildScene()
         {
             var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.NotInBuildSceneGuid);
             var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
@@ -177,7 +177,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesViaBinaryFormatterViaBinaryFormatter_EmptyReference()
+        public void DeserializesViaBinaryFormatter_EmptyReference()
         {
             var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.AllZeroGuid);
             var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
@@ -209,7 +209,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesViaBinaryFormatterViaBinaryFormatter_DeletedScene()
+        public void DeserializesViaBinaryFormatter_DeletedScene()
         {
             var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.DeletedSceneGuid);
             var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
@@ -233,7 +233,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesViaBinaryFormatterViaBinaryFormatter_NotExisting()
+        public void DeserializesViaBinaryFormatter_NotExisting()
         {
             var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.NotExistingGuid);
             var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
@@ -257,7 +257,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesViaBinaryFormatterViaBinaryFormatter_NotSceneAsset()
+        public void DeserializesViaBinaryFormatter_NotSceneAsset()
         {
             var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.NotSceneAssetGuid);
             var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
@@ -297,7 +297,7 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesViaBinaryFormatterViaBinaryFormatter_Addressable1Scene()
+        public void DeserializesViaBinaryFormatter_Addressable1Scene()
         {
             var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.Addressable1SceneGuid);
             var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
