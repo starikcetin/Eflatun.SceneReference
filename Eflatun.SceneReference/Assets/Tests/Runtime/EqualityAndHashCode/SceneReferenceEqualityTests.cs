@@ -83,7 +83,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
             return conceptionType switch
             {
                 ConceptionType.CreatedInCode => new SceneReference(guid),
-                ConceptionType.DeserializedFromJson => TestUtils.DeserializeFromJson(TestUtils.GetRawJson(guid)),
+                ConceptionType.DeserializedViaNewtonsoftJson => TestUtils.DeserializeViaNewtonsoftJson(TestUtils.GetExpectedOutputOfNewtonsoftJson(guid)),
                 ConceptionType.DeserializedFromXml => TestUtils.DeserializeFromXml(TestUtils.GetRawXml(guid)),
                 ConceptionType.DeserializedFromBinary => TestUtils.DeserializeFromBinaryBase64(TestUtils.GetRawBinaryBase64(guid)),
                 ConceptionType.UnitySerialized => TestSubjectContainer.GetSceneReference(sceneType),
@@ -139,7 +139,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
             return conceptionType switch
             {
                 ConceptionType.CreatedInCode => new SceneReference(guid),
-                ConceptionType.DeserializedFromJson => TestUtils.DeserializeFromJson(TestUtils.GetRawJson(guid)),
+                ConceptionType.DeserializedViaNewtonsoftJson => TestUtils.DeserializeViaNewtonsoftJson(TestUtils.GetExpectedOutputOfNewtonsoftJson(guid)),
                 ConceptionType.DeserializedFromXml => TestUtils.DeserializeFromXml(TestUtils.GetRawXml(guid)),
                 ConceptionType.DeserializedFromBinary => TestUtils.DeserializeFromBinaryBase64(TestUtils.GetRawBinaryBase64(guid)),
                 ConceptionType.UnitySerialized => throw new Exception("This branch is already handled above with an if statement."),

@@ -3,7 +3,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
     public enum ConceptionType
     {
         CreatedInCode,
-        DeserializedFromJson,
+        DeserializedViaNewtonsoftJson,
         DeserializedFromXml,
         DeserializedFromBinary,
         UnitySerialized,

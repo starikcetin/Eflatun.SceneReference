@@ -9,16 +9,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
     public class SceneReferenceCustomSerializationInCodeCreationTests
     {
         [Test]
-        public void SerializesToJson_EnabledScene()
+        public void SerializesViaNewtonsoftJson_EnabledScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(new SceneReference(TestUtils.EnabledSceneGuid));
-            Assert.AreEqual(TestUtils.EnabledSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.EnabledSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(new SceneReference(TestUtils.EnabledSceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromJson_EnabledScene()
+        public void DeserializesViaNewtonsoftJson_EnabledScene()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.EnabledSceneJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.EnabledSceneGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertEnabledSceneState(deserialized);
         }
 
@@ -51,16 +53,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_DisabledScene()
+        public void SerializesViaNewtonsoftJson_DisabledScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(new SceneReference(TestUtils.DisabledSceneGuid));
-            Assert.AreEqual(TestUtils.DisabledSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.DisabledSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(new SceneReference(TestUtils.DisabledSceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromJson_DisabledScene()
+        public void DeserializesViaNewtonsoftJson_DisabledScene()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.DisabledSceneJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.DisabledSceneGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertDisabledSceneState(deserialized);
         }
 
@@ -93,16 +97,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_NotInBuildScene()
+        public void SerializesViaNewtonsoftJson_NotInBuildScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(new SceneReference(TestUtils.NotInBuildSceneGuid));
-            Assert.AreEqual(TestUtils.NotInBuildSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.NotInBuildSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(new SceneReference(TestUtils.NotInBuildSceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromJson_NotInBuildScene()
+        public void DeserializesViaNewtonsoftJson_NotInBuildScene()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.NotInBuildSceneJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.NotInBuildSceneGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertNotInBuildSceneState(deserialized);
         }
 
@@ -135,16 +141,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_EmptyReference()
+        public void SerializesViaNewtonsoftJson_EmptyReference()
         {
-            var jsonRaw = TestUtils.SerializeToJson(new SceneReference());
-            Assert.AreEqual(TestUtils.EmptyReferenceJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AllZeroGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(new SceneReference());
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromJson_EmptyReference()
+        public void DeserializesViaNewtonsoftJson_EmptyReference()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.EmptyReferenceJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AllZeroGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertEmptyState(deserialized);
         }
 
@@ -177,9 +185,10 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesFromJson_DeletedScene()
+        public void DeserializesViaNewtonsoftJson_DeletedScene()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.DeletedSceneJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.DeletedSceneGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertDeletedSceneState(deserialized);
         }
 
@@ -198,9 +207,10 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesFromJson_NotExisting()
+        public void DeserializesViaNewtonsoftJson_NotExisting()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.NotExistingJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.NotExistingGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertNotExistingState(deserialized);
         }
 
@@ -219,9 +229,10 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void DeserializesFromJson_NotSceneAsset()
+        public void DeserializesViaNewtonsoftJson_NotSceneAsset()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.NotSceneAssetJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.NotSceneAssetGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertNotSceneAssetState(deserialized);
         }
 
@@ -240,16 +251,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_Addressable1Scene()
+        public void SerializesViaNewtonsoftJson_Addressable1Scene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(new SceneReference(TestUtils.Addressable1SceneGuid));
-            Assert.AreEqual(TestUtils.Addressable1SceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.Addressable1SceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(new SceneReference(TestUtils.Addressable1SceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromJson_Addressable1Scene()
+        public void DeserializesViaNewtonsoftJson_Addressable1Scene()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.Addressable1SceneJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.Addressable1SceneGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertAddressable1SceneState(deserialized);
         }
 
@@ -282,16 +295,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_Addressable2Scene()
+        public void SerializesViaNewtonsoftJson_Addressable2Scene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(new SceneReference(TestUtils.Addressable2SceneGuid));
-            Assert.AreEqual(TestUtils.Addressable2SceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.Addressable2SceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(new SceneReference(TestUtils.Addressable2SceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromJson_Addressable2Scene()
+        public void DeserializesViaNewtonsoftJson_Addressable2Scene()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.Addressable2SceneJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.Addressable2SceneGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertAddressable2SceneState(deserialized);
         }
 
@@ -324,16 +339,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_AddressableDuplicateAddressAScene()
+        public void SerializesViaNewtonsoftJson_AddressableDuplicateAddressAScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(new SceneReference(TestUtils.AddressableDuplicateAddressASceneGuid));
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressASceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AddressableDuplicateAddressASceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(new SceneReference(TestUtils.AddressableDuplicateAddressASceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromJson_AddressableDuplicateAddressAScene()
+        public void DeserializesViaNewtonsoftJson_AddressableDuplicateAddressAScene()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.AddressableDuplicateAddressASceneJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AddressableDuplicateAddressASceneGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertAddressableDuplicateAddressASceneState(deserialized);
         }
 
@@ -366,16 +383,18 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_AddressableDuplicateAddressBScene()
+        public void SerializesViaNewtonsoftJson_AddressableDuplicateAddressBScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(new SceneReference(TestUtils.AddressableDuplicateAddressBSceneGuid));
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressBSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AddressableDuplicateAddressBSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(new SceneReference(TestUtils.AddressableDuplicateAddressBSceneGuid));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void DeserializesFromJson_AddressableDuplicateAddressBScene()
+        public void DeserializesViaNewtonsoftJson_AddressableDuplicateAddressBScene()
         {
-            var deserialized = TestUtils.DeserializeFromJson(TestUtils.AddressableDuplicateAddressBSceneJsonRaw);
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AddressableDuplicateAddressBSceneGuid);
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
             TestUtils.AssertAddressableDuplicateAddressBSceneState(deserialized);
         }
 

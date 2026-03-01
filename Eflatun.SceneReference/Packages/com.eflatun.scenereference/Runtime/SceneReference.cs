@@ -522,7 +522,7 @@ namespace Eflatun.SceneReference
         }
 
         /// <summary>
-        /// Used by <see cref="ISerializable"/> for custom JSON and Binary serialization support.
+        /// Used by <see cref="ISerializable"/> for Newtonsoft.Json and Binary serialization support.
         /// </summary>
         /// <remarks>
         /// https://www.newtonsoft.com/json/help/html/serializationguide.htm#ISerializable

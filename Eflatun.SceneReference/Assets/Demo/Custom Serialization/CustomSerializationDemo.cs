@@ -15,7 +15,7 @@ namespace Eflatun.SceneReference.Demo.CustomSerialization
 
         private void Start()
         {
-            ToJsonAndBack();
+            ViaNewtonsoftJson();
             ToBinaryAndBack();
             ToXmlAndBack();
         }
@@ -36,9 +36,9 @@ namespace Eflatun.SceneReference.Demo.CustomSerialization
             Debug.Log("Deserialized path: " + (deserialized.State != SceneReferenceState.Unsafe ? deserialized.Path : "<empty>"));
         }
 
-        private void ToJsonAndBack()
+        private void ViaNewtonsoftJson()
         {
-            Debug.Log("--- JSON ---");
+            Debug.Log("--- Newtonsoft.Json ---");
             var json = JsonConvert.SerializeObject(original);
             Debug.Log($"JSON serialization: {json}");
 

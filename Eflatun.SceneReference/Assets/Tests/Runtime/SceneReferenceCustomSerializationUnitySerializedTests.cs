@@ -15,10 +15,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         public IEnumerator Setup() => TestSubjectContainer.CacheIfNotAlready();
 
         [Test]
-        public void SerializesToJson_EnabledScene()
+        public void SerializesViaNewtonsoftJson_EnabledScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.EnabledScene.Field);
-            Assert.AreEqual(TestUtils.EnabledSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.EnabledSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.EnabledScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -36,10 +37,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_DisabledScene()
+        public void SerializesViaNewtonsoftJson_DisabledScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.DisabledScene.Field);
-            Assert.AreEqual(TestUtils.DisabledSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.DisabledSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.DisabledScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -57,10 +59,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_NotInBuildScene()
+        public void SerializesViaNewtonsoftJson_NotInBuildScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.NotInBuildScene.Field);
-            Assert.AreEqual(TestUtils.NotInBuildSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.NotInBuildSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.NotInBuildScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -78,10 +81,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_Empty()
+        public void SerializesViaNewtonsoftJson_Empty()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.Empty.Field);
-            Assert.AreEqual(TestUtils.EmptyReferenceJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AllZeroGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.Empty.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -99,10 +103,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_DeletedScene()
+        public void SerializesViaNewtonsoftJson_DeletedScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.DeletedScene.Field);
-            Assert.AreEqual(TestUtils.DeletedSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.DeletedSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.DeletedScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -120,10 +125,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_NotExisting()
+        public void SerializesViaNewtonsoftJson_NotExisting()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.NotExisting.Field);
-            Assert.AreEqual(TestUtils.NotExistingJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.NotExistingGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.NotExisting.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -141,10 +147,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_NotSceneAsset()
+        public void SerializesViaNewtonsoftJson_NotSceneAsset()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.NotSceneAsset.Field);
-            Assert.AreEqual(TestUtils.NotSceneAssetJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.NotSceneAssetGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.NotSceneAsset.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -162,10 +169,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_Addressable1Scene()
+        public void SerializesViaNewtonsoftJson_Addressable1Scene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.Addressable1Scene.Field);
-            Assert.AreEqual(TestUtils.Addressable1SceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.Addressable1SceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.Addressable1Scene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -183,10 +191,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_Addressable2Scene()
+        public void SerializesViaNewtonsoftJson_Addressable2Scene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.Addressable2Scene.Field);
-            Assert.AreEqual(TestUtils.Addressable2SceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.Addressable2SceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.Addressable2Scene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -204,10 +213,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_AddressableDuplicateAddressAScene()
+        public void SerializesViaNewtonsoftJson_AddressableDuplicateAddressAScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.AddressableDuplicateAddressAScene.Field);
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressASceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AddressableDuplicateAddressASceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.AddressableDuplicateAddressAScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -225,10 +235,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToJson_AddressableDuplicateAddressBScene()
+        public void SerializesViaNewtonsoftJson_AddressableDuplicateAddressBScene()
         {
-            var jsonRaw = TestUtils.SerializeToJson(TestSubjectContainer.AddressableDuplicateAddressBScene.Field);
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressBSceneJsonRaw, jsonRaw);
+            var expected = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.AddressableDuplicateAddressBSceneGuid);
+            var actual = TestUtils.SerializeViaNewtonsoftJson(TestSubjectContainer.AddressableDuplicateAddressBScene.Field);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
