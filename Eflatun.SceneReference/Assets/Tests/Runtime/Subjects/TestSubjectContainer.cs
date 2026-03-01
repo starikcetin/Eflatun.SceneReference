@@ -10,6 +10,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
 {
     public class TestSubjectContainer : MonoBehaviour
     {
+        private static CacheState _cacheState = CacheState.NotStarted;
+
         [SerializeField] private TestSubject enabledScene;
         public static TestSubject EnabledScene { get; private set; }
 
@@ -42,16 +44,6 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
 
         [SerializeField] private TestSubject addressableDuplicateAddressBScene;
         public static TestSubject AddressableDuplicateAddressBScene { get; private set; }
-
-        private enum CacheState
-        {
-            NotStarted,
-            InProgress,
-            Succeeded,
-            Failed,
-        }
-
-        private static CacheState _cacheState = CacheState.NotStarted;
 
         public static IEnumerator CacheIfNotAlready()
         {
@@ -125,5 +117,13 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
             SceneType.AddressableDuplicateAddressB => AddressableDuplicateAddressBScene.Field,
             _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null),
         };
+
+        private enum CacheState
+        {
+            NotStarted,
+            InProgress,
+            Succeeded,
+            Failed,
+        }
     }
 }
