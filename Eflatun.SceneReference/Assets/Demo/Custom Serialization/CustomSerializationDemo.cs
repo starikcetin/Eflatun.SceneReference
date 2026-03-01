@@ -16,13 +16,13 @@ namespace Eflatun.SceneReference.Demo.CustomSerialization
         private void Start()
         {
             ViaNewtonsoftJson();
-            ToBinaryAndBack();
+            ViaBinaryFormatter();
             ViaSystemXml();
         }
 
-        private void ToBinaryAndBack()
+        private void ViaBinaryFormatter()
         {
-            Debug.Log("--- Binary ---");
+            Debug.Log("--- BinaryFormatter ---");
             var bf = new BinaryFormatter();
             using var ms = new MemoryStream();
 

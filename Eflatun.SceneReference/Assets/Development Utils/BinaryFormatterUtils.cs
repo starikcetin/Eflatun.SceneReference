@@ -4,9 +4,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Eflatun.SceneReference.DevelopmentUtils
 {
-    public static class BinarySerializationUtils
+    public static class BinaryFormatterUtils
     {
-        public static string SerializeToBinaryBase64(object source)
+        public static string SerializeToBase64ViaBinaryFormatter(object source)
         {
             var bf = new BinaryFormatter();
             using var ms = new MemoryStream();
@@ -15,7 +15,7 @@ namespace Eflatun.SceneReference.DevelopmentUtils
             return Convert.ToBase64String(serializedBytes);
         }
 
-        public static T DeserializeFromBinaryBase64<T>(string binaryBase64) where T : class
+        public static T DeserializeFromBase64ViaBinaryFormatter<T>(string binaryBase64) where T : class
         {
             var bytes = Convert.FromBase64String(binaryBase64);
             var bf = new BinaryFormatter();

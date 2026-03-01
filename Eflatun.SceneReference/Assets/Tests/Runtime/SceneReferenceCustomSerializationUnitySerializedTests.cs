@@ -23,10 +23,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_EnabledScene()
+        public void SerializesViaBinaryFormatter_EnabledScene()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.EnabledScene.Field);
-            Assert.AreEqual(TestUtils.EnabledSceneBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.EnabledSceneGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.EnabledScene.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -46,10 +47,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_DisabledScene()
+        public void SerializesViaBinaryFormatter_DisabledScene()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.DisabledScene.Field);
-            Assert.AreEqual(TestUtils.DisabledSceneBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.DisabledSceneGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.DisabledScene.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -69,10 +71,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_NotInBuildScene()
+        public void SerializesViaBinaryFormatter_NotInBuildScene()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.NotInBuildScene.Field);
-            Assert.AreEqual(TestUtils.NotInBuildSceneBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.NotInBuildSceneGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.NotInBuildScene.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -92,10 +95,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_Empty()
+        public void SerializesViaBinaryFormatter_Empty()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.Empty.Field);
-            Assert.AreEqual(TestUtils.EmptyReferenceBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.AllZeroGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.Empty.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -115,10 +119,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_DeletedScene()
+        public void SerializesViaBinaryFormatter_DeletedScene()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.DeletedScene.Field);
-            Assert.AreEqual(TestUtils.DeletedSceneBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.DeletedSceneGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.DeletedScene.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -138,10 +143,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_NotExisting()
+        public void SerializesViaBinaryFormatter_NotExisting()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.NotExisting.Field);
-            Assert.AreEqual(TestUtils.NotExistingBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.NotExistingGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.NotExisting.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -161,10 +167,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_NotSceneAsset()
+        public void SerializesViaBinaryFormatter_NotSceneAsset()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.NotSceneAsset.Field);
-            Assert.AreEqual(TestUtils.NotSceneAssetBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.NotSceneAssetGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.NotSceneAsset.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -184,10 +191,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_Addressable1Scene()
+        public void SerializesViaBinaryFormatter_Addressable1Scene()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.Addressable1Scene.Field);
-            Assert.AreEqual(TestUtils.Addressable1SceneBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.Addressable1SceneGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.Addressable1Scene.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -207,10 +215,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_Addressable2Scene()
+        public void SerializesViaBinaryFormatter_Addressable2Scene()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.Addressable2Scene.Field);
-            Assert.AreEqual(TestUtils.Addressable2SceneBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.Addressable2SceneGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.Addressable2Scene.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -230,10 +239,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_AddressableDuplicateAddressAScene()
+        public void SerializesViaBinaryFormatter_AddressableDuplicateAddressAScene()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.AddressableDuplicateAddressAScene.Field);
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressASceneBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.AddressableDuplicateAddressASceneGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.AddressableDuplicateAddressAScene.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]
@@ -253,10 +263,11 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void SerializesToBinary_AddressableDuplicateAddressBScene()
+        public void SerializesViaBinaryFormatter_AddressableDuplicateAddressBScene()
         {
-            var binaryBase64 = TestUtils.SerializeToBinaryBase64(TestSubjectContainer.AddressableDuplicateAddressBScene.Field);
-            Assert.AreEqual(TestUtils.AddressableDuplicateAddressBSceneBinaryBase64, binaryBase64);
+            var expected = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.AddressableDuplicateAddressBSceneGuid);
+            var base64 = TestUtils.SerializeToBase64ViaBinaryFormatter(TestSubjectContainer.AddressableDuplicateAddressBScene.Field);
+            Assert.AreEqual(expected, base64);
         }
 
         [Test]

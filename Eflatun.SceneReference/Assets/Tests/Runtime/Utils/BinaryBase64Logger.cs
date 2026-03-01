@@ -14,7 +14,7 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
 
         private void LogBinaryBase64(string name, SceneReference sr)
         {
-            Debug.Log($"{name} binary base64: {TestUtils.SerializeToBinaryBase64(sr)}");
+            Debug.Log($"{name} binary base64: {TestUtils.SerializeToBase64ViaBinaryFormatter(sr)}");
         }
     }
 }
