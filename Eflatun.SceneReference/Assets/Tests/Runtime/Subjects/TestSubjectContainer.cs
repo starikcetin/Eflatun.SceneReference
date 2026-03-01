@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode;
 using Eflatun.SceneReference.Tests.Runtime.Utils;
 using UnityEngine;
@@ -42,38 +43,43 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
         [SerializeField] private TestSubject addressableDuplicateAddressBScene;
         public static TestSubject AddressableDuplicateAddressBScene { get; private set; }
 
-        private static bool _didCache;
+        private enum CacheState
+        {
+            NotStarted,
+            InProgress,
+            Finished,
+        }
+
+        private static CacheState _cacheState = CacheState.NotStarted;
 
         public static IEnumerator CacheIfNotAlready()
         {
-            if (_didCache)
+            var maxWaitDuration = TimeSpan.FromMinutes(2);
+            var waitEndUtcTime = DateTime.UtcNow + maxWaitDuration;
+
+            while (_cacheState == CacheState.InProgress)
+            {
+                if (DateTime.UtcNow > waitEndUtcTime)
+                {
+                    throw new TimeoutException($"Caching the {nameof(TestSubjectContainer)} took longer than {maxWaitDuration}. This likely means that the caching process got stuck.");
+                }
+
+                yield return null;
+            }
+
+            if (_cacheState == CacheState.Finished)
             {
                 yield break;
             }
 
-            _didCache = true;
+            _cacheState = CacheState.InProgress;
 
             yield return SceneManager.LoadSceneAsync(TestUtils.TestSubjectContainerScenePath, LoadSceneMode.Additive);
-            var scene = SceneManager.GetSceneByPath(TestUtils.TestSubjectContainerScenePath);
 
-            if (!scene.IsValid())
-            {
-                throw new Exception($"Couldn't load scene {TestUtils.TestSubjectContainerScenePath}");
-            }
-
-            var containers = FindObjectsOfType<TestSubjectContainer>();
-
-            if (containers.Length < 1)
-            {
-                throw new Exception($"Couldn't find any {nameof(TestSubjectContainer)} in scene {TestUtils.TestSubjectContainerScenePath}");
-            }
-
-            if (containers.Length > 1)
-            {
-                throw new Exception($"Found more than one {nameof(TestSubjectContainer)} in scene {TestUtils.TestSubjectContainerScenePath}");
-            }
-
-            var container = containers[0];
+            var container = SceneManager.GetSceneByPath(TestUtils.TestSubjectContainerScenePath)
+                .GetRootGameObjects()
+                .SelectMany(go => go.GetComponentsInChildren<TestSubjectContainer>())
+                .Single();
 
             EnabledScene = container.enabledScene;
             DisabledScene = container.disabledScene;
@@ -87,7 +93,9 @@ namespace Eflatun.SceneReference.Tests.Runtime.Subjects
             AddressableDuplicateAddressAScene = container.addressableDuplicateAddressAScene;
             AddressableDuplicateAddressBScene = container.addressableDuplicateAddressBScene;
 
-            yield return SceneManager.UnloadSceneAsync(scene);
+            yield return SceneManager.UnloadSceneAsync(TestUtils.TestSubjectContainerScenePath);
+
+            _cacheState = CacheState.Finished;
         }
 
         public static SceneReference GetSceneReference(SceneType sceneType) => sceneType switch
