@@ -149,9 +149,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 311110113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23d44fda09bb43f3b29eab19bbad4374, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Script: {fileID: 11500000, guid: 0e3170eec9cb41149b464923607ee216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   enabledScene:
     field:
       asset: {fileID: 102900000, guid: e3f2c1473b766c34ba5b37779d71787e, type: 3}
