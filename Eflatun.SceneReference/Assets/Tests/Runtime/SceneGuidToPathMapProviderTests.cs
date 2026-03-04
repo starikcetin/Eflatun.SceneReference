@@ -1,4 +1,5 @@
-﻿using Eflatun.SceneReference.Tests.Runtime.Utils;
+﻿using System;
+using Eflatun.SceneReference.Tests.Runtime.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -53,9 +54,9 @@ namespace Eflatun.SceneReference.Tests.Runtime
         public void FillWith_Works()
         {
             // cleanup
-            var toRestore = SceneGuidToPathMapProvider.SceneGuidToPathMap.ToDictionary();
+            var toRestore = SceneGuidToPathMapProvider.SceneGuidToPathMap.ToDictionary(StringComparer.OrdinalIgnoreCase);
 
-            var expected = new Dictionary<string, string>()
+            var expected = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 {"foo", "a"},
                 {"bar", "b"},

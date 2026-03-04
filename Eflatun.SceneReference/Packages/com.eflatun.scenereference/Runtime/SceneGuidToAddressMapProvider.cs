@@ -1,3 +1,4 @@
+using System;
 using Eflatun.SceneReference.Exceptions;
 using JetBrains.Annotations;
 using System.Collections.Generic;
@@ -130,14 +131,15 @@ namespace Eflatun.SceneReference
             if (string.IsNullOrWhiteSpace(json))
             {
                 Logger.Error("Scene GUID to address map not found!");
-                FillWith(new Dictionary<string, string>());
+                FillWith(new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
                 return;
             }
 
-            var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            var deserialized = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            JsonConvert.PopulateObject(json, deserialized);
             FillWith(deserialized);
 #else // ESR_ADDRESSABLES
-            FillWith(new Dictionary<string, string>());
+            FillWith(new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
 #endif // ESR_ADDRESSABLES
         }
     }

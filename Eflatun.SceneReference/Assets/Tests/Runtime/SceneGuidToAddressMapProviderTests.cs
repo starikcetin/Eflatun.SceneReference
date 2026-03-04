@@ -1,4 +1,5 @@
-﻿using Eflatun.SceneReference.Exceptions;
+﻿using System;
+using Eflatun.SceneReference.Exceptions;
 using Eflatun.SceneReference.Tests.Runtime.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
@@ -12,9 +13,9 @@ namespace Eflatun.SceneReference.Tests.Runtime
         public void FillWith_Works()
         {
             // cleanup
-            var toRestore = SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ToDictionary();
+            var toRestore = SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ToDictionary(StringComparer.OrdinalIgnoreCase);
 
-            var expected = new Dictionary<string, string>()
+            var expected = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 {"foo", "a"},
                 {"bar", "b"},

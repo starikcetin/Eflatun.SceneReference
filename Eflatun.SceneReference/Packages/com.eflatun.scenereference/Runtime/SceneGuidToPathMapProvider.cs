@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,11 +89,12 @@ namespace Eflatun.SceneReference
                     Logger.Error("Scene GUID to path map not found!");
                 }
 
-                FillWith(new Dictionary<string, string>());
+                FillWith(new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
                 return;
             }
 
-            var deserialized = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            var deserialized = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            JsonConvert.PopulateObject(json, deserialized);
             FillWith(deserialized);
         }
     }

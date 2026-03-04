@@ -1,4 +1,5 @@
-﻿using Eflatun.SceneReference.Editor.Utility;
+﻿using System;
+using Eflatun.SceneReference.Editor.Utility;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -80,7 +81,8 @@ namespace Eflatun.SceneReference.Editor
         {
             var sceneGuidToPathMap = allSceneGuids.ToDictionary(
                 x => x, // key generator: take guids
-                AssetDatabase.GUIDToAssetPath // value generator: take paths
+                AssetDatabase.GUIDToAssetPath, // value generator: take paths
+                StringComparer.OrdinalIgnoreCase
             );
             return sceneGuidToPathMap;
         }
@@ -104,7 +106,7 @@ namespace Eflatun.SceneReference.Editor
             if (!AddressableAssetSettingsDefaultObject.SettingsExists)
             {
                 EditorLogger.Warn("Addressables settings not found. Skipping map generation.");
-                return new Dictionary<string, string>();
+                return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             }
 
             var addressableSettings = AddressableAssetSettingsDefaultObject.Settings;
@@ -115,12 +117,13 @@ namespace Eflatun.SceneReference.Editor
 
             var sceneGuidToAddressMap = addressableSceneAssetEntries.ToDictionary(
                 x => x.guid, // key generator: take guids
-                x => x.address // value generator: take addresses
+                x => x.address, // value generator: take addresses
+                StringComparer.OrdinalIgnoreCase
             );
 
             return sceneGuidToAddressMap;
 #else // ESR_ADDRESSABLES
-            return new Dictionary<string, string>();
+            return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 #endif // ESR_ADDRESSABLES
         }
 

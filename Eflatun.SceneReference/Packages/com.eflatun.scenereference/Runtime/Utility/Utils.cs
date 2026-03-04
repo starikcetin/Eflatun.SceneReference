@@ -97,13 +97,13 @@ namespace Eflatun.SceneReference.Utility
         /// <summary>
         /// Convert <see cref="IReadOnlyDictionary{TKey, TValue}"/> to <see cref="Dictionary{TKey, TValue}"/>.
         /// </summary>
-        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> readOnly)
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> readOnly, IEqualityComparer<TKey> comparer)
         {
 // Backwards compatibility: Dictionary did not have a constructor that took in an IReadOnlyDictionary for Unity versions before 2021.3.
 #if UNITY_2021_3_OR_NEWER
-            return new Dictionary<TKey, TValue>(readOnly);
+            return new Dictionary<TKey, TValue>(readOnly, comparer);
 #else
-            return readOnly.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            return readOnly.ToDictionary(kvp => kvp.Key, kvp => kvp.Value, comparer);
 #endif
         }
     }
