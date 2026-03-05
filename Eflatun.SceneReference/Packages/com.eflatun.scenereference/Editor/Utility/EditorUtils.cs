@@ -75,7 +75,7 @@ namespace Eflatun.SceneReference.Editor.Utility
         public static void EnableSceneInBuild(string sceneGuid)
         {
             var tempScenes = EditorBuildSettings.scenes.ToList();
-            tempScenes.Single(x => x.guid.ToString() == sceneGuid).enabled = true;
+            tempScenes.Single(x => StringComparer.OrdinalIgnoreCase.Equals(x.guid.ToString(), sceneGuid)).enabled = true;
             EditorBuildSettings.scenes = tempScenes.ToArray();
         }
 
