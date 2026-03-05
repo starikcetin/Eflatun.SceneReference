@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+- All GUIDs are now compared case-insensitively:
+  - Provider dictionaries are constructed with `StringComparer.OrdinalIgnoreCase`.
 
 ### Optimised
 - Eliminated GC allocations in `IsValidGuid`.
