@@ -81,7 +81,7 @@ namespace Eflatun.SceneReference.Editor
             _asset = _assetSerializedProperty.objectReferenceValue;
             _guid = _guidSerializedProperty.stringValue;
             _path = AssetDatabase.GetAssetPath(_asset);
-            _buildEntry = EditorBuildSettings.scenes.FirstOrDefault(x => x.guid.ToString() == _guid);
+            _buildEntry = EditorBuildSettings.scenes.FirstOrDefault(x => StringComparer.OrdinalIgnoreCase.Equals(x.guid.ToString(), _guid));
 
 #if ESR_ADDRESSABLES
             if (AddressableAssetSettingsDefaultObject.SettingsExists)
