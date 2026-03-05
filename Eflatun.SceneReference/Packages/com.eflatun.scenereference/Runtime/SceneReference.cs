@@ -226,7 +226,8 @@ namespace Eflatun.SceneReference
                     throw SceneReferenceInternalException.InvalidGuid("54783205", Guid);
                 }
 
-                return Guid != Utils.AllZeroGuid;
+                // AllZeroGuid is all zeros, casing is irrelevant. The only reason we are using OrdinalIgnoreCase here is consistency.
+                return !StringComparer.OrdinalIgnoreCase.Equals(Guid, Utils.AllZeroGuid);
             }
         }
 
