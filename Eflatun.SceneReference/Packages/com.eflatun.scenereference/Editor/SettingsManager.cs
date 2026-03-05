@@ -337,7 +337,7 @@ namespace Eflatun.SceneReference.Editor
             internal static bool IsIgnoredForToolbox(string path, string guid) => ToolboxIgnoreMode.value switch
             {
                 UtilityIgnoreMode.Disabled => false,
-                UtilityIgnoreMode.List => ToolboxIgnoresList.value.Contains(guid),
+                UtilityIgnoreMode.List => ToolboxIgnoresList.value.Contains(guid, StringComparer.OrdinalIgnoreCase),
                 UtilityIgnoreMode.Patterns => IgnoreCheckers.Toolbox.IsIgnored(path),
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -345,7 +345,7 @@ namespace Eflatun.SceneReference.Editor
             internal static bool IsIgnoredForColoring(string path, string guid) => ColoringIgnoreMode.value switch
             {
                 UtilityIgnoreMode.Disabled => false,
-                UtilityIgnoreMode.List => ColoringIgnoresList.value.Contains(guid),
+                UtilityIgnoreMode.List => ColoringIgnoresList.value.Contains(guid, StringComparer.OrdinalIgnoreCase),
                 UtilityIgnoreMode.Patterns => IgnoreCheckers.Coloring.IsIgnored(path),
                 _ => throw new ArgumentOutOfRangeException()
             };

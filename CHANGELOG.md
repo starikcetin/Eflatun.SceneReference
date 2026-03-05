@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - Provider dictionaries are constructed with `StringComparer.OrdinalIgnoreCase`.
   - Property drawer finds the current scene-in-build entry with `StringComparer.OrdinalIgnoreCase`.
   - `Enable in Build` tool finds the scene-in-build entry with `StringComparer.OrdinalIgnoreCase`.
+  - Utility ignores in list mode now compare scene GUIDs with `StringComparer.OrdinalIgnoreCase`.
 
 ### Optimised
 - Eliminated GC allocations in `IsValidGuid`.
