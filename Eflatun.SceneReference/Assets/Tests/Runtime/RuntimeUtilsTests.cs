@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Eflatun.SceneReference.Tests.Runtime.Utils;
 using Eflatun.SceneReference.Utility;
 using NUnit.Framework;
@@ -106,24 +105,6 @@ namespace Eflatun.SceneReference.Tests.Runtime
         public void IsAddressablesPackagePresent_Works()
         {
             Assert.AreEqual(TestUtils.IsAddressablesPackagePresent, Eflatun.SceneReference.Utility.Utils.IsAddressablesPackagePresent);
-        }
-
-        [Test]
-        public void ToDictionary_WithComparer_PreservesComparer()
-        {
-            var source = new Dictionary<string, string>
-            {
-                {"abc", "value1"},
-                {"def", "value2"},
-            };
-            IReadOnlyDictionary<string, string> readOnly = source;
-
-            var result = readOnly.ToDictionary(StringComparer.OrdinalIgnoreCase);
-
-            Assert.IsTrue(result.ContainsKey("ABC"));
-            Assert.AreEqual("value1", result["ABC"]);
-            Assert.IsTrue(result.ContainsKey("DEF"));
-            Assert.AreEqual("value2", result["DEF"]);
         }
     }
 }

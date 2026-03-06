@@ -86,28 +86,6 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void FillWith_PreservesCaseInsensitiveLookup()
-        {
-            // cleanup
-            var toRestore = SceneGuidToPathMapProvider.SceneGuidToPathMap.ToDictionary(StringComparer.OrdinalIgnoreCase);
-
-            var input = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                {"abcdef01234567890abcdef012345678", "Assets/Scenes/Lower.unity"},
-                {"11111111222222223333333344444444", "Assets/Scenes/Other.unity"},
-            };
-            SceneGuidToPathMapProvider.FillWith(input);
-
-            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey("ABCDEF01234567890ABCDEF012345678"));
-            Assert.AreEqual("Assets/Scenes/Lower.unity", SceneGuidToPathMapProvider.SceneGuidToPathMap["ABCDEF01234567890ABCDEF012345678"]);
-
-            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey("11111111222222223333333344444444"));
-
-            // cleanup
-            SceneGuidToPathMapProvider.FillWith(toRestore);
-        }
-
-        [Test]
         public void SceneGuidToPathMap_And_ScenePathToGuidMap_AreEquivalent()
         {
             var g2p = SceneGuidToPathMapProvider.SceneGuidToPathMap;

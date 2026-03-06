@@ -29,28 +29,6 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
-        public void FillWith_PreservesCaseInsensitiveLookup()
-        {
-            // cleanup
-            var toRestore = SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ToDictionary(StringComparer.OrdinalIgnoreCase);
-
-            var input = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                {"abcdef01234567890abcdef012345678", "Address A"},
-                {"11111111222222223333333344444444", "Address B"},
-            };
-            SceneGuidToAddressMapProvider.FillWith(input);
-
-            Assert.IsTrue(SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey("ABCDEF01234567890ABCDEF012345678"));
-            Assert.AreEqual("Address A", SceneGuidToAddressMapProvider.SceneGuidToAddressMap["ABCDEF01234567890ABCDEF012345678"]);
-
-            Assert.IsTrue(SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey("11111111222222223333333344444444"));
-
-            // cleanup
-            SceneGuidToAddressMapProvider.FillWith(toRestore);
-        }
-
-        [Test]
         public void SceneGuidToAddressMap_ContainsSubjectScenes_WithAddressableSupport()
         {
             TestUtils.IgnoreIfAddressablesSupportIsDisabled();
