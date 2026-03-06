@@ -46,6 +46,28 @@ namespace Eflatun.SceneReference.Tests.Runtime.EqualityAndHashCode
         }
 
         [Test]
+        public void Valid_DifferentGuidCasing_SameHashCode(
+            [Values] SceneType sceneType
+        ) {
+            var guid = sceneType switch
+            {
+                SceneType.NotInBuild => TestUtils.NotInBuildSceneGuid,
+                SceneType.Disabled => TestUtils.DisabledSceneGuid,
+                SceneType.Enabled => TestUtils.EnabledSceneGuid,
+                SceneType.Addressable1 => TestUtils.Addressable1SceneGuid,
+                SceneType.Addressable2 => TestUtils.Addressable2SceneGuid,
+                SceneType.AddressableDuplicateAddressA => TestUtils.AddressableDuplicateAddressASceneGuid,
+                SceneType.AddressableDuplicateAddressB => TestUtils.AddressableDuplicateAddressBSceneGuid,
+                _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null),
+            };
+
+            var srLower = new SceneReference(guid);
+            var srUpper = new SceneReference(guid.ToUpperInvariant());
+
+            Assert.AreEqual(srLower.GetHashCode(), srUpper.GetHashCode());
+        }
+
+        [Test]
         public void Invalid(
             [Values] ConceptionType conceptionType,
             [Values] InvalidReason invalidReason

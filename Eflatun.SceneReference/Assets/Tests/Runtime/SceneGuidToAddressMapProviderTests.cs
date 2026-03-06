@@ -29,6 +29,28 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
+        public void FillWith_PreservesCaseInsensitiveLookup()
+        {
+            // cleanup
+            var toRestore = SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ToDictionary(StringComparer.OrdinalIgnoreCase);
+
+            var input = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                {"abcdef01234567890abcdef012345678", "Address A"},
+                {"11111111222222223333333344444444", "Address B"},
+            };
+            SceneGuidToAddressMapProvider.FillWith(input);
+
+            Assert.IsTrue(SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey("ABCDEF01234567890ABCDEF012345678"));
+            Assert.AreEqual("Address A", SceneGuidToAddressMapProvider.SceneGuidToAddressMap["ABCDEF01234567890ABCDEF012345678"]);
+
+            Assert.IsTrue(SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey("11111111222222223333333344444444"));
+
+            // cleanup
+            SceneGuidToAddressMapProvider.FillWith(toRestore);
+        }
+
+        [Test]
         public void SceneGuidToAddressMap_ContainsSubjectScenes_WithAddressableSupport()
         {
             TestUtils.IgnoreIfAddressablesSupportIsDisabled();
@@ -38,6 +60,20 @@ namespace Eflatun.SceneReference.Tests.Runtime
 
             Assert.IsTrue(SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(TestUtils.Addressable2SceneGuid));
             Assert.AreEqual(TestUtils.Addressable2SceneAddress, SceneGuidToAddressMapProvider.SceneGuidToAddressMap[TestUtils.Addressable2SceneGuid]);
+        }
+
+        [Test]
+        public void SceneGuidToAddressMap_LookupIsCaseInsensitive_WithAddressableSupport()
+        {
+            TestUtils.IgnoreIfAddressablesSupportIsDisabled();
+
+            var upperAddr1 = TestUtils.Addressable1SceneGuid.ToUpperInvariant();
+            Assert.IsTrue(SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(upperAddr1));
+            Assert.AreEqual(TestUtils.Addressable1SceneAddress, SceneGuidToAddressMapProvider.SceneGuidToAddressMap[upperAddr1]);
+
+            var upperAddr2 = TestUtils.Addressable2SceneGuid.ToUpperInvariant();
+            Assert.IsTrue(SceneGuidToAddressMapProvider.SceneGuidToAddressMap.ContainsKey(upperAddr2));
+            Assert.AreEqual(TestUtils.Addressable2SceneAddress, SceneGuidToAddressMapProvider.SceneGuidToAddressMap[upperAddr2]);
         }
 
         [Test]

@@ -70,6 +70,44 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
+        public void SceneGuidToPathMap_LookupIsCaseInsensitive()
+        {
+            var upperEnabled = TestUtils.EnabledSceneGuid.ToUpperInvariant();
+            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(upperEnabled));
+            Assert.AreEqual(TestUtils.EnabledScenePath, SceneGuidToPathMapProvider.SceneGuidToPathMap[upperEnabled]);
+
+            var upperDisabled = TestUtils.DisabledSceneGuid.ToUpperInvariant();
+            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(upperDisabled));
+            Assert.AreEqual(TestUtils.DisabledScenePath, SceneGuidToPathMapProvider.SceneGuidToPathMap[upperDisabled]);
+
+            var upperNotInBuild = TestUtils.NotInBuildSceneGuid.ToUpperInvariant();
+            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey(upperNotInBuild));
+            Assert.AreEqual(TestUtils.NotInBuildScenePath, SceneGuidToPathMapProvider.SceneGuidToPathMap[upperNotInBuild]);
+        }
+
+        [Test]
+        public void FillWith_PreservesCaseInsensitiveLookup()
+        {
+            // cleanup
+            var toRestore = SceneGuidToPathMapProvider.SceneGuidToPathMap.ToDictionary(StringComparer.OrdinalIgnoreCase);
+
+            var input = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                {"abcdef01234567890abcdef012345678", "Assets/Scenes/Lower.unity"},
+                {"11111111222222223333333344444444", "Assets/Scenes/Other.unity"},
+            };
+            SceneGuidToPathMapProvider.FillWith(input);
+
+            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey("ABCDEF01234567890ABCDEF012345678"));
+            Assert.AreEqual("Assets/Scenes/Lower.unity", SceneGuidToPathMapProvider.SceneGuidToPathMap["ABCDEF01234567890ABCDEF012345678"]);
+
+            Assert.IsTrue(SceneGuidToPathMapProvider.SceneGuidToPathMap.ContainsKey("11111111222222223333333344444444"));
+
+            // cleanup
+            SceneGuidToPathMapProvider.FillWith(toRestore);
+        }
+
+        [Test]
         public void SceneGuidToPathMap_And_ScenePathToGuidMap_AreEquivalent()
         {
             var g2p = SceneGuidToPathMapProvider.SceneGuidToPathMap;
