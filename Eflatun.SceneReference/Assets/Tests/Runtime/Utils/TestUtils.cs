@@ -101,8 +101,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.IsTrue(couldGetBuildIndex);
             Assert.AreEqual(EnabledSceneBuildIndex, buildIndex);
 
-            Assert.AreEqual(EnabledSceneGuid, sr.Guid);
-            Assert.AreEqual(EnabledSceneGuid, sr.guid);
+            StringAssert.AreEqualIgnoringCase(EnabledSceneGuid, sr.Guid);
+            StringAssert.AreEqualIgnoringCase(EnabledSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Regular, sr.State);
             Assert.AreEqual(SceneReferenceUnsafeReason.None, sr.UnsafeReason);
 
@@ -145,8 +145,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.IsTrue(couldGetBuildIndex);
             Assert.AreEqual(DisabledSceneBuildIndex, buildIndex);
 
-            Assert.AreEqual(DisabledSceneGuid, sr.Guid);
-            Assert.AreEqual(DisabledSceneGuid, sr.guid);
+            StringAssert.AreEqualIgnoringCase(DisabledSceneGuid, sr.Guid);
+            StringAssert.AreEqualIgnoringCase(DisabledSceneGuid, sr.guid);
 
 // TODO: Unity seems to be enabling all scenes before making a test build.
 // Figure out a way to disable that behaviour and then get rid of this define check.
@@ -197,8 +197,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.IsTrue(couldGetBuildIndex);
             Assert.AreEqual(NotInBuildSceneBuildIndex, buildIndex);
 
-            Assert.AreEqual(NotInBuildSceneGuid, sr.Guid);
-            Assert.AreEqual(NotInBuildSceneGuid, sr.guid);
+            StringAssert.AreEqualIgnoringCase(NotInBuildSceneGuid, sr.Guid);
+            StringAssert.AreEqualIgnoringCase(NotInBuildSceneGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
             Assert.AreEqual(SceneReferenceUnsafeReason.NotInBuild, sr.UnsafeReason);
 
@@ -241,8 +241,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.IsFalse(couldGetBuildIndex);
             Assert.AreEqual(-1, buildIndex);
 
-            Assert.AreEqual(AllZeroGuid, sr.Guid);
-            Assert.AreEqual(AllZeroGuid, sr.guid);
+            StringAssert.AreEqualIgnoringCase(AllZeroGuid, sr.Guid);
+            StringAssert.AreEqualIgnoringCase(AllZeroGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
             Assert.AreEqual(SceneReferenceUnsafeReason.Empty, sr.UnsafeReason);
 
@@ -291,8 +291,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.IsFalse(couldGetBuildIndex);
             Assert.AreEqual(-1, buildIndex);
 
-            Assert.AreEqual(expectedGuid, sr.Guid);
-            Assert.AreEqual(expectedGuid, sr.guid);
+            StringAssert.AreEqualIgnoringCase(expectedGuid, sr.Guid);
+            StringAssert.AreEqualIgnoringCase(expectedGuid, sr.guid);
             Assert.AreEqual(SceneReferenceState.Unsafe, sr.State);
             Assert.AreEqual(SceneReferenceUnsafeReason.NotInMaps, sr.UnsafeReason);
 
@@ -343,8 +343,8 @@ namespace Eflatun.SceneReference.Tests.Runtime.Utils
             Assert.IsTrue(couldGetBuildIndex);
             Assert.AreEqual(-1, buildIndex);
 
-            Assert.AreEqual(expectedGuid, sr.Guid);
-            Assert.AreEqual(expectedGuid, sr.guid);
+            StringAssert.AreEqualIgnoringCase(expectedGuid, sr.Guid);
+            StringAssert.AreEqualIgnoringCase(expectedGuid, sr.guid);
 
             if (IsAddressablesPackagePresent)
             {

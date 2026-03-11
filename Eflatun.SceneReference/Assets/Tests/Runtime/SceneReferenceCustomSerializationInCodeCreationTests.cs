@@ -463,5 +463,77 @@ namespace Eflatun.SceneReference.Tests.Runtime
             var deserialized = TestUtils.DeserializeViaSystemXml(xml);
             TestUtils.AssertAddressableDuplicateAddressBSceneState(deserialized);
         }
+
+        [Test]
+        public void DeserializesViaNewtonsoftJson_UppercaseGuid_EnabledScene()
+        {
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.EnabledSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
+            TestUtils.AssertEnabledSceneState(deserialized);
+        }
+
+        [Test]
+        public void DeserializesViaBinaryFormatter_UppercaseGuid_EnabledScene()
+        {
+            var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.EnabledSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
+            TestUtils.AssertEnabledSceneState(deserialized);
+        }
+
+        [Test]
+        public void DeserializesViaSystemXml_UppercaseGuid_EnabledScene()
+        {
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.EnabledSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
+            TestUtils.AssertEnabledSceneState(deserialized);
+        }
+
+        [Test]
+        public void DeserializesViaNewtonsoftJson_UppercaseGuid_DisabledScene()
+        {
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.DisabledSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
+            TestUtils.AssertDisabledSceneState(deserialized);
+        }
+
+        [Test]
+        public void DeserializesViaBinaryFormatter_UppercaseGuid_DisabledScene()
+        {
+            var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.DisabledSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
+            TestUtils.AssertDisabledSceneState(deserialized);
+        }
+
+        [Test]
+        public void DeserializesViaSystemXml_UppercaseGuid_DisabledScene()
+        {
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.DisabledSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
+            TestUtils.AssertDisabledSceneState(deserialized);
+        }
+
+        [Test]
+        public void DeserializesViaNewtonsoftJson_UppercaseGuid_NotInBuildScene()
+        {
+            var json = TestUtils.GetExpectedOutputOfNewtonsoftJson(TestUtils.NotInBuildSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeViaNewtonsoftJson(json);
+            TestUtils.AssertNotInBuildSceneState(deserialized);
+        }
+
+        [Test]
+        public void DeserializesViaBinaryFormatter_UppercaseGuid_NotInBuildScene()
+        {
+            var base64 = TestUtils.GetAsBase64ExpectedOutputOfBinaryFormatter(TestUtils.NotInBuildSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeFromBase64ViaBinaryFormatter(base64);
+            TestUtils.AssertNotInBuildSceneState(deserialized);
+        }
+
+        [Test]
+        public void DeserializesViaSystemXml_UppercaseGuid_NotInBuildScene()
+        {
+            var xml = TestUtils.GetExpectedOutputOfSystemXml(TestUtils.NotInBuildSceneGuid.ToUpperInvariant());
+            var deserialized = TestUtils.DeserializeViaSystemXml(xml);
+            TestUtils.AssertNotInBuildSceneState(deserialized);
+        }
     }
 }

@@ -28,6 +28,19 @@ namespace Eflatun.SceneReference.Tests.Runtime
         }
 
         [Test]
+        public void GuidConstructor_ProvidesExpectedState_WithUppercaseGuid()
+        {
+            var enabledRef = new SceneReference(TestUtils.EnabledSceneGuid.ToUpperInvariant());
+            TestUtils.AssertEnabledSceneState(enabledRef);
+
+            var disabledRef = new SceneReference(TestUtils.DisabledSceneGuid.ToUpperInvariant());
+            TestUtils.AssertDisabledSceneState(disabledRef);
+
+            var notInBuildRef = new SceneReference(TestUtils.NotInBuildSceneGuid.ToUpperInvariant());
+            TestUtils.AssertNotInBuildSceneState(notInBuildRef);
+        }
+
+        [Test]
         public void GuidConstructor_ThrowsForInvalidArguments()
         {
             Assert.Throws<SceneReferenceCreationException>(() => _ = new SceneReference((string)null));
