@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+- Scenes added to or enabled in build settings from the inspector were not saved when a build profile is active (Unity 6+); the active build profile is now marked dirty.
 
 ### Optimised
 

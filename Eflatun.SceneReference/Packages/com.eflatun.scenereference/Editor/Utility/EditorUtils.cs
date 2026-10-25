@@ -59,6 +59,20 @@ namespace Eflatun.SceneReference.Editor.Utility
         /// </summary>
         public static bool IsScenePath(this string path) => Path.GetExtension(path) == ".unity";
 
+        private static void SetBuildScenes(System.Collections.Generic.List<EditorBuildSettingsScene> scenes)
+        {
+            EditorBuildSettings.scenes = scenes.ToArray();
+
+#if UNITY_6000_0_OR_NEWER
+            // With an active build profile, the scene list lives in the profile asset and must be marked dirty to be saved.
+            var activeProfile = UnityEditor.Build.Profile.BuildProfile.GetActiveBuildProfile();
+            if (activeProfile != null)
+            {
+                EditorUtility.SetDirty(activeProfile);
+            }
+#endif // UNITY_6000_0_OR_NEWER
+        }
+
         /// <summary>
         /// Adds the scene with the given path to build settings as enabled.
         /// </summary>
@@ -66,7 +80,7 @@ namespace Eflatun.SceneReference.Editor.Utility
         {
             var tempScenes = EditorBuildSettings.scenes.ToList();
             tempScenes.Add(new EditorBuildSettingsScene(scenePath, true));
-            EditorBuildSettings.scenes = tempScenes.ToArray();
+            SetBuildScenes(tempScenes);
         }
 
         /// <summary>
@@ -76,7 +90,7 @@ namespace Eflatun.SceneReference.Editor.Utility
         {
             var tempScenes = EditorBuildSettings.scenes.ToList();
             tempScenes.Single(x => StringComparer.OrdinalIgnoreCase.Equals(x.guid.ToString(), sceneGuid)).enabled = true;
-            EditorBuildSettings.scenes = tempScenes.ToArray();
+            SetBuildScenes(tempScenes);
         }
 
 #if ESR_ADDRESSABLES
