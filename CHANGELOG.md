@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+- `Add to Build` and `Enable in Build` tools now mark the active build profile dirty, so their changes are no longer lost when the profile overrides the global scene list (Unity 6+).
 
 ### Optimised
 
