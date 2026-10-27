@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
-- Scenes added to or enabled in build settings from the inspector were not saved when a build profile is active (Unity 6+); the active build profile is now marked dirty.
+- `Add to Build` and `Enable in Build` tools now mark the active build profile dirty, so their changes are no longer lost when the profile overrides the global scene list (Unity 6+).
 
 ### Optimised
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Eflatun.SceneReference.Exceptions;
@@ -59,12 +60,14 @@ namespace Eflatun.SceneReference.Editor.Utility
         /// </summary>
         public static bool IsScenePath(this string path) => Path.GetExtension(path) == ".unity";
 
-        private static void SetBuildScenes(System.Collections.Generic.List<EditorBuildSettingsScene> scenes)
+        private static void SetBuildScenes(List<EditorBuildSettingsScene> scenes)
         {
             EditorBuildSettings.scenes = scenes.ToArray();
 
 #if UNITY_6000_0_OR_NEWER
-            // With an active build profile, the scene list lives in the profile asset and must be marked dirty to be saved.
+            // EditorBuildSettings.scenes writes to the active build profile (since 6000.0.20f1, only if it overrides the global
+            // scene list) without marking it dirty, so the change would be lost on save. Not narrowed with overrideGlobalScenes,
+            // which does not exist before 6000.0.20f1.
             var activeProfile = UnityEditor.Build.Profile.BuildProfile.GetActiveBuildProfile();
             if (activeProfile != null)
             {
