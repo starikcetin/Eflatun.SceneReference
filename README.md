@@ -400,12 +400,13 @@ The scenes with paths matching the patterns in this setting will not be colored 
 2. `UserSettings`.
 3. Internal direct assign to the providers.
 
-The steps 2 and 3 run for all generations. The JSON files on the other hand, will only be generated in two circumstances:
-1. Manaully running the generator via the relevant menu item.
-2. During a build if the _Before Build_ generation trigger is enabled.
+The steps 2 and 3 run for all generations. The JSON files, on the other hand, will only be generated in three circumstances:
+1. Manually running the generator via the relevant menu item.
+2. Manually running the generator from editor code with `SceneDataMapsGenerator.Run(true)`.
+3. During a build if the _Before Build_ generation trigger is enabled.
 
 > [!NOTE]<br/>
-> If the _Before Build_ generation trigger is enabled, JSON map files will also be cleaned up after a build.
+> If the _Before Build_ generation trigger is enabled, JSON map files will also be cleaned up after a build. On Unity 6.3 and newer, this also happens when the build fails or gets cancelled. On older versions, and on any version if the editor crashes during a build, the JSON map files are left behind until the next successful build. You can also delete them yourself.
 
 > [!WARNING]<br/>
 > Map files are auto-generated, do not edit them. Any edits will be lost at the next generation.
@@ -436,7 +437,7 @@ using Eflatun.SceneReference.Editor;
 // Run the generator and output files. Only do this in Editor code!
 SceneDataMapsGenerator.Run(true);
 
-// Run the generator and but do not output files. Only do this in Editor code!
+// Run the generator but do not output files. Only do this in Editor code!
 SceneDataMapsGenerator.Run(false);
 ```
 
