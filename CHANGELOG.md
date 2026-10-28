@@ -16,10 +16,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
-- `Add to Build` and `Enable in Build` tools now mark the active build profile dirty, so their changes are no longer lost when the profile overrides the global scene list (Unity 6+).
-- On Unity 6.3 and newer, map files generated for a build are now also cleaned up when the build fails or gets cancelled. Previously, they were left behind under `Assets/Resources` until the next successful build, showing up as changes in version control. Older Unity versions don't notify packages about builds that fail or get cancelled, so nothing changes there.
 
 ### Optimised
+
+
+
+## [5.0.1] - 2026-10-28
+
+### Fixed
+- `Add to Build` and `Enable in Build` tools now mark the active build profile dirty, so their changes are no longer lost when the profile overrides the global scene list (Unity 6+).
+- On Unity 6.3 and newer, map files generated for a build are now also cleaned up when the build fails or gets cancelled. Previously, they were left behind under `Assets/Resources` until the next successful build, showing up as changes in version control. Older Unity versions don't notify packages about builds that fail or get cancelled, so nothing changes there.
 
 
 
